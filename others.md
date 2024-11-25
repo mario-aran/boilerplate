@@ -1,5 +1,9 @@
 # JavaScript Syllabus
 
+## Interaction
+
+- `console.log()`
+
 ## Comments
 
 - Comments: `//, /**/`
@@ -97,4 +101,90 @@
 - Imports/Exports: `import, export`
 - Named vs Default -->
 
-## Web Storage
+---
+
+## Classes
+
+- Constructor Method: `constructor()`
+
+## Debugging
+
+## Regular Expressions
+
+## Strings
+
+## Popup Boxes
+
+## Sets & Maps
+
+## Iterators & Generators
+
+## Dates
+
+## Prototypes
+
+## Template Literals
+
+## Timeout and Interval
+
+## Execution Context
+
+## Strict Mode
+
+Interaction
+console.log
+document.write()
+window.alert()
+innerHTML (part of DOM)
+
+JavaScript Popup Boxes
+Alert Box
+Confirm Box
+Prompt Box
+
+Identifiers
+What is an identifier ?
+Rules for creating identifier
+Reserved keywords
+
+Statement
+What is a statement in programming ?
+How to write a single line of statement ?
+How to write a multi-line statement or code-block ?
+Use of Semicolon and whitespace in statement.
+
+JavaScript String
+What is a String ?
+Uses of single quote `` and double quotes "" in string
+Escape characters
+How to create a String ?
+String Literal
+String Object
+String Literal vs String Object ?
+String length
+String to Array
+String Template Literal
+String functions
+charAt
+slice
+substring
+substr (deprecated)
+replace
+repeat
+toUpperCase
+toLowerCase
+concat
+trim
+trimEnd
+trimStart
+padStart
+padEnd
+split
+indexOf
+valueOf
+lastIndexOf
+startsWith
+endsWith
+search
+match
+includes
