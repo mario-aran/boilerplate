@@ -1,4 +1,4 @@
-# JavaScript Syllabus
+# Learn JavaScript
 
 ## Comments
 
