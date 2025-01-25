@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Custom
+*tsbuildinfo*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
