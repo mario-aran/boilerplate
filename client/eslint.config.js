@@ -19,7 +19,8 @@ export default tseslint.config(
       js.configs.recommended, // "eslint"
       ...tseslint.configs.strict, // "typescript-eslint"
       ...tseslint.configs.stylistic, // "typescript-eslint"
-      eslintConfigPrettier, // "eslint-config-prettier": needs to be at the end
+      ...pluginQuery.configs['flat/recommended'], // "@tanstack/react-query"
+      eslintConfigPrettier, // "eslint-config-prettier": Needs to be at the end
     ],
     plugins: {
       'react-hooks': reactHooks,
