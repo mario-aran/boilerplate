@@ -1,21 +1,14 @@
 import { VITE_API_URL } from '@/config/env';
-import { Recipe, RecipesParams } from '@/features/recipes/types';
+import { RecipesApiResponse, RecipesParams } from '@/features/recipes/types';
 import { useQuery } from '@tanstack/react-query';
 
 // Types
-interface RecipesApiResponse {
-  limit: number;
-  recipes: Recipe[];
-  skip: number;
-  total: number;
+interface PaginationMetadata {
+  prevPage: number | null;
+  nextPage: number | null;
 }
 
-type GetRecipes = Promise<
-  RecipesApiResponse & {
-    prevPage: number | null;
-    nextPage: number | null;
-  }
->;
+type GetRecipes = Promise<RecipesApiResponse & PaginationMetadata>;
 
 // Utils
 const getRecipes = async ({

@@ -1,9 +1,9 @@
 import { VITE_API_URL } from '@/config/env';
-import { Recipe } from '@/features/recipes/types';
+import { RecipeApiResponse } from '@/features/recipes/types';
 import { useQuery } from '@tanstack/react-query';
 
 // Types
-type GetRecipe = Promise<{ recipe: Recipe }>;
+type GetRecipe = Promise<RecipeApiResponse>;
 
 // Utils
 const getRecipe = async (recipeId: string): GetRecipe => {
