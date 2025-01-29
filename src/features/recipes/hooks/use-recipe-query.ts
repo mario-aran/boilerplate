@@ -8,7 +8,8 @@ type GetRecipe = Promise<RecipeApiResponse>;
 // Utils
 const getRecipe = async (recipeId: string): GetRecipe => {
   const url = `${VITE_API_URL}/recipes/${recipeId}`;
-  return fetch(url).then((res) => res.json());
+  const response = await fetch(url);
+  return response.json();
 };
 
 export const useRecipeQuery = (recipeId: string) =>

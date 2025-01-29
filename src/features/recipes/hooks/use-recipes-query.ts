@@ -3,12 +3,13 @@ import { RecipesApiResponse, RecipesParams } from '@/features/recipes/types';
 import { useQuery } from '@tanstack/react-query';
 
 // Types
-interface PaginationMetadata {
+interface PageMetadata {
+  lastPage: number | null;
   prevPage: number | null;
   nextPage: number | null;
 }
 
-type GetRecipes = Promise<RecipesApiResponse & PaginationMetadata>;
+type GetRecipes = Promise<RecipesApiResponse & PageMetadata>;
 
 // Utils
 const getRecipes = async ({
@@ -24,11 +25,17 @@ const getRecipes = async ({
   const data: RecipesApiResponse = await response.json();
 
   // Prepare metadata
-  const total = data.total || 0;
+  const total = data.total ?? 0;
+  const lastPage = Math.ceil(total / limit) || null;
   const prevPage = page > 1 ? page - 1 : null;
   const nextPage = skip + limit < total ? page + 1 : null;
 
-  return { ...data, prevPage, nextPage };
+  return {
+    ...data,
+    lastPage,
+    prevPage,
+    nextPage,
+  };
 };
 
 export const useRecipesQuery = (params: RecipesParams = {}) =>
