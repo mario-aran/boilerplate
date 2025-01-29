@@ -7,7 +7,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-// "tseslint.config" allows types here
+// tseslint.config allows types in this file
 export default tseslint.config(
   // Ignores
   { ignores: ['dist'] },
@@ -24,16 +24,16 @@ export default tseslint.config(
       eslintConfigPrettier, // "eslint-config-prettier": Needs to be at the end
     ],
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      'check-file': checkFile,
+      'react-hooks': reactHooks, // "eslint-plugin-react-hooks"
+      'react-refresh': reactRefresh, // "eslint-plugin-react-refresh"
+      'check-file': checkFile, // "eslint-plugin-check-file"
     },
     rules: {
       // "eslint"
       'no-restricted-imports': [
         'error',
         { patterns: ['src', '../**', '@/*/*/*/*', './*/*/*/*'] },
-      ], // Prevent specific path imports
+      ], // Prevent path imports
 
       // "eslint-plugin-react-hooks"
       ...reactHooks.configs.recommended.rules,
