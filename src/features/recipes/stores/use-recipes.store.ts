@@ -10,5 +10,5 @@ export const useRecipesStore = create<RecipesStore>()((set) => ({
   sortBy: 'id',
   order: 'asc',
   setPageData: (pageData) => set(pageData),
-  changePage: (page) => set((state) => (page !== state.page ? { page } : {})),
+  changePage: (page) => set({ page }),
 }));
