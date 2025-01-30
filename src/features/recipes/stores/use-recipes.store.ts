@@ -1,24 +1,28 @@
-import { PageData, RecipesParams } from '@/features/recipes/types';
+import { RecipesParams } from '@/features/recipes/types';
 import { create } from 'zustand';
 
-// Constants
-const NO_VALUE = 0;
-const FIRST_PAGE = 1;
+// Types
+interface PageData {
+  total: number;
+  numPage: number;
+  prevPage: number;
+  nextPage: number;
+}
 
 interface RecipesStoreActions {
   setPageData: (pageData: PageData) => void;
   changePage: (page: number) => void;
 }
 
-type RecipesStore = PageData & RecipesParams & RecipesStoreActions;
+type RecipesStore = RecipesParams & PageData & RecipesStoreActions;
 
 export const useRecipesStore = create<RecipesStore>()((set) => ({
   limit: 6,
-  total: NO_VALUE,
-  page: FIRST_PAGE,
-  numPage: FIRST_PAGE,
-  prevPage: NO_VALUE,
-  nextPage: NO_VALUE,
+  page: 1,
+  total: 0,
+  numPage: 1,
+  prevPage: 0,
+  nextPage: 0,
   sortBy: 'id',
   order: 'asc',
   setPageData: (pageData) => set(pageData),
