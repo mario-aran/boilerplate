@@ -18,15 +18,8 @@ export interface RecipeApiResponse {
 }
 
 export interface RecipesParams {
-  limit?: number;
-  page?: number;
-  sortBy?: keyof RecipeApiResponse;
-  order?: 'asc' | 'desc';
-}
-
-export interface RecipesApiResponse {
-  recipes: RecipeApiResponse[];
-  total: number;
-  skip: number;
+  page: number;
   limit: number;
+  sortBy: keyof RecipeApiResponse;
+  order: 'asc' | 'desc';
 }
