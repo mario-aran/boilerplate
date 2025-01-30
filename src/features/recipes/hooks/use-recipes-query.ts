@@ -10,19 +10,28 @@ export const useRecipesQuery = () => {
   const order = useRecipesStore((state) => state.order);
   const setPageData = useRecipesStore((state) => state.setPageData);
 
-  // Prepare params
+  // Prepare queryFn params
   const params = { page, limit, sortBy, order };
 
   // return "tanstack-query"
   return useQuery({
     queryKey: ['recipes', params],
     queryFn: async () => {
+      // Fetch api data
       const data = await getRecipes(params);
-      const { numPage, prevPage, nextPage, ...rest } = data;
+      const { total } = data;
 
-      setPageData({ numPage, prevPage, nextPage });
+      // Prepare page data
+      const { limit, page } = params;
+      const numPage = Math.ceil(total / limit) || 1;
+      const prevPage = page > 1 ? page - 1 : 0;
+      const nextPage = page < numPage ? page + 1 : 0;
 
-      return rest;
+      // Set page data
+      setPageData({ numPage, prevPage, nextPage, total });
+
+      // Return recipes
+      return data.recipes;
     },
   });
 };
