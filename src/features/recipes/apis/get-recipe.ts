@@ -1,8 +1,5 @@
 import { VITE_API_URL } from '@/config/env';
-import { Recipe } from '@/features/recipes/types';
-
-// Types
-type GetRecipe = Promise<Recipe>;
+import { GetRecipe } from '@/features/recipes/types';
 
 export const getRecipe = async (recipeId: string): GetRecipe => {
   // Prepare url
