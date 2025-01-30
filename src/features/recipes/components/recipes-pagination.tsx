@@ -21,7 +21,7 @@ export const RecipesPagination = () => {
   const changePage = useRecipesStore((state) => state.changePage);
 
   // Conditions
-  const showFirstPage = page !== 1;
+  const showFirstPage = page !== FIRST_PAGE;
   const showLastPage = page !== numPage;
   const showFirstEllipsis = page > 2;
   const showLastEllipsis = page < numPage - 2;
