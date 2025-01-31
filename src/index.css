@@ -1,9 +1,9 @@
-/* "tailwindcss" */
+/* "tailwindcss": Copied from https://ui.shadcn.com/docs/installation/vite */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* "shadcn" */
+/* "shadcn": Created by Shadcn Cli */
 @layer base {
   :root {
     --background: 0 0% 100%;

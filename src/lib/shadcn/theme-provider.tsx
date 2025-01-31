@@ -1,6 +1,7 @@
+// "shadcn": Copied from https://ui.shadcn.com/docs/dark-mode/vite
+
 import { createContext, useContext, useEffect, useState } from 'react';
 
-// Types
 type Theme = 'dark' | 'light' | 'system';
 
 interface ThemeProviderProps {
@@ -14,16 +15,13 @@ interface ThemeProviderState {
   setTheme: (theme: Theme) => void;
 }
 
-// Initial values
 const initialState: ThemeProviderState = {
   theme: 'system',
   setTheme: () => null,
 };
 
-// Context
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-// Provider
 export function ThemeProvider({
   children,
   defaultTheme = 'system',
