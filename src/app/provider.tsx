@@ -1,11 +1,11 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from '@/lib/shadcn/theme-provider';
+import { TanstackQueryProvider } from '@/lib/tanstack/tanstack-query-provider';
 import { PropsWithChildren } from 'react';
-
-// "@tanstack/react-query"
-const queryClient = new QueryClient();
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <TanstackQueryProvider>
+      <ThemeProvider>{children}</ThemeProvider>
+    </TanstackQueryProvider>
   );
 };
