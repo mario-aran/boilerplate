@@ -1,6 +1,7 @@
 import { AuthLayout } from '@/components/layouts/auth-layout';
 import { HeadlessLayout } from '@/components/layouts/headless-layout';
 import { PublicLayout } from '@/components/layouts/public-layout';
+import { ROUTES } from '@/constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
 import { LoginRoute } from './routes/login.route';
@@ -15,13 +16,13 @@ export const AppRouter = () => {
         {/* Public */}
         <Route element={<PublicLayout />}>
           <Route index element={<HomeRoute />} />
+          <Route path={ROUTES.LOGIN} element={<LoginRoute />} />
         </Route>
 
         {/* Private*/}
         <Route element={<AuthLayout />}>
-          <Route path="login" element={<LoginRoute />} />
-          <Route path="users" element={<UsersRoute />} />
-          <Route path="products" element={<ProductsRoute />} />
+          <Route path={ROUTES.USERS} element={<UsersRoute />} />
+          <Route path={ROUTES.PRODUCTS} element={<ProductsRoute />} />
         </Route>
 
         {/* Headless */}
