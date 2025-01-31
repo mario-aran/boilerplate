@@ -26,21 +26,16 @@ export const RecipesPagination = () => {
   const showFirstEllipsis = page > 2;
   const showLastEllipsis = page < numPage - 2;
 
-  // Utils
-  const handlePageChange = (newPage: number | null) => {
-    if (newPage) changePage(newPage);
-  };
-
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={() => handlePageChange(prevPage)} />
+          <PaginationPrevious onClick={() => changePage(prevPage)} />
         </PaginationItem>
 
         {showFirstPage && (
           <PaginationItem>
-            <PaginationLink onClick={() => handlePageChange(FIRST_PAGE)}>
+            <PaginationLink onClick={() => changePage(FIRST_PAGE)}>
               {FIRST_PAGE}
             </PaginationLink>
           </PaginationItem>
@@ -64,14 +59,14 @@ export const RecipesPagination = () => {
 
         {showLastPage && (
           <PaginationItem>
-            <PaginationLink onClick={() => handlePageChange(numPage)}>
+            <PaginationLink onClick={() => changePage(numPage)}>
               {numPage}
             </PaginationLink>
           </PaginationItem>
         )}
 
         <PaginationItem>
-          <PaginationNext onClick={() => handlePageChange(nextPage)} />
+          <PaginationNext onClick={() => changePage(nextPage)} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
