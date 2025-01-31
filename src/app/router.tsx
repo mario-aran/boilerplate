@@ -1,4 +1,6 @@
-import { AuthLayout, HeadlessLayout, PublicLayout } from '@/components/layouts';
+import { AuthLayout } from '@/components/layouts/auth-layout';
+import { HeadlessLayout } from '@/components/layouts/headless-layout';
+import { PublicLayout } from '@/components/layouts/public-layout';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
 import { LoginRoute } from './routes/login.route';
