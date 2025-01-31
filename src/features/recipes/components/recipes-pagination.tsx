@@ -6,7 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
+} from '@/components/shadcn-ui/pagination';
 import { useRecipesStore } from '@/features/recipes/stores';
 
 // Constants

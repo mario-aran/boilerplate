@@ -1,5 +1,5 @@
 import { ButtonProps, buttonVariants } from '@/components/shadcn-ui/button';
-import { cn } from '@/lib/shadcn-ui/utils';
+import { cn } from '@/lib/shadcn/utils';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import * as React from 'react';
 

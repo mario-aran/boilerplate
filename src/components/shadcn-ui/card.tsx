@@ -1,4 +1,4 @@
-import { cn } from '@/lib/shadcn-ui/utils';
+import { cn } from '@/lib/shadcn/utils';
 import * as React from 'react';
 
 const Card = React.forwardRef<

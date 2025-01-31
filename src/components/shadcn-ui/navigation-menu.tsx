@@ -1,4 +1,4 @@
-import { cn } from '@/lib/shadcn-ui/utils';
+import { cn } from '@/lib/shadcn/utils';
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
 import { cva } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
