@@ -13,6 +13,10 @@ export default defineConfig(({ mode }: { mode: string }) => {
   return {
     plugins: [react()],
     server: { port: parseInt(env.VITE_CLIENT_PORT) || 5173 },
-    resolve: { alias: { '@': path.resolve(__dirname, './src') } },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'), // Absolute path
+      },
+    },
   };
 });
