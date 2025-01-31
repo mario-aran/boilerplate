@@ -4,7 +4,7 @@ import { RecipeApiResponse } from '@/features/recipes/types';
 export const getRecipe = async (
   recipeId: string,
 ): Promise<RecipeApiResponse> => {
-  // Prepare url
+  // Prepare values
   const url = `${VITE_API_URL}/recipes/${recipeId}`;
 
   // Fetch data

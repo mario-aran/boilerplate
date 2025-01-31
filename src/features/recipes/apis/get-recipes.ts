@@ -13,7 +13,7 @@ export const getRecipes = async ({
   sortBy,
   order,
 }: RecipesParams): Promise<RecipesApiResponse> => {
-  // Prepare url
+  // Prepare values
   const skip = limit * (page - 1);
   const url = `${VITE_API_URL}/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
 
