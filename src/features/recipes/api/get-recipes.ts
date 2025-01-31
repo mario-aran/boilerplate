@@ -5,6 +5,8 @@ import { RecipeApiResponse, RecipesParams } from '@/features/recipes/types';
 interface RecipesApiResponse {
   recipes: RecipeApiResponse[];
   total: number;
+  skip: number;
+  limit: number;
 }
 
 export const getRecipes = async ({
