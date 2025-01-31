@@ -12,7 +12,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
   // Vite config
   return {
     plugins: [react()],
-    resolve: { alias: { '@': path.resolve(__dirname, './src') } },
     server: { port: parseInt(env.VITE_CLIENT_PORT) || 5173 },
+    resolve: { alias: { '@': path.resolve(__dirname, './src') } },
   };
 });

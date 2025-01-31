@@ -51,14 +51,17 @@ export default tseslint.config({
 
 ## To-Do
 
-- [x] create github repo and vite project
+- [x] create github repo
+- [x] create vite project
 - [x] eslint:
       typescript-eslint
       eslint-plugin-react-hooks
       eslint-plugin-react-refresh
       eslint-plugin-check-file
-- [x] editorconfig + prettier + eslint-config-prettier
-- [x] setup envs + setup server port in vite.config.ts
+- [x] create editorconfig
+- [x] prettier + eslint-config-prettier
+- [x] setup envs
+- [x] setup server port in vite.config.ts
 - [x] shadcn/ui + tailwindcss
 - [x] setup absolute paths: tsconfig.app.json, tsconfig.json, vite.config.ts
 - [x] react-router
