@@ -22,8 +22,8 @@ export const useRecipesQuery = () => {
       // Prepare custom data
       const { limit, page } = params;
       const numPage = Math.ceil(data.total / limit) || 1;
-      const prevPage = page > 1 ? page - 1 : 0;
-      const nextPage = page < numPage ? page + 1 : 0;
+      const prevPage = page > 1 ? page - 1 : null;
+      const nextPage = page < numPage ? page + 1 : null;
 
       // Return api and custom data
       return { ...data, numPage, prevPage, nextPage };

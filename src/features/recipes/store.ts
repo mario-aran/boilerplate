@@ -3,7 +3,7 @@ import { create } from 'zustand';
 
 // Types
 interface RecipesStoreActions {
-  changePage: (page: number) => void;
+  changePage: (page: number | null) => void;
 }
 
 type RecipesStore = RecipesParams & RecipesStoreActions;
