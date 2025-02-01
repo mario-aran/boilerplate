@@ -1,5 +1,5 @@
-import { getRecipes } from '@/features/recipes/apis';
-import { useRecipesStore } from '@/features/recipes/stores';
+import { getRecipes } from '@/features/recipes/api';
+import { useRecipesStore } from '@/features/recipes/store';
 import { useQuery } from '@tanstack/react-query';
 
 export const useRecipesQuery = () => {
@@ -8,7 +8,6 @@ export const useRecipesQuery = () => {
   const limit = useRecipesStore((state) => state.limit);
   const sortBy = useRecipesStore((state) => state.sortBy);
   const order = useRecipesStore((state) => state.order);
-  const setPageData = useRecipesStore((state) => state.setPageData);
 
   // Prepare queryFn params
   const params = { page, limit, sortBy, order };
@@ -19,19 +18,15 @@ export const useRecipesQuery = () => {
     queryFn: async () => {
       // Fetch api data
       const data = await getRecipes(params);
-      const { total } = data;
 
-      // Prepare page data
+      // Prepare custom data
       const { limit, page } = params;
-      const numPage = Math.ceil(total / limit) || 1;
+      const numPage = Math.ceil(data.total / limit) || 1;
       const prevPage = page > 1 ? page - 1 : 0;
       const nextPage = page < numPage ? page + 1 : 0;
 
-      // Set page data
-      setPageData({ numPage, prevPage, nextPage, total });
-
-      // Return recipes
-      return data.recipes;
+      // Return api and custom data
+      return { ...data, numPage, prevPage, nextPage };
     },
   });
 };
