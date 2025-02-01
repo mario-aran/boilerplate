@@ -11,10 +11,11 @@ import { useRecipesQuery } from '@/features/recipes/hooks';
 
 export const RecipesCards = () => {
   const { data } = useRecipesQuery();
+  const recipes = data?.recipes ?? [];
 
   return (
     <div className="grid grid-cols-3 gap-8 place-items-center">
-      {data?.map((recipe) => (
+      {recipes.map((recipe) => (
         <Card
           key={recipe.id}
           className="flex flex-col h-full w-full max-w-80 items-center justify-center"
