@@ -66,18 +66,22 @@ export const RecipesCards = () => {
 
   return (
     <div className="flex flex-wrap gap-8 justify-center">
-      {isLoading
-        ? Array.from({ length: 3 }).map((_, index) => (
-            <SkeletonRecipeCard key={index} />
-          ))
-        : recipes.map((recipe) => (
-            <RecipeCard
-              key={recipe.id}
-              title={recipe.name}
-              description={`${recipe.cookTimeMinutes} mins to cook.`}
-              image={recipe.image}
-            />
-          ))}
+      {isLoading ? (
+        Array.from({ length: 3 }).map((_, index) => (
+          <SkeletonRecipeCard key={index} />
+        ))
+      ) : recipes.length === 0 ? (
+        <p>No recipes found.</p>
+      ) : (
+        recipes.map((recipe) => (
+          <RecipeCard
+            key={recipe.id}
+            title={recipe.name}
+            description={`${recipe.cookTimeMinutes} mins to cook.`}
+            image={recipe.image}
+          />
+        ))
+      )}
     </div>
   );
 };
