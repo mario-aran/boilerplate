@@ -10,7 +10,6 @@ import { NavLink } from 'react-router';
 // Initial values
 const navRoutes = [
   { path: '/', name: 'Home' },
-  { path: ROUTES.LOGIN, name: 'Login' },
   { path: ROUTES.USERS, name: 'Users' },
   { path: ROUTES.RECIPES, name: 'Recipes' },
 ];
@@ -31,9 +30,11 @@ export const MainNavbar = () => {
             </NavLink>
           </NavigationMenuItem>
         ))}
-      </NavigationMenuList>
 
-      <ModeToggle />
+        <NavigationMenuItem>
+          <ModeToggle />
+        </NavigationMenuItem>
+      </NavigationMenuList>
     </NavigationMenu>
   );
 };
