@@ -4,10 +4,10 @@ import { MainNavbar } from './main-navbar';
 export const AuthLayout = () => {
   return (
     <>
-      {/* Header */}
-      <MainNavbar />
+      <header>
+        <MainNavbar />
+      </header>
 
-      {/* Content */}
       <main className="container mx-auto px-4">
         {/* Nested route */}
         <Outlet />
