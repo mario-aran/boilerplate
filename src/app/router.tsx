@@ -1,5 +1,4 @@
 import { AuthLayout } from '@/components/layouts/auth-layout';
-import { HeadlessLayout } from '@/components/layouts/headless-layout';
 import { MainLayout } from '@/components/layouts/main-layout';
 import { ROUTES } from '@/constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -25,10 +24,8 @@ export const AppRouter = () => {
           <Route path={ROUTES.RECIPES} element={<RecipesRoute />} />
         </Route>
 
-        {/* Redirect only */}
-        <Route element={<HeadlessLayout />}>
-          <Route path="*" element={<NotFoundRoute />}></Route>
-        </Route>
+        {/* No match */}
+        <Route path="*" element={<NotFoundRoute />} />
       </Routes>
     </BrowserRouter>
   );
