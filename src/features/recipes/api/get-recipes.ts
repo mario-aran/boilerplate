@@ -10,13 +10,12 @@ interface RecipesApiResponse {
 }
 
 export const getRecipes = async ({
-  page,
   limit,
+  skip,
   sortBy,
   order,
 }: RecipesParams): Promise<RecipesApiResponse> => {
   // Prepare values
-  const skip = (page - 1) * limit;
   const url = `${VITE_API_URL}/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
 
   // Fetch data
