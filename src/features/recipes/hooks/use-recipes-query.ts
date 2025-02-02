@@ -11,19 +11,19 @@ export const useRecipesQuery = () => {
   const setPaginationData = useRecipesStore((state) => state.setPaginationData);
 
   // Prepare values
-  const queryParams = { skip, limit, sortBy, order };
+  const recipesParams = { skip, limit, sortBy, order };
 
   // return "tanstack-query"
   return useQuery({
-    queryKey: ['recipes', queryParams],
+    queryKey: ['recipes', recipesParams],
     queryFn: async () => {
-      // Fetch api
-      const data = await getRecipes(queryParams);
+      // Fetch data
+      const data = await getRecipes(recipesParams);
 
       // Set store
       setPaginationData(data.total);
 
-      // Return api data
+      // Return data
       return data;
     },
   });
