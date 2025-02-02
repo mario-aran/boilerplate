@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
 import { LoginRoute } from './routes/login.route';
 import { NotFoundRoute } from './routes/not-found.route';
-import { ProductsRoute } from './routes/products.route';
+import { RecipesRoute } from './routes/recipes.route';
 import { UsersRoute } from './routes/users.route';
 
 export const AppRouter = () => {
@@ -22,12 +22,11 @@ export const AppRouter = () => {
         {/* Private*/}
         <Route element={<AuthLayout />}>
           <Route path={ROUTES.USERS} element={<UsersRoute />} />
-          <Route path={ROUTES.PRODUCTS} element={<ProductsRoute />} />
+          <Route path={ROUTES.RECIPES} element={<RecipesRoute />} />
         </Route>
 
         {/* Headless */}
         <Route element={<HeadlessLayout />}>
-          {/* No match */}
           <Route path="*" element={<NotFoundRoute />}></Route>
         </Route>
       </Routes>
