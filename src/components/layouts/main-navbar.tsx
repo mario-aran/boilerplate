@@ -1,3 +1,4 @@
+import { ModeToggle } from '@/components/controls/mode-toggle';
 import { ROUTES } from '@/constants/routes';
 import {
   NavigationMenu,
@@ -10,8 +11,8 @@ import { NavLink } from 'react-router';
 const navRoutes = [
   { path: '/', name: 'Home' },
   { path: ROUTES.LOGIN, name: 'Login' },
-  { path: ROUTES.PRODUCTS, name: 'Products' },
   { path: ROUTES.USERS, name: 'Users' },
+  { path: ROUTES.RECIPES, name: 'Recipes' },
 ];
 
 export const MainNavbar = () => {
@@ -31,6 +32,8 @@ export const MainNavbar = () => {
           </NavigationMenuItem>
         ))}
       </NavigationMenuList>
+
+      <ModeToggle />
     </NavigationMenu>
   );
 };

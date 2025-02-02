@@ -5,6 +5,7 @@ export const Recipes = () => {
   return (
     <div>
       <RecipesPagination />
+
       <div className="pt-4">
         <RecipesCards />
       </div>
