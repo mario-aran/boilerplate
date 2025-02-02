@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router';
 import { MainNavbar } from './main-navbar';
 
-export const PublicLayout = () => {
+export const MainLayout = () => {
   return (
     <>
       {/* Header */}
-      <MainNavbar />
+      <header>
+        <MainNavbar />
+      </header>
 
       {/* Content */}
       <main className="container mx-auto px-4">

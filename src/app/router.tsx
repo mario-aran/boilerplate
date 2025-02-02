@@ -1,6 +1,6 @@
 import { AuthLayout } from '@/components/layouts/auth-layout';
 import { HeadlessLayout } from '@/components/layouts/headless-layout';
-import { PublicLayout } from '@/components/layouts/public-layout';
+import { MainLayout } from '@/components/layouts/main-layout';
 import { ROUTES } from '@/constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
@@ -14,7 +14,7 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         {/* Public */}
-        <Route element={<PublicLayout />}>
+        <Route element={<MainLayout />}>
           <Route index element={<HomeRoute />} />
           <Route path={ROUTES.LOGIN} element={<LoginRoute />} />
         </Route>
@@ -25,7 +25,7 @@ export const AppRouter = () => {
           <Route path={ROUTES.RECIPES} element={<RecipesRoute />} />
         </Route>
 
-        {/* Headless */}
+        {/* Redirect only */}
         <Route element={<HeadlessLayout />}>
           <Route path="*" element={<NotFoundRoute />}></Route>
         </Route>

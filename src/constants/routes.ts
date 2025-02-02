@@ -1,5 +1,5 @@
 export const ROUTES = {
   LOGIN: '/login',
   USERS: '/users',
-  PRODUCTS: '/products',
+  RECIPES: '/recipes',
 } as const;
