@@ -8,7 +8,9 @@ export const useRecipesQuery = () => {
   const limit = useRecipesStore((state) => state.limit);
   const sortBy = useRecipesStore((state) => state.sortBy);
   const order = useRecipesStore((state) => state.order);
-  const setPaginationData = useRecipesStore((state) => state.setPaginationData);
+  const changeRecipesResults = useRecipesStore(
+    (state) => state.changeRecipesResults,
+  );
 
   // Prepare values
   const recipesParams = { skip, limit, sortBy, order };
@@ -21,7 +23,7 @@ export const useRecipesQuery = () => {
       const data = await getRecipes(recipesParams);
 
       // Set store
-      setPaginationData(data.total);
+      changeRecipesResults({ total: data.total });
 
       // Return data
       return data;
