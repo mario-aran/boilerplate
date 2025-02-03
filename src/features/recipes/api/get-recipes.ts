@@ -1,20 +1,12 @@
 import { VITE_API_URL } from '@/config/env';
-import { RecipeApiResponse, RecipesParams } from '@/features/recipes/types';
-
-// Types
-interface RecipesApiResponse {
-  recipes: RecipeApiResponse[];
-  total: number;
-  skip: number;
-  limit: number;
-}
+import { RecipesParams, RecipesResponse } from '@/features/recipes/types';
 
 export const getRecipes = async ({
   limit,
   skip,
   sortBy,
   order,
-}: RecipesParams): Promise<RecipesApiResponse> => {
+}: RecipesParams): Promise<RecipesResponse> => {
   // Prepare values
   const url = `${VITE_API_URL}/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
 
