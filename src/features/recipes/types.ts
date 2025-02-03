@@ -1,4 +1,5 @@
-export interface RecipeApiResponse {
+// Recipe API
+export interface RecipeResponse {
   id: number;
   name: string;
   ingredients: string[];
@@ -17,9 +18,17 @@ export interface RecipeApiResponse {
   mealType: string[];
 }
 
+// Recipes API
 export interface RecipesParams {
-  page: number;
   limit: number;
-  sortBy: keyof RecipeApiResponse;
+  skip: number;
+  sortBy: keyof RecipeResponse;
   order: 'asc' | 'desc';
+}
+
+export interface RecipesResponse {
+  recipes: RecipeResponse[];
+  total: number;
+  skip: number;
+  limit: number;
 }
