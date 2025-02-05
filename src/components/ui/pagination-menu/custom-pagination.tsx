@@ -17,12 +17,6 @@ export const CustomPagination = ({
   lastPage,
   changePage,
 }: CustomPaginationProps) => {
-  // Utils
-  const handlePageChange = (newPage: number) => () => {
-    if (newPage < FIRST_PAGE || newPage > lastPage) return; // Guard against invalid pages
-    changePage(newPage);
-  };
-
   return (
     <Pagination>
       <PaginationContent>
@@ -32,7 +26,7 @@ export const CustomPagination = ({
             disabled={page <= FIRST_PAGE}
             variant="ghost"
             size="icon"
-            onClick={handlePageChange(page - 1)}
+            onClick={() => changePage(page - 1)}
           >
             <ChevronLeft />
           </Button>
@@ -41,7 +35,7 @@ export const CustomPagination = ({
         {/* First */}
         {page > FIRST_PAGE && (
           <PaginationItem>
-            <PaginationLink onClick={handlePageChange(FIRST_PAGE)}>
+            <PaginationLink onClick={() => changePage(FIRST_PAGE)}>
               {FIRST_PAGE}
             </PaginationLink>
           </PaginationItem>
@@ -69,7 +63,7 @@ export const CustomPagination = ({
         {/* Last */}
         {page < lastPage && (
           <PaginationItem>
-            <PaginationLink onClick={handlePageChange(lastPage)}>
+            <PaginationLink onClick={() => changePage(lastPage)}>
               {lastPage}
             </PaginationLink>
           </PaginationItem>
@@ -81,7 +75,7 @@ export const CustomPagination = ({
             disabled={page >= lastPage}
             variant="ghost"
             size="icon"
-            onClick={handlePageChange(page + 1)}
+            onClick={() => changePage(page + 1)}
           >
             <ChevronRight />
           </Button>
