@@ -18,7 +18,7 @@ interface RecipeCardProps {
   image: string;
 }
 
-// UI Components
+// UI components
 const RecipeCardLayout = ({ children }: PropsWithChildren) => (
   <Card className="flex flex-col h-full w-80 items-center justify-center">
     {children}
@@ -59,7 +59,7 @@ const RecipeCard = ({ title, description, image }: RecipeCardProps) => (
   </RecipeCardLayout>
 );
 
-// Main Component
+// Main component
 export const RecipesCards = () => {
   const { data, isLoading } = useRecipesQuery();
   const recipes = data?.recipes ?? [];
