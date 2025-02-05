@@ -12,7 +12,6 @@ import { CustomSelectProps } from './types';
 const ITEMS_PER_PAGE_OPTIONS = [6, 9, 12];
 
 export const CustomSelect = ({ totalItems, page }: CustomSelectProps) => {
-  // Values
   const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
   const firstItem = (page - 1) * itemsPerPage + 1;
   const lastItem = Math.min(page * itemsPerPage, totalItems);
