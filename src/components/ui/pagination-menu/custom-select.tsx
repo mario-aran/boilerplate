@@ -14,20 +14,19 @@ export const CustomSelect = ({
   page,
 }: CustomSelectProps) => {
   // States
-  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[0] || 1);
+  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[0]);
 
-  // Values
+  // Message values
   const firstItem = (page - 1) * itemsPerPage + 1;
   const lastItem = Math.min(page * itemsPerPage, totalItems);
-
-  // Render conditions
-  const itemsMessage =
+  const message =
     totalItems > 0
       ? `Showing ${firstItem}-${lastItem} of ${totalItems} items`
       : 'No items available';
 
   return (
     <div className="flex items-center gap-4 text-sm">
+      {/* Selector */}
       <div className="flex items-center">
         <p className="whitespace-nowrap">Items per page:</p>
         <Select
@@ -47,7 +46,8 @@ export const CustomSelect = ({
         </Select>
       </div>
 
-      <p className="whitespace-nowrap">{itemsMessage}</p>
+      {/* Message */}
+      <p className="whitespace-nowrap">{message}</p>
     </div>
   );
 };
