@@ -3,6 +3,7 @@ import { CustomSelect } from './custom-select';
 import { PaginationMenuProps } from './types';
 
 export const PaginationMenu = ({
+  itemsPerPageOptions,
   totalItems,
   page,
   lastPage,
@@ -12,7 +13,11 @@ export const PaginationMenu = ({
 }: PaginationMenuProps) => {
   return (
     <div className="flex flex-wrap justify-around">
-      <CustomSelect page={page} totalItems={totalItems} />
+      <CustomSelect
+        itemsPerPageOptions={itemsPerPageOptions}
+        totalItems={totalItems}
+        page={page}
+      />
 
       <CustomPagination
         page={page}

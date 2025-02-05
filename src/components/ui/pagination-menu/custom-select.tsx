@@ -8,17 +8,18 @@ import {
 import { useState } from 'react';
 import { CustomSelectProps } from './types';
 
-// Constants
-const ITEMS_PER_PAGE_OPTIONS = [6, 9, 12];
-
-export const CustomSelect = ({ totalItems, page }: CustomSelectProps) => {
-  const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
+export const CustomSelect = ({
+  itemsPerPageOptions,
+  totalItems,
+  page,
+}: CustomSelectProps) => {
+  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[0]);
   const firstItem = (page - 1) * itemsPerPage + 1;
   const lastItem = Math.min(page * itemsPerPage, totalItems);
 
   // Render conditions
   const itemsMessage =
-    totalItems <= 0
+    totalItems < 1
       ? 'No items available'
       : `Showing ${firstItem}-${lastItem} of ${totalItems} items`;
 
@@ -38,7 +39,7 @@ export const CustomSelect = ({ totalItems, page }: CustomSelectProps) => {
             <SelectValue placeholder={itemsPerPage.toString()} />
           </SelectTrigger>
           <SelectContent>
-            {ITEMS_PER_PAGE_OPTIONS.map((option) => (
+            {itemsPerPageOptions.map((option) => (
               <SelectItem key={option} value={option.toString()}>
                 {option}
               </SelectItem>

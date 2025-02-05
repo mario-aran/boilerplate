@@ -7,6 +7,7 @@ export interface CustomPaginationProps {
 }
 
 export interface CustomSelectProps extends Pick<CustomPaginationProps, 'page'> {
+  itemsPerPageOptions: number[];
   totalItems: number;
 }
 
