@@ -1,19 +1,19 @@
 import { getRecipes } from '@/features/recipes/api';
 import { useRecipesStore } from '@/features/recipes/store';
 import { useQuery } from '@tanstack/react-query';
+import { useShallow } from 'zustand/react/shallow';
 
 export const useRecipesQuery = () => {
   // "zustand"
-  const skip = useRecipesStore((state) => state.skip);
-  const limit = useRecipesStore((state) => state.limit);
-  const sortBy = useRecipesStore((state) => state.sortBy);
-  const order = useRecipesStore((state) => state.order);
-  const changeRecipesResults = useRecipesStore(
-    (state) => state.changeRecipesResults,
+  const { changeRecipesResponse, ...recipesParams } = useRecipesStore(
+    useShallow((state) => ({
+      skip: state.skip,
+      limit: state.limit,
+      sortBy: state.sortBy,
+      order: state.order,
+      changeRecipesResponse: state.changeRecipesResponse,
+    })),
   );
-
-  // Prepare values
-  const recipesParams = { skip, limit, sortBy, order };
 
   // return "tanstack-query"
   return useQuery({
@@ -23,7 +23,7 @@ export const useRecipesQuery = () => {
       const data = await getRecipes(recipesParams);
 
       // Set store
-      changeRecipesResults({ total: data.total });
+      changeRecipesResponse({ total: data.total });
 
       // Return data
       return data;
