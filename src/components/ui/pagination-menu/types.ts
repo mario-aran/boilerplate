@@ -1,8 +1,6 @@
 export interface CustomPaginationProps {
   page: number;
   lastPage: number;
-  prevPage: number | null;
-  nextPage: number | null;
   changePage: (newPage: number) => void;
 }
 

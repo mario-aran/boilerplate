@@ -7,8 +7,6 @@ export const PaginationMenu = ({
   totalItems,
   page,
   lastPage,
-  prevPage,
-  nextPage,
   changePage,
 }: PaginationMenuProps) => {
   return (
@@ -22,8 +20,6 @@ export const PaginationMenu = ({
       <CustomPagination
         page={page}
         lastPage={lastPage}
-        prevPage={prevPage}
-        nextPage={nextPage}
         changePage={changePage}
       />
     </div>

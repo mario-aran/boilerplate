@@ -15,85 +15,78 @@ const FIRST_PAGE = 1;
 export const CustomPagination = ({
   page,
   lastPage,
-  prevPage,
-  nextPage,
   changePage,
 }: CustomPaginationProps) => {
-  // Render conditions
-  const showFirstPage = page !== FIRST_PAGE;
-  const showLastPage = page !== lastPage;
-  const showFirstEllipsis = page > 2;
-  const showLastEllipsis = page < lastPage - 1;
-
   // Utils
-  const handlePageChange = (newPage: number | null) => () => {
-    if (newPage === null) return; // Not null guard
-    if (newPage < FIRST_PAGE || newPage > lastPage) return; // Available pages guard
+  const handlePageChange = (newPage: number) => () => {
+    if (newPage < FIRST_PAGE || newPage > lastPage) return; // Guard against invalid pages
     changePage(newPage);
   };
 
   return (
-    <div>
-      <Pagination>
-        <PaginationContent>
-          {/* Previous page */}
+    <Pagination>
+      <PaginationContent>
+        {/* Previous */}
+        <PaginationItem>
+          <Button
+            disabled={page <= FIRST_PAGE}
+            variant="ghost"
+            size="icon"
+            onClick={handlePageChange(page - 1)}
+          >
+            <ChevronLeft />
+          </Button>
+        </PaginationItem>
+
+        {/* First */}
+        {page > FIRST_PAGE && (
           <PaginationItem>
-            <Button
-              disabled={!prevPage}
-              variant="ghost"
-              size="icon"
-              onClick={handlePageChange(prevPage)}
-            >
-              <ChevronLeft />
-            </Button>
+            <PaginationLink onClick={handlePageChange(FIRST_PAGE)}>
+              {FIRST_PAGE}
+            </PaginationLink>
           </PaginationItem>
+        )}
 
-          {showFirstPage && (
-            <PaginationItem>
-              <PaginationLink onClick={handlePageChange(FIRST_PAGE)}>
-                {FIRST_PAGE}
-              </PaginationLink>
-            </PaginationItem>
-          )}
-
-          {showFirstEllipsis && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
-
-          {/* Current page */}
+        {/* Ellipsis before current */}
+        {page > 2 && (
           <PaginationItem>
-            <PaginationLink isActive>{page}</PaginationLink>
+            <PaginationEllipsis />
           </PaginationItem>
+        )}
 
-          {showLastEllipsis && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
+        {/* Current */}
+        <PaginationItem>
+          <PaginationLink isActive>{page}</PaginationLink>
+        </PaginationItem>
 
-          {showLastPage && (
-            <PaginationItem>
-              <PaginationLink onClick={handlePageChange(lastPage)}>
-                {lastPage}
-              </PaginationLink>
-            </PaginationItem>
-          )}
-
-          {/* Next page */}
+        {/* Ellipsis after current */}
+        {page < lastPage - 1 && (
           <PaginationItem>
-            <Button
-              disabled={!nextPage}
-              variant="ghost"
-              size="icon"
-              onClick={handlePageChange(nextPage)}
-            >
-              <ChevronRight />
-            </Button>
+            <PaginationEllipsis />
           </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
+        )}
+
+        {/* Last */}
+        {page < lastPage && (
+          <PaginationItem>
+            <PaginationLink onClick={handlePageChange(lastPage)}>
+              {lastPage}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+
+        {/* Next */}
+        <PaginationItem>
+          <Button
+            disabled={page >= lastPage}
+            variant="ghost"
+            size="icon"
+            onClick={handlePageChange(page + 1)}
+          >
+            <ChevronRight />
+          </Button>
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 };

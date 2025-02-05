@@ -13,19 +13,18 @@ export const CustomSelect = ({
   totalItems,
   page,
 }: CustomSelectProps) => {
-  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[0]);
+  // States
+  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[0] || 1);
+
+  // Values
   const firstItem = (page - 1) * itemsPerPage + 1;
   const lastItem = Math.min(page * itemsPerPage, totalItems);
 
   // Render conditions
   const itemsMessage =
-    totalItems < 1
-      ? 'No items available'
-      : `Showing ${firstItem}-${lastItem} of ${totalItems} items`;
-
-  // Utils
-  const handleItemsPerPageChange = (value: string) =>
-    setItemsPerPage(Number(value));
+    totalItems > 0
+      ? `Showing ${firstItem}-${lastItem} of ${totalItems} items`
+      : 'No items available';
 
   return (
     <div className="flex items-center gap-4 text-sm">
@@ -33,7 +32,7 @@ export const CustomSelect = ({
         <p className="whitespace-nowrap">Items per page:</p>
         <Select
           value={itemsPerPage.toString()}
-          onValueChange={handleItemsPerPageChange}
+          onValueChange={(value) => setItemsPerPage(Number(value))}
         >
           <SelectTrigger className="w-[58px] border-none focus:ring-transparent">
             <SelectValue placeholder={itemsPerPage.toString()} />
