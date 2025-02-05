@@ -13,7 +13,6 @@ export const CustomSelect = ({
   totalItems,
   page,
 }: CustomSelectProps) => {
-  // States
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[0]);
 
   // Message values
