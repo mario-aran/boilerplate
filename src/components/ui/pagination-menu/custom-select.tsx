@@ -5,16 +5,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shadcn-ui/select';
-import { useState } from 'react';
 import { CustomSelectProps } from './types';
 
 export const CustomSelect = ({
   itemsPerPageOptions,
+  itemsPerPage,
   totalItems,
   page,
+  changeItemsPerPage,
 }: CustomSelectProps) => {
-  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[0]);
-
   // Message values
   const firstItem = (page - 1) * itemsPerPage + 1;
   const lastItem = Math.min(page * itemsPerPage, totalItems);
@@ -30,7 +29,7 @@ export const CustomSelect = ({
         <p className="whitespace-nowrap">Items per page:</p>
         <Select
           value={itemsPerPage.toString()}
-          onValueChange={(value) => setItemsPerPage(Number(value))}
+          onValueChange={(value) => changeItemsPerPage(Number(value))}
         >
           <SelectTrigger className="w-[58px] border-none focus:ring-transparent">
             <SelectValue placeholder={itemsPerPage.toString()} />

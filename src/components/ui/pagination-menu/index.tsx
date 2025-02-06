@@ -14,20 +14,15 @@ import { PaginationMenuProps } from './types';
 const FIRST_PAGE = 1;
 
 export const PaginationMenu = ({
-  itemsPerPageOptions,
-  totalItems,
   page,
   lastPage,
   changePage,
+  ...customSelectProps
 }: PaginationMenuProps) => {
   return (
     <div className="flex flex-wrap justify-around">
       {/* Selector */}
-      <CustomSelect
-        itemsPerPageOptions={itemsPerPageOptions}
-        totalItems={totalItems}
-        page={page}
-      />
+      <CustomSelect page={page} {...customSelectProps} />
 
       {/* Pagination */}
       <Pagination>
