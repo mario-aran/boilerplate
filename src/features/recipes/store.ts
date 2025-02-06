@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { RecipesParams } from './types';
 
 // Types
-
 interface RecipesStore extends Pick<RecipesParams, 'sortBy' | 'order'> {
   page: number;
   itemsPerPage: number;
@@ -21,7 +20,7 @@ export const useRecipesStore = create<RecipesStore>()((set) => ({
   // Params
   page: FIRST_PAGE,
   itemsPerPage: ITEMS_PER_PAGE_OPTIONS[0],
-  sortBy: 'id',
+  sortBy: 'name',
   order: 'asc',
 
   // Results
@@ -29,14 +28,11 @@ export const useRecipesStore = create<RecipesStore>()((set) => ({
   lastPage: FIRST_PAGE,
 
   // Actions
-  changePage: (page) =>
-    set((state) => {
-      if (page < FIRST_PAGE || page > state.lastPage) return {}; // Guard page should be in range
-      return { page };
-    }),
+  changePage: (page) => set({ page }),
 
   changeItemsPerPage: (itemsPerPage) =>
     set((state) => ({
+      page: FIRST_PAGE,
       itemsPerPage,
       lastPage: Math.max(
         Math.ceil(state.totalItems / itemsPerPage),
