@@ -19,13 +19,13 @@ export const CustomSelect = ({
   const lastItem = Math.min(page * itemsPerPage, totalItems);
   const message =
     totalItems > 0
-      ? `Showing ${firstItem}-${lastItem} of ${totalItems} items`
+      ? `${firstItem}-${lastItem} of ${totalItems} items`
       : 'No items available';
 
   return (
-    <div className="flex items-center gap-4 text-sm">
+    <div className="flex items-center text-sm">
       {/* Selector */}
-      <div className="flex items-center">
+      <div className="flex items-center gap-1">
         <p className="whitespace-nowrap">Items per page:</p>
         <Select
           value={itemsPerPage.toString()}

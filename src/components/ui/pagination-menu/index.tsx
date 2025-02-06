@@ -31,70 +31,72 @@ export const PaginationMenu = ({
       <CustomSelect page={page} {...customSelectProps} />
 
       {/* Pagination */}
-      <Pagination>
-        <PaginationContent>
-          {/* Previous */}
-          <PaginationItem>
-            <Button
-              disabled={page <= FIRST_PAGE}
-              variant="ghost"
-              size="icon"
-              onClick={() => changePage(page - 1)}
-            >
-              <ChevronLeft />
-            </Button>
-          </PaginationItem>
-
-          {/* First */}
-          {page > FIRST_PAGE && (
+      <div>
+        <Pagination>
+          <PaginationContent>
+            {/* Previous */}
             <PaginationItem>
-              <PaginationLink onClick={() => changePage(FIRST_PAGE)}>
-                {FIRST_PAGE}
-              </PaginationLink>
+              <Button
+                disabled={page <= FIRST_PAGE}
+                variant="ghost"
+                size="icon"
+                onClick={() => changePage(page - 1)}
+              >
+                <ChevronLeft />
+              </Button>
             </PaginationItem>
-          )}
 
-          {/* Ellipsis before current */}
-          {page > 2 && (
+            {/* First */}
+            {page > FIRST_PAGE && (
+              <PaginationItem>
+                <PaginationLink onClick={() => changePage(FIRST_PAGE)}>
+                  {FIRST_PAGE}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {/* Ellipsis before current */}
+            {page > 2 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            {/* Current */}
             <PaginationItem>
-              <PaginationEllipsis />
+              <PaginationLink isActive>{page}</PaginationLink>
             </PaginationItem>
-          )}
 
-          {/* Current */}
-          <PaginationItem>
-            <PaginationLink isActive>{page}</PaginationLink>
-          </PaginationItem>
+            {/* Ellipsis after current */}
+            {page < lastPage - 1 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
 
-          {/* Ellipsis after current */}
-          {page < lastPage - 1 && (
+            {/* Last */}
+            {page < lastPage && (
+              <PaginationItem>
+                <PaginationLink onClick={() => changePage(lastPage)}>
+                  {lastPage}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {/* Next */}
             <PaginationItem>
-              <PaginationEllipsis />
+              <Button
+                disabled={page >= lastPage}
+                variant="ghost"
+                size="icon"
+                onClick={() => changePage(page + 1)}
+              >
+                <ChevronRight />
+              </Button>
             </PaginationItem>
-          )}
-
-          {/* Last */}
-          {page < lastPage && (
-            <PaginationItem>
-              <PaginationLink onClick={() => changePage(lastPage)}>
-                {lastPage}
-              </PaginationLink>
-            </PaginationItem>
-          )}
-
-          {/* Next */}
-          <PaginationItem>
-            <Button
-              disabled={page >= lastPage}
-              variant="ghost"
-              size="icon"
-              onClick={() => changePage(page + 1)}
-            >
-              <ChevronRight />
-            </Button>
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </div>
   );
 };
