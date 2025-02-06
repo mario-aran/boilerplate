@@ -1,5 +1,13 @@
 import { VITE_API_URL } from '@/config/env';
-import { RecipesParams, RecipesResponse } from '@/features/recipes/types';
+import { RecipeResponse, RecipesParams } from '@/features/recipes/types';
+
+// Types
+interface RecipesResponse {
+  recipes: RecipeResponse[];
+  total: number;
+  skip: number;
+  limit: number;
+}
 
 export const getRecipes = async ({
   limit,

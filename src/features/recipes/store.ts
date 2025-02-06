@@ -1,52 +1,49 @@
-import { RecipesParams, RecipesResponse } from '@/features/recipes/types';
 import { create } from 'zustand';
+import { RecipesParams } from './types';
 
 // Types
-type RecipesResults = Partial<Pick<RecipesResponse, 'total'>>;
+type ItemsPerPage = (typeof ITEMS_PER_PAGE_OPTIONS)[number];
 
-type RecipesStore = RecipesParams & {
+interface RecipesStore extends Pick<RecipesParams, 'sortBy' | 'order'> {
   page: number;
+  itemsPerPage: ItemsPerPage;
   totalItems: number;
-  totalPages: number;
-  prevPage: number | null;
-  nextPage: number | null;
-  changeRecipesParams: (recipesParams: Partial<RecipesParams>) => void;
+  lastPage: number;
   changePage: (page: number) => void;
-  changeRecipesResults: (recipesResults: RecipesResults) => void;
-};
+  changeItemsPerPage: (itemsPerPage: ItemsPerPage) => void;
+  changeTotalItems: (totalItems: number) => void;
+}
 
 // Constants
-const INITIAL_TOTAL_ITEMS = 0;
-const INITIAL_TOTAL_PAGES = 1;
+const FIRST_PAGE = 1;
+export const ITEMS_PER_PAGE_OPTIONS = [6, 9, 12] as const;
 
 export const useRecipesStore = create<RecipesStore>()((set) => ({
   // Params
-  skip: 1,
-  limit: 6,
+  page: FIRST_PAGE,
+  itemsPerPage: ITEMS_PER_PAGE_OPTIONS[0],
   sortBy: 'id',
   order: 'asc',
 
-  // Values
-  page: 1,
-
   // Results
-  totalItems: INITIAL_TOTAL_ITEMS,
-  totalPages: INITIAL_TOTAL_PAGES,
-  prevPage: null,
-  nextPage: null,
+  totalItems: 0,
+  lastPage: FIRST_PAGE,
 
   // Actions
-  changeRecipesParams: (recipesParams) => set(recipesParams),
-  changePage: (page) => page > 0 && set({ page }),
-  changeRecipesResults: ({ total = INITIAL_TOTAL_ITEMS }) =>
+  changePage: (page) =>
     set((state) => {
-      const totalPages = Math.ceil(total / state.limit) || INITIAL_TOTAL_PAGES;
-
-      return {
-        totalItems: total,
-        totalPages,
-        prevPage: state.page > 1 ? state.page - 1 : null,
-        nextPage: state.page < totalPages ? state.page + 1 : null,
-      };
+      if (page < FIRST_PAGE || page > state.lastPage) return {}; // Guard against out bounds
+      return { page };
     }),
+
+  changeItemsPerPage: (itemsPerPage) => set({ itemsPerPage }),
+
+  changeTotalItems: (totalItems) =>
+    set((state) => ({
+      totalItems,
+      lastPage: Math.max(
+        Math.ceil(totalItems / state.itemsPerPage),
+        FIRST_PAGE,
+      ),
+    })),
 }));

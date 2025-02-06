@@ -25,10 +25,3 @@ export interface RecipesParams {
   sortBy: keyof RecipeResponse;
   order: 'asc' | 'desc';
 }
-
-export interface RecipesResponse {
-  recipes: RecipeResponse[];
-  total: number;
-  skip: number;
-  limit: number;
-}
