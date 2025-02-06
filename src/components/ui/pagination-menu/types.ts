@@ -5,8 +5,3 @@ export interface CustomSelectProps {
   page: number;
   changeItemsPerPage: (itemsPerPage: number) => void;
 }
-
-export interface PaginationMenuProps extends CustomSelectProps {
-  lastPage: number;
-  changePage: (newPage: number) => void;
-}

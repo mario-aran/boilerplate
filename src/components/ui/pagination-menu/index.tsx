@@ -8,7 +8,13 @@ import {
 } from '@/components/shadcn-ui/pagination';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CustomSelect } from './custom-select';
-import { PaginationMenuProps } from './types';
+import { CustomSelectProps } from './types';
+
+// Types
+interface PaginationMenuProps extends CustomSelectProps {
+  lastPage: number;
+  changePage: (newPage: number) => void;
+}
 
 // Constants
 const FIRST_PAGE = 1;
