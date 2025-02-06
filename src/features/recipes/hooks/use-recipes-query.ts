@@ -5,13 +5,13 @@ import { useShallow } from 'zustand/react/shallow';
 
 export const useRecipesQuery = () => {
   // "zustand"
-  const { changeRecipesResponse, ...recipesParams } = useRecipesStore(
+  const { changeRecipesTotalItems, ...recipesParams } = useRecipesStore(
     useShallow((state) => ({
       skip: state.skip,
       limit: state.limit,
       sortBy: state.sortBy,
       order: state.order,
-      changeRecipesResponse: state.changeRecipesResponse,
+      changeRecipesTotalItems: state.changeRecipesTotalItems,
     })),
   );
 
@@ -23,7 +23,7 @@ export const useRecipesQuery = () => {
       const data = await getRecipes(recipesParams);
 
       // Set store
-      changeRecipesResponse({ total: data.total });
+      changeRecipesTotalItems(data.total);
 
       // Return data
       return data;
