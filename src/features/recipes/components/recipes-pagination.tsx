@@ -9,9 +9,11 @@ export const RecipesPagination = () => {
   // "zustand"
   const paginationMenuProps = useRecipesStore(
     useShallow((state) => ({
+      itemsPerPage: state.itemsPerPage,
       totalItems: state.totalItems,
       page: state.page,
       lastPage: state.lastPage,
+      changeItemsPerPage: state.changeItemsPerPage,
       changePage: state.changePage,
     })),
   );
