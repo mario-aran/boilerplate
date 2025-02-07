@@ -1,11 +1,7 @@
-import { Navigate, Outlet } from 'react-router';
+import { Outlet } from 'react-router';
 import { AppBar } from './app-bar';
 
-const user = true;
-
-export const AuthLayout = () => {
-  if (!user) return <Navigate to="/" replace />;
-
+export const PublicLayout = () => {
   return (
     <>
       <AppBar />
