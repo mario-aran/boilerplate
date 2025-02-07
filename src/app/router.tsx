@@ -1,5 +1,5 @@
 import { AuthLayout } from '@/components/layouts/auth-layout';
-import { MainLayout } from '@/components/layouts/main-layout';
+import { PublicLayout } from '@/components/layouts/public-layout';
 import { ROUTES } from '@/constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
@@ -12,7 +12,7 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         {/* Public */}
-        <Route element={<MainLayout />}>
+        <Route element={<PublicLayout />}>
           <Route index element={<HomeRoute />} />
         </Route>
 
