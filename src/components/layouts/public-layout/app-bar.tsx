@@ -2,12 +2,12 @@ import { ModeToggle } from '@/components/controls/mode-toggle';
 import { ROUTES } from '@/constants/routes';
 import { NavLink } from 'react-router';
 
-// Initial values
-const navRoutes = [
+// Constants
+const NAV_ROUTES = [
   { path: '/', name: 'Home' },
   { path: ROUTES.USERS, name: 'Users' },
   { path: ROUTES.RECIPES, name: 'Recipes' },
-];
+] as const;
 
 export const AppBar = () => {
   return (
@@ -15,7 +15,7 @@ export const AppBar = () => {
       <div className="flex justify-between items-center">
         {/* Routes */}
         <nav className="space-x-2 text-sm">
-          {navRoutes.map(({ path, name }) => (
+          {NAV_ROUTES.map(({ path, name }) => (
             <NavLink
               key={name}
               to={path}
