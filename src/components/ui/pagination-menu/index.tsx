@@ -9,7 +9,7 @@ export const PaginationMenu = ({
   ...customSelectProps
 }: PaginationMenuProps) => {
   return (
-    <div className="flex flex-wrap justify-center space-x-10">
+    <div className="flex flex-wrap justify-center gap-x-10">
       <CustomSelect page={page} {...customSelectProps} />
 
       <div>
