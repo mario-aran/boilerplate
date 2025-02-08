@@ -1,4 +1,4 @@
-import { CustomPagination } from '@/components/ui/custom-pagination';
+import { CustomPagination } from './custom-pagination';
 import { CustomSelect } from './custom-select';
 import { PaginationMenuProps } from './types';
 

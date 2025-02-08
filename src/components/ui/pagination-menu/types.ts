@@ -6,7 +6,10 @@ export interface CustomSelectProps {
   changeItemsPerPage: (itemsPerPage: number) => void;
 }
 
-export interface PaginationMenuProps extends CustomSelectProps {
+export interface CustomPaginationProps {
+  page: number;
   lastPage: number;
   changePage: (newPage: number) => void;
 }
+
+export type PaginationMenuProps = CustomSelectProps & CustomPaginationProps;

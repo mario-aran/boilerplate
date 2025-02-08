@@ -7,13 +7,7 @@ import {
   PaginationLink,
 } from '@/components/shadcn-ui/pagination';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-// Types
-interface CustomPaginationProps {
-  page: number;
-  lastPage: number;
-  changePage: (newPage: number) => void;
-}
+import { CustomPaginationProps } from './types';
 
 // Constants
 const FIRST_PAGE = 1;
