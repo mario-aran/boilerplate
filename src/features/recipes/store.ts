@@ -2,21 +2,19 @@ import { create } from 'zustand';
 import { RecipesParams } from './types';
 
 // Types
-type ItemsPerPageOption = (typeof ITEMS_PER_PAGE_OPTIONS)[number];
-
 interface RecipesStore extends Pick<RecipesParams, 'sortBy' | 'order'> {
   page: number;
-  itemsPerPage: ItemsPerPageOption;
+  itemsPerPage: number;
   totalItems: number;
   lastPage: number;
   changePage: (page: number) => void;
-  changeItemsPerPage: (itemsPerPage: ItemsPerPageOption) => void;
+  changeItemsPerPage: (itemsPerPage: number) => void;
   changeTotalItems: (totalItems: number) => void;
 }
 
 // Constants
 const FIRST_PAGE = 1;
-export const ITEMS_PER_PAGE_OPTIONS = [6, 9, 12] as const;
+export const ITEMS_PER_PAGE_OPTIONS = [6, 9, 12];
 
 export const useRecipesStore = create<RecipesStore>()((set) => ({
   // Params
