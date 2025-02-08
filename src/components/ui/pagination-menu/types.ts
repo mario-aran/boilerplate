@@ -1,13 +1,12 @@
-export interface CustomSelectProps<T extends number[]> {
+export interface CustomSelectProps {
   page: number;
-  itemsPerPageOptions: T;
-  itemsPerPage: T[number];
+  itemsPerPageOptions: number[];
+  itemsPerPage: number;
   totalItems: number;
-  changeItemsPerPage: (itemsPerPage: T[number]) => void;
+  changeItemsPerPage: (itemsPerPage: number) => void;
 }
 
-export interface PaginationMenuProps<T extends number[]>
-  extends CustomSelectProps<T> {
+export interface PaginationMenuProps extends CustomSelectProps {
   lastPage: number;
   changePage: (newPage: number) => void;
 }

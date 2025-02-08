@@ -7,13 +7,13 @@ import {
 } from '@/components/shadcn-ui/select';
 import { CustomSelectProps } from './types';
 
-export const CustomSelect = <T extends number[]>({
+export const CustomSelect = ({
   page,
   itemsPerPageOptions,
   itemsPerPage,
   totalItems,
   changeItemsPerPage,
-}: CustomSelectProps<T>) => {
+}: CustomSelectProps) => {
   // Values
   const firstItem = (page - 1) * itemsPerPage + 1;
   const lastItem = Math.min(page * itemsPerPage, totalItems);

@@ -2,12 +2,12 @@ import { CustomPagination } from '@/components/ui/custom-pagination';
 import { CustomSelect } from './custom-select';
 import { PaginationMenuProps } from './types';
 
-export const PaginationMenu = <T extends number[]>({
+export const PaginationMenu = ({
   page,
   lastPage,
   changePage,
   ...customSelectProps
-}: PaginationMenuProps<T>) => {
+}: PaginationMenuProps) => {
   return (
     <div className="flex flex-wrap justify-center space-x-10">
       <CustomSelect page={page} {...customSelectProps} />
