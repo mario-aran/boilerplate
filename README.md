@@ -58,7 +58,6 @@ export default tseslint.config({
       eslint-plugin-react-hooks
       eslint-plugin-react-refresh
       eslint-plugin-check-file
-- [x] create editorconfig
 - [x] prettier + eslint-config-prettier
 - [x] setup envs
 - [x] setup server port in vite.config.ts
@@ -68,3 +67,13 @@ export default tseslint.config({
 - [x] tanstack-query + tanstack/eslint-plugin-query
 - [ ] react-hook-form + hookform/resolvers + zod
 - [ ] zustand
+
+### Configs
+
+- [x] .env
+- [x] .editorconfig
+- [x] .prettierrc.json
+
+### Code
+
+- [x] not-found.route

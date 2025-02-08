@@ -1,4 +1,3 @@
-import { AuthLayout } from '@/components/layouts/auth-layout';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import { ROUTES } from '@/constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -17,7 +16,7 @@ export const AppRouter = () => {
         </Route>
 
         {/* Private*/}
-        <Route element={<AuthLayout />}>
+        <Route element={<PublicLayout />}>
           <Route path={ROUTES.USERS} element={<UsersRoute />} />
           <Route path={ROUTES.RECIPES} element={<RecipesRoute />} />
         </Route>
