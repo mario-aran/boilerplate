@@ -1,4 +1,3 @@
-// Recipe API
 export interface RecipeResponse {
   id: number;
   name: string;
@@ -18,7 +17,6 @@ export interface RecipeResponse {
   mealType: string[];
 }
 
-// Recipes API
 export interface RecipesParams {
   limit: number;
   skip: number;
