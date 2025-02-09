@@ -7,7 +7,7 @@ export const PublicLayout = () => {
     <div className="flex min-h-screen flex-col">
       <AppBar />
 
-      <main className="container mx-auto flex-1 border-x p-6">
+      <main className="container mx-auto flex flex-1 flex-col border-x p-6">
         {/* Nested routes */}
         <Outlet />
       </main>
