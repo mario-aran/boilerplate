@@ -2,10 +2,10 @@ import { Recipes } from '@/features/recipes/components';
 
 export const RecipesRoute = () => {
   return (
-    <>
+    <div className="h-full">
       <h1 className="text-3xl font-semibold">Recipes</h1>
 
       <Recipes />
-    </>
+    </div>
   );
 };
