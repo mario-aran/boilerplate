@@ -12,12 +12,12 @@ import { useRecipesQuery } from '@/features/recipes/hooks';
 import { PropsWithChildren } from 'react';
 
 // UI components
-const RecipesCardsLayout = ({ children }: PropsWithChildren) => (
-  <div className="flex flex-wrap gap-8 justify-center">{children}</div>
+const CardsGrid = ({ children }: PropsWithChildren) => (
+  <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">{children}</div>
 );
 
-const CardLayout = ({ children }: PropsWithChildren) => (
-  <Card className="flex flex-col h-full w-80 items-center justify-center">
+const CardWrapper = ({ children }: PropsWithChildren) => (
+  <Card className="flex min-w-80 flex-col items-center text-center">
     {children}
   </Card>
 );
@@ -27,12 +27,16 @@ export const RecipesCards = () => {
   const { data, isLoading } = useRecipesQuery();
   const recipes = data?.recipes ?? [];
 
+  // No data
+  if (!isLoading && recipes.length === 0)
+    return <p className="text-center">No recipes found.</p>;
+
   // Skeleton
   if (isLoading)
     return (
-      <RecipesCardsLayout>
+      <CardsGrid>
         {Array.from({ length: 3 }).map((_, index) => (
-          <CardLayout key={index}>
+          <CardWrapper key={index}>
             <CardHeader>
               <Skeleton className="h-6 w-60" />
               <Skeleton className="h-4 w-40" />
@@ -43,40 +47,32 @@ export const RecipesCards = () => {
             <CardFooter>
               <Skeleton className="h-10 w-28" />
             </CardFooter>
-          </CardLayout>
+          </CardWrapper>
         ))}
-      </RecipesCardsLayout>
+      </CardsGrid>
     );
 
   // Cards
-  if (recipes.length > 0)
-    return (
-      <RecipesCardsLayout>
-        {recipes.map((recipe) => (
-          <CardLayout key={recipe.id}>
-            <CardHeader>
-              <CardTitle>{recipe.name}</CardTitle>
-              <CardDescription>{`${recipe.cookTimeMinutes} mins to cook.`}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <img
-                src={recipe.image}
-                alt={recipe.name}
-                className="w-40 h-40 rounded-md object-cover"
-              />
-            </CardContent>
-            <CardFooter>
-              <Button>View Recipe</Button>
-            </CardFooter>
-          </CardLayout>
-        ))}
-      </RecipesCardsLayout>
-    );
-
-  // No recipes
   return (
-    <RecipesCardsLayout>
-      <p>No recipes found.</p>
-    </RecipesCardsLayout>
+    <CardsGrid>
+      {recipes.map((recipe) => (
+        <CardWrapper key={recipe.id}>
+          <CardHeader>
+            <CardTitle>{recipe.name}</CardTitle>
+            <CardDescription>{`${recipe.cookTimeMinutes} mins to cook.`}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <img
+              src={recipe.image}
+              alt={recipe.name}
+              className="h-40 w-40 rounded-md object-cover"
+            />
+          </CardContent>
+          <CardFooter>
+            <Button>View Recipe</Button>
+          </CardFooter>
+        </CardWrapper>
+      ))}
+    </CardsGrid>
   );
 };
