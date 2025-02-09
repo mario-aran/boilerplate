@@ -5,7 +5,6 @@ import { NavLink } from 'react-router';
 // Constants
 const NAV_ROUTES = [
   { path: '/', name: 'Home' },
-  { path: ROUTES.USERS, name: 'Users' },
   { path: ROUTES.RECIPES, name: 'Recipes' },
 ] as const;
 

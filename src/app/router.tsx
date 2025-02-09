@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
 import { NotFoundRoute } from './routes/not-found.route';
 import { RecipesRoute } from './routes/recipes.route';
-import { UsersRoute } from './routes/users.route';
 
 export const AppRouter = () => {
   return (
@@ -13,11 +12,6 @@ export const AppRouter = () => {
         {/* Public */}
         <Route element={<PublicLayout />}>
           <Route index element={<HomeRoute />} />
-        </Route>
-
-        {/* Private*/}
-        <Route element={<PublicLayout />}>
-          <Route path={ROUTES.USERS} element={<UsersRoute />} />
           <Route path={ROUTES.RECIPES} element={<RecipesRoute />} />
         </Route>
 
