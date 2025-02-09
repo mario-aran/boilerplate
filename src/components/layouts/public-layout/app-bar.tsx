@@ -11,10 +11,10 @@ const NAV_ROUTES = [
 
 export const AppBar = () => {
   return (
-    <header className="sticky top-0 z-50 px-4 py-2 border border-b backdrop-blur-md">
-      <div className="flex justify-between items-center">
+    <header className="sticky top-0 z-50 border border-b px-4 py-2 text-sm backdrop-blur-md">
+      <div className="flex items-center justify-between">
         {/* Routes */}
-        <nav className="space-x-2 text-sm">
+        <nav className="space-x-2">
           {NAV_ROUTES.map(({ path, name }) => (
             <NavLink
               key={name}
