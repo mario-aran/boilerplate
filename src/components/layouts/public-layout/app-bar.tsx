@@ -11,8 +11,8 @@ const NAV_ROUTES = [
 
 export const AppBar = () => {
   return (
-    <header className="sticky top-0 z-50 border border-b px-4 py-2 text-sm backdrop-blur-md">
-      <div className="flex items-center justify-between">
+    <header className="sticky top-0 z-50 border-b backdrop-blur-md">
+      <div className="container mx-auto flex items-center justify-between border-x px-4 py-2 text-sm">
         {/* Routes */}
         <nav className="space-x-2">
           {NAV_ROUTES.map(({ path, name }) => (
