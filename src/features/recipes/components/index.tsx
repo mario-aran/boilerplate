@@ -3,9 +3,12 @@ import { RecipesPagination } from './recipes-pagination';
 
 export const Recipes = () => {
   return (
-    <div className="flex flex-col justify-center space-y-4">
+    <div>
       <RecipesPagination />
-      <RecipesCards />
+
+      <div className="mt-4">
+        <RecipesCards />
+      </div>
     </div>
   );
 };
