@@ -8,12 +8,12 @@ const NAV_ROUTES = [
   { path: ROUTES.RECIPES, name: 'Recipes' },
 ] as const;
 
-export const AppBar = () => {
+export const BaseHeader = () => {
   return (
     <header className="sticky top-0 z-50 border-b backdrop-blur-md">
-      <div className="container mx-auto flex items-center justify-between border-x px-4 py-2 text-sm">
+      <div className="container mx-auto flex items-center justify-between border-x px-4 py-2">
         {/* Routes */}
-        <nav className="space-x-2">
+        <nav className="flex items-center gap-4 text-sm xl:gap-6">
           {NAV_ROUTES.map(({ path, name }) => (
             <NavLink
               key={name}
