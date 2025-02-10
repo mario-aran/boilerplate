@@ -4,15 +4,11 @@ import { Link } from 'react-router';
 
 export const NotFoundRoute = () => {
   return (
-    <main className="flex min-h-screen items-center justify-center px-4 text-center">
-      <div className="max-w-md space-y-6">
-        <h1 className="text-4xl font-semibold tracking-tighter sm:text-5xl md:text-6xl">
-          404
-        </h1>
+    <div className="flex h-full items-center justify-center">
+      <div className="w-full max-w-xs space-y-4 text-center">
+        <h1 className="text-4xl font-semibold">404</h1>
 
-        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
-          Page Not Found
-        </h2>
+        <h2 className="text-xl font-semibold">Page Not Found</h2>
 
         <p className="text-muted-foreground">
           Oops! The page you're looking for doesn't exist.
@@ -25,6 +21,6 @@ export const NotFoundRoute = () => {
           </Link>
         </Button>
       </div>
-    </main>
+    </div>
   );
 };
