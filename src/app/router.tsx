@@ -19,8 +19,6 @@ export const AppRouter = () => {
           <Route index element={<HomeRoute />} />
           <Route path={ROUTES.RECIPES} element={<RecipesRoute />} />
         </Route>
-
-        {/* Private */}
       </Routes>
     </BrowserRouter>
   );
