@@ -8,7 +8,7 @@ const NAV_ROUTES = [
   { path: ROUTES.RECIPES, name: 'Recipes' },
 ] as const;
 
-export const BaseHeader = () => {
+export const Header = () => {
   return (
     <header className="sticky top-0 z-50 border-b backdrop-blur-md">
       <div className="container mx-auto flex items-center justify-between border-x px-4 py-2">
