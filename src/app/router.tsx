@@ -1,4 +1,5 @@
-import { PublicLayout } from '@/components/layouts/public-layout';
+import { EmptyLayout } from '@/components/layouts/empty-layout';
+import { MainLayout } from '@/components/layouts/main-layout';
 import { ROUTES } from '@/constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
@@ -10,13 +11,16 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         {/* Public */}
-        <Route element={<PublicLayout />}>
+        <Route element={<EmptyLayout />}>
+          <Route path="*" element={<NotFoundRoute />} />
+        </Route>
+
+        <Route element={<MainLayout />}>
           <Route index element={<HomeRoute />} />
           <Route path={ROUTES.RECIPES} element={<RecipesRoute />} />
         </Route>
 
-        {/* No match */}
-        <Route path="*" element={<NotFoundRoute />} />
+        {/* Private */}
       </Routes>
     </BrowserRouter>
   );

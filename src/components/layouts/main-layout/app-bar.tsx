@@ -20,7 +20,7 @@ export const AppBar = () => {
               to={path}
               className={({ isActive }) => {
                 const activeClass = isActive
-                  ? 'text-foreground'
+                  ? 'font-semibold text-foreground'
                   : 'text-foreground/80';
                 return `transition-colors hover:text-foreground/80 ${activeClass}`;
               }}

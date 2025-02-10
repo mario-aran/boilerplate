@@ -2,7 +2,7 @@ import { Outlet } from 'react-router';
 import { AppBar } from './app-bar';
 import { Footer } from './footer';
 
-export const PublicLayout = () => {
+export const MainLayout = () => {
   return (
     <div className="flex h-screen flex-col">
       <AppBar />
