@@ -11,12 +11,14 @@ import { Skeleton } from '@/components/shadcn-ui/skeleton';
 import { useRecipesQuery } from '@/features/recipes/hooks';
 import { PropsWithChildren } from 'react';
 
-// UI components
+// Internal components
 const CardsGrid = ({ children }: PropsWithChildren) => (
-  <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">{children}</div>
+  <div className="grid gap-x-16 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
+    {children}
+  </div>
 );
 
-const CardWrapper = ({ children }: PropsWithChildren) => (
+const CustomCard = ({ children }: PropsWithChildren) => (
   <Card className="flex min-w-80 flex-col items-center text-center">
     {children}
   </Card>
@@ -27,16 +29,16 @@ export const RecipesCards = () => {
   const { data, isLoading } = useRecipesQuery();
   const recipes = data?.recipes ?? [];
 
-  // No data
+  // Render no data
   if (!isLoading && recipes.length === 0)
     return <p className="text-center">No recipes found.</p>;
 
-  // Skeleton
+  // Render skeleton
   if (isLoading)
     return (
       <CardsGrid>
         {Array.from({ length: 3 }).map((_, index) => (
-          <CardWrapper key={index}>
+          <CustomCard key={index}>
             <CardHeader>
               <Skeleton className="h-6 w-60" />
               <Skeleton className="h-4 w-40" />
@@ -47,16 +49,16 @@ export const RecipesCards = () => {
             <CardFooter>
               <Skeleton className="h-10 w-28" />
             </CardFooter>
-          </CardWrapper>
+          </CustomCard>
         ))}
       </CardsGrid>
     );
 
-  // Cards
+  // Render cards
   return (
     <CardsGrid>
       {recipes.map((recipe) => (
-        <CardWrapper key={recipe.id}>
+        <CustomCard key={recipe.id}>
           <CardHeader>
             <CardTitle>{recipe.name}</CardTitle>
             <CardDescription>{`${recipe.cookTimeMinutes} mins to cook.`}</CardDescription>
@@ -71,7 +73,7 @@ export const RecipesCards = () => {
           <CardFooter>
             <Button>View Recipe</Button>
           </CardFooter>
-        </CardWrapper>
+        </CustomCard>
       ))}
     </CardsGrid>
   );
