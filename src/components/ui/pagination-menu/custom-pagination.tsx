@@ -34,13 +34,13 @@ export const CustomPagination = ({
       <PaginationContent>
         <PaginationItem>
           <Button
+            aria-label="Previous"
             disabled={!showFirstPage}
             variant="ghost"
             size="icon"
             onClick={() => changePage(prevPage)}
           >
             <ChevronLeft />
-            <span className="sr-only">Previous</span>
           </Button>
         </PaginationItem>
 
@@ -94,13 +94,13 @@ export const CustomPagination = ({
 
         <PaginationItem>
           <Button
+            aria-label="Next"
             disabled={!showLastPage}
             variant="ghost"
             size="icon"
             onClick={() => changePage(nextPage)}
           >
             <ChevronRight />
-            <span className="sr-only">Next</span>
           </Button>
         </PaginationItem>
       </PaginationContent>
