@@ -1,5 +1,6 @@
 import { ModeToggle } from '@/components/controls/mode-toggle';
 import { ROUTES } from '@/constants/routes';
+import { cn } from '@/lib/shadcn/utils';
 import { NavLink } from 'react-router';
 
 // Constants
@@ -18,12 +19,12 @@ export const Header = () => {
             <NavLink
               key={name}
               to={path}
-              className={({ isActive }) => {
-                const activeClass = isActive
-                  ? 'font-semibold text-foreground'
-                  : 'text-foreground/80';
-                return `transition-colors hover:text-foreground/80 ${activeClass}`;
-              }}
+              className={({ isActive }) =>
+                cn(
+                  'text-foreground/80 transition-colors hover:text-foreground/80',
+                  isActive && 'font-semibold text-foreground',
+                )
+              }
             >
               {name}
             </NavLink>
