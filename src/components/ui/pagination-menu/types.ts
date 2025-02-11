@@ -6,8 +6,7 @@ export interface CustomSelectProps {
   changeItemsPerPage: (itemsPerPage: number) => void;
 }
 
-export interface CustomPaginationProps {
-  page: number;
+export interface CustomPaginationProps extends Pick<CustomSelectProps, 'page'> {
   lastPage: number;
   changePage: (newPage: number) => void;
 }

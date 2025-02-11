@@ -9,16 +9,14 @@ export const PaginationMenu = ({
   ...customSelectProps
 }: PaginationMenuProps) => {
   return (
-    <div className="flex flex-wrap justify-center gap-x-10">
+    <div className="flex flex-wrap items-center justify-center gap-x-10">
       <CustomSelect page={page} {...customSelectProps} />
 
-      <div>
-        <CustomPagination
-          page={page}
-          lastPage={lastPage}
-          changePage={changePage}
-        />
-      </div>
+      <CustomPagination
+        page={page}
+        lastPage={lastPage}
+        changePage={changePage}
+      />
     </div>
   );
 };

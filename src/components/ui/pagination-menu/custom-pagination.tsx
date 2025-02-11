@@ -30,80 +30,82 @@ export const CustomPagination = ({
   const showLastEllipsis = page < lastPage - 2;
 
   return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <Button
-            aria-label="Previous"
-            disabled={!showFirstPage}
-            variant="ghost"
-            size="icon"
-            onClick={() => changePage(prevPage)}
-          >
-            <ChevronLeft />
-          </Button>
-        </PaginationItem>
-
-        {showFirstPage && (
+    <div>
+      <Pagination>
+        <PaginationContent>
           <PaginationItem>
-            <PaginationLink onClick={() => changePage(FIRST_PAGE)}>
-              {FIRST_PAGE}
-            </PaginationLink>
+            <Button
+              aria-label="Previous"
+              disabled={!showFirstPage}
+              variant="ghost"
+              size="icon"
+              onClick={() => changePage(prevPage)}
+            >
+              <ChevronLeft />
+            </Button>
           </PaginationItem>
-        )}
 
-        {showFirstEllipsis && (
+          {showFirstPage && (
+            <PaginationItem>
+              <PaginationLink onClick={() => changePage(FIRST_PAGE)}>
+                {FIRST_PAGE}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+
+          {showFirstEllipsis && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+
+          {showPageBeforeCurrent && (
+            <PaginationItem>
+              <PaginationLink onClick={() => changePage(prevPage)}>
+                {prevPage}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+
           <PaginationItem>
-            <PaginationEllipsis />
+            <PaginationLink isActive>{page}</PaginationLink>
           </PaginationItem>
-        )}
 
-        {showPageBeforeCurrent && (
+          {showPageAfterCurrent && (
+            <PaginationItem>
+              <PaginationLink onClick={() => changePage(nextPage)}>
+                {nextPage}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+
+          {showLastEllipsis && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+
+          {showLastPage && (
+            <PaginationItem>
+              <PaginationLink onClick={() => changePage(lastPage)}>
+                {lastPage}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+
           <PaginationItem>
-            <PaginationLink onClick={() => changePage(prevPage)}>
-              {prevPage}
-            </PaginationLink>
+            <Button
+              aria-label="Next"
+              disabled={!showLastPage}
+              variant="ghost"
+              size="icon"
+              onClick={() => changePage(nextPage)}
+            >
+              <ChevronRight />
+            </Button>
           </PaginationItem>
-        )}
-
-        <PaginationItem>
-          <PaginationLink isActive>{page}</PaginationLink>
-        </PaginationItem>
-
-        {showPageAfterCurrent && (
-          <PaginationItem>
-            <PaginationLink onClick={() => changePage(nextPage)}>
-              {nextPage}
-            </PaginationLink>
-          </PaginationItem>
-        )}
-
-        {showLastEllipsis && (
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-        )}
-
-        {showLastPage && (
-          <PaginationItem>
-            <PaginationLink onClick={() => changePage(lastPage)}>
-              {lastPage}
-            </PaginationLink>
-          </PaginationItem>
-        )}
-
-        <PaginationItem>
-          <Button
-            aria-label="Next"
-            disabled={!showLastPage}
-            variant="ghost"
-            size="icon"
-            onClick={() => changePage(nextPage)}
-          >
-            <ChevronRight />
-          </Button>
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+        </PaginationContent>
+      </Pagination>
+    </div>
   );
 };

@@ -23,7 +23,7 @@ export const CustomSelect = ({
       : `${firstItem}-${lastItem} of ${totalItems} items`;
 
   return (
-    <div className="flex items-center text-sm">
+    <div className="flex items-center justify-center text-sm">
       {/* Items selector */}
       <div className="flex items-center gap-0.5">
         <p>Items per page:</p>
