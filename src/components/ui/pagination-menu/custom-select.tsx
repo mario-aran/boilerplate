@@ -14,39 +14,38 @@ export const CustomSelect = ({
   totalItems,
   changeItemsPerPage,
 }: CustomSelectProps) => {
-  // Values
+  // Items summary values
   const firstItem = (page - 1) * itemsPerPage + 1;
   const lastItem = Math.min(page * itemsPerPage, totalItems);
-  const message =
-    totalItems > 0
-      ? `${firstItem}-${lastItem} of ${totalItems} items`
-      : 'No items available';
+  const itemsSummary =
+    totalItems === 0
+      ? 'No items available'
+      : `${firstItem}-${lastItem} of ${totalItems} items`;
 
   return (
     <div className="flex items-center text-sm">
-      <div className="flex items-center gap-1">
-        <p className="whitespace-nowrap">Items per page:</p>
+      {/* Items selector */}
+      <div className="flex items-center gap-0.5">
+        <p>Items per page:</p>
         <Select
-          value={itemsPerPage.toString()}
+          value={String(itemsPerPage)}
           onValueChange={(value) => changeItemsPerPage(Number(value))}
         >
           <SelectTrigger className="w-[58px] border-none focus:ring-transparent">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {itemsPerPageOptions.map((option) => {
-              const strOption = option.toString();
-              return (
-                <SelectItem key={strOption} value={strOption}>
-                  {strOption}
-                </SelectItem>
-              );
-            })}
+            {itemsPerPageOptions.map((option) => (
+              <SelectItem key={option} value={String(option)}>
+                {option}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
 
-      <p className="whitespace-nowrap">{message}</p>
+      {/* Items summary */}
+      <p>{itemsSummary}</p>
     </div>
   );
 };
