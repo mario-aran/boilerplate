@@ -40,6 +40,7 @@ export const CustomPagination = ({
             onClick={() => changePage(prevPage)}
           >
             <ChevronLeft />
+            <span className="sr-only">Previous</span>
           </Button>
         </PaginationItem>
 
@@ -99,6 +100,7 @@ export const CustomPagination = ({
             onClick={() => changePage(nextPage)}
           >
             <ChevronRight />
+            <span className="sr-only">Next</span>
           </Button>
         </PaginationItem>
       </PaginationContent>
