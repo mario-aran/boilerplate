@@ -12,6 +12,7 @@ const THEMES = {
 export const ModeToggle = () => {
   const { theme, setTheme } = useTheme();
 
+  // Utils
   const handleModeChange = () => {
     const isColorDark =
       theme === THEMES.DARK ||
