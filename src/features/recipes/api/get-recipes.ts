@@ -15,10 +15,8 @@ export const getRecipes = async ({
   sortBy,
   order,
 }: RecipesParams): Promise<RecipesResponse> => {
-  // Prepare values
   const url = `${VITE_API_URL}/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
 
-  // Fetch data
   const response = await fetch(url);
   return response.json();
 };

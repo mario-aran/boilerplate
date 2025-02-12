@@ -1,4 +1,4 @@
-import { PaginationMenu } from '@/components/ui/pagination-menu';
+import { PaginationWithPageSize } from '@/components/ui/pagination-with-page-size';
 import {
   ITEMS_PER_PAGE_OPTIONS,
   useRecipesStore,
@@ -19,7 +19,7 @@ export const RecipesPagination = () => {
   );
 
   return (
-    <PaginationMenu
+    <PaginationWithPageSize
       itemsPerPageOptions={ITEMS_PER_PAGE_OPTIONS}
       {...paginationMenuProps}
     />

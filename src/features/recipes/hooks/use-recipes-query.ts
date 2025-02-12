@@ -19,13 +19,10 @@ export const useRecipesQuery = () => {
   return useQuery({
     queryKey: ['recipes', recipesParams],
     queryFn: async () => {
-      // Fetch data
       const data = await getRecipes(recipesParams);
 
-      // Set store
       changeTotalItems(data.total);
 
-      // Return data
       return data;
     },
   });
