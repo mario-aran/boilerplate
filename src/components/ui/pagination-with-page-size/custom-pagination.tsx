@@ -17,7 +17,6 @@ export const CustomPagination = ({
   lastPage,
   changePage,
 }: CustomPaginationProps) => {
-  // Values
   const prevPage = page - 1;
   const nextPage = page + 1;
 

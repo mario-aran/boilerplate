@@ -5,26 +5,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shadcn-ui/select';
-import { CustomSelectProps } from './types';
+import { PageSizeSelectorProps } from './types';
 
-export const CustomSelect = ({
+export const PageSizeSelector = ({
   page,
   itemsPerPageOptions,
   itemsPerPage,
   totalItems,
   changeItemsPerPage,
-}: CustomSelectProps) => {
-  // Items summary values
-  const firstItem = (page - 1) * itemsPerPage + 1;
-  const lastItem = Math.min(page * itemsPerPage, totalItems);
-  const itemsSummary =
-    totalItems === 0
-      ? 'No items available'
-      : `${firstItem}-${lastItem} of ${totalItems} items`;
+}: PageSizeSelectorProps) => {
+  // Utils
+  const getItemsSummary = () => {
+    if (totalItems === 0) return 'No items available';
+
+    const firstItem = (page - 1) * itemsPerPage + 1;
+    const lastItem = Math.min(page * itemsPerPage, totalItems);
+    return `${firstItem}-${lastItem} of ${totalItems} items`;
+  };
 
   return (
     <div className="flex items-center justify-center text-sm">
-      {/* Items selector */}
+      {/* Page size selector */}
       <div className="flex items-center gap-0.5">
         <p>Items per page:</p>
         <Select
@@ -45,7 +46,7 @@ export const CustomSelect = ({
       </div>
 
       {/* Items summary */}
-      <p>{itemsSummary}</p>
+      <p>{getItemsSummary()}</p>
     </div>
   );
 };
