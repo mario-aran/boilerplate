@@ -8,7 +8,6 @@ export const DefaultLayout = () => {
       <Header />
 
       <main className="container mx-auto flex flex-1 flex-col border-x p-6">
-        {/* "react-router" */}
         <Outlet />
       </main>
 
