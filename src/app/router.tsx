@@ -10,7 +10,6 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
         <Route element={<EmptyLayout />}>
           <Route path="*" element={<NotFoundRoute />} />
         </Route>
