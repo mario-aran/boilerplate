@@ -9,20 +9,17 @@ const THEMES = {
   SYSTEM: 'system',
 } as const;
 
-// Utils
-const isSystemDark = () =>
-  window.matchMedia('(prefers-color-scheme: dark)').matches;
-
 export const ModeToggle = () => {
   const { theme, setTheme } = useTheme();
 
   const handleModeChange = () => {
-    // Get current color theme
-    const isDark =
-      theme === THEMES.DARK || (theme === THEMES.SYSTEM && isSystemDark());
+    const isColorDark =
+      theme === THEMES.DARK ||
+      (theme === THEMES.SYSTEM &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-    // Set new color theme
-    setTheme(isDark ? THEMES.LIGHT : THEMES.DARK);
+    const newTheme = isColorDark ? THEMES.LIGHT : THEMES.DARK;
+    setTheme(newTheme);
   };
 
   return (
