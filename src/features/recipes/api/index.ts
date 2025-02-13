@@ -1,2 +1,2 @@
-export * from './get-recipe';
-export * from './get-recipes';
+export * from './use-recipe-query';
+export * from './use-recipes-query';
