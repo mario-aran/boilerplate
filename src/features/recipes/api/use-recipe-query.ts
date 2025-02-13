@@ -11,6 +11,7 @@ const getRecipe = async (recipeId: string): Promise<RecipeResponse> => {
 };
 
 export const useRecipeQuery = (recipeId: string) => {
+  // "tanstack-query"
   return useQuery({
     queryKey: ['recipe', recipeId],
     queryFn: () => getRecipe(recipeId),

@@ -37,7 +37,7 @@ export const useRecipesQuery = () => {
     })),
   );
 
-  // return "tanstack-query"
+  // "tanstack-query"
   return useQuery({
     queryKey: ['recipes', recipesParams],
     queryFn: async () => {
