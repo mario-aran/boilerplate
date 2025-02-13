@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 export const NotFoundRoute = () => {
   return (
-    <div className="flex flex-1 items-center justify-center">
+    <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-6">
       <div className="w-full max-w-xs space-y-4 text-center">
         <h1 className="text-4xl font-semibold">404</h1>
 
@@ -21,6 +21,6 @@ export const NotFoundRoute = () => {
           </Link>
         </Button>
       </div>
-    </div>
+    </main>
   );
 };

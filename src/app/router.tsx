@@ -1,9 +1,7 @@
 import { DefaultLayout } from '@/components/layouts/default-layout';
-import { EmptyLayout } from '@/components/layouts/empty-layout';
 import { ROUTES } from '@/constants/routes';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { HomeRoute } from './routes/home.route';
-import { LoginRoute } from './routes/login.route';
 import { NotFoundRoute } from './routes/not-found.route';
 import { RecipesRoute } from './routes/recipes.route';
 
@@ -11,10 +9,7 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<EmptyLayout />}>
-          <Route path="*" element={<NotFoundRoute />} />
-          <Route path={ROUTES.LOGIN} element={<LoginRoute />} />
-        </Route>
+        <Route path="*" element={<NotFoundRoute />} />
 
         <Route element={<DefaultLayout />}>
           <Route index element={<HomeRoute />} />
