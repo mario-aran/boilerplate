@@ -10,7 +10,7 @@ import tseslint from 'typescript-eslint';
 // tseslint.config allows types in this file
 export default tseslint.config(
   // Ignores
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'src/components/shadcn-ui'] },
 
   // Config
   {
