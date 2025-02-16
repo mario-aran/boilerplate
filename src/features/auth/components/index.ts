@@ -1,2 +1,2 @@
-export * from './login-form';
-export * from './register-form';
+export * from './login-dialog';
+export * from './register-dialog';
