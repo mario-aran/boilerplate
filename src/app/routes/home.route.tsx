@@ -1,4 +1,4 @@
-import { LoginDialog, RegisterDialog } from '@/features/auth/components';
+import { AuthOptions } from '@/features/auth/components';
 import { PropsWithChildren } from 'react';
 
 // Internal components
@@ -18,11 +18,7 @@ export const HomeRoute = () => {
       </CenteredSection>
 
       <CenteredSection>
-        <div className="w-full max-w-md space-y-4 p-6 text-center">
-          <span className="text-2xl font-medium">Join today.</span>
-          <RegisterDialog />
-          <LoginDialog />
-        </div>
+        <AuthOptions />
       </CenteredSection>
     </div>
   );
