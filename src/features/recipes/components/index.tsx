@@ -1,7 +1,7 @@
 import { RecipesCards } from './recipes-cards';
 import { RecipesPagination } from './recipes-pagination';
 
-export const Recipes = () => {
+export const RecipesList = () => {
   return (
     <div>
       <RecipesPagination />
