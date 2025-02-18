@@ -1,12 +1,15 @@
 import { VITE_API_URL } from '@/config/env';
 import { useRecipesStore } from '@/features/recipes/store';
-import { RecipeApiResponse, RecipesApiParams } from '@/features/recipes/types';
+import {
+  GetAllRecipesApiParams,
+  GetRecipeApiResponse,
+} from '@/features/recipes/types';
 import { useQuery } from '@tanstack/react-query';
 import { useShallow } from 'zustand/react/shallow';
 
 // Types
-interface RecipesApiResponse {
-  recipes: RecipeApiResponse[];
+interface GetAllRecipesApiResponse {
+  recipes: GetRecipeApiResponse[];
   total: number;
   skip: number;
   limit: number;
@@ -18,10 +21,10 @@ const getAllRecipesApi = async ({
   skip,
   sortBy,
   order,
-}: RecipesApiParams): Promise<RecipesApiResponse> => {
-  const url = `${VITE_API_URL}/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
+}: GetAllRecipesApiParams): Promise<GetAllRecipesApiResponse> => {
+  const apiUrl = `${VITE_API_URL}/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
 
-  const response = await fetch(url);
+  const response = await fetch(apiUrl);
   return response.json();
 };
 
