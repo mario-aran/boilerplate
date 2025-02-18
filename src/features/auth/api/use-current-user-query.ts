@@ -21,7 +21,7 @@ const getCurrentAuthUserApi = async (
 export const useCurrentUserQuery = (accessToken: string) => {
   // "tanstack-query"
   return useQuery({
-    queryKey: ['current-auth-user', accessToken],
+    queryKey: ['current-user', accessToken],
     queryFn: () => getCurrentAuthUserApi(accessToken),
   });
 };
