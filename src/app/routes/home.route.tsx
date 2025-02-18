@@ -10,6 +10,7 @@ const CenteredSection = ({ children }: PropsWithChildren) => {
   );
 };
 
+// Exported component
 export const HomeRoute = () => {
   return (
     <div className="flex flex-1 flex-col md:flex-row">
