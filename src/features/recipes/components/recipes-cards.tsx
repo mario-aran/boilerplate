@@ -24,8 +24,9 @@ const CustomCard = ({ children }: PropsWithChildren) => (
   </Card>
 );
 
-// Main component
+// Exported component
 export const RecipesCards = () => {
+  // "tanstack-query"
   const { data, isLoading } = useRecipesQuery();
   const recipes = data?.recipes ?? [];
 
