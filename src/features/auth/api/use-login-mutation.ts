@@ -32,7 +32,5 @@ const loginApi = async ({
 
 export const useLoginMutation = () => {
   // "tanstack-query"
-  return useMutation({
-    mutationFn: loginApi,
-  });
+  return useMutation({ mutationFn: loginApi });
 };

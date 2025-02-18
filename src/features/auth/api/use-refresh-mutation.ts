@@ -29,7 +29,5 @@ const refreshAuthSessionApi = async (
 
 export const useRefreshMutation = () => {
   // "tanstack-query"
-  return useMutation({
-    mutationFn: refreshAuthSessionApi,
-  });
+  return useMutation({ mutationFn: refreshAuthSessionApi });
 };
