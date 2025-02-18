@@ -1,24 +1,24 @@
 import { VITE_API_URL } from '@/config/env';
 import { useRecipesStore } from '@/features/recipes/store';
-import { RecipeResponse, RecipesParams } from '@/features/recipes/types';
+import { RecipeApiResponse, RecipesApiParams } from '@/features/recipes/types';
 import { useQuery } from '@tanstack/react-query';
 import { useShallow } from 'zustand/react/shallow';
 
 // Types
-interface RecipesResponse {
-  recipes: RecipeResponse[];
+interface RecipesApiResponse {
+  recipes: RecipeApiResponse[];
   total: number;
   skip: number;
   limit: number;
 }
 
 // Utils
-const getRecipes = async ({
+const getAllRecipesApi = async ({
   limit,
   skip,
   sortBy,
   order,
-}: RecipesParams): Promise<RecipesResponse> => {
+}: RecipesApiParams): Promise<RecipesApiResponse> => {
   const url = `${VITE_API_URL}/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`;
 
   const response = await fetch(url);
@@ -41,7 +41,7 @@ export const useRecipesQuery = () => {
   return useQuery({
     queryKey: ['recipes', recipesParams],
     queryFn: async () => {
-      const data = await getRecipes(recipesParams);
+      const data = await getAllRecipesApi(recipesParams);
 
       changeTotalItems(data.total);
 

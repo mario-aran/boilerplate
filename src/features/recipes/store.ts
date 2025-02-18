@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { RecipesParams } from './types';
+import { RecipesApiParams } from './types';
 
 // Types
-interface RecipesStore extends Pick<RecipesParams, 'sortBy' | 'order'> {
+interface RecipesStore extends Pick<RecipesApiParams, 'sortBy' | 'order'> {
   page: number;
   itemsPerPage: number;
   totalItems: number;
