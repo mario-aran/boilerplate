@@ -1,4 +1,4 @@
-import { PaginationWithPageSize } from '@/components/ui/pagination-with-page-size';
+import { PaginationWithPageSize } from '@/components/custom-ui/pagination-with-page-size';
 import {
   ITEMS_PER_PAGE_OPTIONS,
   useRecipesStore,
