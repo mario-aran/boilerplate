@@ -3,13 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "clean:all": "find . \\( -name 'node_modules' -o -name 'dist' -o -name '*lock*' -o -name '*tsbuildinfo*' \\) -exec rm -rf {} +",
+    "files:to-lf": "find . \\( -name 'node_modules' -o -name 'dist' \\) -prune -o -type f -exec dos2unix {} +",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "lint": "tsc --noEmit && eslint . --fix",
-    "clean:all": "find . \\( -name 'node_modules' -o -name 'dist' -o -name '*lock*' -o -name '*tsbuildinfo*' \\) -exec rm -rf {} +",
-    "files:to-lf": "find . \\( -name 'node_modules' -o -name 'dist' \\) -prune -o -type f -exec dos2unix {} +"
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.0",
@@ -39,6 +40,7 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "autoprefixer": "^10.4.20",
+    "cypress": "^14.0.3",
     "eslint": "^9.20.1",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-check-file": "^3.1.0",
