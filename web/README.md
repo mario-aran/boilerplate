@@ -66,7 +66,7 @@ export default tseslint.config({
 
 ### Installers
 
-- [x] pnpm (global)
+- [x] pnpm | pnpm workspaces | pnpm neverBuiltDependencies: (global install)
 - [x] vite | react | typescript
 - [x] github repo | git init | git push
 - [x] prettier | prettier-plugin-tailwindcss

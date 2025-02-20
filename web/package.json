@@ -2,6 +2,9 @@
   "name": "learn_frontend",
   "private": true,
   "type": "module",
+  "pnpm": {
+    "neverBuiltDependencies": []
+  },
   "scripts": {
     "clean:all": "find . \\( -name 'node_modules' -o -name 'dist' -o -name '*lock*' -o -name '*tsbuildinfo*' \\) -exec rm -rf {} +",
     "files:to-lf": "find . \\( -name 'node_modules' -o -name 'dist' \\) -prune -o -type f -exec dos2unix {} +",
