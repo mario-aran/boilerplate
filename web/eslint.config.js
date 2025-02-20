@@ -13,9 +13,7 @@ export default tseslint.config(
   {
     ignores: [
       'dist',
-      'src/components/shadcn-ui',
-      // To ignore shadcn components
-      '00-lessons', // to ignore lessons folder,
+      'src/components/shadcn-ui', // To ignore shadcn components
     ],
   },
 
