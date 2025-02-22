@@ -12,7 +12,6 @@ export default tseslint.config(
   // Ignores
   {
     ignores: [
-      'node_modules', // Ignored by default, but added here for clarity
       'dist',
       'src/components/shadcn-ui', // To not alter shadcn components
     ],
