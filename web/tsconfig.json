@@ -5,6 +5,8 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "types": ["vitest/globals"], // "vitest" types
+
     // Absolute path
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
