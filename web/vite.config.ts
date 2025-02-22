@@ -25,7 +25,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
     },
     test: {
       environment: 'jsdom', // "react-testing-library"
-      globals: true, // Global vars and auto clean up "react-testing-library"
+      globals: true, // Global vars and auto clean up
       coverage: { include: ['src/**/*.{ts,tsx}'] }, // Coverage
     },
   };
