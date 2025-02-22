@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 // The above line allows "vitest" types in the project
 
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
@@ -14,7 +15,10 @@ export default defineConfig(({ mode }: { mode: string }) => {
 
   // Vite config
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+      tailwindcss(), // "tailwind"
+    ],
     server: {
       port: parseInt(env.VITE_CLIENT_PORT) || 5173, // Client port
     },
