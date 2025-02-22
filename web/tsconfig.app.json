@@ -22,7 +22,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // Absolute path
+    // Absolute path alias
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },

@@ -7,7 +7,7 @@
   "compilerOptions": {
     "types": ["vitest/globals"], // "vitest" types
 
-    // Absolute path
+    // Absolute path alias
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   }
