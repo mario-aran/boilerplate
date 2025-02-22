@@ -12,8 +12,9 @@ export default tseslint.config(
   // Ignores
   {
     ignores: [
+      'node_modules', // Ignored by default, but added here for clarity
       'dist',
-      'src/components/shadcn-ui', // To ignore shadcn components
+      'src/components/shadcn-ui', // To not alter shadcn components
     ],
   },
 
@@ -37,7 +38,7 @@ export default tseslint.config(
       // "eslint"
       'no-restricted-imports': [
         'error',
-        { patterns: ['src', '../**', '@/*/*/*/*', './*/*/*/*'] },
+        { patterns: ['src/*', '../**', '@/*/*/*/*', './*/*/*/*'] },
       ], // Prevent path imports
 
       // "eslint-plugin-react-hooks"
