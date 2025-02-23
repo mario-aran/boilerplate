@@ -33,7 +33,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
 
       // "vitest/coverage-v8"
       coverage: {
-        include: ['src/**/*.{ts,tsx}'],
+        include: ['src/**/*.{ts,tsx,js,jsx}'],
       },
     },
   };

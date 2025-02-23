@@ -24,7 +24,8 @@ dist-ssr
 *.sw?
 
 # Custom
+coverage/
 *tsbuildinfo*
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
+package-lock.json

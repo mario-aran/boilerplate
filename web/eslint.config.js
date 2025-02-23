@@ -1,5 +1,4 @@
 import js from '@eslint/js';
-import pluginQuery from '@tanstack/eslint-plugin-query';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import checkFile from 'eslint-plugin-check-file';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -12,20 +11,18 @@ export default tseslint.config(
   // Ignores
   {
     ignores: [
-      'dist',
       'src/components/shadcn-ui', // To not alter shadcn components
     ],
   },
 
   // Config
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx,js,jsx}'],
     languageOptions: { ecmaVersion: 2020, globals: globals.browser },
     extends: [
       js.configs.recommended, // "eslint"
       ...tseslint.configs.strict, // "typescript-eslint"
       ...tseslint.configs.stylistic, // "typescript-eslint"
-      ...pluginQuery.configs['flat/recommended'], // "@tanstack/react-query"
       eslintConfigPrettier, // "eslint-config-prettier": Needs to be at the end
     ],
     plugins: {

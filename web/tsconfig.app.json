@@ -22,7 +22,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // Absolute path alias
+    "types": [
+      "vitest/globals" // "vitest"
+    ],
+
+    // Absolute path
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },
