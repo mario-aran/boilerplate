@@ -1,3 +1,4 @@
+import { FormFieldInput } from '@/components/custom-ui/form-field-input';
 import { Button } from '@/components/shadcn-ui/button';
 import { DialogFooter } from '@/components/shadcn-ui/dialog';
 import { Form } from '@/components/shadcn-ui/form';
@@ -5,7 +6,6 @@ import { useLoginMutation } from '@/features/auth/api';
 import { registerSchema, RegisterSchema } from '@/features/auth/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { FormFieldInput } from './form-field-input';
 
 // Constants
 const REGISTER_DEFAULT_VALUES: RegisterSchema = {
