@@ -25,6 +25,9 @@ dist-ssr
 
 # Custom
 coverage/
+cypress/videos/
+cypress/screenshots/
+cypress/results/
 *tsbuildinfo*
 yarn.lock
 pnpm-lock.yaml

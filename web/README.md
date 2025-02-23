@@ -51,38 +51,40 @@ export default tseslint.config({
 
 ## To-Do
 
-### Configs
-
-- [x] vscode settings.json | vscode extensions
-- [x] .gitignore
-- [x] package.json
-- [x] tsconfig.json | tsconfig.app.json: absolute paths
-- [x] vite.config: server port, absolute paths
-- [x] .editorconfig
-- [x] .prettierrc.json
-- [x] eslint.config
-- [x] .env
-- [x] components.json (shadcn/ui)
-
 ### Installers
 
-- [x] pnpm | pnpm workspaces | pnpm neverBuiltDependencies: (global install)
+- [x] github repo
+- [x] pnpm (global install) with builtDependencies
 - [x] vite | react | typescript
-- [x] github repo | git init | git push
-- [x] prettier | prettier-plugin-tailwindcss
-- [x] eslint | typescript-eslint
+- [x] prettier
+      prettier-plugin-tailwindcss
+- [x] eslint
+      typescript-eslint
       eslint-plugin-react-hooks
       eslint-plugin-react-refresh
       eslint-plugin-check-file
       eslint-config-prettier
-      tanstack/eslint-plugin-query
-- [x] tailwindcss | shadcn/ui | radix-ui | lucide-react
+- [x] testing-library | vitest
+- [x] cypress
+- [x] tailwindcss | shadcn/ui
 - [x] react-router
 - [x] react-hook-form | hookform/resolvers | zod
 - [x] tanstack-query
 - [x] zustand
-- [ ] jest | testing-library
-- [ ] cypress
+
+### Configs
+
+- [x] settings.json (vscode)
+- [x] .gitignore
+- [x] .env
+- [x] .editorconfig
+- [x] .prettierrc.json
+- [x] eslint.config.js
+- [x] package.json
+- [x] tsconfig.json | tsconfig.app.json
+- [x] vite.config
+- [x] cypress.config.js
+- [x] components.json (shadcn/ui)
 
 ### Code
 
@@ -91,6 +93,6 @@ export default tseslint.config({
 - [x] layout: navbar, footer
 - [x] shadcn components
 - [x] custom-ui
-- [ ] setup unit and e2e tests
+- [ ] setup unit tests
+- [ ] setup e2e tests
 - [ ] add notification when singup register fails
-- [ ] migrate to tailwind v4 with shadcn
