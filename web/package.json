@@ -11,7 +11,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "format": "prettier --write src",
+    "format": "prettier --write .",
     "lint": "tsc --noEmit && eslint . --fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",

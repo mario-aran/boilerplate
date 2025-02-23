@@ -11,13 +11,15 @@ export default tseslint.config(
   // Ignores
   {
     ignores: [
-      'src/components/shadcn-ui', // To not alter shadcn components
+      'dist',
+      'coverage', // "@vitest/coverage-v8"
+      'src/components/shadcn-ui', // Avoid "shadcn/ui" components
     ],
   },
 
   // Config
   {
-    files: ['src/**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: { ecmaVersion: 2020, globals: globals.browser },
     extends: [
       js.configs.recommended, // "eslint"

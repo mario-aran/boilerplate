@@ -16,7 +16,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
   return {
     plugins: [
       react(),
-      tailwindcss(), // "tailwind"
+      tailwindcss(), // "tailwindcss"
     ],
     server: {
       port: parseInt(env.VITE_CLIENT_PORT) || 5173, // Client port
@@ -28,12 +28,12 @@ export default defineConfig(({ mode }: { mode: string }) => {
     },
     test: {
       // "vitest"
-      environment: 'jsdom', // "testing-library"
+      environment: 'jsdom', // "@testing-library/react"
       globals: true,
 
-      // "vitest/coverage-v8"
+      // "@vitest/coverage-v8"
       coverage: {
-        include: ['src/**/*.{ts,tsx,js,jsx}'],
+        include: ['src'],
       },
     },
   };
