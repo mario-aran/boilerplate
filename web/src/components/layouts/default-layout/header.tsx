@@ -21,8 +21,8 @@ export const Header = () => {
               to={path}
               className={({ isActive }) =>
                 cn(
-                  'text-foreground/80 transition-colors hover:text-foreground/80',
-                  isActive && 'font-semibold text-foreground',
+                  'text-foreground/80 hover:text-foreground/80 transition-colors',
+                  isActive && 'text-foreground font-semibold',
                 )
               }
             >
