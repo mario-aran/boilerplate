@@ -28,8 +28,9 @@ export default defineConfig(({ mode }: { mode: string }) => {
     },
     test: {
       // "vitest"
-      environment: 'jsdom', // "@testing-library/react"
-      globals: true,
+      environment: 'jsdom', // "jsdom"
+      globals: true, // "vitest", "@testing-library/react"
+      setupFiles: './src/lib/testing/vitest-setup.ts', // @testing-library/jest-dom
 
       // "@vitest/coverage-v8"
       coverage: {

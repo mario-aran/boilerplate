@@ -54,22 +54,31 @@ export default tseslint.config({
 ### Installers
 
 - [x] github repo
-- [x] pnpm (global install) with builtDependencies
+- [x] pnpm (global install) + builtDependencies
 - [x] vite | react | typescript
 - [x] prettier
-      prettier-plugin-tailwindcss
+      [x] prettier-plugin-tailwindcss
 - [x] eslint
-      typescript-eslint
-      eslint-plugin-react-hooks
-      eslint-plugin-react-refresh
-      eslint-plugin-check-file
-      eslint-config-prettier
-- [x] testing-library | vitest
+      [x] typescript-eslint
+      [x] eslint-plugin-react-hooks
+      [x] eslint-plugin-react-refresh
+      [x] eslint-plugin-check-file
+      [x] eslint-config-prettier
+      [ ] @tanstack/eslint-plugin-query
+      [ ] eslint-plugin-import
+      [ ] eslint-plugin-jest-dom
+      [ ] eslint-plugin-jsx-a11y
+      [ ] eslint-plugin-react
+      [ ] eslint-plugin-testing-library
+      [ ] eslint-plugin-vitest
+- [x] vitest | @testing-library
+      [x] @testing-library/jest-dom
+      [x] @testing-library/user-event
 - [x] cypress
-- [x] tailwindcss | shadcn/ui
+- [x] tailwindcss | shadcn/ui | radix-ui
 - [x] react-router
 - [x] react-hook-form | hookform/resolvers | zod
-- [x] tanstack-query
+- [x] @tanstack/react-query
 - [x] zustand
 
 ### Configs
@@ -93,6 +102,6 @@ export default tseslint.config({
 - [x] layout: navbar, footer
 - [x] shadcn components
 - [x] custom-ui
-- [ ] setup unit tests
-- [ ] setup e2e tests
+- [ ] unit tests
 - [ ] add notification when singup register fails
+- [ ] e2e tests
