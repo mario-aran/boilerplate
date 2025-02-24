@@ -19,7 +19,7 @@ export default tseslint.config(
 
   // Config
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: { ecmaVersion: 2020, globals: globals.browser },
     extends: [
       js.configs.recommended, // "eslint"

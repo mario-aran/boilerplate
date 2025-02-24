@@ -35,6 +35,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
       // "@vitest/coverage-v8"
       coverage: {
         include: ['src'],
+        reporter: ['text', 'html'], // Coverage output files
       },
     },
   };
