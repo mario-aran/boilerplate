@@ -64,13 +64,6 @@ export default tseslint.config({
       [x] eslint-plugin-react-refresh
       [x] eslint-plugin-check-file
       [x] eslint-config-prettier
-      [ ] @tanstack/eslint-plugin-query
-      [ ] eslint-plugin-import
-      [ ] eslint-plugin-jest-dom
-      [ ] eslint-plugin-jsx-a11y
-      [ ] eslint-plugin-react
-      [ ] eslint-plugin-testing-library
-      [ ] eslint-plugin-vitest
 - [x] vitest | @testing-library
       [x] @testing-library/jest-dom
       [x] @testing-library/user-event
