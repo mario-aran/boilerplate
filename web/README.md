@@ -67,6 +67,7 @@ export default tseslint.config({
 - [x] vitest | @testing-library
       [x] @testing-library/jest-dom
       [x] @testing-library/user-event
+      [x] @vitest/coverage-v8 | @vitest/ui
 - [x] cypress
 - [x] tailwindcss | shadcn/ui | radix-ui
 - [x] react-router
