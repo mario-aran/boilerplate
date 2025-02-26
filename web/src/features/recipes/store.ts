@@ -1,17 +1,5 @@
 import { create } from 'zustand';
-import { GetAllRecipesApiParams } from './types';
-
-// Types
-interface RecipesStore
-  extends Pick<GetAllRecipesApiParams, 'sortBy' | 'order'> {
-  page: number;
-  itemsPerPage: number;
-  totalItems: number;
-  lastPage: number;
-  changePage: (page: number) => void;
-  changeItemsPerPage: (itemsPerPage: number) => void;
-  changeTotalItems: (totalItems: number) => void;
-}
+import { RecipesStore } from './types';
 
 // Constants
 const FIRST_PAGE = 1;

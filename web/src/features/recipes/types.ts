@@ -23,3 +23,14 @@ export interface GetAllRecipesApiParams {
   sortBy: keyof GetRecipeApiResponse;
   order: 'asc' | 'desc';
 }
+
+export interface RecipesStore
+  extends Pick<GetAllRecipesApiParams, 'sortBy' | 'order'> {
+  page: number;
+  itemsPerPage: number;
+  totalItems: number;
+  lastPage: number;
+  changePage: (page: number) => void;
+  changeItemsPerPage: (itemsPerPage: number) => void;
+  changeTotalItems: (totalItems: number) => void;
+}
