@@ -12,8 +12,8 @@ export default tseslint.config(
   {
     ignores: [
       'dist',
-      'coverage', // "@vitest/coverage-v8"
-      'src/components/shadcn-ui', // Avoid "shadcn/ui" components
+      'coverage', // "vitest/coverage-v8"
+      'src/components/shadcn-ui', // Avoid "shadcn" components
     ],
   },
 
