@@ -26,6 +26,4 @@ dist-ssr
 # Custom
 coverage/
 *tsbuildinfo*
-yarn.lock
-pnpm-lock.yaml
-package-lock.json
+*lock*
