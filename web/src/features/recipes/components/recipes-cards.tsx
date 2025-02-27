@@ -9,7 +9,7 @@ import {
 } from '@/components/shadcn-ui/card';
 import { Skeleton } from '@/components/shadcn-ui/skeleton';
 import { useRecipesQuery } from '@/features/recipes/api';
-import { PropsWithChildren } from 'react';
+import { HTMLProps, PropsWithChildren } from 'react';
 
 // Internal components
 const CardsGrid = ({ children }: PropsWithChildren) => (
@@ -18,8 +18,11 @@ const CardsGrid = ({ children }: PropsWithChildren) => (
   </div>
 );
 
-const CustomCard = ({ children }: PropsWithChildren) => (
-  <Card className="flex min-w-80 flex-col items-center text-center">
+const CustomCard = ({
+  children,
+  ...props
+}: PropsWithChildren<HTMLProps<HTMLDivElement>>) => (
+  <Card className="flex min-w-80 flex-col items-center text-center" {...props}>
     {children}
   </Card>
 );
@@ -35,7 +38,7 @@ export const RecipesCards = () => {
     return (
       <CardsGrid>
         {Array.from({ length: 3 }).map((_, index) => (
-          <CustomCard key={index}>
+          <CustomCard key={index} data-testid="skeleton-card">
             <CardHeader>
               <Skeleton className="h-6 w-60" />
               <Skeleton className="h-4 w-40" />
@@ -56,15 +59,15 @@ export const RecipesCards = () => {
     return (
       <CardsGrid>
         {recipes.map((recipe) => (
-          <CustomCard key={recipe.id}>
+          <CustomCard key={recipe.id} data-testid="recipe-card">
             <CardHeader>
               <CardTitle>{recipe.name}</CardTitle>
               <CardDescription>{`${recipe.cookTimeMinutes} mins to cook.`}</CardDescription>
             </CardHeader>
             <CardContent>
               <img
-                src={recipe.image}
                 alt={recipe.name}
+                src={recipe.image}
                 className="h-40 w-40 rounded-md object-cover"
               />
             </CardContent>
