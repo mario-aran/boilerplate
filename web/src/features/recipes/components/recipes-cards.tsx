@@ -26,13 +26,9 @@ const CustomCard = ({ children }: PropsWithChildren) => (
 
 // Exported component
 export const RecipesCards = () => {
-  // "tanstack-query"
+  // "react-query"
   const { data, isLoading } = useRecipesQuery();
   const recipes = data?.recipes ?? [];
-
-  // Render no data
-  if (!isLoading && recipes.length === 0)
-    return <p className="text-center">No recipes found.</p>;
 
   // Render skeleton
   if (isLoading)
@@ -56,26 +52,30 @@ export const RecipesCards = () => {
     );
 
   // Render cards
-  return (
-    <CardsGrid>
-      {recipes.map((recipe) => (
-        <CustomCard key={recipe.id}>
-          <CardHeader>
-            <CardTitle>{recipe.name}</CardTitle>
-            <CardDescription>{`${recipe.cookTimeMinutes} mins to cook.`}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <img
-              src={recipe.image}
-              alt={recipe.name}
-              className="h-40 w-40 rounded-md object-cover"
-            />
-          </CardContent>
-          <CardFooter>
-            <Button>View Recipe</Button>
-          </CardFooter>
-        </CustomCard>
-      ))}
-    </CardsGrid>
-  );
+  if (!isLoading && recipes.length > 0)
+    return (
+      <CardsGrid>
+        {recipes.map((recipe) => (
+          <CustomCard key={recipe.id}>
+            <CardHeader>
+              <CardTitle>{recipe.name}</CardTitle>
+              <CardDescription>{`${recipe.cookTimeMinutes} mins to cook.`}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <img
+                src={recipe.image}
+                alt={recipe.name}
+                className="h-40 w-40 rounded-md object-cover"
+              />
+            </CardContent>
+            <CardFooter>
+              <Button>View Recipe</Button>
+            </CardFooter>
+          </CustomCard>
+        ))}
+      </CardsGrid>
+    );
+
+  // Render no data
+  return <p className="text-center">No recipes found.</p>;
 };
