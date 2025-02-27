@@ -14,7 +14,7 @@
     "format": "prettier --write .",
     "lint": "tsc --noEmit && eslint . --fix",
     "test": "vitest --watch",
-    "coverage": "vitest --ui --coverage --watch",
+    "coverage": "vitest --coverage --watch",
     "cy:open": "cypress open"
   },
   "dependencies": {
@@ -47,7 +47,6 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "@vitest/coverage-v8": "^3.0.7",
-    "@vitest/ui": "^3.0.7",
     "cypress": "^14.1.0",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
