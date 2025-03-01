@@ -1,40 +1,42 @@
 import { create } from 'zustand';
 import { RecipesStore } from './types';
 
-// Constants
-const FIRST_PAGE = 1;
-export const ITEMS_PER_PAGE_OPTIONS = [6, 9, 12];
+// Utils
+const getLastPage = (totalItems: number, itemsPerPage: number) =>
+  Math.max(Math.ceil(totalItems / itemsPerPage), 1);
 
 export const useRecipesStore = create<RecipesStore>()((set) => ({
-  // Params
-  page: FIRST_PAGE,
-  itemsPerPage: ITEMS_PER_PAGE_OPTIONS[0],
+  page: 1,
+  itemsPerPage: 6,
   sortBy: 'name',
   order: 'asc',
-
-  // Results
   totalItems: 0,
-  lastPage: FIRST_PAGE,
+  lastPage: 1,
+  changePage: (newPage) => {
+    // Ensure page is a positive integer
+    if (newPage <= 0 || !Number.isInteger(newPage)) return;
 
-  // Actions
-  changePage: (page) => set({ page }),
+    // Ensure page does not exceed last page
+    set((state) => (newPage > state.lastPage ? state : { page: newPage }));
+  },
 
-  changeItemsPerPage: (itemsPerPage) =>
+  changeItemsPerPage: (newItemsPerPage) =>
     set((state) => ({
-      page: FIRST_PAGE,
-      itemsPerPage,
-      lastPage: Math.max(
-        Math.ceil(state.totalItems / itemsPerPage),
-        FIRST_PAGE,
-      ),
+      itemsPerPage: newItemsPerPage,
+      page: 1,
+      lastPage: getLastPage(state.totalItems, newItemsPerPage),
     })),
 
-  changeTotalItems: (totalItems) =>
+  changeSortBy: (newSortBy) => set({ sortBy: newSortBy }),
+  changeOrder: (newOrder) => set({ order: newOrder }),
+
+  changeTotalItems: (newTotalItems) => {
+    // Ensure page is a non-negative integer
+    if (newTotalItems < 0 || !Number.isInteger(newTotalItems)) return;
+
     set((state) => ({
-      totalItems,
-      lastPage: Math.max(
-        Math.ceil(totalItems / state.itemsPerPage),
-        FIRST_PAGE,
-      ),
-    })),
+      totalItems: newTotalItems,
+      lastPage: getLastPage(newTotalItems, state.itemsPerPage),
+    }));
+  },
 }));

@@ -17,20 +17,30 @@ export interface GetRecipeApiResponse {
   mealType: string[];
 }
 
+type SortBy = keyof Pick<
+  GetRecipeApiResponse,
+  'id' | 'name' | 'cookTimeMinutes' | 'difficulty' | 'cuisine' | 'rating'
+>;
 export interface GetAllRecipesApiParams {
   limit: number;
   skip: number;
-  sortBy: keyof GetRecipeApiResponse;
+  sortBy: SortBy;
   order: 'asc' | 'desc';
 }
 
-export interface RecipesStore
+interface RecipesStoreState
   extends Pick<GetAllRecipesApiParams, 'sortBy' | 'order'> {
   page: number;
-  itemsPerPage: number;
+  itemsPerPage: 6 | 9 | 12;
   totalItems: number;
   lastPage: number;
-  changePage: (page: number) => void;
-  changeItemsPerPage: (itemsPerPage: number) => void;
-  changeTotalItems: (totalItems: number) => void;
+}
+export interface RecipesStore extends RecipesStoreState {
+  changePage: (newPage: RecipesStoreState['page']) => void;
+  changeItemsPerPage: (
+    newItemsPerPage: RecipesStoreState['itemsPerPage'],
+  ) => void;
+  changeSortBy: (newSortBy: RecipesStoreState['sortBy']) => void;
+  changeOrder: (newChangeOrder: RecipesStoreState['order']) => void;
+  changeTotalItems: (newTotalItems: RecipesStoreState['totalItems']) => void;
 }
