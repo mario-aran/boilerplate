@@ -3,11 +3,11 @@ import { render, screen, within } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
 import { RecipesCards } from './recipes-cards';
 
-// Casted mocks
-vi.mock('@/features/recipes/api', () => ({ useRecipesQuery: vi.fn() }));
-const mockedUseRecipesQuery = useRecipesQuery as Mock;
-
 describe('RecipesCards', () => {
+  // Casted mocks
+  vi.mock('@/features/recipes/api', () => ({ useRecipesQuery: vi.fn() }));
+  const mockedUseRecipesQuery = useRecipesQuery as Mock;
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
