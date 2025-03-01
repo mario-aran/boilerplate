@@ -1,13 +1,20 @@
-export interface PageSizeSelectorProps {
+interface PageProp {
   page: number;
-  itemsPerPageOptions: number[];
-  itemsPerPage: number;
-  totalItems: number;
-  changeItemsPerPage: (itemsPerPage: number) => void;
 }
 
-export interface CustomPaginationProps
-  extends Pick<PageSizeSelectorProps, 'page'> {
+export interface CustomPaginationProps extends PageProp {
   lastPage: number;
-  changePage: (newPage: number) => void;
+  changePage: (newPage: PageProp['page']) => void;
 }
+
+export type RNArray = readonly number[];
+
+export interface PageSizeSelectorProps<T extends RNArray> extends PageProp {
+  itemsPerPageOptions: T;
+  itemsPerPage: T[number];
+  totalItems: number;
+  changeItemsPerPage: (newItemsPerPage: T[number]) => void;
+}
+
+export type PaginationWithPageSizeProps<T extends RNArray> =
+  CustomPaginationProps & PageSizeSelectorProps<T>;

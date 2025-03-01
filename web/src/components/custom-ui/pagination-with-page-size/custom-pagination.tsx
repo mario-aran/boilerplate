@@ -29,6 +29,7 @@ export const CustomPagination = ({
   const showLastEllipsis = page < lastPage - 2;
 
   return (
+    // div wrapper to avoid full width
     <div>
       <Pagination>
         <PaginationContent>

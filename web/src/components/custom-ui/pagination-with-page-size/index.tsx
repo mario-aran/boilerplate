@@ -1,17 +1,13 @@
 import { CustomPagination } from './custom-pagination';
 import { PageSizeSelector } from './page-size-selector';
-import { CustomPaginationProps, PageSizeSelectorProps } from './types';
+import { PaginationWithPageSizeProps, RNArray } from './types';
 
-// Types
-type PaginationWithPageSizeProps = PageSizeSelectorProps &
-  CustomPaginationProps;
-
-export const PaginationWithPageSize = ({
+export const PaginationWithPageSize = <T extends RNArray>({
   page,
   lastPage,
   changePage,
   ...customSelectProps
-}: PaginationWithPageSizeProps) => {
+}: PaginationWithPageSizeProps<T>) => {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-10">
       <PageSizeSelector page={page} {...customSelectProps} />

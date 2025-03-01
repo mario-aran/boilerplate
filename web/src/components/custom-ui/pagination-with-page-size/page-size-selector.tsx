@@ -5,15 +5,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shadcn-ui/select';
-import { PageSizeSelectorProps } from './types';
+import { PageSizeSelectorProps, RNArray } from './types';
 
-export const PageSizeSelector = ({
+export const PageSizeSelector = <T extends RNArray>({
   page,
   itemsPerPageOptions,
   itemsPerPage,
   totalItems,
   changeItemsPerPage,
-}: PageSizeSelectorProps) => {
+}: PageSizeSelectorProps<T>) => {
   // Utils
   const getItemsSummary = () => {
     if (totalItems === 0) return 'No items available';
