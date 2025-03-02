@@ -4,7 +4,7 @@ import { Mock, vi } from 'vitest';
 import { RecipesCards } from './recipes-cards';
 
 describe('RecipesCards', () => {
-  // Casted mocks
+  // Mocks: casted to use mock methods
   vi.mock('@/features/recipes/api', () => ({ useRecipesQuery: vi.fn() }));
   const mockedUseRecipesQuery = useRecipesQuery as Mock;
 
@@ -36,11 +36,11 @@ describe('RecipesCards', () => {
     render(<RecipesCards />);
 
     // Assertions
-    // Assert cards number
+    // Test cards number
     const cards = screen.getAllByTestId('recipe-card');
     expect(cards).toHaveLength(defaultRecipes.length);
 
-    // Assert each card content
+    // Test each card
     defaultRecipes.forEach(({ name, cookTimeMinutes, image }, index) => {
       const card = within(cards[index]);
       const cardName = card.getByText(name);
@@ -53,20 +53,18 @@ describe('RecipesCards', () => {
     });
   });
 
-  it.each([
-    ['an empty array', []],
-    ['undefined', undefined],
-  ])(
-    'displays "No recipes found." when recipes is %s and loading is complete',
-    (_, testRecipes) => {
+  it('displays "No recipes found." when no recipes exists and loading is complete', () => {
+    const noRecipesValues = [[], undefined];
+
+    noRecipesValues.forEach((recipes) => {
       mockedUseRecipesQuery.mockReturnValue({
         isLoading: false,
-        data: { recipes: testRecipes },
+        data: { recipes },
       });
 
       render(<RecipesCards />);
 
       expect(screen.getByText('No recipes found.')).toBeInTheDocument();
-    },
-  );
+    });
+  });
 });
