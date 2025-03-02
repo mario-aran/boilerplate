@@ -17,15 +17,13 @@ export interface GetRecipeApiResponse {
   mealType: string[];
 }
 
-type SortBy = keyof Pick<
-  GetRecipeApiResponse,
-  'id' | 'name' | 'cookTimeMinutes' | 'difficulty' | 'cuisine' | 'rating'
->;
-
 export interface GetAllRecipesApiParams {
   limit: number;
   skip: number;
-  sortBy: SortBy;
+  sortBy: keyof Pick<
+    GetRecipeApiResponse,
+    'id' | 'name' | 'cookTimeMinutes' | 'difficulty' | 'cuisine' | 'rating'
+  >;
   order: 'asc' | 'desc';
 }
 
