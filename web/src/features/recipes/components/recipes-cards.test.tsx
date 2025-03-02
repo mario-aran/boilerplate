@@ -1,36 +1,55 @@
 import { useRecipesQuery } from '@/features/recipes/api';
+import { GetRecipeApiResponse } from '@/features/recipes/types';
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
 import { RecipesCards } from './recipes-cards';
 
-describe('RecipesCards', () => {
-  // Mocks: casted to use mock methods
-  vi.mock('@/features/recipes/api', () => ({ useRecipesQuery: vi.fn() }));
-  const mockedUseRecipesQuery = useRecipesQuery as Mock;
+// Types
+interface MockUseRecipesQueryProps {
+  isLoading: boolean;
+  recipes?: Pick<
+    GetRecipeApiResponse,
+    'id' | 'name' | 'cookTimeMinutes' | 'image'
+  >[];
+}
 
+// Mocks
+vi.mock('@/features/recipes/api', () => ({ useRecipesQuery: vi.fn() }));
+
+// Utils
+const mockUseRecipesQuery = ({
+  isLoading,
+  recipes,
+}: MockUseRecipesQueryProps) => {
+  const castedUseRecipesQuery = useRecipesQuery as Mock;
+
+  return castedUseRecipesQuery.mockReturnValue({
+    isLoading,
+    data: { recipes },
+  });
+};
+
+describe('RecipesCards', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it('renders 3 skeleton cards while loading data', () => {
-    mockedUseRecipesQuery.mockReturnValue({ isLoading: true });
+    mockUseRecipesQuery({ isLoading: true });
 
     render(<RecipesCards />);
 
     expect(screen.getAllByTestId('skeleton-card')).toHaveLength(3);
   });
 
-  it('renders the correct number of cards with correct content when loading is complete', () => {
+  it('renders the correct number of cards with accurate content after loading completes', () => {
     // Setup
-    const defaultRecipes = [
+    const recipes = [
       { id: 1, name: 'Pasta', cookTimeMinutes: 10, image: 'pasta.jpg' },
       { id: 2, name: 'Pizza', cookTimeMinutes: 20, image: 'pizza.jpg' },
     ];
 
-    mockedUseRecipesQuery.mockReturnValue({
-      isLoading: false,
-      data: { recipes: defaultRecipes },
-    });
+    mockUseRecipesQuery({ recipes, isLoading: false });
 
     // Actions
     render(<RecipesCards />);
@@ -38,10 +57,10 @@ describe('RecipesCards', () => {
     // Assertions
     // Test cards number
     const cards = screen.getAllByTestId('recipe-card');
-    expect(cards).toHaveLength(defaultRecipes.length);
+    expect(cards).toHaveLength(recipes.length);
 
     // Test each card
-    defaultRecipes.forEach(({ name, cookTimeMinutes, image }, index) => {
+    recipes.forEach(({ name, cookTimeMinutes, image }, index) => {
       const card = within(cards[index]);
       const cardName = card.getByText(name);
       const cardCookTime = card.getByText(`${cookTimeMinutes} mins to cook.`);
@@ -57,16 +76,13 @@ describe('RecipesCards', () => {
     const noRecipesValues = [[], undefined];
 
     noRecipesValues.forEach((recipes) => {
-      mockedUseRecipesQuery.mockReturnValue({
-        isLoading: false,
-        data: { recipes },
-      });
+      mockUseRecipesQuery({ recipes, isLoading: false });
 
       render(<RecipesCards />);
 
       expect(screen.getByText('No recipes found.')).toBeInTheDocument();
 
-      cleanup(); // Remove the components after each iteration
+      cleanup(); // Remove components after each iteration
     });
   });
 });
