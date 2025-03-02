@@ -12,11 +12,11 @@ export const useRecipesStore = create<RecipesStore>()((set) => ({
   order: 'asc',
   totalItems: 0,
   lastPage: 1,
+
+  // Actions
   changePage: (newPage) => {
-    // Ensure page is a positive integer
     if (newPage <= 0 || !Number.isInteger(newPage)) return;
 
-    // Ensure page does not exceed last page
     set((state) => (newPage > state.lastPage ? state : { page: newPage }));
   },
 
@@ -31,7 +31,6 @@ export const useRecipesStore = create<RecipesStore>()((set) => ({
   changeOrder: (newOrder) => set({ order: newOrder }),
 
   changeTotalItems: (newTotalItems) => {
-    // Ensure page is a non-negative integer
     if (newTotalItems < 0 || !Number.isInteger(newTotalItems)) return;
 
     set((state) => ({

@@ -21,6 +21,7 @@ type SortBy = keyof Pick<
   GetRecipeApiResponse,
   'id' | 'name' | 'cookTimeMinutes' | 'difficulty' | 'cuisine' | 'rating'
 >;
+
 export interface GetAllRecipesApiParams {
   limit: number;
   skip: number;
@@ -35,6 +36,7 @@ interface RecipesStoreState
   totalItems: number;
   lastPage: number;
 }
+
 export interface RecipesStore extends RecipesStoreState {
   changePage: (newPage: RecipesStoreState['page']) => void;
   changeItemsPerPage: (
