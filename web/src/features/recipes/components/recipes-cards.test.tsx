@@ -1,5 +1,5 @@
 import { useRecipesQuery } from '@/features/recipes/api';
-import { render, screen, within } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
 import { RecipesCards } from './recipes-cards';
 
@@ -65,6 +65,8 @@ describe('RecipesCards', () => {
       render(<RecipesCards />);
 
       expect(screen.getByText('No recipes found.')).toBeInTheDocument();
+
+      cleanup(); // Remove the components after each iteration
     });
   });
 });
