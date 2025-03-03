@@ -40,7 +40,7 @@ const CustomDialog = ({
 export const AuthOptions = () => {
   return (
     <div className="w-full max-w-md space-y-4 p-6 text-center">
-      <span className="text-2xl font-medium">Join today.</span>
+      <p className="text-2xl font-medium">Join today.</p>
 
       <CustomDialog title="Register">
         <RegisterForm />
