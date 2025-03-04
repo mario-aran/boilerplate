@@ -1,5 +1,5 @@
-import { VITE_API_URL } from '@/config/env';
 import { LoginApiResponse } from '@/features/auth/types';
+import { apiFetch } from '@/lib/fetch/api-fetch';
 import { useMutation } from '@tanstack/react-query';
 
 // Types
@@ -8,29 +8,19 @@ interface LoginApiCredentials {
   password: string;
 }
 
-// Constants
-const API_URL = `${VITE_API_URL}/auth/login`;
-
 // Utils
-const loginApi = async ({
-  username,
-  password,
-}: LoginApiCredentials): Promise<LoginApiResponse> => {
-  const response = await fetch(API_URL, {
+const loginApi = ({ username, password }: LoginApiCredentials) =>
+  apiFetch<LoginApiResponse>('/auth/login', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       username,
       password,
       expiresInMins: 30,
     }),
-    credentials: 'include',
   });
 
-  return response.json();
-};
-
-export const useLoginMutation = () => {
-  // "tanstack-query"
-  return useMutation({ mutationFn: loginApi });
-};
+// "tanstack-query"
+export const useLoginMutation = () =>
+  useMutation({
+    mutationFn: loginApi,
+  });

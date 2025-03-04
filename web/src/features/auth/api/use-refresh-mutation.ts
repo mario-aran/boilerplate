@@ -1,4 +1,4 @@
-import { VITE_API_URL } from '@/config/env';
+import { apiFetch } from '@/lib/fetch/api-fetch';
 import { useMutation } from '@tanstack/react-query';
 
 // Types
@@ -7,27 +7,19 @@ interface RefreshAuthSessionApiResponse {
   refreshToken: string;
 }
 
-// Constants
-const API_URL = `${VITE_API_URL}/auth/refresh`;
-
 // Utils
-const refreshAuthSessionApi = async (
-  refreshToken: string,
-): Promise<RefreshAuthSessionApiResponse> => {
-  const response = await fetch(API_URL, {
+const refreshAuthSessionApi = (refreshToken: string) =>
+  apiFetch<RefreshAuthSessionApiResponse>('/auth/refresh', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       refreshToken,
       expiresInMins: 30,
     }),
-    credentials: 'include',
   });
 
-  return response.json();
-};
-
-export const useRefreshMutation = () => {
-  // "tanstack-query"
-  return useMutation({ mutationFn: refreshAuthSessionApi });
-};
+// "tanstack-query"
+export const useRefreshMutation = () =>
+  useMutation({
+    mutationFn: refreshAuthSessionApi,
+  });
