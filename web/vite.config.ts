@@ -15,7 +15,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
   // Vite config
   return {
     plugins: [
-      react(),
+      react(), // "@vitejs/plugin-react-swc": Babel replacement for faster compilation
       tailwindcss(), // "tailwindcss"
     ],
     server: {
