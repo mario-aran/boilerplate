@@ -1,5 +1,6 @@
 import { AuthOptions } from '@/features/auth/components';
 import { PropsWithChildren } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Internal components
 const CenteredSection = ({ children }: PropsWithChildren) => (
@@ -10,10 +11,12 @@ const CenteredSection = ({ children }: PropsWithChildren) => (
 
 // Exported component
 export const HomeRoute = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-1 flex-col md:flex-row">
       <CenteredSection>
-        <h1 className="text-5xl font-bold">Home</h1>
+        <h1 className="text-5xl font-bold">{t('home')}</h1>
       </CenteredSection>
 
       <CenteredSection>
