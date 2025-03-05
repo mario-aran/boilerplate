@@ -33,11 +33,29 @@ export default tseslint.config(
       'check-file': checkFile, // "eslint-plugin-check-file"
     },
     rules: {
-      // "eslint"
+      // "eslint": Prevent imports
       'no-restricted-imports': [
         'error',
-        { patterns: ['src/*', '../**', '@/*/*/*/*', './*/*/*/*'] },
-      ], // Prevent path imports
+        {
+          patterns: [
+            {
+              group: ['../**', 'src/*'],
+              message: "Use '@/' instead",
+            },
+            {
+              group: ['@radix-ui/*'],
+              message: "Use '@/components/shadcn-ui' instead.",
+            },
+          ],
+          paths: [
+            {
+              name: 'sonner',
+              importNames: ['Toaster'],
+              message: "Use '@/components/shadcn-ui/sonner' instead.",
+            },
+          ],
+        },
+      ],
 
       // "eslint-plugin-react-hooks"
       ...reactHooks.configs.recommended.rules,

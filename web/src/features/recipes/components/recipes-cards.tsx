@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/shadcn-ui/card';
 import { Skeleton } from '@/components/shadcn-ui/skeleton';
-import { useRecipesQuery } from '@/features/recipes/api';
+import { useRecipesQuery } from '@/features/recipes/api/use-recipes-query';
 import { HTMLProps, PropsWithChildren } from 'react';
 
 // Internal components

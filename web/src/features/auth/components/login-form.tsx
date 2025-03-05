@@ -2,7 +2,7 @@ import { FormFieldInput } from '@/components/custom-ui/form-field-input';
 import { Button } from '@/components/shadcn-ui/button';
 import { DialogFooter } from '@/components/shadcn-ui/dialog';
 import { Form } from '@/components/shadcn-ui/form';
-import { useLoginMutation } from '@/features/auth/api';
+import { useLoginMutation } from '@/features/auth/api/use-login-mutation';
 import { loginSchema, LoginSchema } from '@/features/auth/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';

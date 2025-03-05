@@ -1,4 +1,4 @@
-import { useRecipesQuery } from '@/features/recipes/api';
+import { useRecipesQuery } from '@/features/recipes/api/use-recipes-query';
 import { GetRecipeApiResponse } from '@/features/recipes/types';
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
