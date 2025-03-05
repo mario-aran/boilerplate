@@ -13,7 +13,7 @@ const getRecipeApi = async (
 };
 
 export const useRecipeQuery = (recipeId: string) => {
-  // "tanstack-query"
+  // "tanstack"
   return useQuery({
     queryKey: ['recipe', recipeId],
     queryFn: () => getRecipeApi(recipeId),

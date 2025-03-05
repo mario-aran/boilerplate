@@ -26,7 +26,7 @@ export const RegisterForm = () => {
     defaultValues: REGISTER_DEFAULT_VALUES,
   });
 
-  // "tanstack-query"
+  // "tanstack"
   const loginMutation = useLoginMutation();
 
   // Utils

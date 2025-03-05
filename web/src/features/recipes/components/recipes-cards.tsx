@@ -29,7 +29,7 @@ const CustomCard = ({
 
 // Exported component
 export const RecipesCards = () => {
-  // "tanstack-query"
+  // "tanstack"
   const { data, isLoading } = useRecipesQuery();
   const recipes = data?.recipes ?? [];
 
