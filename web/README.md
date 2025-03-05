@@ -91,6 +91,7 @@ export default tseslint.config({
 
 - [x] implement i18next
 - [x] prefer shadcn/ui imports in eslint instead of other libs
+- [ ] check the selectable as cards! also, rename theme to switch?
 - [ ] add language-select
 - [ ] add one notification when singup register fails
 - [ ] refactor auth form component, so it can be reused on login and register

@@ -11,6 +11,7 @@ const CenteredSection = ({ children }: PropsWithChildren) => (
 
 // Exported component
 export const HomeRoute = () => {
+  // "i18next"
   const { t } = useTranslation();
 
   return (
