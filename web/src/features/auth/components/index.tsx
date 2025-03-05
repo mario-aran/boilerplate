@@ -15,26 +15,24 @@ import { RegisterForm } from './register-form';
 const CustomDialog = ({
   children,
   title,
-}: PropsWithChildren<{ title: string }>) => {
-  return (
-    <Dialog>
-      {/* Trigger */}
-      <DialogTrigger asChild>
-        <Button className="w-full">{title}</Button>
-      </DialogTrigger>
+}: PropsWithChildren<{ title: string }>) => (
+  <Dialog>
+    {/* Trigger */}
+    <DialogTrigger asChild>
+      <Button className="w-full">{title}</Button>
+    </DialogTrigger>
 
-      {/* Dialog */}
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription className="sr-only" />
-        </DialogHeader>
+    {/* Dialog */}
+    <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogDescription className="sr-only" />
+      </DialogHeader>
 
-        {children}
-      </DialogContent>
-    </Dialog>
-  );
-};
+      {children}
+    </DialogContent>
+  </Dialog>
+);
 
 // Exported component
 export const AuthOptions = () => {

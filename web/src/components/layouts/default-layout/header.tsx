@@ -1,4 +1,4 @@
-import { ModeToggle } from '@/components/controls/mode-toggle';
+import { ThemeToggle } from '@/components/controls/theme-toggle';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/lib/shadcn/utils';
 import { NavLink } from 'react-router';
@@ -32,7 +32,7 @@ export const Header = () => {
         </nav>
 
         {/* Nav buttons */}
-        <ModeToggle />
+        <ThemeToggle />
       </div>
     </header>
   );

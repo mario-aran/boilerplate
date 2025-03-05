@@ -9,7 +9,7 @@ const getCurrentAuthUserApi = async (accessToken: string) =>
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-// "tanstack"
+// "tanstack-query"
 export const useCurrentUserQuery = (accessToken: string) =>
   useQuery({
     queryKey: ['current-user', accessToken],

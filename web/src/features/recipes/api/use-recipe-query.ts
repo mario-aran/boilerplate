@@ -1,21 +1,14 @@
-import { VITE_API_URL } from '@/config/env';
 import { GetRecipeApiResponse } from '@/features/recipes/types';
+import { apiFetch } from '@/lib/fetch/api-fetch';
 import { useQuery } from '@tanstack/react-query';
 
 // Utils
-const getRecipeApi = async (
-  recipeId: string,
-): Promise<GetRecipeApiResponse> => {
-  const apiUrl = `${VITE_API_URL}/recipes/${recipeId}`;
+const getRecipeApi = (recipeId: string) =>
+  apiFetch<GetRecipeApiResponse>(`/recipes/${recipeId}`);
 
-  const response = await fetch(apiUrl);
-  return response.json();
-};
-
-export const useRecipeQuery = (recipeId: string) => {
-  // "tanstack"
-  return useQuery({
+// "tanstack-query"
+export const useRecipeQuery = (recipeId: string) =>
+  useQuery({
     queryKey: ['recipe', recipeId],
     queryFn: () => getRecipeApi(recipeId),
   });
-};

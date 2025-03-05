@@ -2,13 +2,11 @@ import { AuthOptions } from '@/features/auth/components';
 import { PropsWithChildren } from 'react';
 
 // Internal components
-const CenteredSection = ({ children }: PropsWithChildren) => {
-  return (
-    <section className="flex flex-1 flex-col items-center justify-center">
-      {children}
-    </section>
-  );
-};
+const CenteredSection = ({ children }: PropsWithChildren) => (
+  <section className="flex flex-1 flex-col items-center justify-center">
+    {children}
+  </section>
+);
 
 // Exported component
 export const HomeRoute = () => {

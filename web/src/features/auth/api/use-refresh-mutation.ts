@@ -18,7 +18,7 @@ const refreshAuthSessionApi = (refreshToken: string) =>
     }),
   });
 
-// "tanstack"
+// "tanstack-query"
 export const useRefreshMutation = () =>
   useMutation({
     mutationFn: refreshAuthSessionApi,

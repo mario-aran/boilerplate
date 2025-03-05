@@ -89,7 +89,9 @@ export default tseslint.config({
 
 ### Code
 
-- [ ] add one notification when singup register fails
-- [ ] e2e tests
 - [ ] implement i18next
+- [ ] e2e tests
+- [ ] add one notification when singup register fails
 - [ ] use env vars on cypress.config.js
+- [ ] prevent sonner import with message
+- [ ] refactor auth form component, so it can be reused on login and register

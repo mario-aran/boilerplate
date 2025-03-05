@@ -50,13 +50,13 @@ describe('useRecipesStore', () => {
     setState({ totalItems });
     const expectedStore = getState();
 
-    // Test all options
     const options = [
       { itemsPerPage: 6, lastPage: 5 },
       { itemsPerPage: 9, lastPage: 4 },
       { itemsPerPage: 12, lastPage: 3 },
     ] as const;
 
+    // Test all options
     options.forEach(({ itemsPerPage, lastPage }) => {
       changeItemsPerPage(itemsPerPage);
 

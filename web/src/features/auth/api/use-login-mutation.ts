@@ -19,7 +19,7 @@ const loginApi = ({ username, password }: LoginApiCredentials) =>
     }),
   });
 
-// "tanstack"
+// "tanstack-query"
 export const useLoginMutation = () =>
   useMutation({
     mutationFn: loginApi,

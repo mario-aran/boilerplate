@@ -23,7 +23,7 @@ export const LoginForm = () => {
     defaultValues: LOGIN_DEFAULT_VALUES,
   });
 
-  // "tanstack"
+  // "tanstack-query"
   const loginMutation = useLoginMutation();
 
   // Utils

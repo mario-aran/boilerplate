@@ -17,7 +17,7 @@ interface MockUseRecipesQueryProps {
 vi.mock('@/features/recipes/api', () => ({ useRecipesQuery: vi.fn() }));
 
 // Utils
-const mockUseRecipesQuery = ({
+const mockUseRecipesQueryResults = ({
   isLoading,
   recipes,
 }: MockUseRecipesQueryProps) => {
@@ -35,7 +35,7 @@ describe('RecipesCards', () => {
   });
 
   it('renders 3 skeleton cards while loading data', () => {
-    mockUseRecipesQuery({ isLoading: true });
+    mockUseRecipesQueryResults({ isLoading: true });
 
     render(<RecipesCards />);
 
@@ -49,7 +49,7 @@ describe('RecipesCards', () => {
       { id: 2, name: 'Pizza', cookTimeMinutes: 20, image: 'pizza.jpg' },
     ];
 
-    mockUseRecipesQuery({ recipes, isLoading: false });
+    mockUseRecipesQueryResults({ recipes, isLoading: false });
 
     // Actions
     render(<RecipesCards />);
@@ -74,7 +74,7 @@ describe('RecipesCards', () => {
 
   it('displays "No recipes found." when no recipes exists and loading is complete', () => {
     [[], undefined].forEach((recipes) => {
-      mockUseRecipesQuery({ recipes, isLoading: false });
+      mockUseRecipesQueryResults({ recipes, isLoading: false });
 
       render(<RecipesCards />);
 
