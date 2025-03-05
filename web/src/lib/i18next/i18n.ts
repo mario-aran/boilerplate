@@ -29,6 +29,12 @@ i18n
     interpolation: {
       escapeValue: false, // Not needed for react as it escapes by default
     },
+
+    // "i18next-browser-languagedetector"
+    detection: {
+      order: ['localStorage', 'navigator'], // Detection order
+      caches: ['localStorage'], // Where to persist user language
+    },
   });
 
 export { i18n };
