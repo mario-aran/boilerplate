@@ -54,48 +54,41 @@ export default tseslint.config({
 ### Installers
 
 - [x] github repo
-- [x] pnpm (global install) + builtDependencies
+- [x] pnpm
 - [x] vite | react | typescript
 - [x] prettier
       [x] prettier-plugin-tailwindcss
-- [x] eslint
-      [x] typescript-eslint
+- [x] typescript-eslint | eslint
       [x] eslint-plugin-react-hooks
       [x] eslint-plugin-react-refresh
       [x] eslint-plugin-check-file
       [x] eslint-config-prettier
-- [x] vitest | @testing-library
-      [x] @testing-library/jest-dom
-      [x] @testing-library/user-event
-      [x] @vitest/coverage-v8 | @vitest/ui
+- [x] shadcn/ui | tailwindcss
+- [x] @testing-library/react | vitest
 - [x] cypress
-- [x] tailwindcss | shadcn/ui | radix-ui
 - [x] react-router
-- [x] react-hook-form | hookform/resolvers | zod
+- [x] react-hook-form | zod
 - [x] @tanstack/react-query
 - [x] zustand
+- [x] react-i18next
 
 ### Configs
 
 - [x] settings.json (vscode)
-- [x] .gitignore
-- [x] .env
 - [x] .editorconfig
+- [x] .env
+- [x] .gitignore
+- [x] .prettierignore
 - [x] .prettierrc.json
+- [x] components.json (shadcn/ui)
+- [x] cypress.config.js
 - [x] eslint.config.js
 - [x] package.json
 - [x] tsconfig.json | tsconfig.app.json
 - [x] vite.config
-- [x] cypress.config.js
-- [x] components.json (shadcn/ui)
 
 ### Code
 
-- [x] setup config folder: envs
-- [x] setup app folder: router, provider, routes (home, not-found)
-- [x] layout: navbar, footer
-- [x] shadcn components
-- [x] custom-ui
-- [ ] unit tests
-- [ ] add notification when singup register fails
+- [ ] add one notification when singup register fails
 - [ ] e2e tests
+- [ ] implement i18next
