@@ -92,3 +92,4 @@ export default tseslint.config({
 - [ ] add one notification when singup register fails
 - [ ] e2e tests
 - [ ] implement i18next
+- [ ] use env vars on cypress.config.js

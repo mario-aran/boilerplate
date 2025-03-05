@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-// The line above allows "vitest" types in the project.
+// Line above allows "vitest" types in the project.
 
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
@@ -29,7 +29,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
     test: {
       // "vitest"
       environment: 'jsdom', // "jsdom"
-      globals: true, // "vitest", "@testing-library/react"
+      globals: true, // "vitest" and "@testing-library/react"
       setupFiles: './src/lib/vitest/vitest-setup.ts', // @testing-library/jest-dom
 
       // "@vitest/coverage-v8"
