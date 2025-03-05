@@ -71,7 +71,6 @@ describe('useRecipesStore', () => {
 
   it('changeSortBy: should update sortBy', () => {
     const sortBy = 'rating';
-
     changeSortBy(sortBy);
 
     expect(getState()).toEqual({ ...initialStore, sortBy });
@@ -79,7 +78,6 @@ describe('useRecipesStore', () => {
 
   it('changeOrder: should update order', () => {
     const order = 'desc';
-
     changeOrder(order);
 
     expect(getState()).toEqual({ ...initialStore, order });
