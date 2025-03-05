@@ -63,14 +63,14 @@ export default tseslint.config({
       [x] eslint-plugin-react-refresh
       [x] eslint-plugin-check-file
       [x] eslint-config-prettier
-- [x] shadcn/ui | tailwindcss
-- [x] @testing-library/react | vitest
+- [x] shadcn | tailwindcss
+- [x] testing-library | vitest
 - [x] cypress
 - [x] react-router
 - [x] react-hook-form | zod
-- [x] @tanstack/react-query
+- [x] tanstack-query
 - [x] zustand
-- [x] react-i18next
+- [x] i18next
 
 ### Configs
 
@@ -90,9 +90,10 @@ export default tseslint.config({
 ### Code
 
 - [x] implement i18next
+- [x] prefer shadcn/ui imports in eslint instead of other libs
+- [ ] add language-select
 - [ ] add one notification when singup register fails
 - [ ] refactor auth form component, so it can be reused on login and register
 - [ ] use env vars on cypress.config.js
-- [ ] prevent sonner import with message
-- [ ] e2e tests
 - [ ] add auth flow with a backend
+- [ ] e2e tests
