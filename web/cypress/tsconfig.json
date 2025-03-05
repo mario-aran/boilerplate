@@ -1,3 +1,5 @@
+// "cypress": Copied from https://docs.cypress.io/app/tooling/typescript-support
+
 {
   "compilerOptions": {
     "target": "es5",
