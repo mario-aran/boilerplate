@@ -4,9 +4,12 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-// Import translations
+// Translation imports
 import defaultEn from './locales/default-en.json';
 import { es } from './locales/es';
+
+// Types
+export type Language = keyof typeof resources;
 
 // Constants
 export const DEFAULT_NS = 'ns1';
@@ -26,6 +29,7 @@ i18n
     resources, // Load translations
     defaultNS: DEFAULT_NS, // Default namespace
     fallbackLng: DEFAULT_LANGUAGE, // Default language
+    supportedLngs: Object.keys(resources) as Language[], // Supported languages
     interpolation: {
       escapeValue: false, // Not needed for react as it escapes by default
     },
