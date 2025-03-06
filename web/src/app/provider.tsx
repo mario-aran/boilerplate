@@ -1,4 +1,4 @@
-import { Toaster } from '@/components/shadcn-ui/sonner';
+import { ThemedToaster } from '@/components/custom-ui/themed-toaster';
 import { ThemeProvider } from '@/lib/shadcn/theme-provider';
 import { TanstackQueryProvider } from '@/lib/tanstack/tanstack-query-provider';
 import { PropsWithChildren } from 'react';
@@ -12,8 +12,8 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       <ThemeProvider>
         {children}
 
-        {/* Toast notifications */}
-        <Toaster />
+        {/* Notifications */}
+        <ThemedToaster />
       </ThemeProvider>
     </TanstackQueryProvider>
   );

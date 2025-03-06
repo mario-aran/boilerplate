@@ -3,21 +3,18 @@ import { useTheme } from '@/lib/shadcn/theme-provider';
 import { Moon, Sun } from 'lucide-react';
 
 // Constants
-const DARK = 'dark';
+const THEMES = {
+  LIGHT: 'light',
+  DARK: 'dark',
+} as const;
 
 export const ThemeButton = () => {
   // "shadcn"
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   // Utils
-  const handleThemeClick = () => {
-    const isDark =
-      theme === DARK ||
-      (theme === 'system' &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-    setTheme(isDark ? 'light' : DARK);
-  };
+  const handleThemeClick = () =>
+    setTheme(resolvedTheme === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK);
 
   return (
     <Button
