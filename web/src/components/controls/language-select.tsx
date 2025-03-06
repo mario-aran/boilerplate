@@ -27,10 +27,10 @@ export const LanguageSelect = () => {
   const currentLanguage = i18n.resolvedLanguage;
 
   // Utils
-  const handleChangeLanguage = (value: Language) => i18n.changeLanguage(value);
+  const handleLanguageChange = (value: Language) => i18n.changeLanguage(value);
 
   return (
-    <Select value={currentLanguage} onValueChange={handleChangeLanguage}>
+    <Select value={currentLanguage} onValueChange={handleLanguageChange}>
       <SelectTrigger className="w-40 border-none shadow-none">
         <SelectValue />
       </SelectTrigger>

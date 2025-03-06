@@ -1,5 +1,5 @@
 import { LanguageSelect } from '@/components/controls/language-select';
-import { ThemeSwitch } from '@/components/controls/theme-switch';
+import { ThemeButton } from '@/components/controls/theme-button';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/lib/shadcn/utils';
 import { NavLink } from 'react-router';
@@ -35,7 +35,7 @@ export const Header = () => {
         {/* Settings */}
         <div className="flex">
           <LanguageSelect />
-          <ThemeSwitch />
+          <ThemeButton />
         </div>
       </div>
     </header>
