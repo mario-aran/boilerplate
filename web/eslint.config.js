@@ -49,6 +49,10 @@ export default tseslint.config(
           ],
           paths: [
             {
+              name: 'next-themes',
+              message: "Use '@/lib/shadcn/theme-provider' instead.",
+            },
+            {
               name: 'sonner',
               importNames: ['Toaster'],
               message: "Use '@/components/shadcn-ui/sonner' instead.",
