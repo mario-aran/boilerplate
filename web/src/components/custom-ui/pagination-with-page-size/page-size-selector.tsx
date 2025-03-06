@@ -32,7 +32,7 @@ export const PageSizeSelector = <T extends RNArray>({
           value={String(itemsPerPage)}
           onValueChange={(value) => changeItemsPerPage(Number(value))}
         >
-          <SelectTrigger className="w-[58px] border-none focus:ring-transparent">
+          <SelectTrigger className="w-16 border-none shadow-none">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
