@@ -94,7 +94,7 @@ export default tseslint.config({
 - [x] check the selectable as cards! also
 - [x] add language-select
 - [x] rename theme to button?
-- [ ] add one notification when singup register fails
+- [x] add one notification when singup register fails and fix colors
 - [ ] refactor auth form component, so it can be reused on login and register
 - [ ] use env vars on cypress.config.js
 - [ ] add auth flow with a backend
