@@ -91,8 +91,9 @@ export default tseslint.config({
 
 - [x] implement i18next
 - [x] prefer shadcn/ui imports in eslint instead of other libs
-- [ ] check the selectable as cards! also, rename theme to switch?
-- [ ] add language-select
+- [x] check the selectable as cards! also
+- [x] add language-select
+- [ ] rename theme to switch?
 - [ ] add one notification when singup register fails
 - [ ] refactor auth form component, so it can be reused on login and register
 - [ ] use env vars on cypress.config.js
