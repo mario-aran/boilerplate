@@ -6,8 +6,6 @@
     "neverBuiltDependencies": []
   },
   "scripts": {
-    "clean:all": "find . -type d \\( -name 'node_modules' -o -name 'dist' -o -name 'coverage' \\) -prune -exec rm -rf {} + && rm -f *tsbuildinfo*",
-    "files:to-lf": "find . -type f ! -path './node_modules/*' ! -path './dist/*' -exec dos2unix {} +",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
