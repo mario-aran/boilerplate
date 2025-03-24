@@ -8,8 +8,8 @@ services:
       - postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=db
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
 
   redis:
     image: redis:7-alpine
