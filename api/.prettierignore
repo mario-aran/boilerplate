@@ -1,0 +1,2 @@
+# Put files and folders not present in .gitignore
+pnpm-lock.yaml
