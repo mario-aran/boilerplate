@@ -23,11 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Custom Folders
+## Custom
+# Folders
 coverage
 
-# Custom Files
+# Files
 *tsbuildinfo*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
