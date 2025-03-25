@@ -1,6 +1,10 @@
 {
   "name": "api",
-  "private": "true",
+  "private": true,
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
   "scripts": {
     "postinstall": "pnpm rebuild",
     "dev": "tsx watch src/app/index.ts",
