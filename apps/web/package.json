@@ -2,10 +2,8 @@
   "name": "web",
   "private": true,
   "type": "module",
-  "pnpm": {
-    "neverBuiltDependencies": []
-  },
   "scripts": {
+    "postinstall": "pnpm rebuild",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
