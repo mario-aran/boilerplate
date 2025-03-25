@@ -1,13 +1,6 @@
 {
   "name": "api",
   "private": true,
-  "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
-  },
-  "pnpm": {
-    "neverBuiltDependencies": []
-  },
   "scripts": {
     "dev": "tsx watch src/app/index.ts",
     "build": "tsc && tsc-alias",
