@@ -1,4 +1,9 @@
-# Custom
-node_modules/
-dist/
+# Folders
+node_modules
+dist
+
+# Files
 *tsbuildinfo*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

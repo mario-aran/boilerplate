@@ -5,8 +5,10 @@
     "node": ">=22",
     "pnpm": ">=10"
   },
+  "pnpm": {
+    "neverBuiltDependencies": []
+  },
   "scripts": {
-    "postinstall": "pnpm rebuild",
     "dev": "tsx watch src/app/index.ts",
     "build": "tsc && tsc-alias",
     "start": "node dist/app/index.js",
