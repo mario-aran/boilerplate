@@ -6,26 +6,30 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-// tseslint.config allows types in this file
 export default tseslint.config(
-  // Ignores
   {
     ignores: [
       'dist',
-      'coverage', // Avoid "@vitest/coverage-v8" folder
-      'src/components/shadcn-ui', // Avoid "shadcn" components
+      'coverage', // "@vitest/coverage-v8" folder
+      'src/components/shadcn-ui', // "shadcn" components
     ],
   },
 
   // Config
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
-    languageOptions: { ecmaVersion: 2020, globals: globals.browser },
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
     extends: [
-      js.configs.recommended, // "eslint"
-      ...tseslint.configs.strict, // "typescript-eslint"
-      ...tseslint.configs.stylistic, // "typescript-eslint"
-      eslintConfigPrettier, // "eslint-config-prettier": Needs to be at the end
+      // "eslint" and "typescript-eslint"
+      js.configs.recommended,
+      tseslint.configs.strict,
+      tseslint.configs.stylistic,
+
+      // "eslint-config-prettier": Needs to be at the end
+      eslintConfigPrettier,
     ],
     plugins: {
       'react-hooks': reactHooks, // "eslint-plugin-react-hooks"
@@ -38,24 +42,15 @@ export default tseslint.config(
         'error',
         {
           patterns: [
-            {
-              group: ['../**', 'src/*'],
-              message: "Use '@/' instead",
-            },
-            {
-              group: ['@radix-ui/*'],
-              message: "Use '@/components/shadcn-ui' instead.",
-            },
+            { group: ['../**', 'src/*'], message: "Use '@/' instead" },
+            { group: ['@radix-ui/*'], message: "Use '/shadcn-ui' instead." },
           ],
           paths: [
-            {
-              name: 'next-themes',
-              message: "Use '@/lib/shadcn/theme-provider' instead.",
-            },
+            { name: 'next-themes', message: "Use '/theme-provider' instead." },
             {
               name: 'sonner',
               importNames: ['Toaster'],
-              message: "Use '@/components/shadcn-ui/sonner' instead.",
+              message: "Use '/sonner' instead.",
             },
           ],
         },
