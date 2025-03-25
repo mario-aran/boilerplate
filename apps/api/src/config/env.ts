@@ -1,5 +1,5 @@
 // Never use dotenv in production
-if (process.env.NODE_ENV !== 'production') import('dotenv/config'); 
+if (process.env.NODE_ENV !== 'production') import('dotenv/config');
 
 export const {
   NODE_ENV = '',
