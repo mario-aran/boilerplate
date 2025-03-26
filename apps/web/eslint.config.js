@@ -21,7 +21,7 @@ export default tseslint.config(
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2020, // Should match the "target" version in "tsconfig.json"
       globals: globals.browser,
     },
     extends: [

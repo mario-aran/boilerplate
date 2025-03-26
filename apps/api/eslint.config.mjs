@@ -13,7 +13,7 @@ export default tseslint.config(
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2024,
+      ecmaVersion: 2022, // Should match the "target" version in "tsconfig.json"
       globals: globals.node,
     },
     extends: [

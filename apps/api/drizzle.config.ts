@@ -6,7 +6,7 @@ import { DATABASE_URL } from './src/config/env';
 
 export default defineConfig({
   out: './migrations', // Migrations folder
-  schema: './src/libs/drizzle/schemas/index.ts',
+  schema: './src/lib/drizzle/schemas/index.ts',
   dialect: 'postgresql',
   dbCredentials: { url: DATABASE_URL },
 });
