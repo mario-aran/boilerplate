@@ -1,7 +1,7 @@
 /* "tailwind" */
 @import 'tailwindcss';
 
-/* "shadcn": Created by Shadcn Cli */
+/* "shadcn": Created by shadcn cli */
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));

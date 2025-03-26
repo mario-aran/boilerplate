@@ -1,4 +1,4 @@
-// "cypress": Created by cypress Cli
+// "cypress": Created by cypress cli
 
 import { defineConfig } from 'cypress';
 
