@@ -1,5 +1,5 @@
+import { usersController } from '@/features/users/users.controller';
 import { Router } from 'express';
-import { usersController } from './users.controller';
 
 // Constants
 const USERS_ROUTE = '/users';
