@@ -1,3 +1,3 @@
 # TypeScript + Node.js
 
-This template was manually created
+This template was created manually.
