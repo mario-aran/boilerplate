@@ -5,6 +5,7 @@ import * as schemas from './schemas';
 
 const pool = new Pool({ connectionString: DATABASE_URL });
 
+// Drizzle database connection
 export const db = drizzle({
   client: pool, // DB connection with driver
   logger: NODE_ENV !== 'production' && true, // Query logging
