@@ -27,7 +27,7 @@
       "@testing-library/jest-dom" // "@testing-library/jest-dom"
     ],
 
-    // Absolute path
+    // Absolute paths
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },

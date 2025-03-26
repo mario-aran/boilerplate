@@ -15,7 +15,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // Absolute path
+    // Absolute paths
     "baseUrl": "./",
     "paths": { "@/*": ["./src/*"] }
   },
