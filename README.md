@@ -21,7 +21,17 @@
       [x] eslint-config-prettier
 - [x] zod
 
-2. Installers frontend
+2. Installers backend
+
+- [x] tsx | tsc-alias
+- [x] dotenv
+- [x] express
+- [x] cors
+- [x] drizzle-orm | pg
+- [x] @faker-js/faker
+- [ ] supertest
+
+3. Installers frontend
 
 - [x] vite | react
       [x] eslint-plugin-react-hooks
@@ -34,16 +44,6 @@
 - [x] zustand
 - [x] react-hook-form | @hookform/resolvers
 - [x] i18next
-
-3. Installers backend
-
-- [x] tsx | tsc-alias
-- [x] dotenv
-- [x] express
-- [x] cors
-- [x] drizzle-orm | pg
-- [x] @faker-js/faker
-- [ ] supertest
 
 ---
 
@@ -65,17 +65,17 @@
 - [x] eslint.config (x2)
 - [x] .env (x2)
 
-5. Setups frontend
-
-- [x] vite.config
-- [x] cypress.config | tsconfig (cypress)
-- [x] components.json (shadcn/ui)
-
-6. Setups backend
+5. Setups backend
 
 - [x] docker-compose
       [x] postgresql
       [x] redis
 - [x] drizzle.config
+
+6. Setups frontend
+
+- [x] vite.config
+- [x] cypress.config | tsconfig (cypress)
+- [x] components.json (shadcn/ui)
 
 ---
