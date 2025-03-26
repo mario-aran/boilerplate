@@ -1,3 +1,5 @@
+// "typescript-eslint": Copied from https://typescript-eslint.io/getting-started/#step-2-configuration
+
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import checkFile from 'eslint-plugin-check-file';

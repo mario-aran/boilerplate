@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-// Line above allows "vitest" types in the project.
+// Line above allows "vitest" types in the project
 
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
@@ -8,8 +8,8 @@ import { defineConfig, loadEnv } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }: { mode: string }) => {
-  // Load env file based on `mode` in the current working directory.
-  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
+  // Load env file based on `mode` in the current working directory
+  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix
   const env = loadEnv(mode, process.cwd(), ''); // process.cwd requires "@types/node"
 
   // Vite config
@@ -23,7 +23,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'), // Absolute path
+        '@': path.resolve(__dirname, './src'), // Absolute paths
       },
     },
     test: {

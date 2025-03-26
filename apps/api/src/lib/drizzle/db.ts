@@ -1,3 +1,5 @@
+// "drizzle": Copied from https://orm.drizzle.team/docs/get-started/postgresql-new#step-3---connect-drizzle-orm-to-the-database
+
 import { DATABASE_URL, NODE_ENV } from '@/config/env';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
