@@ -4,5 +4,5 @@ import { usersRoute } from './routes/users.route';
 
 export const router = Router();
 
-// Merge routes after router is created
+// Merge all routes here
 router.use(homeRoute).use(usersRoute);
