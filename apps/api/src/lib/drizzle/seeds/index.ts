@@ -1,3 +1,5 @@
+// WARNING: This file is executed by a "package.json" script. Don't rename or move it
+
 import { NODE_ENV } from '@/config/env';
 import { seedBaseTables } from './seed-base-tables';
 import { seedUsers } from './seed-users';
