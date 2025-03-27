@@ -1,4 +1,4 @@
-// WARNING: This file is executed by a script in "package.json". Don't rename or move it
+// WARNING: This file is used by a script in "package.json". Do not rename or move.
 
 import { SERVER_PORT } from '@/config/env';
 import { errorHandler } from '@/middleware/error-handler';
@@ -13,7 +13,7 @@ app.use('/api', router);
 
 // Middlewares
 app.use(notFound); // Not found routes
-app.use(errorHandler); // Centralized error handler: Must be the last middleware
+app.use(errorHandler); // Error handler: Must be the last middleware
 
 // Start the server
 app.listen(SERVER_PORT, () => {

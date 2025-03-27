@@ -9,7 +9,10 @@ export const usersRoute = Router();
 
 // Route definitions
 usersRoute.get(ROUTE_USERS, usersController.getAll);
+
 usersRoute.get(ROUTE_USER_ID, usersController.get);
-usersRoute.post(ROUTE_USERS, usersController.create);
-usersRoute.put(ROUTE_USER_ID, usersController.update);
+usersRoute.patch(ROUTE_USER_ID, usersController.update);
+usersRoute.patch(`${ROUTE_USER_ID}/status`, usersController.updateStatus);
+usersRoute.patch(`${ROUTE_USER_ID}/role`, usersController.updateRole);
+usersRoute.patch(`${ROUTE_USER_ID}/password`, usersController.updatePassword);
 usersRoute.delete(ROUTE_USER_ID, usersController.delete);
