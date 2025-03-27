@@ -1,5 +1,5 @@
-// "shadcn": Created by shadcn cli
 // WARNING: This file is referenced by "components.json". Don't rename or move it
+// "shadcn": Created by shadcn cli
 
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';

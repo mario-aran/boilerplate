@@ -17,13 +17,12 @@ export default tseslint.config(
       globals: globals.node,
     },
     extends: [
-      // "eslint" and "typescript-eslint"
+      // "eslint" and "typescript-eslint": Must be start with eslint and be put first
       js.configs.recommended,
       tseslint.configs.strict,
       tseslint.configs.stylistic,
 
-      // "eslint-config-prettier": Needs to be at the end
-      eslintConfigPrettier,
+      eslintConfigPrettier, // "eslint-config-prettier": Must be put last
     ],
     plugins: {
       'check-file': checkFile, // "eslint-plugin-check-file"
