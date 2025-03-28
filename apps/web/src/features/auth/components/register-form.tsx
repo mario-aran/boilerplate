@@ -3,7 +3,7 @@ import { Button } from '@/components/shadcn-ui/button';
 import { DialogFooter } from '@/components/shadcn-ui/dialog';
 import { Form } from '@/components/shadcn-ui/form';
 import { useLoginMutation } from '@/features/auth/api/use-login-mutation';
-import { registerSchema, RegisterSchema } from '@/features/auth/zod';
+import { registerSchema, RegisterSchema } from '@/features/auth/auth.zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
