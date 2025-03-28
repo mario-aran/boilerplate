@@ -1,23 +1,17 @@
 export const usersController = {
   getAll: () => {
-    //
+    // yes
   },
   get: () => {
-    //
+    // no
   },
   update: () => {
-    //
-  },
-  updateStatus: () => {
-    //
+    // yes
   },
   updateRole: () => {
-    //
+    // yes
   },
   updatePassword: () => {
-    //
-  },
-  delete: () => {
-    //
+    // yes
   },
 };

@@ -6,6 +6,6 @@ import { usersRoute } from './routes/users.route';
 export const router = Router();
 
 // Combine all routes
-router.use(homeRoute);
-router.use(authRoute);
-router.use(usersRoute);
+router.use('/', homeRoute);
+router.use('/auth', authRoute);
+router.use('/users', usersRoute);
