@@ -3,12 +3,12 @@ import { Button } from '@/components/shadcn-ui/button';
 import { DialogFooter } from '@/components/shadcn-ui/dialog';
 import { Form } from '@/components/shadcn-ui/form';
 import { useLoginMutation } from '@/features/auth/api/use-login-mutation';
-import { registerSchema, RegisterSchema } from '@/features/auth/auth.zod';
+import { registerZod, RegisterZod } from '@/features/auth/auth.zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 // Constants
-const REGISTER_DEFAULT_VALUES: RegisterSchema = {
+const REGISTER_DEFAULT_VALUES: RegisterZod = {
   email: '',
   username: '',
   password: '',
@@ -17,12 +17,12 @@ const REGISTER_DEFAULT_VALUES: RegisterSchema = {
 // Initial values
 const registerInputs = Object.keys(
   REGISTER_DEFAULT_VALUES,
-) as (keyof RegisterSchema)[];
+) as (keyof RegisterZod)[];
 
 export const RegisterForm = () => {
   // "react-hook-form"
-  const form = useForm<RegisterSchema>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<RegisterZod>({
+    resolver: zodResolver(registerZod),
     defaultValues: REGISTER_DEFAULT_VALUES,
   });
 
@@ -30,7 +30,7 @@ export const RegisterForm = () => {
   const loginMutation = useLoginMutation();
 
   // Utils
-  const onSubmit = ({ username, password }: RegisterSchema) =>
+  const onSubmit = ({ username, password }: RegisterZod) =>
     loginMutation.mutate({ username, password });
 
   return (
