@@ -1,17 +1,17 @@
 export const usersController = {
-  getAll: () => {
-    // yes
+  getAll: async () => {
+    return '';
   },
-  get: () => {
-    // no
+  get: async () => {
+    return '';
   },
-  update: () => {
-    // yes
+  update: async () => {
+    return '';
   },
-  updateRole: () => {
-    // yes
+  updateRole: async () => {
+    return '';
   },
-  updatePassword: () => {
-    // yes
+  updatePassword: async () => {
+    return '';
   },
 };

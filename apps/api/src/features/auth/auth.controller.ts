@@ -1,23 +1,23 @@
 export const authController = {
-  register: () => {
+  register: async () => {
     // yes, info
   },
-  login: () => {
+  login: async () => {
     // yes, info
   },
-  logout: () => {
+  logout: async () => {
     // no
   },
-  refresh: () => {
+  refresh: async () => {
     // no
   },
-  me: () => {
+  me: async () => {
     // no
   },
-  forgotPassword: () => {
+  forgotPassword: async () => {
     // yes, email
   },
-  resetPassword: () => {
+  resetPassword: async () => {
     // yes, reset token and new password
   },
 };
