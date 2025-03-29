@@ -12,6 +12,7 @@ const app = express();
 app.use('/api', router);
 
 // Middlewares
+app.use(express.json()); // JSON payloads
 app.use(notFound); // Not found routes
 app.use(errorHandler); // Error handler: Must be the last middleware
 
