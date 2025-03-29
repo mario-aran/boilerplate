@@ -28,7 +28,7 @@ export const usersZod = {
     params: z.object({ id }),
     body: z.object({ userName, email }),
   }),
-  updateRoles: z.object({
+  updateRole: z.object({
     params: z.object({ id }),
     body: z.object({ roleId }),
   }),
@@ -42,5 +42,5 @@ export const usersZod = {
 export type GetAllZod = z.infer<typeof usersZod.getAll>;
 export type GetZod = z.infer<typeof usersZod.get>;
 export type UpdateZod = z.infer<typeof usersZod.update>;
-export type UpdateRolesZod = z.infer<typeof usersZod.updateRoles>;
+export type UpdateRoleZod = z.infer<typeof usersZod.updateRole>;
 export type UpdatePasswordZod = z.infer<typeof usersZod.updatePassword>;

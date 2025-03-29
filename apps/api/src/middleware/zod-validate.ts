@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { ZodError, ZodIssue, ZodObject, ZodRawShape } from 'zod';
+import { AnyZodObject, ZodError, ZodIssue } from 'zod';
 
 // Constants
 const STATUS_UNPROCESSABLE = 422;
 
-export const zodValidate = <T extends ZodRawShape>(schema: ZodObject<T>) => {
+export const zodValidate = (schema: AnyZodObject) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse({
@@ -20,11 +20,13 @@ export const zodValidate = <T extends ZodRawShape>(schema: ZodObject<T>) => {
           message: `${issue.path.join('.')} is ${issue.message}`,
         }));
 
-        return res.status(STATUS_UNPROCESSABLE).json({
+        res.status(STATUS_UNPROCESSABLE).json({
           status: STATUS_UNPROCESSABLE,
           message: 'Invalid data',
           details: errorDetails,
         });
+
+        return; // Stop further execution.
       }
 
       next(err);
