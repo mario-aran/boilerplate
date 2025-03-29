@@ -26,7 +26,7 @@ export const zodValidate = (schema: AnyZodObject) => {
           details: errorDetails,
         });
 
-        return; // Stop further execution.
+        return; // Stop further execution
       }
 
       next(err);

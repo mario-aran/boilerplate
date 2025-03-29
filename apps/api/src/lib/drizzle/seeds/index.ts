@@ -1,4 +1,4 @@
-// WARNING: This file is executed by a script in "package.json". Don't rename or move it
+// WARNING: This file is used by a script in "package.json". Do not rename or move
 
 import { NODE_ENV } from '@/config/env';
 import { seedBaseTables } from './seed-base-tables';

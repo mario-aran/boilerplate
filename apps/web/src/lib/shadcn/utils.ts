@@ -1,4 +1,4 @@
-// WARNING: This file is referenced by "components.json". Don't rename or move it
+// WARNING: This file is referenced by "components.json". Don not rename or move
 // "shadcn": Created by shadcn cli
 
 import { clsx, type ClassValue } from 'clsx';

@@ -1,4 +1,4 @@
-// WARNING: This file is used by a script in "package.json". Do not rename or move.
+// WARNING: This file is used by a script in "package.json". Do not rename or move
 
 import { SERVER_PORT } from '@/config/env';
 import { errorHandler } from '@/middleware/error-handler';

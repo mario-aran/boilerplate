@@ -1,2 +1,2 @@
-# Add only what's not present in .gitignore
+# Only add what's not present in ".gitignore"
 pnpm-lock.yaml
