@@ -19,17 +19,14 @@ export const useRecipesStore = create<RecipesStore>()((set) => ({
 
     set((state) => (newPage > state.lastPage ? state : { page: newPage }));
   },
-
   changeItemsPerPage: (newItemsPerPage) =>
     set((state) => ({
       itemsPerPage: newItemsPerPage,
       page: 1,
       lastPage: getLastPage(state.totalItems, newItemsPerPage),
     })),
-
   changeSortBy: (newSortBy) => set({ sortBy: newSortBy }),
   changeOrder: (newOrder) => set({ order: newOrder }),
-
   changeTotalItems: (newTotalItems) => {
     if (newTotalItems < 0 || !Number.isInteger(newTotalItems)) return;
 
