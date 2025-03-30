@@ -19,28 +19,17 @@ const roleId = z.string().uuid();
 const password = z.string().trim().min(8).max(20);
 
 // Schemas
-export const usersZod = {
-  getAll: z.object({
-    query: z.object({ limit, skip, sortOrder, sortBy }),
-  }),
-  get: z.object({ params: z.object({ id }) }),
-  update: z.object({
-    params: z.object({ id }),
-    body: z.object({ userName, email }),
-  }),
-  updateRole: z.object({
-    params: z.object({ id }),
-    body: z.object({ roleId }),
-  }),
-  updatePassword: z.object({
-    params: z.object({ id }),
-    body: z.object({ password }),
-  }),
-};
+const params = z.object({ id });
+const getAllQuery = z.object({ limit, skip, sortOrder, sortBy });
+const updateBody = z.object({ userName, email });
+const updateRoleBody = z.object({ roleId });
+const updatePasswordBody = z.object({ password });
 
-// Schema types
-export type GetAllZod = z.infer<typeof usersZod.getAll>;
-export type GetZod = z.infer<typeof usersZod.get>;
-export type UpdateZod = z.infer<typeof usersZod.update>;
-export type UpdateRoleZod = z.infer<typeof usersZod.updateRole>;
-export type UpdatePasswordZod = z.infer<typeof usersZod.updatePassword>;
+// Request schemas
+export const usersZod = {
+  getAll: z.object({ query: getAllQuery }),
+  get: z.object({ params }),
+  update: z.object({ params, body: updateBody }),
+  updateRole: z.object({ params, body: updateRoleBody }),
+  updatePassword: z.object({ params, body: updatePasswordBody }),
+};
