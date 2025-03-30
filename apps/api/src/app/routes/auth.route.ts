@@ -1,7 +1,7 @@
 import { authController } from '@/features/auth/auth.controller';
 import { authZod } from '@/features/auth/auth.zod';
 import { zodValidate } from '@/middleware/zod-validate';
-import { controllerCatchAsync } from '@/utils/controller-catch-async';
+import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
 
 export const authRoute = Router();
@@ -10,41 +10,33 @@ export const authRoute = Router();
 authRoute.post(
   '/register',
   zodValidate(authZod.register),
-  controllerCatchAsync(authController.register),
+  routeCatchAsync(authController.register),
 );
 
 authRoute.post(
   '/login',
   zodValidate(authZod.login),
-  controllerCatchAsync(authController.login),
+  routeCatchAsync(authController.login),
 );
 
-authRoute.post(
-  '/logout',
-  zodValidate(authZod.logout),
-  controllerCatchAsync(authController.logout),
-);
+authRoute.post('/logout', routeCatchAsync(authController.logout));
 
 authRoute.post(
   '/refresh',
   zodValidate(authZod.refresh),
-  controllerCatchAsync(authController.refresh),
+  routeCatchAsync(authController.refresh),
 );
 
-authRoute.get(
-  '/me',
-  zodValidate(authZod.me),
-  controllerCatchAsync(authController.me),
-);
+authRoute.get('/me', routeCatchAsync(authController.me));
 
 authRoute.post(
   '/forgot-password',
   zodValidate(authZod.forgotPassword),
-  controllerCatchAsync(authController.forgotPassword),
+  routeCatchAsync(authController.forgotPassword),
 );
 
 authRoute.post(
   '/reset-password',
   zodValidate(authZod.resetPassword),
-  controllerCatchAsync(authController.resetPassword),
+  routeCatchAsync(authController.resetPassword),
 );

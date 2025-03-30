@@ -9,11 +9,11 @@ import { router } from './router';
 const app = express();
 
 // Router
-app.use('/api', router);
+app.use(express.json()); // JSON payloads
+app.use('/api', router); // API router
+app.use(notFound); // Not found routes: Must be put after all routers
 
 // Middlewares
-app.use(express.json()); // JSON payloads
-app.use(notFound); // Not found routes
 app.use(errorHandler); // Error handler: Must be the last middleware
 
 // Start the server
