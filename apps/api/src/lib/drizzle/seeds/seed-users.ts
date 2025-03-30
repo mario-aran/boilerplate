@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import { SEEDS_LENGTH } from './constants';
 
 // Types
-type User = typeof usersSchema.$inferInsert;
+type UsersInsert = typeof usersSchema.$inferInsert;
 
 export const seedUsers = async () => {
   // Query the database
@@ -17,7 +17,7 @@ export const seedUsers = async () => {
   const mockedUsers = faker.helpers
     .uniqueArray(faker.internet.email, SEEDS_LENGTH)
     .map(
-      (email): User => ({
+      (email): UsersInsert => ({
         name: faker.person.fullName(),
         email,
         password: faker.internet.password(),

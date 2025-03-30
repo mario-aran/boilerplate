@@ -2,7 +2,7 @@ import { db } from '@/lib/drizzle/db';
 import { userRolesSchema } from '@/lib/drizzle/schemas';
 
 // Types
-type UserRoleRow = typeof userRolesSchema.$inferInsert;
+type UserRolesInsert = typeof userRolesSchema.$inferInsert;
 
 // Constants
 const USER_ROLES = {
@@ -12,7 +12,7 @@ const USER_ROLES = {
 
 // Prepare mocks
 const mockedUserRoles = Object.values(USER_ROLES).map(
-  (name): UserRoleRow => ({ name }),
+  (name): UserRolesInsert => ({ name }),
 );
 
 // Prepare seed promises
