@@ -1,5 +1,6 @@
 import { authController } from '@/features/auth/auth.controller';
 import { authZod } from '@/features/auth/auth.zod';
+import { jwtStrategy } from '@/lib/passport/jwt-strategy';
 import { zodValidate } from '@/middleware/zod-validate';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
@@ -27,7 +28,7 @@ authRoute.post(
   routeCatchAsync(authController.refresh),
 );
 
-authRoute.get('/me', routeCatchAsync(authController.me));
+authRoute.get('/me', jwtStrategy, routeCatchAsync(authController.me));
 
 authRoute.post(
   '/forgot-password',

@@ -1,21 +1,24 @@
 import { z } from 'zod';
 
-// Schemas
-export const authZod = {
-  register: z.object({}),
-  login: z.object({}),
-  logout: z.object({}),
-  refresh: z.object({}),
-  me: z.object({}),
-  forgotPassword: z.object({}),
-  resetPassword: z.object({}),
-};
+// Fields
+const username;
+const email;
+const password;
+const refreshToken;
+const resetToken;
 
-// Schema types
-export type RegisterZod = z.infer<typeof authZod.register>;
-export type LoginZod = z.infer<typeof authZod.login>;
-export type LogoutZod = z.infer<typeof authZod.logout>;
-export type RefreshZod = z.infer<typeof authZod.refresh>;
-export type MeZod = z.infer<typeof authZod.me>;
-export type ForgotPasswordZod = z.infer<typeof authZod.forgotPassword>;
-export type ResetPasswordZod = z.infer<typeof authZod.resetPassword>;
+// Schemas
+const registerBody = z.object({ username, email, password });
+const loginBody = z.object({ username, password });
+const refreshBody = z.object({ refreshToken });
+const forgotPasswordBody = z.object({ email });
+const resetPasswordBody = z.object({ password, resetToken });
+
+// Request schemas
+export const authZod = {
+  register: z.object({ body: registerBody }),
+  login: z.object({ body: loginBody }),
+  refresh: z.object({ body: refreshBody }),
+  forgotPassword: z.object({ body: forgotPasswordBody }),
+  resetPassword: z.object({ body: resetPasswordBody }),
+};
