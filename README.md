@@ -1,17 +1,8 @@
 # To-Do
 
-## Code
-
-- [ ] implement auth flow
-- [ ] refactor auth form component, so it can be reused on login and register (frontend)
-- [ ] use env vars on cypress.config.js (frontend)
-- [ ] implement e2e (frontend)
-
----
-
 ## Installers
 
-1. Installers full-stack
+1. Installers Full-stack
 
 - [x] pnpm
 - [x] typescript
@@ -21,7 +12,7 @@
       [x] eslint-config-prettier
 - [x] zod
 
-2. Installers backend
+2. Installers Backend
 
 - [x] tsx | tsc-alias
 - [x] dotenv
@@ -31,7 +22,7 @@
 - [x] @faker-js/faker
 - [ ] supertest
 
-3. Installers frontend
+3. Installers Frontend
 
 - [x] vite | react
       [x] eslint-plugin-react-hooks
@@ -49,7 +40,7 @@
 
 ## Setups
 
-4. Setups full-stack
+1. Setups Full-stack
 
 - [ ] render
 - [x] github
@@ -65,17 +56,15 @@
 - [x] eslint.config (x2)
 - [x] .env (x2)
 
-5. Setups backend
+2. Setups Backend
 
 - [x] docker-compose
       [x] postgresql
       [x] redis
 - [x] drizzle.config
 
-6. Setups frontend
+3. Setups Frontend
 
 - [x] vite.config
 - [x] cypress.config | tsconfig (cypress)
 - [x] components.json (shadcn/ui)
-
----
