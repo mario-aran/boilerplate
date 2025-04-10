@@ -1,5 +1,3 @@
-// WARNING: This file is used by a script in "package.json". Do not rename or move
-
 import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
 import cors from 'cors';
