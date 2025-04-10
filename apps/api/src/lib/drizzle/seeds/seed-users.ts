@@ -1,7 +1,7 @@
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { faker } from '@faker-js/faker';
-import { SEEDS_LENGTH } from './constants';
+import { SEEDS_LENGTH } from './constants/seeds-length';
 
 // Types
 type UsersInsert = typeof usersSchema.$inferInsert;

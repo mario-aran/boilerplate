@@ -23,7 +23,8 @@ const seedDatabase = async () => {
   }
 };
 
-// Run script only in development
+// Guard to run this script only in development
 if (NODE_ENV === 'production')
   throw new Error('Seeding not allowed in production');
+
 seedDatabase();
