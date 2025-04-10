@@ -1,2 +1,8 @@
 packages:
-  - "apps/*"
+  - apps/*
+
+# "pnpm approve-builds": Dependencies allowed to run scripts
+onlyBuiltDependencies:
+  - "@swc/core"
+  - cypress
+  - esbuild

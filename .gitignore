@@ -1,7 +1,11 @@
 # Folders
 node_modules
+dist
+coverage
 
 # Files
+package-lock.json
+yarn.lock
+*tsbuildinfo*
 **/package-lock.json
-**/pnpm-lock.yaml
 **/yarn.lock

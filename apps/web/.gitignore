@@ -1,3 +1,4 @@
+## Added by vite cli
 # Logs
 logs
 *.log
@@ -7,8 +8,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
+# node_modules
+# dist
 dist-ssr
 *.local
 
@@ -23,8 +24,15 @@ dist-ssr
 *.sln
 *.sw?
 
-# Custom Folders
+## Added manually
+# Folders
+node_modules
+dist
 coverage
 
-# Custom Files
+# Files
+package-lock.json
+yarn.lock
 *tsbuildinfo*
+**/package-lock.json
+**/yarn.lock
