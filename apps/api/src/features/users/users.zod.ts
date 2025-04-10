@@ -19,25 +19,25 @@ const sortBy = z
   });
 
 // Schemas
-export const getAllUsersZod = z.object({ limit, skip, sortOrder, sortBy });
-export const updateUsersZod = z.object({ userName, email });
-export const updateRoleUsersZod = z.object({ roleId: id });
-export const updatePasswordUsersZod = z.object({ password });
+const getAllUsersZod = z.object({ limit, skip, sortOrder, sortBy });
+const updateUsersZod = z.object({ userName, email });
+const updateRoleUsersZod = z.object({ roleId: id });
+const updatePasswordUsersZod = z.object({ password });
 
 // Request schemas
-export const getAllQueryUsersZod = z.object({ query: getAllUsersZod });
+export const getAllReqUsersZod = z.object({ query: getAllUsersZod });
 
-export const updateBodyUsersZod = z.object({
+export const updateReqUsersZod = z.object({
   params: idZod,
   body: updateUsersZod,
 });
 
-export const updateRoleBodyUsersZod = z.object({
+export const updateRoleReqUsersZod = z.object({
   params: idZod,
   body: updateRoleUsersZod,
 });
 
-export const updatePasswordBodyUsersZod = z.object({
+export const updatePasswordReqUsersZod = z.object({
   params: idZod,
   body: updatePasswordUsersZod,
 });

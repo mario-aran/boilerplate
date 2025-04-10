@@ -5,7 +5,7 @@ import { id } from './common-fields';
 export const idZod = z.object({ id });
 
 // Request schemas
-export const paramsIdZod = z.object({ params: idZod });
+export const idReqZod = z.object({ params: idZod });
 
 // Exported schema types
 export type IdZod = z.infer<typeof idZod>;
