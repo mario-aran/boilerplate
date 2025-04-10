@@ -1,10 +1,16 @@
+import {
+  email,
+  id,
+  limit,
+  password,
+  skip,
+  sortOrder,
+  userName,
+} from '@/lib/zod/common-fields';
+import { idZod } from '@/lib/zod/common-schemas';
 import { z } from 'zod';
 
 // Fields
-const limit = z.number().int().positive().optional();
-const skip = z.number().int().positive().optional();
-const sortOrder = z.enum(['asc', 'desc']).optional();
-
 const sortBy = z
   .array(z.enum(['id', 'userName', 'email', 'roleId']))
   .optional()
@@ -12,24 +18,32 @@ const sortBy = z
     message: 'Array cannot be empty and must contain unique values',
   });
 
-const id = z.string().uuid();
-const userName = z.string().trim().min(3).max(20).optional();
-const email = z.string().email().trim().min(5).max(60).optional();
-const roleId = z.string().uuid();
-const password = z.string().trim().min(8).max(20);
-
 // Schemas
-const params = z.object({ id });
-const getAllQuery = z.object({ limit, skip, sortOrder, sortBy });
-const updateBody = z.object({ userName, email });
-const updateRoleBody = z.object({ roleId });
-const updatePasswordBody = z.object({ password });
+export const getAllUsersZod = z.object({ limit, skip, sortOrder, sortBy });
+export const updateUsersZod = z.object({ userName, email });
+export const updateRoleUsersZod = z.object({ roleId: id });
+export const updatePasswordUsersZod = z.object({ password });
 
 // Request schemas
-export const usersZod = {
-  getAll: z.object({ query: getAllQuery }),
-  get: z.object({ params }),
-  update: z.object({ params, body: updateBody }),
-  updateRole: z.object({ params, body: updateRoleBody }),
-  updatePassword: z.object({ params, body: updatePasswordBody }),
-};
+export const getAllQueryUsersZod = z.object({ query: getAllUsersZod });
+
+export const updateBodyUsersZod = z.object({
+  params: idZod,
+  body: updateUsersZod,
+});
+
+export const updateRoleBodyUsersZod = z.object({
+  params: idZod,
+  body: updateRoleUsersZod,
+});
+
+export const updatePasswordBodyUsersZod = z.object({
+  params: idZod,
+  body: updatePasswordUsersZod,
+});
+
+// Exported schema types
+export type GetAllUsersZod = z.infer<typeof getAllUsersZod>;
+export type UpdateUsersZod = z.infer<typeof updateUsersZod>;
+export type UpdateRoleUsersZod = z.infer<typeof updateRoleUsersZod>;
+export type UpdatePasswordUsersZod = z.infer<typeof updatePasswordUsersZod>;
