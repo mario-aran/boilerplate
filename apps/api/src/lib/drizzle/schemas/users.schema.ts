@@ -1,4 +1,8 @@
-import { createdAt, id, updatedAt } from '@/lib/drizzle/schemas/common-columns';
+import {
+  createdAt,
+  id,
+  updatedAt,
+} from '@/lib/drizzle/schemas/utils/common-columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 import { userRolesSchema } from './user-roles.schema';

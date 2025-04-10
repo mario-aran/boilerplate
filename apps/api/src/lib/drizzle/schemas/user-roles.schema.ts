@@ -1,7 +1,7 @@
-import { createdAt, id, updatedAt } from '@/lib/drizzle/schemas/common-columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { usersSchema } from './users.schema';
+import { createdAt, id, updatedAt } from './utils/common-columns';
 
 export const userRolesSchema = pgTable('user_roles', {
   id,
