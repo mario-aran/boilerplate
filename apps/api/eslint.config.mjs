@@ -1,15 +1,15 @@
-// "typescript-eslint": Copied from https://typescript-eslint.io/getting-started/#step-2-configuration
-
 import js from '@eslint/js';
+import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import checkFile from 'eslint-plugin-check-file';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
+  // Ignores
   { ignores: ['dist'] },
 
-  // Config
+  // Base config
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -48,6 +48,18 @@ export default tseslint.config(
         { '**/*.{ts,tsx}': 'KEBAB_CASE' },
         { ignoreMiddleExtensions: true },
       ],
+    },
+  },
+
+  // Vitest config
+  {
+    files: ['**/*.{spec,test}.{ts,tsx}'],
+    plugins: {
+      vitest, // "eslint-plugin-vitest"
+    },
+    rules: {
+      // "eslint-plugin-vitest"
+      ...vitest.configs.recommended.rules,
     },
   },
 );
