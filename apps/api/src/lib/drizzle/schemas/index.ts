@@ -1,4 +1,4 @@
-// This barrel file with all schemas is needed for "drizzle.config" and the database connection
+// WARNING: Barrel file is used by "drizzle.config" and database connection. Do not rename or move
 
 export * from './user-roles.schema';
 export * from './users.schema';
