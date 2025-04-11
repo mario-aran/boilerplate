@@ -5,10 +5,6 @@ import { usersService } from '../../features/users/users.service';
 import { GetAllUsersZod } from '../../lib/zod/schemas/users.zod';
 
 class UsersController {
-  private throwNotFoundHttpError() {
-    throw new HttpError(HTTP_STATUS.NOT_FOUND, 'User not found');
-  }
-
   public async getAll(
     req: Request<unknown, unknown, unknown, GetAllUsersZod>,
     res: Response,
@@ -54,6 +50,10 @@ class UsersController {
     res.json({
       message: `Password for ${updatedUser.id} updated successfully`,
     });
+  }
+
+  private throwNotFoundHttpError() {
+    throw new HttpError(HTTP_STATUS.NOT_FOUND, 'User not found');
   }
 }
 
