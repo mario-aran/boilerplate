@@ -1,5 +1,5 @@
-import { handleNotFound } from '@/middleware/handle-not-found';
-import { handleRouteError } from '@/middleware/handle-route-error';
+import { handleNotFound } from '@/server/middleware/handle-not-found';
+import { handleRouteError } from '@/server/middleware/handle-route-error';
 import cors from 'cors';
 import express from 'express';
 import passport from 'passport';
