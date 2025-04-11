@@ -5,7 +5,7 @@ import { usersRoute } from './routes/users.route';
 
 const router = Router();
 
-// Imported routes: Combine and declare paths
+// Combine routes and declare paths
 router.use('/', homeRoute);
 router.use('/auth', authRoute);
 router.use('/users', usersRoute);
