@@ -24,14 +24,14 @@ export const zodValidate = (schema: Schema) => {
           message: issue.message,
         }));
 
-        return res.status(HTTP_STATUS.UNPROCESSABLE).json({
+        res.status(HTTP_STATUS.UNPROCESSABLE).json({
           status: HTTP_STATUS.UNPROCESSABLE,
           message: 'Invalid data',
           details,
         });
+      } else {
+        next(err);
       }
-
-      next(err);
     }
   };
 };
