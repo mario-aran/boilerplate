@@ -1,4 +1,5 @@
 import {
+  createUsersZod,
   getAllUsersZod,
   updatePasswordUsersZod,
   updateUsersZod,
@@ -20,6 +21,12 @@ usersRoute.get(
   BASE_PATH,
   zodValidate({ query: getAllUsersZod }),
   routeCatchAsync(usersController.getAll),
+);
+
+usersRoute.post(
+  BASE_PATH,
+  zodValidate({ body: createUsersZod }),
+  routeCatchAsync(usersController.create),
 );
 
 usersRoute.get(ID_PATH, routeCatchAsync(usersController.get));
