@@ -6,7 +6,7 @@ import {
 } from '@/lib/zod/schemas/users.zod';
 import { usersController } from '@/server/controllers/users.controller';
 import { zodValidate } from '@/server/middleware/zod-validate';
-import { routeCatchAsync } from '@/utils/route-catch-async';
+import { routeCatchAsync } from '@/server/utils/route-catch-async';
 import { Router } from 'express';
 
 // Constants

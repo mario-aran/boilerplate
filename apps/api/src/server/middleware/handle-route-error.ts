@@ -1,5 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { HttpError } from '@/utils/http-error';
+import { HttpError } from '@/server/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 export const handleRouteError = (
