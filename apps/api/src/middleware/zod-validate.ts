@@ -2,30 +2,33 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodError, ZodIssue } from 'zod';
 
-export const zodValidate = (schema: AnyZodObject) => {
+// Types
+interface Schema {
+  params?: AnyZodObject;
+  query?: AnyZodObject;
+  body?: AnyZodObject;
+}
+
+export const zodValidate = (schema: Schema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse({
-        params: req.params,
-        query: req.query,
-        body: req.body,
-      });
+      schema.params?.parse(req.params);
+      schema.query?.parse(req.query);
+      schema.body?.parse(req.body);
 
       next();
     } catch (err) {
       if (err instanceof ZodError) {
-        const errorDetails = err.errors.map((issue: ZodIssue) => ({
+        const details = err.errors.map((issue: ZodIssue) => ({
           path: `${issue.path.join('.')}`,
           message: issue.message,
         }));
 
-        res.status(HTTP_STATUS.UNPROCESSABLE).json({
+        return res.status(HTTP_STATUS.UNPROCESSABLE).json({
           status: HTTP_STATUS.UNPROCESSABLE,
           message: 'Invalid data',
-          details: errorDetails,
+          details,
         });
-
-        return; // Stop further execution
       }
 
       next(err);
