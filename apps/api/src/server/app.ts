@@ -3,7 +3,7 @@ import { handleRouteError } from '@/server/middleware/handle-route-error';
 import cors from 'cors';
 import express from 'express';
 import passport from 'passport';
-import { router } from './router';
+import { router } from './routes';
 
 const app = express();
 
