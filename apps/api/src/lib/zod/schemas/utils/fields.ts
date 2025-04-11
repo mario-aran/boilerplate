@@ -10,8 +10,10 @@ export const stringId = z
     message: 'Must be uppercase alphanumeric without spaces',
   });
 
+// Text fields
+export const string = z.string().trim().min(1).max(60);
+
 // User fields
-export const name = z.string().trim().min(1).max(60);
 export const email = z.string().email().min(5).max(60);
 
 export const password = z
@@ -22,6 +24,6 @@ export const password = z
     message: 'Must not contain spaces',
   });
 
-// Pagination fields
+// Filter fields
 export const limit = z.number().int().positive();
 export const skip = z.number().int().positive();

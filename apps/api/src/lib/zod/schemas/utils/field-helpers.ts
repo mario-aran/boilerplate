@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-// Pagination helpers
+// Filter helpers
 export const getOrderBy = <T extends string>(values: [T, ...T[]]) =>
   z
     .array(z.string())
