@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '@/constants/http-status';
+import { HTTP_STATUS } from '@/server/constants/http-status';
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodError, ZodIssue } from 'zod';
 
