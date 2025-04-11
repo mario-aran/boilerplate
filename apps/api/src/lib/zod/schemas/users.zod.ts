@@ -24,7 +24,7 @@ export const updateUsersZod = z
 
 export const updatePasswordUsersZod = z.object({ password });
 
-// Schema types
+// Exported schema types
 export type GetAllUsersZod = z.infer<typeof getAllUsersZod>;
 export type CreateUsersZod = z.infer<typeof createUsersZod>;
 export type UpdateUsersZod = z.infer<typeof updateUsersZod>;
