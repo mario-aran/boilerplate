@@ -1,14 +1,9 @@
+import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { userRolesSchema } from '@/lib/drizzle/schemas';
 
 // Types
 type UserRolesInsert = typeof userRolesSchema.$inferInsert;
-
-// Constants
-const USER_ROLES = {
-  DEFAULT: 'DEFAULT',
-  ADMIN: 'ADMIN',
-} as const;
 
 // Mocks
 const mockedUserRoles = Object.values(USER_ROLES).map(

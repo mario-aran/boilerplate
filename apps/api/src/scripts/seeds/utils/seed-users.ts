@@ -1,6 +1,6 @@
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
-import { SEEDS_LENGTH } from '@/scripts/seeds/constants';
+import { SEEDS_LENGTH } from '@/scripts/seeds/constants/seeds-length';
 import { faker } from '@faker-js/faker';
 
 // Types
