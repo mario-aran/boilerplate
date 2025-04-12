@@ -1,7 +1,14 @@
 import { USERS_COLUMNS } from '@/lib/drizzle/schemas';
+import { getSort } from '@/lib/zod/utils/field-helpers';
+import {
+  email,
+  limit,
+  password,
+  skip,
+  text,
+  textId,
+} from '@/lib/zod/utils/fields';
 import { z } from 'zod';
-import { getSort } from '../utils/field-helpers';
-import { email, limit, password, skip, text, textId } from '../utils/fields';
 
 // Fields
 const sort = getSort(USERS_COLUMNS);
