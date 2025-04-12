@@ -1,5 +1,5 @@
+import { email, password } from '@/lib/zod/utils/fields';
 import { z } from 'zod';
-import { email, password } from '../utils/fields';
 
 // Schemas
 export const loginAuthZod = z.object({ email, password });
