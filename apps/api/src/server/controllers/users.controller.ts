@@ -1,8 +1,8 @@
+import { usersService } from '@/features/users/users.service';
+import { GetAllUsersZod } from '@/lib/zod/schemas/users.zod';
 import { HTTP_STATUS } from '@/server/constants/http-status';
 import { HttpError } from '@/server/utils/http-error';
 import { Request, Response } from 'express';
-import { usersService } from '../../features/users/users.service';
-import { GetAllUsersZod } from '../../lib/zod/schemas/users.zod';
 
 class UsersController {
   public async getAll(
@@ -24,19 +24,16 @@ class UsersController {
     const createdUser = await usersService.create(req.body);
 
     res.status(HTTP_STATUS.CREATED).json({
-      message: `User ${createdUser.id} created successfully`,
+      message: `User ${createdUser.email} created successfully`,
     });
   }
 
   public async update(req: Request, res: Response) {
-    const updatedUser = await usersService.updatePassword(
-      req.params.id,
-      req.body,
-    );
+    const updatedUser = await usersService.update(req.params.id, req.body);
     if (!updatedUser) this.throwNotFoundHttpError();
 
     res.json({
-      message: `User ${updatedUser.id} updated successfully`,
+      message: `User ${updatedUser.email} updated successfully`,
     });
   }
 
@@ -48,7 +45,7 @@ class UsersController {
     if (!updatedUser) this.throwNotFoundHttpError();
 
     res.json({
-      message: `Password for ${updatedUser.id} updated successfully`,
+      message: `Password for ${updatedUser.email} updated successfully`,
     });
   }
 
