@@ -1,21 +1,13 @@
 import { z } from 'zod';
 
-// Filter helpers
-export const getOrderBy = <T extends string>(values: [T, ...T[]]) =>
-  z
-    .array(z.string())
-    .min(1)
-    .transform((arr) =>
-      arr.map((item) => {
-        const [field, order] = item.split('.') as [T, 'asc' | 'desc'];
-        return { field, order };
+// Filters
+const getSort = (allowedFields: string[]) => {
+  return z.string().refine(
+    (value) =>
+      value.split(',').every((field) => {
+        const cleanField = field.startsWith('-') ? field.slice(1) : field;
+        return allowedFields.includes(cleanField);
       }),
-    )
-    .refine(
-      (arr) =>
-        arr.every(
-          ({ field, order }) =>
-            values.includes(field) && (order === 'asc' || order === 'desc'),
-        ),
-      { message: 'Invalid field or order in orderBy query' },
-    );
+    { message: 'Invalid sort field(s)' },
+  );
+};

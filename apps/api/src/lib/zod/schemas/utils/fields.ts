@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
-// Id fields
+// Ids
 export const id = z.string().uuid();
-export const stringId = z
+
+export const textId = z
   .string()
   .min(3)
   .max(12)
@@ -10,10 +11,8 @@ export const stringId = z
     message: 'Must be uppercase alphanumeric without spaces',
   });
 
-// Text fields
-export const string = z.string().trim().min(1).max(60);
-
-// User fields
+// Texts
+export const text = z.string().trim().min(1).max(60);
 export const email = z.string().email().min(5).max(60);
 
 export const password = z
@@ -24,6 +23,6 @@ export const password = z
     message: 'Must not contain spaces',
   });
 
-// Filter fields
+// Filters
 export const limit = z.number().int().positive();
 export const skip = z.number().int().positive();
