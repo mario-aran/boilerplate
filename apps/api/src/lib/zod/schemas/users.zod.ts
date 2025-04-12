@@ -1,15 +1,19 @@
 import { USERS_COLUMNS } from '@/lib/drizzle/schemas';
 import { z } from 'zod';
-import { getOrderBy } from './utils/field-helpers';
-import { email, id, limit, name, password, skip } from './utils/fields';
+import { getSort } from './utils/field-helpers';
+import { email, limit, password, skip, text, textId } from './utils/fields';
 
 // Fields
-const firstName = name;
-const lastName = name;
-const orderBy = getOrderBy(USERS_COLUMNS);
+const sort = getSort(USERS_COLUMNS);
+const userRoleId = textId;
+const q = text;
+const firstName = text;
+const lastName = text;
 
 // Schemas
-export const getAllUsersZod = z.object({ orderBy, limit, skip }).partial();
+export const getAllUsersZod = z
+  .object({ limit, skip, sort, userRoleId, q })
+  .partial();
 
 export const createUsersZod = z.object({
   firstName,
@@ -19,7 +23,7 @@ export const createUsersZod = z.object({
 });
 
 export const updateUsersZod = z
-  .object({ firstName, lastName, email, userRoleId: id })
+  .object({ firstName, lastName, email, userRoleId })
   .partial();
 
 export const updatePasswordUsersZod = z.object({ password });
