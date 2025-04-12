@@ -3,8 +3,8 @@ import { getSort } from '@/lib/zod/utils/field-helpers';
 import {
   email,
   limit,
+  page,
   password,
-  skip,
   text,
   textId,
 } from '@/lib/zod/utils/fields';
@@ -19,7 +19,7 @@ const lastName = text;
 
 // Schemas
 export const getAllUsersZod = z
-  .object({ limit, skip, sort, userRoleId, q })
+  .object({ limit, page, sort, userRoleId, q })
   .partial();
 
 export const createUsersZod = z.object({
