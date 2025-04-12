@@ -1,27 +1,27 @@
 import { z } from 'zod';
 
 // Filters
-export const getSort = <T extends string>(allowedFields: readonly T[]) => {
-  return z
+export const getSort = <T extends string>(allowedFields: readonly T[]) =>
+  z
     .string()
+    .nonempty()
+    .transform((value) =>
+      value.split(',').map((el) => {
+        const desc = el.startsWith('-');
+        return {
+          field: (desc ? el.slice(1) : el) as T,
+          direction: desc ? ('desc' as const) : ('asc' as const),
+        };
+      }),
+    )
     .refine(
-      (value) =>
-        value.split(',').every((el) => {
-          const field = (el.startsWith('-') ? el.slice(1) : el) as T;
-          return allowedFields.includes(field);
-        }),
+      (values) => values.every(({ field }) => allowedFields.includes(field)),
       { message: 'Invalid sort field(s)' },
     )
-    .transform((value) =>
-      value
-        .split(',')
-        .filter(Boolean)
-        .map((el) => {
-          const desc = el.startsWith('-');
-          return {
-            field: (desc ? el.slice(1) : el) as T,
-            direction: desc ? ('desc' as const) : ('asc' as const),
-          };
-        }),
+    .refine(
+      (values) => {
+        const unique = new Set(values.map(({ field }) => field));
+        return unique.size === values.length;
+      },
+      { message: 'Duplicate fields are not allowed' },
     );
-};

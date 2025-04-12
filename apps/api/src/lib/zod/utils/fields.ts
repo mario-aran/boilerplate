@@ -12,7 +12,7 @@ export const textId = z
   });
 
 // Texts
-export const text = z.string().trim().min(1).max(60);
+export const text = z.string().trim().nonempty().max(60);
 export const email = z.string().email().min(5).max(60);
 
 export const password = z
