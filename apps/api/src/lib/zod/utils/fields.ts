@@ -25,4 +25,4 @@ export const password = z
 
 // Filters
 export const limit = z.number().int().positive();
-export const skip = z.number().int().positive();
+export const page = z.number().int().positive();
