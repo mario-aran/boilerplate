@@ -17,7 +17,11 @@
 
     // Absolute paths
     "baseUrl": "./",
-    "paths": { "@/*": ["./src/*"] }
+    "paths": { "@/*": ["./src/*"] },
+
+    "types": [
+      "vitest/globals" // "vitest"
+    ]
   },
   "include": ["src"]
 }

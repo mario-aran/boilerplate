@@ -22,14 +22,14 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    // Absolute paths
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] },
+
     "types": [
       "vitest/globals", // "vitest"
       "@testing-library/jest-dom" // "@testing-library/jest-dom"
-    ],
-
-    // Absolute paths
-    "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"] }
+    ]
   },
   "include": ["src"]
 }

@@ -1,5 +1,4 @@
 import js from '@eslint/js';
-import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import checkFile from 'eslint-plugin-check-file';
 import globals from 'globals';
@@ -7,7 +6,12 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   // Ignores
-  { ignores: ['dist'] },
+  {
+    ignores: [
+      'dist',
+      'coverage', // "@vitest/coverage-v8"
+    ],
+  },
 
   // Base config
   {
@@ -32,9 +36,7 @@ export default tseslint.config(
       'no-restricted-imports': [
         'error',
         {
-          patterns: [
-            { group: ['../**', 'src/*'], message: "Use '@/' instead" },
-          ],
+          patterns: [{ group: ['../**', 'src/*'] }],
         },
       ],
 
@@ -48,18 +50,6 @@ export default tseslint.config(
         { '**/*.{ts,tsx}': 'KEBAB_CASE' },
         { ignoreMiddleExtensions: true },
       ],
-    },
-  },
-
-  // Vitest config
-  {
-    files: ['**/*.{spec,test}.{ts,tsx}'],
-    plugins: {
-      vitest, // "eslint-plugin-vitest"
-    },
-    rules: {
-      // "eslint-plugin-vitest"
-      ...vitest.configs.recommended.rules,
     },
   },
 );

@@ -1,5 +1,3 @@
-// "typescript-eslint": Copied from https://typescript-eslint.io/getting-started/#step-2-configuration
-
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import checkFile from 'eslint-plugin-check-file';
@@ -9,15 +7,16 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
+  // Ignores
   {
     ignores: [
       'dist',
-      'coverage', // "@vitest/coverage-v8" folder
+      'coverage', // "@vitest/coverage-v8"
       'src/components/shadcn-ui', // "shadcn" components
     ],
   },
 
-  // Config
+  // Base config
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
