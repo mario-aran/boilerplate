@@ -1,8 +1,5 @@
 import { db } from '@/lib/drizzle/db';
 
-// Types
-type SelectTablesResult = { table_name: string };
-
 // Constants
 const SELECT_TABLES_QUERY = `
   SELECT table_name
@@ -12,7 +9,9 @@ const SELECT_TABLES_QUERY = `
 
 export const truncateTables = async () => {
   // Query the database
-  const { rows } = await db.execute<SelectTablesResult>(SELECT_TABLES_QUERY);
+  const { rows } = await db.execute<{ table_name: string }>(
+    SELECT_TABLES_QUERY,
+  );
 
   if (!rows.length) return console.log('No tables to truncate');
 
