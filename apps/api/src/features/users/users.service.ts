@@ -3,10 +3,10 @@ import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
-  CreateUsersZod,
+  CreateUserZod,
   GetAllUsersZod,
-  UpdatePasswordUsersZod,
-  UpdateUsersZod,
+  UpdateUserPasswordZod,
+  UpdateUserZod,
 } from '@/lib/zod/schemas/users.zod';
 import bcrypt from 'bcryptjs';
 import { and, eq, ilike, or } from 'drizzle-orm';
@@ -17,15 +17,15 @@ class UsersService {
     page,
     sort,
     userRoleId = '',
-    q = '',
+    search = '',
   }: GetAllUsersZod) {
     // Prepare filters
     const filters = and(
       ilike(usersSchema.userRoleId, `%${userRoleId}%`),
       or(
-        ilike(usersSchema.email, `%${q}%`),
-        ilike(usersSchema.firstName, `%${q}%`),
-        ilike(usersSchema.lastName, `%${q}%`),
+        ilike(usersSchema.email, `%${search}%`),
+        ilike(usersSchema.firstName, `%${search}%`),
+        ilike(usersSchema.lastName, `%${search}%`),
       ),
     );
 
@@ -38,12 +38,13 @@ class UsersService {
       page,
     });
 
+    // Remove password from results
     const dataWithNoPassword = data.map(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       ({ password: _, ...restOfData }) => restOfData,
     );
 
-    // Return results
+    // Return results with no password
     return { ...restOfResults, data: dataWithNoPassword };
   }
 
@@ -54,9 +55,9 @@ class UsersService {
     });
   }
 
-  public async create(data: CreateUsersZod) {
+  public async create(data: CreateUserZod) {
     const hashedPassword = await this.hashPassword(data.password);
-    const [createdUser] = await db
+    const [createdRecord] = await db
       .insert(usersSchema)
       .values({
         ...data,
@@ -65,28 +66,28 @@ class UsersService {
       })
       .returning({ email: usersSchema.email });
 
-    return createdUser;
+    return createdRecord;
   }
 
-  public async update(id: string, data: UpdateUsersZod) {
-    const [updatedUser] = await db
+  public async update(id: string, data: UpdateUserZod) {
+    const [updatedRecord] = await db
       .update(usersSchema)
       .set(data)
       .where(eq(usersSchema.id, id))
       .returning({ email: usersSchema.email });
 
-    return updatedUser;
+    return updatedRecord;
   }
 
-  public async updatePassword(id: string, data: UpdatePasswordUsersZod) {
+  public async updatePassword(id: string, data: UpdateUserPasswordZod) {
     const hashedPassword = await this.hashPassword(data.password);
-    const [updatedUser] = await db
+    const [updatedRecord] = await db
       .update(usersSchema)
       .set({ password: hashedPassword })
       .where(eq(usersSchema.id, id))
       .returning({ email: usersSchema.email });
 
-    return updatedUser;
+    return updatedRecord;
   }
 
   private async hashPassword(password: string) {
