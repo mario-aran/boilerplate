@@ -1,8 +1,8 @@
-import { authController } from '@/features/auth/auth.controller';
 import { loginAuthZod } from '@/lib/zod/schemas/auth.zod';
 import { zodValidate } from '@/middleware/zod-validate';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
+import { authController } from './auth.controller';
 
 const authRoute = Router();
 

@@ -1,6 +1,6 @@
-import { authService } from '@/features/auth/auth.service';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
+import { authService } from './auth.service';
 
 class AuthController {
   public async login(req: Request, res: Response) {

@@ -1,8 +1,8 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { usersService } from '@/features/users/users.service';
 import { GetAllUsersZod } from '@/lib/zod/schemas/users.zod';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
+import { usersService } from './users.service';
 
 class UsersController {
   public async getAll(

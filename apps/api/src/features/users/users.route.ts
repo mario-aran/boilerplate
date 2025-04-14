@@ -1,4 +1,3 @@
-import { usersController } from '@/features/users/users.controller';
 import {
   createUsersZod,
   getAllUsersZod,
@@ -8,6 +7,7 @@ import {
 import { zodValidate } from '@/middleware/zod-validate';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
+import { usersController } from './users.controller';
 
 // Constants
 const BASE_PATH = '/';
