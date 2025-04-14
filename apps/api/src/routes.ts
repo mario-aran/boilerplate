@@ -5,7 +5,7 @@ import { Router } from 'express';
 
 const routes = Router();
 
-// Combine routes and declare paths
+// Merge all routes and assign base paths
 routes.use('/', homeRoute);
 routes.use('/auth', authRoute);
 routes.use('/users', usersRoute);
