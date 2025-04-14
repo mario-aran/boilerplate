@@ -1,9 +1,9 @@
 // WARNING: This file is used by a script in "package.json". Do not rename or move
 
-// Never use dotenv in production
+// Load environment variables in non-production environments
 if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require('dotenv').config(); // Used "require()" because "import()" uses async
+  require('dotenv').config(); // Used "require()" because conditional "import()" is async
 }
 
 import { SERVER_PORT } from '@/config/env';
