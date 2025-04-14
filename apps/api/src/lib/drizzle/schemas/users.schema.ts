@@ -24,6 +24,6 @@ export const usersRelations = relations(usersSchema, ({ one }) => ({
 }));
 
 // Exported constants
-export const USERS_COLUMNS = Object.keys(getTableColumns(usersSchema)).filter(
-  (column) => column !== 'password',
-) as [keyof Omit<typeof usersSchema.$inferSelect, 'password'>];
+export const USERS_COLUMNS = Object.keys(getTableColumns(usersSchema)) as [
+  keyof typeof usersSchema.$inferSelect,
+];
