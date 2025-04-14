@@ -8,8 +8,8 @@ import { routes } from './routes';
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // JSON payloads
 app.use(passport.initialize());
+app.use(express.json()); // JSON payloads
 
 // Routes
 app.use('/api', routes);

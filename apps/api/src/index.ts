@@ -3,7 +3,7 @@
 // Load environment variables in non-production environments
 if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require('dotenv').config(); // Used "require()" because conditional "import()" is async
+  require('dotenv').config(); // Used "require()" because conditional "import()" uses async
 }
 
 import { SERVER_PORT } from '@/config/env';
