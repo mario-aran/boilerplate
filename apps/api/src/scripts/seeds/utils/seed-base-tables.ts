@@ -7,7 +7,10 @@ type UserRolesInsert = typeof userRolesSchema.$inferInsert;
 
 // Mocks
 const mockedUserRoles = Object.values(USER_ROLES).map(
-  (id): UserRolesInsert => ({ id, name: id.toLowerCase() }),
+  (id): UserRolesInsert => ({
+    id,
+    name: id.toLowerCase(),
+  }),
 );
 
 // Promises
