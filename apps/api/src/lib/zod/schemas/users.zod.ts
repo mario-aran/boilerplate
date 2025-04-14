@@ -18,30 +18,25 @@ const USERS_WITHOUT_PASSWORD = USERS_COLUMNS.filter(
 // Fields
 const sort = getSort(USERS_WITHOUT_PASSWORD);
 const userRoleId = textId;
-const q = text;
+const search = text;
 const firstName = text;
 const lastName = text;
 
 // Schemas
 export const getAllUsersZod = z
-  .object({ limit, page, sort, userRoleId, q })
+  .object({ limit, page, sort, userRoleId, search })
   .partial();
 
-export const createUsersZod = z.object({
-  firstName,
-  lastName,
-  email,
-  password,
-});
+export const createUserZod = z.object({ firstName, lastName, email, password });
 
-export const updateUsersZod = z
+export const updateUserZod = z
   .object({ firstName, lastName, email, userRoleId })
   .partial();
 
-export const updatePasswordUsersZod = z.object({ password });
+export const updateUserPasswordZod = z.object({ password });
 
 // Exported schema types
 export type GetAllUsersZod = z.infer<typeof getAllUsersZod>;
-export type CreateUsersZod = z.infer<typeof createUsersZod>;
-export type UpdateUsersZod = z.infer<typeof updateUsersZod>;
-export type UpdatePasswordUsersZod = z.infer<typeof updatePasswordUsersZod>;
+export type CreateUserZod = z.infer<typeof createUserZod>;
+export type UpdateUserZod = z.infer<typeof updateUserZod>;
+export type UpdateUserPasswordZod = z.infer<typeof updateUserPasswordZod>;
