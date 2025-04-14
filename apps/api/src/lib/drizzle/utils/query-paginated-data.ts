@@ -21,7 +21,7 @@ export const queryPaginatedData = async ({
   limit = 10,
   sort = [{ field: 'id', direction: 'asc' }],
 }: QueryParams) => {
-  // Query count data
+  // Query count
   const [{ count: total }] = await db
     .select({ count: count() })
     .from(schema)
@@ -29,6 +29,7 @@ export const queryPaginatedData = async ({
 
   const totalPages = total ? Math.ceil(total / limit) : 1;
 
+  // Prepare results
   const results = {
     page,
     prevPage: page > 1 ? page - 1 : null,
@@ -39,7 +40,7 @@ export const queryPaginatedData = async ({
     data: [],
   };
 
-  // Return results with empty data
+  // If count is zero, Return results with empty data
   if (!total) return results;
 
   // Query data
