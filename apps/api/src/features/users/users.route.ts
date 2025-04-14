@@ -1,12 +1,12 @@
+import { usersController } from '@/features/users/users.controller';
 import {
   createUsersZod,
   getAllUsersZod,
   updatePasswordUsersZod,
   updateUsersZod,
 } from '@/lib/zod/schemas/users.zod';
-import { usersController } from '@/server/controllers/users.controller';
-import { zodValidate } from '@/server/middleware/zod-validate';
-import { routeCatchAsync } from '@/server/utils/route-catch-async';
+import { zodValidate } from '@/middleware/zod-validate';
+import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
 
 // Constants

@@ -1,5 +1,5 @@
 import { authService } from '@/features/auth/auth.service';
-import { HttpError } from '@/server/utils/http-error';
+import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 
 class AuthController {

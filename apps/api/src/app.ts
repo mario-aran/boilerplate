@@ -1,9 +1,9 @@
-import { handleNotFound } from '@/server/middleware/handle-not-found';
-import { handleRouteError } from '@/server/middleware/handle-route-error';
+import { handleNotFound } from '@/middleware/handle-not-found';
+import { handleRouteError } from '@/middleware/handle-route-error';
 import cors from 'cors';
 import express from 'express';
 import passport from 'passport';
-import { router } from './routes';
+import { routes } from './routes';
 
 const app = express();
 
@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json()); // JSON payloads
 app.use(passport.initialize());
 
-// Router
-app.use('/api', router);
+// Routes
+app.use('/api', routes);
 
 // Handle route errors
 app.use(handleNotFound); // Must be placed after all route definitions

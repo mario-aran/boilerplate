@@ -68,3 +68,5 @@
 - [x] vite.config
 - [x] cypress.config | tsconfig (cypress)
 - [x] components.json (shadcn/ui)
+
+////
