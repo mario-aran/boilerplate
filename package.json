@@ -1,8 +1,6 @@
 {
   "name": "boilerplate_lab",
   "private": true,
-  "author": "Mario Arancibia",
-  "license": "ISC",
   "engines": {
     "node": ">=22",
     "pnpm": ">=10"
