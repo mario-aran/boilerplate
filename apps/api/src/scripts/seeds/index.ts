@@ -5,7 +5,7 @@ import { seedBaseTables } from './utils/seed-base-tables';
 import { seedUsers } from './utils/seed-users';
 import { truncateTables } from './utils/truncate-tables';
 
-// Guard: Don't run this script in production
+// Never run this script in production
 if (NODE_ENV === 'production')
   throw new Error('Seeding not allowed in production');
 

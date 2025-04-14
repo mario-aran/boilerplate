@@ -1,6 +1,6 @@
 // WARNING: This file is used by a script in "package.json". Do not rename or move
 
-// Load environment variables in non-production environments
+// Load env in non-production environments
 if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   require('dotenv').config(); // Used "require()" because conditional "import()" uses async
