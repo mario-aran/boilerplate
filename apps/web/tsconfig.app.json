@@ -24,12 +24,7 @@
 
     // Absolute paths
     "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"] },
-
-    "types": [
-      "vitest/globals", // "vitest"
-      "@testing-library/jest-dom" // "@testing-library/jest-dom"
-    ]
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src"]
 }

@@ -15,13 +15,14 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // Absolute paths
-    "baseUrl": "./",
-    "paths": { "@/*": ["./src/*"] },
-
+    // Types
     "types": [
       "vitest/globals" // "vitest"
-    ]
+    ],
+
+    // Absolute paths
+    "baseUrl": "./",
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src"]
 }
