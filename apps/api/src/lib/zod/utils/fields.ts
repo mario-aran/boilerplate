@@ -11,7 +11,7 @@ export const textId = z
     message: 'Must be uppercase alphanumeric without spaces',
   });
 
-// Texts
+// Text inputs
 export const text = z.string().trim().nonempty().max(60);
 export const email = z.string().email().min(5).max(60);
 
