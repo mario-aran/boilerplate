@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 // Filters
-export const getSort = <T extends string>(allowedFields: readonly T[]) =>
-  z
+export const getSort = <T extends string>(allowedFields: readonly T[]) => {
+  return z
     .string()
     .nonempty()
     .transform((value) =>
@@ -15,7 +15,10 @@ export const getSort = <T extends string>(allowedFields: readonly T[]) =>
       }),
     )
     .refine(
-      (values) => values.every(({ field }) => allowedFields.includes(field)),
+      (values) =>
+        values.every(({ field }) => {
+          return allowedFields.includes(field);
+        }),
       { message: 'Invalid sort field(s)' },
     )
     .refine(
@@ -25,3 +28,4 @@ export const getSort = <T extends string>(allowedFields: readonly T[]) =>
       },
       { message: 'Duplicate fields are not allowed' },
     );
+};
