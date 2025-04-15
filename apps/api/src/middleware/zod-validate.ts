@@ -9,12 +9,12 @@ interface Schema {
   body?: AnyZodObject;
 }
 
-export const zodValidate = (schema: Schema) => {
+export const zodValidate = ({ params, query, body }: Schema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.params?.parse(req.params);
-      schema.query?.parse(req.query);
-      schema.body?.parse(req.body);
+      params?.parse(req.params);
+      query?.parse(req.query);
+      body?.parse(req.body);
 
       next();
     } catch (err) {
