@@ -23,7 +23,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'), // Absolute paths
+        '@': path.resolve(__dirname, './src'), // Path aliases
       },
     },
     test: {

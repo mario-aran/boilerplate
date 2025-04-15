@@ -20,7 +20,7 @@
       "vitest/globals" // "vitest"
     ],
 
-    // Absolute paths
+    // Path aliases
     "baseUrl": "./",
     "paths": { "@/*": ["./src/*"] }
   },
