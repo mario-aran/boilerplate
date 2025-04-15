@@ -22,6 +22,7 @@ usersRoute.post(
   zodValidate({ body: createUserZod }),
   routeCatchAsync(usersController.create),
 );
+
 usersRoute.get(
   BASE_PATH,
   zodValidate({ query: getAllUsersZod }),
@@ -29,6 +30,7 @@ usersRoute.get(
 );
 
 usersRoute.get(ID_PATH, routeCatchAsync(usersController.get));
+
 usersRoute.patch(
   ID_PATH,
   zodValidate({ body: updateUserZod }),

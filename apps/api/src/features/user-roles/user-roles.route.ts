@@ -20,6 +20,7 @@ userRolesRoute.post(
   zodValidate({ body: createUserRoleZod }),
   routeCatchAsync(userRolesController.create),
 );
+
 userRolesRoute.get(
   BASE_PATH,
   zodValidate({ query: getAllUserRolesZod }),
@@ -27,11 +28,13 @@ userRolesRoute.get(
 );
 
 userRolesRoute.get(ID_PATH, routeCatchAsync(userRolesController.get));
+
 userRolesRoute.put(
   ID_PATH,
   zodValidate({ body: updateUserRoleZod }),
   routeCatchAsync(userRolesController.update),
 );
+
 userRolesRoute.delete(ID_PATH, routeCatchAsync(userRolesController.delete));
 
 export { userRolesRoute };
