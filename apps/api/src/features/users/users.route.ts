@@ -1,8 +1,8 @@
 import {
-  createUsersZod,
+  createUserZod,
   getAllUsersZod,
-  updatePasswordUsersZod,
-  updateUsersZod,
+  updateUserPasswordZod,
+  updateUserZod,
 } from '@/lib/zod/schemas/users.zod';
 import { zodValidate } from '@/middleware/zod-validate';
 import { routeCatchAsync } from '@/utils/route-catch-async';
@@ -25,7 +25,7 @@ usersRoute.get(
 
 usersRoute.post(
   BASE_PATH,
-  zodValidate({ body: createUsersZod }),
+  zodValidate({ body: createUserZod }),
   routeCatchAsync(usersController.create),
 );
 
@@ -33,13 +33,13 @@ usersRoute.get(ID_PATH, routeCatchAsync(usersController.get));
 
 usersRoute.patch(
   ID_PATH,
-  zodValidate({ body: updateUsersZod }),
+  zodValidate({ body: updateUserZod }),
   routeCatchAsync(usersController.update),
 );
 
 usersRoute.patch(
   ID_PASSWORD_PATH,
-  zodValidate({ body: updatePasswordUsersZod }),
+  zodValidate({ body: updateUserPasswordZod }),
   routeCatchAsync(usersController.updatePassword),
 );
 
