@@ -2,6 +2,7 @@
   "name": "web",
   "private": true,
   "type": "module",
+  "main": "main.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
