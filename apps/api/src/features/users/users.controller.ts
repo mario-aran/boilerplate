@@ -45,7 +45,7 @@ class UsersController {
     if (!updatedRecord) this.throwNotFoundHttpError();
 
     res.json({
-      message: `Password for ${updatedRecord.email} user updated successfully`,
+      message: `Password for user ${updatedRecord.email} updated successfully`,
     });
   }
 
