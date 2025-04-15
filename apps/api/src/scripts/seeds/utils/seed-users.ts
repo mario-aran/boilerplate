@@ -6,13 +6,13 @@ import { SEEDS_LENGTH } from '@/scripts/seeds/constants/seeds-length';
 import { faker } from '@faker-js/faker';
 
 export const seedUsers = async () => {
-  // Check if all roles exist
-  const roles = await db.query.userRolesSchema.findMany({
+  // Check if all user roles exist
+  const userRoles = await db.query.userRolesSchema.findMany({
     columns: { id: true },
   });
 
-  const allRolesPresent = Object.values(USER_ROLES).every((roleId) =>
-    roles.some(({ id }) => id === roleId),
+  const allRolesPresent = Object.values(USER_ROLES).every((userRoleId) =>
+    userRoles.some(({ id }) => id === userRoleId),
   );
 
   if (!allRolesPresent)
