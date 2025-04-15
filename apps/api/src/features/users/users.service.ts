@@ -45,7 +45,10 @@ class UsersService {
     );
 
     // Return results with no password
-    return { ...restOfResults, data: dataWithNoPassword };
+    return {
+      ...restOfResults,
+      data: dataWithNoPassword,
+    };
   }
 
   public async get(id: string) {

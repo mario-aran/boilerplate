@@ -14,38 +14,38 @@ class UsersController {
   }
 
   public async get(req: Request, res: Response) {
-    const entity = await usersService.get(req.params.id);
-    if (!entity) this.throwNotFoundHttpError();
+    const record = await usersService.get(req.params.id);
+    if (!record) this.throwNotFoundHttpError();
 
-    res.json(entity);
+    res.json(record);
   }
 
   public async create(req: Request, res: Response) {
-    const createdEntity = await usersService.create(req.body);
+    const createdRecord = await usersService.create(req.body);
 
     res.status(HTTP_STATUS.CREATED).json({
-      message: `User ${createdEntity.email} created successfully`,
+      message: `User ${createdRecord.email} created successfully`,
     });
   }
 
   public async update(req: Request, res: Response) {
-    const updatedEntity = await usersService.update(req.params.id, req.body);
-    if (!updatedEntity) this.throwNotFoundHttpError();
+    const updatedRecord = await usersService.update(req.params.id, req.body);
+    if (!updatedRecord) this.throwNotFoundHttpError();
 
     res.json({
-      message: `User ${updatedEntity.email} updated successfully`,
+      message: `User ${updatedRecord.email} updated successfully`,
     });
   }
 
   public async updatePassword(req: Request, res: Response) {
-    const updatedEntity = await usersService.updatePassword(
+    const updatedRecord = await usersService.updatePassword(
       req.params.id,
       req.body,
     );
-    if (!updatedEntity) this.throwNotFoundHttpError();
+    if (!updatedRecord) this.throwNotFoundHttpError();
 
     res.json({
-      message: `Password for ${updatedEntity.email} updated successfully`,
+      message: `Password for ${updatedRecord.email} user updated successfully`,
     });
   }
 
