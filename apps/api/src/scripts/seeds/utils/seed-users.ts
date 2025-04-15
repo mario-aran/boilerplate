@@ -1,34 +1,39 @@
+import { USER_ROLES } from '@/constants/user-roles';
+import { usersService } from '@/features/users/users.service';
 import { db } from '@/lib/drizzle/db';
-import { usersSchema } from '@/lib/drizzle/schemas';
+import { CreateUserZod } from '@/lib/zod/schemas/users.zod';
 import { SEEDS_LENGTH } from '@/scripts/seeds/constants/seeds-length';
 import { faker } from '@faker-js/faker';
 
-// Types
-type UsersInsert = typeof usersSchema.$inferInsert;
-
 export const seedUsers = async () => {
-  // Query the database
-  const userRoles = await db.query.userRolesSchema.findMany({
+  // Check if all roles exist
+  const roles = await db.query.userRolesSchema.findMany({
     columns: { id: true },
   });
 
-  if (userRoles.length === 0) throw new Error('No user roles found');
+  const allRolesPresent = Object.values(USER_ROLES).every((roleId) =>
+    roles.some(({ id }) => id === roleId),
+  );
 
-  // Prepare mocks
+  if (!allRolesPresent)
+    throw new Error('Not all user roles exists on the database');
+
+  // Mocks
   const mockedUsers = faker.helpers
     .uniqueArray(faker.internet.email, SEEDS_LENGTH)
     .map(
-      (email): UsersInsert => ({
+      (email): CreateUserZod => ({
+        email,
+        password: '12345678',
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
-        email,
-        password: faker.internet.password(),
-        userRoleId: faker.helpers.arrayElement(userRoles).id,
       }),
     );
 
   // Insert seeds
-  await db.insert(usersSchema).values(mockedUsers);
+  for (const user of mockedUsers) {
+    await usersService.create(user);
+  }
 
   console.log('Users seeded successfully');
 };
