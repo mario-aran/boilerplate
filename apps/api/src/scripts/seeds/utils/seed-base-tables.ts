@@ -1,13 +1,11 @@
 import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { userRolesSchema } from '@/lib/drizzle/schemas';
-
-// Types
-type UserRolesInsert = typeof userRolesSchema.$inferInsert;
+import { CreateUserRoleZod } from '@/lib/zod/schemas/user-roles.zod';
 
 // Mocks
 const mockedUserRoles = Object.values(USER_ROLES).map(
-  (id): UserRolesInsert => ({
+  (id): CreateUserRoleZod => ({
     id,
     name: id.toLowerCase(),
   }),

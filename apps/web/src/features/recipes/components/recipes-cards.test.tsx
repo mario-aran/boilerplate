@@ -72,7 +72,7 @@ describe('RecipesCards', () => {
     });
   });
 
-  it('displays "No recipes found." when no recipes exists and loading is complete', () => {
+  it('displays "No recipes found." when no recipes exist and loading is complete', () => {
     [[], undefined].forEach((recipes) => {
       mockUseRecipesQueryResults({ recipes, isLoading: false });
 
