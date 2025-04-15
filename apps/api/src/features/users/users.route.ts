@@ -17,20 +17,18 @@ const ID_PASSWORD_PATH = '/:id/password';
 const usersRoute = Router();
 
 // Route definitions
+usersRoute.post(
+  BASE_PATH,
+  zodValidate({ body: createUserZod }),
+  routeCatchAsync(usersController.create),
+);
 usersRoute.get(
   BASE_PATH,
   zodValidate({ query: getAllUsersZod }),
   routeCatchAsync(usersController.getAll),
 );
 
-usersRoute.post(
-  BASE_PATH,
-  zodValidate({ body: createUserZod }),
-  routeCatchAsync(usersController.create),
-);
-
 usersRoute.get(ID_PATH, routeCatchAsync(usersController.get));
-
 usersRoute.patch(
   ID_PATH,
   zodValidate({ body: updateUserZod }),
