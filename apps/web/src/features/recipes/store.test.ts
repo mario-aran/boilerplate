@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { useRecipesStore } from './store';
 
 // Initial values
