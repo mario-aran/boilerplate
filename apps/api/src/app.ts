@@ -3,13 +3,13 @@ import { handleRouteError } from '@/middleware/handle-route-error';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import passport from 'passport';
+import { passport } from './lib/passport';
 import { routes } from './routes';
 
 const app = express();
 
-app.use(passport.initialize()); // Auth
-app.use(cors()); // Origins
+app.use(passport.initialize()); // Custom passport with all strategies
+app.use(cors()); // Cors
 app.use(cookieParser()); // Cookies
 app.use(express.json()); // JSON body
 
