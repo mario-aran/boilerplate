@@ -22,7 +22,6 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.14.1",
     "zod": "^3.24.2"
@@ -36,7 +35,6 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.1",
     "@types/passport": "^1.0.17",
-    "@types/passport-google-oauth20": "^2.0.16",
     "@types/passport-jwt": "^4.0.1",
     "@types/pg": "^8.11.13",
     "@types/supertest": "^6.0.3",
