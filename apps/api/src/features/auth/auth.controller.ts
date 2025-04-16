@@ -17,11 +17,14 @@ class AuthController {
       sameSite: 'strict',
       maxAge: 60 * 60 * 1000, // 1 hour
     });
+
     res.json({ message: `User ${record.email} logged in successfully` });
   }
 
   public logout(_: Request, res: Response) {
     res.clearCookie(COOKIES.JWT);
+
+    res.json({ message: 'User logged out successfully' });
   }
 }
 
