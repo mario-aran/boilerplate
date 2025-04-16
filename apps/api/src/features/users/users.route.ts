@@ -4,6 +4,7 @@ import {
   updateUserPasswordZod,
   updateUserZod,
 } from '@/lib/zod/schemas/users.zod';
+import { authenticateJwt } from '@/middleware/authenticate-jwt';
 import { zodValidate } from '@/middleware/zod-validate';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
@@ -15,6 +16,9 @@ const ID_PATH = '/:id';
 const ID_PASSWORD_PATH = '/:id/password';
 
 const usersRoute = Router();
+
+// Middleware applied to all routes below
+usersRoute.use(authenticateJwt);
 
 // Route definitions
 usersRoute.post(

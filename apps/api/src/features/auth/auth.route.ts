@@ -1,4 +1,5 @@
 import { loginAuthZod } from '@/lib/zod/schemas/auth.zod';
+import { authenticateJwt } from '@/middleware/authenticate-jwt';
 import { zodValidate } from '@/middleware/zod-validate';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
@@ -13,6 +14,6 @@ authRoute.post(
   routeCatchAsync(authController.login),
 );
 
-authRoute.post('/logout', authController.logout);
+authRoute.post('/logout', authenticateJwt, authController.logout);
 
 export { authRoute };
