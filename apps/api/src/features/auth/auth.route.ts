@@ -13,4 +13,6 @@ authRoute.post(
   routeCatchAsync(authController.login),
 );
 
+authRoute.post('/logout', authController.logout);
+
 export { authRoute };
