@@ -12,10 +12,10 @@ class AuthController {
       throw new HttpError(HTTP_STATUS.UNAUTHORIZED, 'Invalid credentials');
 
     res.cookie(COOKIES.JWT, record.token, {
-      maxAge: 1000 * 60 * 60, // 1 hour
-      sameSite: 'lax',
-      secure: NODE_ENV === 'production',
       httpOnly: true,
+      secure: NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 1000, // 1 hour
     });
     res.json({ message: `User ${record.email} logged in successfully` });
   }
