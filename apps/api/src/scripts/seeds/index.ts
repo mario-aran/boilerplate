@@ -1,5 +1,9 @@
 // WARNING: This file is used by a script in "package.json". Do not rename or move
 
+// Side-effect imports
+import '@/config/load-env';
+
+// Imports
 import { NODE_ENV } from '@/config/env';
 import { seedBaseTables } from './utils/seed-base-tables';
 import { seedUsers } from './utils/seed-users';

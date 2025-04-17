@@ -39,9 +39,16 @@
 - [x] .env (x2)
 - [x] .prettierrc | .prettierignore (x2)
 - [x] eslint.config (x2)
-- [x] tsconfig (x2)
+- [x] tsconfig (x2 + x1 cypress)
 
 2. Setups Backend
 
 - [x] docker-compose.yml
 - [x] drizzle.config
+- [x] vitest.config.ts
+
+3. Setups Frontend
+
+- [x] components.json
+- [x] cypress.config.js
+- [x] vite.config.ts

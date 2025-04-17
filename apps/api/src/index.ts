@@ -1,13 +1,11 @@
 // WARNING: This file is used by a script in "package.json". Do not rename or move
 
-// Load env in non-production environments
-if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require('dotenv').config(); // Used "require()" because conditional "import()" uses async
-}
+// Side-effect imports
+import '@/config/load-env';
 
-import { SERVER_PORT } from '@/config/env';
+// Imports
 import { app } from './app';
+import { SERVER_PORT } from './config/env';
 
 // Start the server
 const server = app.listen(SERVER_PORT, () => {
