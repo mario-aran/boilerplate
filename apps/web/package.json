@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "lint": "tsc --noEmit && eslint . --fix",
     "test": "vitest --watch",
-    "coverage": "vitest --coverage --watch",
+    "test:coverage": "vitest run --coverage",
     "cy:open": "cypress open",
     "shadcn:add": "pnpm dlx shadcn@latest add"
   },

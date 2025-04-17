@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "lint": "tsc --noEmit && eslint . --fix",
     "test": "vitest --watch",
-    "test:coverage": "vitest --watch --coverage",
+    "test:coverage": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx src/scripts/seeds/index.ts"
