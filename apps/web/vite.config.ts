@@ -28,14 +28,14 @@ export default defineConfig(({ mode }: { mode: string }) => {
     },
     test: {
       // "vitest"
-      environment: 'jsdom', // "jsdom"
-      globals: true, // "vitest" and "@testing-library/react"
-      setupFiles: './src/lib/vitest/vitest-setup.ts', // @testing-library/jest-dom
+      globals: true, // Allows global variables without importing them
+      environment: 'jsdom', // "jsdom": Browser environment
+      setupFiles: './src/lib/vitest/vitest-setup.ts', // "@testing-library/jest-dom"
 
       // "@vitest/coverage-v8"
       coverage: {
-        include: ['src'],
-        reporter: ['text'], // Coverage output files
+        reporter: ['text', 'html'], // Coverage report formats
+        include: ['src'], // TIP: Always define coverage.include to optimize coverage
       },
     },
   };
