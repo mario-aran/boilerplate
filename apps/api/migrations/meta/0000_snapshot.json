@@ -42,9 +42,7 @@
         "user_roles_name_unique": {
           "name": "user_roles_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       },
       "policies": {},
@@ -113,12 +111,8 @@
           "name": "users_user_role_id_user_roles_id_fk",
           "tableFrom": "users",
           "tableTo": "user_roles",
-          "columnsFrom": [
-            "user_role_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_role_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -128,9 +122,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},

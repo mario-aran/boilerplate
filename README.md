@@ -21,6 +21,7 @@
 - [x] cors | @types/cors
 - [x] drizzle-orm | pg | drizzle-kit | @types/pg
 - [x] @faker-js/faker
+- [x] cookie-parser | @types/cookie-parser
 - [x] passport | passport-jwt | @types/passport | @types/passport-jwt
       bcryptjs
       jsonwebtoken
