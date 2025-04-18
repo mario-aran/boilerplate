@@ -9,12 +9,12 @@ export default defineConfig({
   },
   test: {
     // "vitest"
-    globals: true, // Allows global variables without importing them
+    globals: true, // Vitest variables without imports
 
     // "@vitest/coverage-v8"
     coverage: {
       reporter: ['text', 'html'], // Coverage report formats
-      include: ['src'], // TIP: Always define coverage.include to optimize coverage
+      include: ['src'], // Define coverage.include to optimize coverage
     },
   },
 });

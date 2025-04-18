@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-// Line above allows "vitest" types in the project
+// Line above allows vitest types in the project
 
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
@@ -28,14 +28,14 @@ export default defineConfig(({ mode }: { mode: string }) => {
     },
     test: {
       // "vitest"
-      globals: true, // Allows global variables without importing them
+      globals: true, // // Vitest variables without imports
       environment: 'jsdom', // "jsdom": Browser environment
       setupFiles: './src/lib/vitest/vitest-setup.ts', // "@testing-library/jest-dom"
 
       // "@vitest/coverage-v8"
       coverage: {
         reporter: ['text', 'html'], // Coverage report formats
-        include: ['src'], // TIP: Always define coverage.include to optimize coverage
+        include: ['src'], // Define coverage.include to optimize coverage
       },
     },
   };
