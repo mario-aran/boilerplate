@@ -8,5 +8,5 @@ export const handleNotFound = (
 ) => {
   const error = new HttpError(404, 'API route not found');
 
-  next(error);
+  return next(error);
 };
