@@ -10,13 +10,13 @@ import {
 } from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
-// Constants
-const USERS_WITHOUT_PASSWORD = USERS_COLUMNS.filter(
+// Initial values
+const usersWithoutPassword = USERS_COLUMNS.filter(
   (column) => column !== 'password',
 );
 
 // Fields
-const sort = getSort(USERS_WITHOUT_PASSWORD);
+const sort = getSort(usersWithoutPassword);
 const userRoleId = textId;
 const search = text;
 const firstName = text;
