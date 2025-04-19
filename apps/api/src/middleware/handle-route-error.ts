@@ -6,6 +6,7 @@ export const handleRouteError = (
   err: HttpError,
   _: Request,
   res: Response,
+  // Disabled eslint rule as "_next" is unused and exception rule isn't applied
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
@@ -14,6 +15,7 @@ export const handleRouteError = (
   res.status(errorStatus).json({
     status: errorStatus,
     message: err.message || 'Internal Server Error',
+    details: err.details || undefined,
     stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
   });
 };
