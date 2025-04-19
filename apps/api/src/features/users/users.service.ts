@@ -46,8 +46,8 @@ class UsersService {
 
     // Return results with no password
     return {
-      ...restOfResults,
       data: dataWithNoPassword,
+      ...restOfResults,
     };
   }
 

@@ -31,17 +31,16 @@ export const queryPaginatedData = async ({
 
   // Prepare results
   const results = {
+    total,
+    limit,
     page,
+    totalPages,
     prevPage: page > 1 ? page - 1 : null,
     nextPage: page < totalPages ? page + 1 : null,
-    total,
-    totalPages,
-    limit,
-    data: [],
   };
 
   // If count is zero, Return results with empty data
-  if (!total) return results;
+  if (!total) return { data: [], ...results };
 
   // Query data
   const orderBy = sort.map(({ field, direction }) => {
@@ -59,5 +58,5 @@ export const queryPaginatedData = async ({
     .offset((page - 1) * limit);
 
   // Return results with data
-  return { ...results, data };
+  return { data, ...results };
 };
