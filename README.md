@@ -1,5 +1,14 @@
 # To-Do
 
+## Instructions
+
+- launch db: `docker compose up -d`
+- install packages: `pnpm install`
+- launch app: `pnpm api dev` | `pnpm web dev`
+- urls: "http://localhost:3000/api" | "http://localhost:5173"
+
+---
+
 ## Installers
 
 1. Installers Full-stack
