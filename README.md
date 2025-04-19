@@ -4,8 +4,8 @@
 
 1. Installers Full-stack
 
-- [x] typescript | @types/node
 - [x] prettier
+- [x] typescript | @types/node
 - [x] typescript-eslint | eslint | @eslint/js | globals
       eslint-plugin-check-file
       eslint-config-prettier
@@ -15,16 +15,34 @@
 2. Installers Backend
 
 - [x] tsx | tsc-alias
-- [x] express | @types/express
 - [x] supertest | @types/supertest
-- [x] dotenv
-- [x] cors | @types/cors
-- [x] drizzle-orm | pg | drizzle-kit | @types/pg
-- [x] @faker-js/faker
-- [x] cookie-parser | @types/cookie-parser
-- [x] passport | passport-jwt | @types/passport | @types/passport-jwt
+- [x] express | @types/express
+      dotenv
+      cors | @types/cors
+- [x] drizzle-orm | drizzle-kit | pg | @types/pg
+      @faker-js/faker
+- [x] passport | @types/passport
+      passport-jwt | @types/passport-jwt
       bcryptjs
-      jsonwebtoken
+      jsonwebtoken | @types/jsonwebtoken
+      cookie-parser | @types/cookie-parser
+
+3. Installers Frontend
+
+- [x] prettier-plugin-tailwindcss
+- [x] eslint-plugin-react-hooks
+      eslint-plugin-react-refresh
+- [x] @testing-library/(dom,jest-dom,react,user-event) | jsdom
+      cypress
+- [x] vite | @vitejs/plugin-react-swc
+      react | react-dom | @types/react | @types/react-dom
+- [x] tailwindcss
+      shadcn/ui: (radix-ui,lucide,sonner)
+- [x] react-router
+- [x] @tanstack/react-query
+- [x] react-hook-form | @hookform/resolvers
+- [x] zustand
+- [x] react-i18next | i18next | i18next-browser-languagedetector
 
 ---
 
@@ -38,14 +56,14 @@
 - [x] pnpm-lock.yaml | pnpm-workspace.yaml
 - [x] README.md (x3)
 - [x] .env (x2)
-- [x] .prettierrc | .prettierignore (x2)
+- [x] .prettierignore | .prettierrc.json (x2)
 - [x] eslint.config (x2)
-- [x] tsconfig (x2 + x1 cypress)
+- [x] tsconfig.json (x3)
 
 2. Setups Backend
 
 - [x] docker-compose.yml
-- [x] drizzle.config
+- [x] drizzle.config.ts
 - [x] vitest.config.ts
 
 3. Setups Frontend
