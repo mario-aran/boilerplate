@@ -8,10 +8,11 @@ import { routes } from './routes';
 
 const app = express();
 
-app.use(passport.initialize()); // Passport with all strategies
 app.use(cors()); // Cors
 app.use(cookieParser()); // Cookies
 app.use(express.json()); // JSON body
+
+app.use(passport.initialize()); // Passport with all strategies
 
 // Routes
 app.use('/api', routes);
