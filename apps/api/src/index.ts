@@ -1,9 +1,6 @@
 // WARNING: This file is used by a script in "package.json". Do not rename or move
 
-// Side-effect imports
 import '@/config/load-env';
-
-// Imports
 import { app } from './app';
 import { SERVER_PORT } from './config/env';
 

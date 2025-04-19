@@ -23,12 +23,12 @@ export default tseslint.config(
       globals: globals.browser,
     },
     extends: [
-      // "eslint", "typescript-eslint": Must start with eslint and come first
+      // "eslint", "typescript-eslint": Must be placed first, starting with eslint
       js.configs.recommended,
       tseslint.configs.strict,
       tseslint.configs.stylistic,
 
-      eslintConfigPrettier, // "eslint-config-prettier": Must come last
+      eslintConfigPrettier, // "eslint-config-prettier": Must be placed last
     ],
     plugins: {
       'react-hooks': reactHooks, // "eslint-plugin-react-hooks"
