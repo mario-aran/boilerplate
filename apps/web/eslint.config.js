@@ -7,7 +7,6 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  // Ignores
   {
     ignores: [
       'dist',
@@ -20,16 +19,16 @@ export default tseslint.config(
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020, // Should match the "target" version in "tsconfig.json"
+      ecmaVersion: 2020, // Should match target version in "tsconfig.json"
       globals: globals.browser,
     },
     extends: [
-      // "eslint" and "typescript-eslint": Must be start with eslint and be put first
+      // "eslint", "typescript-eslint": Must start with eslint and come first
       js.configs.recommended,
       tseslint.configs.strict,
       tseslint.configs.stylistic,
 
-      eslintConfigPrettier, // "eslint-config-prettier": Must be put last
+      eslintConfigPrettier, // "eslint-config-prettier": Must come last
     ],
     plugins: {
       'react-hooks': reactHooks, // "eslint-plugin-react-hooks"

@@ -5,7 +5,6 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  // Ignores
   {
     ignores: [
       'dist',
@@ -17,16 +16,16 @@ export default tseslint.config(
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2022, // Should match the "target" version in "tsconfig.json"
+      ecmaVersion: 2022, // Should match target version in "tsconfig.json"
       globals: globals.node,
     },
     extends: [
-      // "eslint" and "typescript-eslint": Must be start with eslint and be put first
+      // "eslint", "typescript-eslint": Must start with eslint and come first
       js.configs.recommended,
       tseslint.configs.strict,
       tseslint.configs.stylistic,
 
-      eslintConfigPrettier, // "eslint-config-prettier": Must be put last
+      eslintConfigPrettier, // "eslint-config-prettier": Must come last
     ],
     plugins: {
       'check-file': checkFile, // "eslint-plugin-check-file"
