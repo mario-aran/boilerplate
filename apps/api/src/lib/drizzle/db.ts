@@ -9,5 +9,5 @@ const pool = new Pool({ connectionString: DATABASE_URL });
 export const db = drizzle({
   client: pool, // DB connection with driver
   logger: NODE_ENV !== 'production' && true,
-  schema: schemas, // Enable the use of "drizzle.query" within all schemas
+  schema: schemas, // Enable usage of "drizzle.query" within all schemas
 });
