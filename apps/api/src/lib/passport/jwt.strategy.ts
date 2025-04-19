@@ -17,6 +17,11 @@ const strategyOptions = {
   secretOrKey: JWT_SECRET,
 };
 
+const unauthorizedError = new HttpError(
+  HTTP_STATUS.UNAUTHORIZED,
+  'Unauthorized',
+);
+
 export const jwtStrategy = new Strategy(
   strategyOptions,
   async (payload, done) => {
@@ -25,14 +30,13 @@ export const jwtStrategy = new Strategy(
         where: eq(usersSchema.id, payload.id),
       });
 
-      const unauthorizedError = new HttpError(
-        HTTP_STATUS.UNAUTHORIZED,
-        'Unauthorized',
-      );
+      // Pass user error
       if (!userExists) return done(unauthorizedError, false);
 
+      // Pass ok
       return done(null, userExists);
     } catch (err) {
+      // Pass error
       return done(err, false);
     }
   },
