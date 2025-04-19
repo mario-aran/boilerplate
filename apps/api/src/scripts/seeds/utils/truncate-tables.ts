@@ -8,7 +8,7 @@ const SELECT_TABLES_QUERY = `
 `;
 
 export const truncateTables = async () => {
-  // Query the database
+  // Check if tables contain data
   const { rows } = await db.execute<{ table_name: string }>(
     SELECT_TABLES_QUERY,
   );
