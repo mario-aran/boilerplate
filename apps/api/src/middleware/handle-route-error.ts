@@ -6,7 +6,6 @@ export const handleRouteError = (
   err: HttpError,
   _: Request,
   res: Response,
-  // Disabled eslint rule as "_next" is unused and exception rule isn't applied
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {

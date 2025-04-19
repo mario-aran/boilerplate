@@ -17,7 +17,7 @@ export const zodValidate = ({ params, query, body }: Schema) => {
       query?.parse(req.query);
       body?.parse(req.body);
 
-      return next();
+      return next(); // Pass validation ok
     } catch (err) {
       if (err instanceof ZodError) {
         const details = err.errors.map((issue: ZodIssue) => ({
@@ -31,12 +31,10 @@ export const zodValidate = ({ params, query, body }: Schema) => {
           details,
         );
 
-        // Pass zod error
-        return next(zodError);
+        return next(zodError); // Pass zod error
       }
 
-      // Pass regular error
-      return next(err);
+      return next(err); // Pass regular error
     }
   };
 };
