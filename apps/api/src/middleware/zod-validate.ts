@@ -3,6 +3,7 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodError, ZodIssue } from 'zod';
 
+// Types
 interface Schema {
   params?: AnyZodObject;
   query?: AnyZodObject;
