@@ -1,8 +1,8 @@
 import { HTTP_STATUS } from '@/constants/http-status';
+import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodError, ZodIssue } from 'zod';
 
-// Types
 interface Schema {
   params?: AnyZodObject;
   query?: AnyZodObject;
@@ -10,13 +10,13 @@ interface Schema {
 }
 
 export const zodValidate = ({ params, query, body }: Schema) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, _: Response, next: NextFunction) => {
     try {
       params?.parse(req.params);
       query?.parse(req.query);
       body?.parse(req.body);
 
-      next();
+      return next();
     } catch (err) {
       if (err instanceof ZodError) {
         const details = err.errors.map((issue: ZodIssue) => ({
@@ -24,14 +24,18 @@ export const zodValidate = ({ params, query, body }: Schema) => {
           message: issue.message,
         }));
 
-        res.status(HTTP_STATUS.UNPROCESSABLE).json({
-          status: HTTP_STATUS.UNPROCESSABLE,
-          message: 'Invalid data',
+        const zodError = new HttpError(
+          HTTP_STATUS.UNPROCESSABLE,
+          'Invalid data',
           details,
-        });
-      } else {
-        next(err);
+        );
+
+        // Pass zod error
+        return next(zodError);
       }
+
+      // Pass regular error
+      return next(err);
     }
   };
 };
