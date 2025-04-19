@@ -27,7 +27,7 @@ export const zodValidate = ({ params, query, body }: Schema) => {
 
         const zodError = new HttpError(
           HTTP_STATUS.UNPROCESSABLE,
-          'Invalid data',
+          'Invalid inputs',
           details,
         );
 
