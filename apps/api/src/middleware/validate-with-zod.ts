@@ -10,7 +10,7 @@ interface Schema {
   body?: AnyZodObject;
 }
 
-export const zodValidate = ({ params, query, body }: Schema) => {
+export const validateWithZod = ({ params, query, body }: Schema) => {
   return (req: Request, _: Response, next: NextFunction) => {
     try {
       params?.parse(req.params);
