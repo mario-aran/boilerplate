@@ -1,19 +1,19 @@
 import { loginAuthZod } from '@/lib/zod/schemas/auth.zod';
 import { authenticateJwt } from '@/middleware/authenticate-jwt';
-import { zodValidate } from '@/middleware/zod-validate';
+import { validateWithZod } from '@/middleware/validate-with-zod';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
 import { authController } from './auth.controller';
 
-const authRoute = Router();
+const router = Router();
 
-// Route definitions
-authRoute.post(
+// Define routes with specific middleware
+router.post(
   '/login',
-  zodValidate({ body: loginAuthZod }),
+  validateWithZod({ body: loginAuthZod }),
   routeCatchAsync(authController.login),
 );
 
-authRoute.post('/logout', authenticateJwt, authController.logout);
+router.post('/logout', authenticateJwt, authController.logout);
 
-export { authRoute };
+export { router as authRoute };
