@@ -1,6 +1,6 @@
 import { NODE_ENV } from '@/config/env';
-import { COOKIES } from '@/constants/cookies';
 import { HTTP_STATUS } from '@/constants/http-status';
+import { JWT_COOKIE } from '@/lib/passport/constants/jwt-cookie';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { authService } from './auth.service';
@@ -19,7 +19,7 @@ class AuthController {
     if (!record)
       throw new HttpError(HTTP_STATUS.UNAUTHORIZED, 'Invalid credentials');
 
-    res.cookie(COOKIES.JWT, record.token, {
+    res.cookie(JWT_COOKIE, record.token, {
       httpOnly: true,
       secure: NODE_ENV === 'production',
       sameSite: 'strict',
@@ -30,7 +30,7 @@ class AuthController {
   }
 
   public logout(_: Request, res: Response) {
-    res.clearCookie(COOKIES.JWT);
+    res.clearCookie(JWT_COOKIE);
 
     res.json({ message: 'User logged out successfully' });
   }

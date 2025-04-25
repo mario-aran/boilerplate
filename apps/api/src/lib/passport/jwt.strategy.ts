@@ -1,21 +1,19 @@
 import { JWT_SECRET } from '@/config/env';
-import { COOKIES } from '@/constants/cookies';
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { eq } from 'drizzle-orm';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
+import { JWT_COOKIE } from './constants/jwt-cookie';
 
 // Utils
-const jwtCookieExtractor = (req: Request) => req.cookies?.[COOKIES.JWT] ?? null;
-
-const strategyOptions = {
-  jwtFromRequest: jwtCookieExtractor,
-  secretOrKey: JWT_SECRET,
-};
+const jwtCookieExtractor = (req: Request) => req.cookies?.[JWT_COOKIE] ?? null;
 
 export const jwtStrategy = new Strategy(
-  strategyOptions,
+  {
+    jwtFromRequest: jwtCookieExtractor,
+    secretOrKey: JWT_SECRET,
+  },
   async (payload, done) => {
     try {
       const userExists = await db.query.usersSchema.findFirst({
