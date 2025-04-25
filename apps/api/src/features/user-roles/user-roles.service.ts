@@ -4,20 +4,13 @@ import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
   CreateUserRoleZod,
   ReadAllUserRolesZod,
-  UpdateUserRoleZod,
 } from '@/lib/zod/schemas/user-roles.zod';
-import { eq, ilike } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 class UserRolesService {
-  public async readAll({
-    limit,
-    page,
-    sort,
-    search = '',
-  }: ReadAllUserRolesZod) {
+  public async readAll({ limit, page, sort }: ReadAllUserRolesZod) {
     return queryPaginatedData({
       schema: userRolesSchema,
-      filters: ilike(userRolesSchema.name, `%${search}%`),
       limit,
       sort,
       page,
@@ -37,16 +30,6 @@ class UserRolesService {
       .returning({ id: userRolesSchema.id });
 
     return createdRecord;
-  }
-
-  public async update(id: string, data: UpdateUserRoleZod) {
-    const [updatedRecord] = await db
-      .update(userRolesSchema)
-      .set(data)
-      .where(eq(userRolesSchema.id, id))
-      .returning({ id: userRolesSchema.id });
-
-    return updatedRecord;
   }
 
   public async delete(id: string) {

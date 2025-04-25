@@ -28,18 +28,6 @@ class UserRolesController {
     });
   }
 
-  public async update(req: Request, res: Response) {
-    const updatedRecord = await userRolesService.update(
-      req.params.id,
-      req.body,
-    );
-    if (!updatedRecord) this.throwNotFoundHttpError();
-
-    res.json({
-      message: `User role ${updatedRecord.id} updated successfully`,
-    });
-  }
-
   public async delete(req: Request, res: Response) {
     const deletedRecord = await userRolesService.delete(req.params.id);
     if (!deletedRecord) this.throwNotFoundHttpError();
