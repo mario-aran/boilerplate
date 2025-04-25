@@ -19,7 +19,6 @@ export const jwtStrategy = new Strategy(
       const userExists = await db.query.usersSchema.findFirst({
         where: eq(usersSchema.id, payload.id),
       });
-
       if (!userExists) return done(null, false);
 
       return done(null, userExists);
