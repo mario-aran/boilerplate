@@ -6,7 +6,7 @@ export const handleNotFound = (
   _res: Response,
   next: NextFunction,
 ) => {
-  const error = new HttpError(404, 'API route not found');
+  const httpError = new HttpError(404, 'API route not found');
 
-  return next(error);
+  return next(httpError);
 };
