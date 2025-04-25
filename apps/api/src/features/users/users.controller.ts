@@ -20,14 +20,6 @@ class UsersController {
     res.json(record);
   }
 
-  public async create(req: Request, res: Response) {
-    const createdRecord = await usersService.create(req.body);
-
-    res.status(HTTP_STATUS.CREATED).json({
-      message: `User ${createdRecord.email} created successfully`,
-    });
-  }
-
   public async update(req: Request, res: Response) {
     const updatedRecord = await usersService.update(req.params.id, req.body);
     if (!updatedRecord) this.throwNotFoundHttpError();

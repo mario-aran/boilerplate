@@ -6,6 +6,14 @@ import { Request, Response } from 'express';
 import { authService } from './auth.service';
 
 class AuthController {
+  public async register(req: Request, res: Response) {
+    const createdRecord = await authService.register(req.body);
+
+    res.status(HTTP_STATUS.CREATED).json({
+      message: `User ${createdRecord.email} registered successfully`,
+    });
+  }
+
   public async login(req: Request, res: Response) {
     const record = await authService.login(req.body);
     if (!record)
