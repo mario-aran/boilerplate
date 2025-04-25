@@ -50,10 +50,31 @@ class UsersService {
   }
 
   public async read(id: string) {
-    return db.query.usersSchema.findFirst({
+    // Check record
+    const record = await db.query.usersSchema.findFirst({
       columns: { password: false },
+      with: {
+        userRole: {
+          columns: {},
+          with: {
+            userRolesToPermissions: {
+              columns: { permissionId: true },
+            },
+          },
+        },
+      },
       where: eq(usersSchema.id, id),
     });
+    if (!record) return null;
+
+    // Flatten info
+    const { userRole, ...restOfRecord } = record;
+    const permissionIds = userRole.userRolesToPermissions.map(
+      ({ permissionId }) => permissionId,
+    );
+
+    // Return record with info
+    return { ...restOfRecord, permissionIds };
   }
 
   public async update(id: string, data: UpdateUserZod) {

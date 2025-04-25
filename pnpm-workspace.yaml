@@ -1,8 +1,8 @@
 packages:
   - apps/*
 
-# "pnpm approve-builds": Dependencies allowed to run scripts
 onlyBuiltDependencies:
+  - "@scarf/scarf"
   - "@swc/core"
   - cypress
   - esbuild
