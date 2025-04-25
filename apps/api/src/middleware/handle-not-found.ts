@@ -7,6 +7,6 @@ export const handleNotFound = (
   _res: Response,
   next: NextFunction,
 ) => {
-  const httpError = new HttpError(HTTP_STATUS.NOT_FOUND, 'Route not found');
-  return next(httpError);
+  const notFoundError = new HttpError(HTTP_STATUS.NOT_FOUND, 'Route not found');
+  return next(notFoundError);
 };

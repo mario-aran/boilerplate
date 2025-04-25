@@ -18,8 +18,11 @@ export const authenticateJwt = (
       if (err) return next(err);
 
       // Pass httpError
-      const httpError = new HttpError(HTTP_STATUS.UNAUTHORIZED, 'Unauthorized');
-      if (!user) return next(httpError);
+      const unauthorizedError = new HttpError(
+        HTTP_STATUS.UNAUTHORIZED,
+        'Unauthorized',
+      );
+      if (!user) return next(unauthorizedError);
 
       // Authorize user
       req.user = user as JwtUser;
