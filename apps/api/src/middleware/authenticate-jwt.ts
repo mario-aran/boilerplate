@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 import { passport } from '@/lib/passport';
+import { JwtUser } from '@/lib/passport/types/jwt-user';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
@@ -21,7 +22,7 @@ export const authenticateJwt = (
       if (!user) return next(httpError);
 
       // Authorize user
-      req.user = user;
+      req.user = user as JwtUser;
       return next();
     },
   )(req, res, next);
