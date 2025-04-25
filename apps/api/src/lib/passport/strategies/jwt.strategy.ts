@@ -1,10 +1,10 @@
 import { JWT_SECRET } from '@/config/env';
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
+import { JWT_COOKIE } from '@/lib/passport/constants/jwt-cookie';
 import { eq } from 'drizzle-orm';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
-import { JWT_COOKIE } from './constants/jwt-cookie';
 
 // Utils
 const jwtCookieExtractor = (req: Request) => req.cookies?.[JWT_COOKIE] ?? null;
