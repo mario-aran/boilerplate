@@ -11,12 +11,10 @@ export const truncateTables = async () => {
   const { rows } = await db.execute<{ table_name: string }>(
     SELECT_TABLES_QUERY,
   );
-
   if (!rows.length) return console.log('No tables to truncate');
 
   // Prepare queries
   const joinedTableNames = rows.map(({ table_name }) => table_name).join(', ');
-
   const truncateTablesQuery = `
     TRUNCATE TABLE ${joinedTableNames}
     RESTART IDENTITY

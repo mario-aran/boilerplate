@@ -1,7 +1,7 @@
 import { USER_ROLES } from '@/constants/user-roles';
-import { usersService } from '@/features/users/users.service';
+import { authService } from '@/features/auth/auth.service';
 import { db } from '@/lib/drizzle/db';
-import { CreateUserZod } from '@/lib/zod/schemas/users.zod';
+import { RegisterAuthZod } from '@/lib/zod/schemas/auth.zod';
 import { SEEDS_LENGTH } from '@/scripts/seeds/constants/seeds-length';
 import { faker } from '@faker-js/faker';
 
@@ -9,7 +9,7 @@ import { faker } from '@faker-js/faker';
 const mockedUsers = faker.helpers
   .uniqueArray(faker.internet.email, SEEDS_LENGTH)
   .map(
-    (email): CreateUserZod => ({
+    (email): RegisterAuthZod => ({
       email,
       password: '12345678',
       firstName: faker.person.firstName(),
@@ -26,12 +26,11 @@ export const seedUsers = async () => {
   const everyUserRoleExists = Object.values(USER_ROLES).every((userRoleId) =>
     userRoles.some(({ id }) => id === userRoleId),
   );
-
   if (!everyUserRoleExists)
     throw new Error('Not all user roles exists on the database');
 
   // Insert seeds
-  await Promise.all(mockedUsers.map((user) => usersService.create(user)));
+  await Promise.all(mockedUsers.map((user) => authService.register(user)));
 
   console.log('Users seeded successfully');
 };
