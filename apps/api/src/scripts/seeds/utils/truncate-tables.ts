@@ -1,6 +1,5 @@
 import { db } from '@/lib/drizzle/db';
 
-// Constants
 const SELECT_TABLES_QUERY = `
   SELECT table_name
   FROM information_schema.tables
