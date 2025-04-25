@@ -5,10 +5,7 @@ import { CreateUserRoleZod } from '@/lib/zod/schemas/user-roles.zod';
 
 // Mocks
 const mockedUserRoles = Object.values(USER_ROLES).map(
-  (id): CreateUserRoleZod => ({
-    id,
-    name: id.toLowerCase(),
-  }),
+  (id): CreateUserRoleZod => ({ id }),
 );
 
 // Promises
