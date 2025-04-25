@@ -9,7 +9,6 @@ import { Strategy } from 'passport-jwt';
 // Utils
 const jwtCookieExtractor = (req: Request) => req.cookies?.[JWT_COOKIE] ?? null;
 
-// Initial values
 const strategyOptions = {
   jwtFromRequest: jwtCookieExtractor,
   secretOrKey: JWT_SECRET,
@@ -23,7 +22,6 @@ export const jwtStrategy = new Strategy(
         where: eq(usersSchema.id, payload.id),
       });
 
-      // Check user
       if (!userExists) return done(null, false);
 
       return done(null, userExists);
