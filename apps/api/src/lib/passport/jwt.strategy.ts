@@ -1,13 +1,13 @@
 import { JWT_SECRET } from '@/config/env';
-import { COOKIES } from '@/constants/cookies';
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
+import { JWT_COOKIE } from '@/lib/passport/constants';
 import { eq } from 'drizzle-orm';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
 
 // Utils
-const jwtCookieExtractor = (req: Request) => req.cookies?.[COOKIES.JWT] ?? null;
+const jwtCookieExtractor = (req: Request) => req.cookies?.[JWT_COOKIE] ?? null;
 
 // Initial values
 const strategyOptions = {
