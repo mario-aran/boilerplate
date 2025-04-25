@@ -1,12 +1,11 @@
-import { JWT_SECRET } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
+import { hashPassword } from '@/lib/passport/utils/hash-password';
+import { signJwtToken } from '@/lib/passport/utils/sign-jwt-token';
 import { LoginAuthZod, RegisterAuthZod } from '@/lib/zod/schemas/auth.zod';
-import { hashPassword } from '@/utils/hash-password';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
-import jwt from 'jsonwebtoken';
 
 class AuthService {
   public async register(data: RegisterAuthZod) {
@@ -35,11 +34,10 @@ class AuthService {
     if (!passwordValid) return null;
 
     // Generate token
-    const token = jwt.sign(
-      { id: userExists.id, email: userExists.email },
-      JWT_SECRET,
-      { expiresIn: '1h' },
-    );
+    const token = signJwtToken({
+      id: userExists.id,
+      email: userExists.email,
+    });
 
     return {
       token,
