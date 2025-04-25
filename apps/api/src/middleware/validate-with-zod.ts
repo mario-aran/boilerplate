@@ -3,7 +3,6 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject, ZodError, ZodIssue } from 'zod';
 
-// Types
 interface Schema {
   params?: AnyZodObject;
   query?: AnyZodObject;
@@ -17,7 +16,7 @@ export const validateWithZod = ({ params, query, body }: Schema) => {
       query?.parse(req.query);
       body?.parse(req.body);
 
-      return next(); // Pass ok
+      return next(); // Validation ok
     } catch (err) {
       if (err instanceof ZodError) {
         const details = err.errors.map((issue: ZodIssue) => ({
