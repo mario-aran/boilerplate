@@ -10,7 +10,6 @@ import {
 } from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
-// Initial values
 const usersWithoutPassword = USERS_COLUMNS.filter(
   (column) => column !== 'password',
 );
