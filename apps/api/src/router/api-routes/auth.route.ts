@@ -1,5 +1,5 @@
 import { authController } from '@/features/auth/auth.controller';
-import { loginAuthZod } from '@/lib/zod/schemas/auth.zod';
+import { loginAuthZod, registerAuthZod } from '@/lib/zod/schemas/auth.zod';
 import { authenticateJwt } from '@/middleware/authenticate-jwt';
 import { validateWithZod } from '@/middleware/validate-with-zod';
 import { routeCatchAsync } from '@/utils/route-catch-async';
@@ -8,6 +8,12 @@ import { Router } from 'express';
 const router = Router();
 
 // Route definitions
+router.post(
+  '/register',
+  validateWithZod({ body: registerAuthZod }),
+  routeCatchAsync(authController.register),
+);
+
 router.post(
   '/login',
   validateWithZod({ body: loginAuthZod }),
