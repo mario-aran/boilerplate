@@ -1,7 +1,7 @@
 import { userRolesController } from '@/features/user-roles/user-roles.controller';
 import {
   createUserRoleZod,
-  getAllUserRolesZod,
+  readAllUserRolesZod,
   updateUserRoleZod,
 } from '@/lib/zod/schemas/user-roles.zod';
 import { authenticateJwt } from '@/middleware/authenticate-jwt';
@@ -26,14 +26,14 @@ router.post(
 router.get(
   '/',
   checkPermission('read_user_roles'),
-  validateWithZod({ query: getAllUserRolesZod }),
-  routeCatchAsync(userRolesController.getAll),
+  validateWithZod({ query: readAllUserRolesZod }),
+  routeCatchAsync(userRolesController.readAll),
 );
 
 router.get(
   ID_PATH,
   checkPermission('read_user_role'),
-  routeCatchAsync(userRolesController.get),
+  routeCatchAsync(userRolesController.read),
 );
 
 router.put(
