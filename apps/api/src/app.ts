@@ -6,12 +6,12 @@ import { router } from './router';
 
 const app = express();
 
-app.use(cors()); // Cors
+app.use(cors());
 
-app.use(cookieParser()); // Cookie parser
+app.use(cookieParser());
 app.use(express.json()); // JSON body parser
 app.use(passport.initialize()); // Custom passport strategies
 
-app.use('/', router); // Router
+app.use('/', router);
 
 export { app };
