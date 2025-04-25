@@ -14,7 +14,7 @@ const ID_PATH = '/:id';
 const ID_PASSWORD_PATH = '/:id/password';
 
 const router = Router();
-router.use(authenticateJwt); // Middleware applied to all routes below
+router.use(authenticateJwt); // // Apply JWT to all subsequent routes
 
 // Route definitions
 router.post(
