@@ -3,13 +3,18 @@ import { userRolesSchema } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
   CreateUserRoleZod,
-  GetAllUserRolesZod,
+  ReadAllUserRolesZod,
   UpdateUserRoleZod,
 } from '@/lib/zod/schemas/user-roles.zod';
 import { eq, ilike } from 'drizzle-orm';
 
 class UserRolesService {
-  public async getAll({ limit, page, sort, search = '' }: GetAllUserRolesZod) {
+  public async readAll({
+    limit,
+    page,
+    sort,
+    search = '',
+  }: ReadAllUserRolesZod) {
     return queryPaginatedData({
       schema: userRolesSchema,
       filters: ilike(userRolesSchema.name, `%${search}%`),
@@ -19,7 +24,7 @@ class UserRolesService {
     });
   }
 
-  public async get(id: string) {
+  public async read(id: string) {
     return db.query.userRolesSchema.findFirst({
       where: eq(userRolesSchema.id, id),
     });

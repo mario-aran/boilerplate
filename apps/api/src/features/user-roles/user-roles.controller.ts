@@ -1,20 +1,20 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { GetAllUserRolesZod } from '@/lib/zod/schemas/user-roles.zod';
+import { ReadAllUserRolesZod } from '@/lib/zod/schemas/user-roles.zod';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { userRolesService } from './user-roles.service';
 
 class UserRolesController {
-  public async getAll(
-    req: Request<unknown, unknown, unknown, GetAllUserRolesZod>,
+  public async readAll(
+    req: Request<unknown, unknown, unknown, ReadAllUserRolesZod>,
     res: Response,
   ) {
-    const results = await userRolesService.getAll(req.query);
+    const results = await userRolesService.readAll(req.query);
     res.json(results);
   }
 
-  public async get(req: Request, res: Response) {
-    const record = await userRolesService.get(req.params.id);
+  public async read(req: Request, res: Response) {
+    const record = await userRolesService.read(req.params.id);
     if (!record) this.throwNotFoundHttpError();
 
     res.json(record);

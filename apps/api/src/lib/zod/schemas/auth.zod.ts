@@ -12,6 +12,7 @@ export const registerAuthZod = z.object({
   email,
   password,
 });
+
 export const loginAuthZod = z.object({ email, password });
 
 // Exported schema types

@@ -2,7 +2,7 @@ import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
-  GetAllUsersZod,
+  ReadAllUsersZod,
   UpdateUserPasswordZod,
   UpdateUserZod,
 } from '@/lib/zod/schemas/users.zod';
@@ -10,13 +10,13 @@ import { hashPassword } from '@/utils/hash-password';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
-  public async getAll({
+  public async readAll({
     limit,
     page,
     sort,
     userRoleId = '',
     search = '',
-  }: GetAllUsersZod) {
+  }: ReadAllUsersZod) {
     // Prepare filters
     const filters = and(
       ilike(usersSchema.userRoleId, `%${userRoleId}%`),
@@ -49,7 +49,7 @@ class UsersService {
     };
   }
 
-  public async get(id: string) {
+  public async read(id: string) {
     return db.query.usersSchema.findFirst({
       columns: { password: false },
       where: eq(usersSchema.id, id),

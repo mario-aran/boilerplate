@@ -10,7 +10,7 @@ const name = text;
 const id = textId;
 
 // Schemas
-export const getAllUserRolesZod = z
+export const readAllUserRolesZod = z
   .object({ limit, page, sort, search })
   .partial();
 
@@ -18,6 +18,6 @@ export const createUserRoleZod = z.object({ id, name });
 export const updateUserRoleZod = z.object({ name }).partial();
 
 // Exported schema types
-export type GetAllUserRolesZod = z.infer<typeof getAllUserRolesZod>;
+export type ReadAllUserRolesZod = z.infer<typeof readAllUserRolesZod>;
 export type CreateUserRoleZod = z.infer<typeof createUserRoleZod>;
 export type UpdateUserRoleZod = z.infer<typeof updateUserRoleZod>;

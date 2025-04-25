@@ -1,20 +1,20 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { GetAllUsersZod } from '@/lib/zod/schemas/users.zod';
+import { ReadAllUsersZod } from '@/lib/zod/schemas/users.zod';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { usersService } from './users.service';
 
 class UsersController {
-  public async getAll(
-    req: Request<unknown, unknown, unknown, GetAllUsersZod>,
+  public async readAll(
+    req: Request<unknown, unknown, unknown, ReadAllUsersZod>,
     res: Response,
   ) {
-    const results = await usersService.getAll(req.query);
+    const results = await usersService.readAll(req.query);
     res.json(results);
   }
 
-  public async get(req: Request, res: Response) {
-    const record = await usersService.get(req.params.id);
+  public async read(req: Request, res: Response) {
+    const record = await usersService.read(req.params.id);
     if (!record) this.throwNotFoundHttpError();
 
     res.json(record);
