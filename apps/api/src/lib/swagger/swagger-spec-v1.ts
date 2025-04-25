@@ -4,7 +4,7 @@ export const swaggerSpecV1 = swaggerJsdoc({
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Docs',
+      title: 'API Docs - V1',
       version: '1.0.0',
     },
   },
