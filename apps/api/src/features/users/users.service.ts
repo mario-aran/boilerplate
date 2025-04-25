@@ -1,12 +1,12 @@
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
+import { hashPassword } from '@/lib/passport/utils/hash-password';
 import {
   ReadAllUsersZod,
   UpdateUserPasswordZod,
   UpdateUserZod,
 } from '@/lib/zod/schemas/users.zod';
-import { hashPassword } from '@/utils/hash-password';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
