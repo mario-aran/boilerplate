@@ -8,6 +8,15 @@ import {
 import { eq } from 'drizzle-orm';
 
 class UserRolesService {
+  public async create(data: CreateUserRoleZod) {
+    const [createdRecord] = await db
+      .insert(userRolesSchema)
+      .values(data)
+      .returning({ id: userRolesSchema.id });
+
+    return createdRecord;
+  }
+
   public async readAll({ limit, page, sort }: ReadAllUserRolesZod) {
     return queryPaginatedData({
       schema: userRolesSchema,
@@ -21,15 +30,6 @@ class UserRolesService {
     return db.query.userRolesSchema.findFirst({
       where: eq(userRolesSchema.id, id),
     });
-  }
-
-  public async create(data: CreateUserRoleZod) {
-    const [createdRecord] = await db
-      .insert(userRolesSchema)
-      .values(data)
-      .returning({ id: userRolesSchema.id });
-
-    return createdRecord;
   }
 
   public async delete(id: string) {

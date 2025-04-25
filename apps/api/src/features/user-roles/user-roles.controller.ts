@@ -5,6 +5,14 @@ import { Request, Response } from 'express';
 import { userRolesService } from './user-roles.service';
 
 class UserRolesController {
+  public async create(req: Request, res: Response) {
+    const createdRecord = await userRolesService.create(req.body);
+
+    res.status(HTTP_STATUS.CREATED).json({
+      message: `User role ${createdRecord.id} created successfully`,
+    });
+  }
+
   public async readAll(
     req: Request<unknown, unknown, unknown, ReadAllUserRolesZod>,
     res: Response,
@@ -18,14 +26,6 @@ class UserRolesController {
     if (!record) this.throwNotFoundHttpError();
 
     res.json(record);
-  }
-
-  public async create(req: Request, res: Response) {
-    const createdRecord = await userRolesService.create(req.body);
-
-    res.status(HTTP_STATUS.CREATED).json({
-      message: `User role ${createdRecord.id} created successfully`,
-    });
   }
 
   public async delete(req: Request, res: Response) {
