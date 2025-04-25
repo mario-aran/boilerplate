@@ -4,9 +4,9 @@ import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
 import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { authRoute } from './api-routes/auth.route';
-import { userRolesRoute } from './api-routes/user-roles.route';
-import { usersRoute } from './api-routes/users.route';
+import { authRoute } from './v1-routes/auth.route';
+import { userRolesRoute } from './v1-routes/user-roles.route';
+import { usersRoute } from './v1-routes/users.route';
 
 const API_DOCS_V1_PATH = '/api-docs/v1';
 const API_V1_PATH = '/api/v1';
