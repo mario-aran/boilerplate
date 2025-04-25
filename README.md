@@ -28,6 +28,8 @@
 - [x] express | @types/express
       dotenv
       cors | @types/cors
+- [x] swagger-ui-express | @types/swagger-ui-express
+      swagger-jsdoc | @types/swagger-jsdoc
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
       @faker-js/faker
 - [x] passport | @types/passport
