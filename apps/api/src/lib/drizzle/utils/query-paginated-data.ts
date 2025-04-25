@@ -2,7 +2,6 @@ import { db } from '@/lib/drizzle/db';
 import { asc, count, desc, SQL } from 'drizzle-orm';
 import { AnyPgTable } from 'drizzle-orm/pg-core';
 
-// Types
 interface QueryParams {
   schema: AnyPgTable;
   filters?: SQL<unknown>;
