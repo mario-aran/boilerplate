@@ -12,7 +12,8 @@
     "test:coverage": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed-fake-data": "tsx src/scripts/seeds/seed-fake-data.ts"
+    "db:seed:fake": "tsx src/scripts/seeds/seed-fake.ts",
+    "db:seed:initial": "node dist/scripts/seeds/seed-initial.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

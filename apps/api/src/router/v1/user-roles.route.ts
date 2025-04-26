@@ -1,3 +1,4 @@
+import { PERMISSIONS } from '@/constants/permissions';
 import { userRolesController } from '@/features/user-roles/user-roles.controller';
 import {
   createUserRoleZod,
@@ -17,27 +18,27 @@ router.use(authenticateJwt); // Apply JWT to all subsequent routes
 // Route definitions
 router.post(
   '/',
-  checkPermission('create_user_role'),
+  checkPermission(PERMISSIONS.CREATE_USER_ROLE),
   validateWithZod({ body: createUserRoleZod }),
   routeCatchAsync(userRolesController.create),
 );
 
 router.get(
   '/',
-  checkPermission('read_user_roles'),
+  checkPermission(PERMISSIONS.READ_USER_ROLES),
   validateWithZod({ query: readAllUserRolesZod }),
   routeCatchAsync(userRolesController.readAll),
 );
 
 router.get(
   ID_PATH,
-  checkPermission('read_user_role'),
+  checkPermission(PERMISSIONS.READ_USER_ROLE),
   routeCatchAsync(userRolesController.read),
 );
 
 router.delete(
   ID_PATH,
-  checkPermission('delete_user_role'),
+  checkPermission(PERMISSIONS.DELETE_USER_ROLE),
   routeCatchAsync(userRolesController.delete),
 );
 

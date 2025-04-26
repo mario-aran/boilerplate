@@ -1,3 +1,4 @@
+import { PERMISSIONS } from '@/constants/permissions';
 import { usersController } from '@/features/users/users.controller';
 import {
   readAllUsersZod,
@@ -19,27 +20,27 @@ router.use(authenticateJwt); // // Apply JWT to all subsequent routes
 // Route definitions
 router.get(
   '/',
-  checkPermission('read_users'),
+  checkPermission(PERMISSIONS.READ_USERS),
   validateWithZod({ query: readAllUsersZod }),
   routeCatchAsync(usersController.readAll),
 );
 
 router.get(
   ID_PATH,
-  checkPermission('read_user'),
+  checkPermission(PERMISSIONS.READ_USER),
   routeCatchAsync(usersController.read),
 );
 
 router.patch(
   ID_PATH,
-  checkPermission('update_user'),
+  checkPermission(PERMISSIONS.UPDATE_USER),
   validateWithZod({ body: updateUserZod }),
   routeCatchAsync(usersController.update),
 );
 
 router.patch(
   ID_PASSWORD_PATH,
-  checkPermission('update_user_password'),
+  checkPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
   validateWithZod({ body: updateUserPasswordZod }),
   routeCatchAsync(usersController.updatePassword),
 );
