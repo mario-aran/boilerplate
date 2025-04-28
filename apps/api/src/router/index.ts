@@ -5,6 +5,7 @@ import { handleRouteError } from '@/middleware/handle-route-error';
 import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { authRoute } from './v1/auth.route';
+import { permissionsRoute } from './v1/permissions.route';
 import { userRolesRoute } from './v1/user-roles.route';
 import { usersRoute } from './v1/users.route';
 
@@ -20,6 +21,7 @@ router.use(API_DOCS_V1_PATH, swaggerUi.serve, swaggerUi.setup(swaggerSpecV1));
 router.use(`${API_V1_PATH}/auth`, authRoute);
 router.use(`${API_V1_PATH}/users`, usersRoute);
 router.use(`${API_V1_PATH}/user-roles`, userRolesRoute);
+router.use(`${API_V1_PATH}/permissions`, permissionsRoute);
 
 router.use(API_V1_PATH, (_req, res) => {
   res.sendStatus(HTTP_STATUS.NO_CONTENT);
