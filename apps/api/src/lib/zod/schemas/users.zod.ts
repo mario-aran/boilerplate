@@ -1,5 +1,5 @@
 import { USERS_COLUMNS } from '@/lib/drizzle/schemas';
-import { getSort } from '@/lib/zod/utils/field-helpers';
+import { createSortSchema } from '@/lib/zod/utils/field-helpers';
 import {
   email,
   limit,
@@ -16,7 +16,7 @@ const usersWithoutPassword = USERS_COLUMNS.filter(
 );
 
 // Fields
-const sort = getSort(usersWithoutPassword);
+const sort = createSortSchema(usersWithoutPassword);
 const userRoleId = textId;
 const search = text;
 const firstName = text;

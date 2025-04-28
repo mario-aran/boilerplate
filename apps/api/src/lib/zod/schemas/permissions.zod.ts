@@ -1,11 +1,11 @@
 import { PERMISSIONS_COLUMNS } from '@/lib/drizzle/schemas';
-import { getSort } from '@/lib/zod/utils/field-helpers';
+import { createSortSchema } from '@/lib/zod/utils/field-helpers';
 import { limit, page, textId } from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
 // Fields
 const id = textId;
-const sort = getSort(PERMISSIONS_COLUMNS);
+const sort = createSortSchema(PERMISSIONS_COLUMNS);
 
 // Schemas
 export const createPermissionZod = z.object({ id });
