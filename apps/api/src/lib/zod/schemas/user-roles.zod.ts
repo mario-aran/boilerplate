@@ -19,4 +19,4 @@ export const updateUserRoleZod = z.object({ permissionIds }).partial();
 // Exported schema types
 export type CreateUserRoleZod = z.infer<typeof createUserRoleZod>;
 export type ReadAllUserRolesZod = z.infer<typeof readAllUserRolesZod>;
-export type UpdateRoleZod = z.infer<typeof updateUserRoleZod>;
+export type UpdateUserRoleZod = z.infer<typeof updateUserRoleZod>;
