@@ -1,6 +1,6 @@
 import { PERMISSIONS } from '@/constants/permissions';
-import { userRolesController } from '@/features/user-roles/user-roles.controller';
-import { readAllUserRolesZod } from '@/lib/zod/schemas/user-roles.zod';
+import { permissionsController } from '@/features/permissions/permissions.controller';
+import { readAllPermissionsZod } from '@/lib/zod/schemas/permissions.zod';
 import { authenticateJwt } from '@/middleware/authenticate-jwt';
 import { checkPermission } from '@/middleware/check-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
@@ -13,9 +13,9 @@ router.use(authenticateJwt); // Apply JWT to all subsequent routes
 // Route definitions
 router.get(
   '/',
-  checkPermission(PERMISSIONS.READ_USER_ROLES),
-  validateWithZod({ query: readAllUserRolesZod }),
-  routeCatchAsync(userRolesController.readAll),
+  checkPermission(PERMISSIONS.READ_PERMISSIONS),
+  validateWithZod({ query: readAllPermissionsZod }),
+  routeCatchAsync(permissionsController.readAll),
 );
 
-export { router as userRolesRoute };
+export { router as permissionsRoute };
