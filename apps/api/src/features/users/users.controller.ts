@@ -5,6 +5,14 @@ import { Request, Response } from 'express';
 import { usersService } from './users.service';
 
 class UsersController {
+  public async create(req: Request, res: Response) {
+    const createdRecord = await usersService.create(req.body);
+
+    res.status(HTTP_STATUS.CREATED).json({
+      message: `User ${createdRecord.email} created successfully`,
+    });
+  }
+
   public async readAll(
     req: Request<unknown, unknown, unknown, ReadAllUsersZod>,
     res: Response,
