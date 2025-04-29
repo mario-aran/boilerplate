@@ -2,12 +2,10 @@ import { VITE_API_URL } from '@/config/env';
 
 export const apiFetch = async <T extends object>(
   path: string,
-  options: RequestInit = {},
+  { body, headers, ...restOfOptions }: RequestInit = {},
 ): Promise<T> => {
-  const { body, headers, ...rest } = options;
-
   const response = await fetch(VITE_API_URL + path, {
-    ...rest,
+    ...restOfOptions,
     body,
     headers: body
       ? { 'Content-Type': 'application/json', ...headers }
