@@ -12,12 +12,12 @@ import bcrypt from 'bcryptjs';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
-  public async create(data: CreateUserZod) {
-    const hashedPassword = await this.hashPassword(data.password);
+  public async create({ password, ...restOfData }: CreateUserZod) {
+    const hashedPassword = await this.hashPassword(password);
     const [createdRecord] = await db
       .insert(usersSchema)
       .values({
-        ...data,
+        ...restOfData,
         userRoleId: USER_ROLES.USER,
         password: hashedPassword,
       })
