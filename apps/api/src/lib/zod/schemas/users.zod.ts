@@ -23,6 +23,13 @@ const firstName = text;
 const lastName = text;
 
 // Schemas
+export const createUserZod = z.object({
+  firstName,
+  lastName,
+  email,
+  password,
+});
+
 export const readAllUsersZod = z
   .object({ limit, page, sort, userRoleId, search })
   .partial();
@@ -34,6 +41,7 @@ export const updateUserZod = z
 export const updateUserPasswordZod = z.object({ password });
 
 // Exported schema types
+export type CreateUserZod = z.infer<typeof createUserZod>;
 export type ReadAllUsersZod = z.infer<typeof readAllUsersZod>;
 export type UpdateUserZod = z.infer<typeof updateUserZod>;
 export type UpdateUserPasswordZod = z.infer<typeof updateUserPasswordZod>;

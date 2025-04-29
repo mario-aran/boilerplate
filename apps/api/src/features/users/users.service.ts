@@ -1,15 +1,31 @@
+import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import { hashPassword } from '@/lib/passport/utils/hash-password';
 import {
+  CreateUserZod,
   ReadAllUsersZod,
   UpdateUserPasswordZod,
   UpdateUserZod,
 } from '@/lib/zod/schemas/users.zod';
+import bcrypt from 'bcryptjs';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
+  public async create(data: CreateUserZod) {
+    const hashedPassword = await this.hashPassword(data.password);
+    const [createdRecord] = await db
+      .insert(usersSchema)
+      .values({
+        ...data,
+        userRoleId: USER_ROLES.USER,
+        password: hashedPassword,
+      })
+      .returning({ email: usersSchema.email });
+
+    return createdRecord;
+  }
+
   public async readAll({
     limit,
     page,
@@ -42,7 +58,6 @@ class UsersService {
       ({ password: _, ...restOfData }) => restOfData,
     );
 
-    // Return results with no password
     return {
       data: dataWithNoPassword,
       ...restOfResults,
@@ -73,7 +88,6 @@ class UsersService {
       ({ permissionId }) => permissionId,
     );
 
-    // Return record with info
     return { ...restOfRecord, permissionIds };
   }
 
@@ -88,7 +102,7 @@ class UsersService {
   }
 
   public async updatePassword(id: string, data: UpdateUserPasswordZod) {
-    const hashedPassword = await hashPassword(data.password);
+    const hashedPassword = await this.hashPassword(data.password);
     const [updatedRecord] = await db
       .update(usersSchema)
       .set({ password: hashedPassword })
@@ -96,6 +110,10 @@ class UsersService {
       .returning({ email: usersSchema.email });
 
     return updatedRecord;
+  }
+
+  private async hashPassword(password: string) {
+    return bcrypt.hash(password, 10);
   }
 }
 
