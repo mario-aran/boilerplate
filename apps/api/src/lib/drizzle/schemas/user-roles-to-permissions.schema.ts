@@ -1,3 +1,4 @@
+import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { getColumns } from '@/lib/drizzle/utils/get-column-values';
 import { relations } from 'drizzle-orm';
 import { pgTable, primaryKey, varchar } from 'drizzle-orm/pg-core';
@@ -13,6 +14,8 @@ export const userRolesToPermissionsSchema = pgTable(
     permissionId: varchar('permission_id', { length: 255 })
       .notNull()
       .references(() => permissionsSchema.id),
+    createdAt,
+    updatedAt,
   },
   (t) => [primaryKey({ columns: [t.userRoleId, t.permissionId] })],
 );
