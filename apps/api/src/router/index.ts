@@ -1,4 +1,3 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { swaggerSpecV1 } from '@/lib/swagger/swagger-spec-v1';
 import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
@@ -23,11 +22,7 @@ router.use(`${API_V1_PATH}/users`, usersRoute);
 router.use(`${API_V1_PATH}/user-roles`, userRolesRoute);
 router.use(`${API_V1_PATH}/permissions`, permissionsRoute);
 
-router.use(API_V1_PATH, (_req, res) => {
-  res.sendStatus(HTTP_STATUS.NO_CONTENT);
-});
-
-router.get('/', (_req, res) => {
+router.get('/', (_, res) => {
   res.json({ message: 'Service is up and running' });
 });
 
