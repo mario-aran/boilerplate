@@ -16,7 +16,6 @@ const ID_PATH = '/:id';
 const ID_PASSWORD_PATH = '/:id/password';
 
 const router = Router();
-router.use(authenticateJwt); // Apply JWT to all subsequent routes
 
 // Route definitions
 router.post(
@@ -27,6 +26,7 @@ router.post(
 
 router.get(
   '/',
+  authenticateJwt,
   checkPermission(PERMISSIONS.READ_USERS),
   validateWithZod({ query: readAllUsersZod }),
   routeCatchAsync(usersController.readAll),
@@ -34,12 +34,14 @@ router.get(
 
 router.get(
   ID_PATH,
+  authenticateJwt,
   checkPermission(PERMISSIONS.READ_USER),
   routeCatchAsync(usersController.read),
 );
 
 router.patch(
   ID_PATH,
+  authenticateJwt,
   checkPermission(PERMISSIONS.UPDATE_USER),
   validateWithZod({ body: updateUserZod }),
   routeCatchAsync(usersController.update),
@@ -47,6 +49,7 @@ router.patch(
 
 router.patch(
   ID_PASSWORD_PATH,
+  authenticateJwt,
   checkPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
   validateWithZod({ body: updateUserPasswordZod }),
   routeCatchAsync(usersController.updatePassword),
