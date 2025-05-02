@@ -1,5 +1,5 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
-import { USER_ROLES, USER_ROLE_VALUES } from '@/constants/user-roles';
+import { USER_ROLE_VALUES, USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import {
   permissionsSchema,
@@ -9,7 +9,7 @@ import {
 } from '@/lib/drizzle/schemas';
 import { hashPassword } from '@/lib/passport/utils/hash-password';
 
-type UsersData = (typeof usersSchema.$inferInsert)[];
+type User = typeof usersSchema.$inferInsert;
 type UserRoleToPermission = typeof userRolesToPermissionsSchema.$inferInsert;
 
 interface LogSeedMessageProps {
@@ -18,12 +18,11 @@ interface LogSeedMessageProps {
 }
 
 class AuthSeeder {
-  public async runSeeders() {
-    await this.seedPermissions();
-    await this.seedUserRoles();
-    await this.seedUserRolesToPermissions();
-
-    await this.seedUsers([
+  public async runSeeds() {
+    await authSeeder.seedPermissions();
+    await authSeeder.seedUserRoles();
+    await authSeeder.seedUserRolesToPermissions();
+    await authSeeder.seedUsers([
       {
         userRoleId: USER_ROLES.SUPERADMIN,
         email: 'superadmin@superadmin.com',
@@ -34,7 +33,7 @@ class AuthSeeder {
     ]);
   }
 
-  public async seedUsers(data: UsersData) {
+  public async seedUsers(data: User[]) {
     const hashedUserPromises = data.map(
       async ({ password, ...restOfRecord }) => {
         const hashedPassword = await hashPassword(password);
@@ -83,16 +82,16 @@ class AuthSeeder {
   }
 
   private async seedUserRolesToPermissions() {
+    const values = PERMISSION_VALUES.map(
+      (permissionId): UserRoleToPermission => ({
+        userRoleId: USER_ROLES.SUPERADMIN,
+        permissionId,
+      }),
+    );
+
     const createdRecords = await db
       .insert(userRolesToPermissionsSchema)
-      .values(
-        PERMISSION_VALUES.map(
-          (permissionId): UserRoleToPermission => ({
-            userRoleId: USER_ROLES.SUPERADMIN,
-            permissionId,
-          }),
-        ),
-      )
+      .values(values)
       .onConflictDoNothing()
       .returning({ userRoleId: userRolesToPermissionsSchema.userRoleId });
 
