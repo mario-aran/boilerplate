@@ -1,6 +1,6 @@
 // WARNING: This file is used by a script in "package.json". Do not rename or move
 
-import '@/config/load-env';
+import '@/config/load-dotenv';
 
 import { NODE_ENV } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
