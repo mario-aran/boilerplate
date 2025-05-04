@@ -1,5 +1,5 @@
-import { PERMISSION_VALUES } from '@/constants/permissions';
-import { USER_ROLE_VALUES, USER_ROLES } from '@/constants/user-roles';
+import { PERMISSIONS } from '@/constants/permissions';
+import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import {
   permissionsSchema,
@@ -8,6 +8,7 @@ import {
   usersSchema,
 } from '@/lib/drizzle/schemas';
 import { hashPassword } from '@/lib/passport/utils/hash-password';
+import { getUniqueObjectValues } from '@/utils/get-unique-object-values';
 
 type User = typeof usersSchema.$inferInsert;
 type UserRoleToPermission = typeof userRolesToPermissionsSchema.$inferInsert;
@@ -16,6 +17,9 @@ interface LogSeedMessageProps {
   keys: string[];
   entityName: string;
 }
+
+const permissionValues = getUniqueObjectValues(PERMISSIONS);
+const userRoleValues = getUniqueObjectValues(USER_ROLES);
 
 class AuthSeeder {
   public async runSeeds() {
@@ -58,7 +62,7 @@ class AuthSeeder {
   private async seedPermissions() {
     const createdRecords = await db
       .insert(permissionsSchema)
-      .values(PERMISSION_VALUES.map((id) => ({ id })))
+      .values(permissionValues.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: permissionsSchema.id });
 
@@ -71,7 +75,7 @@ class AuthSeeder {
   private async seedUserRoles() {
     const createdRecords = await db
       .insert(userRolesSchema)
-      .values(USER_ROLE_VALUES.map((id) => ({ id })))
+      .values(userRoleValues.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: userRolesSchema.id });
 
@@ -82,7 +86,7 @@ class AuthSeeder {
   }
 
   private async seedUserRolesToPermissions() {
-    const values = PERMISSION_VALUES.map(
+    const values = permissionValues.map(
       (permissionId): UserRoleToPermission => ({
         userRoleId: USER_ROLES.SUPERADMIN,
         permissionId,

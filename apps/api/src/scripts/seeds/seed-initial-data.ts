@@ -1,12 +1,8 @@
+import { runScriptWithTryCatch } from '@/scripts/utils/run-script-with-try-catch';
 import { authSeeder } from './utils/auth-seeder';
 
 (async () => {
-  try {
+  await runScriptWithTryCatch('Seeding', async () => {
     await authSeeder.runSeeds();
-
-    console.log('Database seeded successfully');
-  } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    throw new Error(`Seeding error: ${errorMessage}`);
-  }
+  });
 })();

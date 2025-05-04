@@ -5,6 +5,7 @@ import '@/config/load-env';
 import { NODE_ENV } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
 import { usersSchema } from '@/lib/drizzle/schemas';
+import { runScriptWithTryCatch } from '@/scripts/utils/run-script-with-try-catch';
 import { faker } from '@faker-js/faker';
 import { SEEDS_LENGTH } from './constants/seeds-length';
 import { authSeeder } from './utils/auth-seeder';
@@ -29,17 +30,11 @@ const mockedUsers = faker.helpers
   if (NODE_ENV === 'production')
     throw new Error('Seeding not allowed in production');
 
-  try {
-    // Reset tables
+  await runScriptWithTryCatch('Seeding', async () => {
     await truncateTables();
 
     // Seeds
     await authSeeder.runSeeds();
     await authSeeder.seedUsers(mockedUsers);
-
-    console.log('Database seeded successfully');
-  } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    throw new Error(`Seeding error: ${errorMessage}`);
-  }
+  });
 })();
