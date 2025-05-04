@@ -6,7 +6,3 @@ export const PERMISSIONS = {
   READ_USER_ROLES: 'read_user_roles',
   READ_PERMISSIONS: 'read_permissions',
 } as const;
-
-export const PERMISSION_VALUES = [...new Set(Object.values(PERMISSIONS))] as [
-  (typeof PERMISSIONS)[keyof typeof PERMISSIONS],
-];
