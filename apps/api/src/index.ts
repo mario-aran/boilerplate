@@ -12,6 +12,6 @@ const server = app.listen(SERVER_PORT, () => {
 
 // Server errors
 server.on('error', (error) => {
-  console.error('Server failed to start:', error);
+  console.error(`Server failed to start: ${error}`);
   process.exit(1);
 });
