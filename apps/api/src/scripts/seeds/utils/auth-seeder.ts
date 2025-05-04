@@ -14,8 +14,8 @@ type User = typeof usersSchema.$inferInsert;
 type UserRoleToPermission = typeof userRolesToPermissionsSchema.$inferInsert;
 
 interface LogSeedMessageProps {
-  keys: string[];
   entityName: string;
+  keys: string[];
 }
 
 const permissionValues = getUniqueObjectValues(PERMISSIONS);
@@ -26,6 +26,7 @@ class AuthSeeder {
     await authSeeder.seedPermissions();
     await authSeeder.seedUserRoles();
     await authSeeder.seedUserRolesToPermissions();
+
     await authSeeder.seedUsers([
       {
         userRoleId: USER_ROLES.SUPERADMIN,
@@ -54,8 +55,8 @@ class AuthSeeder {
       .returning({ email: usersSchema.email });
 
     this.logSeedMessage({
-      keys: createdRecords.map(({ email }) => email),
       entityName: 'users',
+      keys: createdRecords.map(({ email }) => email),
     });
   }
 
@@ -67,8 +68,8 @@ class AuthSeeder {
       .returning({ id: permissionsSchema.id });
 
     this.logSeedMessage({
-      keys: createdRecords.map(({ id }) => id),
       entityName: 'permissions',
+      keys: createdRecords.map(({ id }) => id),
     });
   }
 
@@ -80,8 +81,8 @@ class AuthSeeder {
       .returning({ id: userRolesSchema.id });
 
     this.logSeedMessage({
-      keys: createdRecords.map(({ id }) => id),
       entityName: 'userRoles',
+      keys: createdRecords.map(({ id }) => id),
     });
   }
 
@@ -104,12 +105,12 @@ class AuthSeeder {
     ];
 
     this.logSeedMessage({
-      keys: uniqueKeys,
       entityName: 'userRolesToPermissions',
+      keys: uniqueKeys,
     });
   }
 
-  private logSeedMessage({ keys, entityName }: LogSeedMessageProps) {
+  private logSeedMessage({ entityName, keys }: LogSeedMessageProps) {
     if (!keys.length) {
       console.log(`Skipping seeding ${entityName}: no new records.`);
       return;
