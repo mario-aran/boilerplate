@@ -19,23 +19,23 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
       'jwt',
       { session: false },
       async (err: unknown, user: JwtUser | undefined) => {
-        if (err) return next(err); // Access denied: passport internal error
-        if (!user) return next(unauthorizedError); // Access denied: invalid or missing JWT
+        if (err) return next(err); // Fail: passport internal error
+        if (!user) return next(unauthorizedError); // Fail: invalid or missing JWT
 
         // Attach user manually when using a callback
         req.user = user;
 
-        // Access granted: no required permission or user is the owner
+        // Pass: user is the owner or no required permission
         const userIsOwner = req.params.id === user.id;
-        if (!requiredPermission || userIsOwner) return next();
+        if (userIsOwner || !requiredPermission) return next();
 
-        // Access granted: user has the required permission
+        // Pass: user has the required permission
         const dbUser = await usersService.read(user.id);
         const hasPermission =
           dbUser?.permissionIds.includes(requiredPermission);
         if (hasPermission) return next();
 
-        // Access denied: user missing or lacks permission
+        // Fail: user missing or lacks permission
         return next(forbiddenError);
       },
     )(req, res, next);

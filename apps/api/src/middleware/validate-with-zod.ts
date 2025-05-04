@@ -16,6 +16,7 @@ export const validateWithZod = ({ params, query, body }: Schema) => {
       query?.parse(req.query);
       body?.parse(req.body);
 
+      // Pass
       return next();
     } catch (err) {
       if (err instanceof ZodError) {
@@ -30,11 +31,11 @@ export const validateWithZod = ({ params, query, body }: Schema) => {
           details,
         );
 
-        // Pass zod error
+        // Fail: zod error
         return next(zodError);
       }
 
-      // Pass error
+      // Fail: internal error
       return next(err);
     }
   };
