@@ -6,8 +6,12 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 // HTTP errors
-const unauthorizedErr = new HttpError(HTTP_STATUS.UNAUTHORIZED, 'Unauthorized');
-const forbiddenErr = new HttpError(HTTP_STATUS.FORBIDDEN, 'Forbidden');
+const unauthorizedError = new HttpError(
+  HTTP_STATUS.UNAUTHORIZED,
+  'Unauthorized',
+);
+
+const forbiddenError = new HttpError(HTTP_STATUS.FORBIDDEN, 'Forbidden');
 
 export const authenticateWithPermission = (requiredPermission?: string) => {
   return (req: Request, res: Response, next: NextFunction) =>
@@ -16,7 +20,7 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
       { session: false },
       async (err: unknown, user: JwtUser | undefined) => {
         if (err) return next(err); // Access denied: passport internal error
-        if (!user) return next(unauthorizedErr); // Access denied: invalid or missing JWT
+        if (!user) return next(unauthorizedError); // Access denied: invalid or missing JWT
 
         // Attach user manually when using a callback
         req.user = user;
@@ -32,7 +36,7 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
         if (hasPermission) return next();
 
         // Access denied: user missing or lacks permission
-        return next(forbiddenErr);
+        return next(forbiddenError);
       },
     )(req, res, next);
 };
