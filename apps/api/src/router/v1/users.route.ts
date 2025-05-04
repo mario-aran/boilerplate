@@ -6,8 +6,7 @@ import {
   updateUserPasswordZod,
   updateUserZod,
 } from '@/lib/zod/schemas/users.zod';
-import { authenticateJwt } from '@/middleware/authenticate-jwt';
-import { checkPermission } from '@/middleware/check-permission';
+import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
@@ -26,31 +25,27 @@ router.post(
 
 router.get(
   '/',
-  authenticateJwt,
-  checkPermission(PERMISSIONS.READ_USERS),
+  authenticateWithPermission(PERMISSIONS.READ_USERS),
   validateWithZod({ query: readAllUsersZod }),
   routeCatchAsync(usersController.readAll),
 );
 
 router.get(
   ID_PATH,
-  authenticateJwt,
-  checkPermission(PERMISSIONS.READ_USER),
+  authenticateWithPermission(PERMISSIONS.READ_USER),
   routeCatchAsync(usersController.read),
 );
 
 router.patch(
   ID_PATH,
-  authenticateJwt,
-  checkPermission(PERMISSIONS.UPDATE_USER),
+  authenticateWithPermission(PERMISSIONS.UPDATE_USER),
   validateWithZod({ body: updateUserZod }),
   routeCatchAsync(usersController.update),
 );
 
 router.patch(
   ID_PASSWORD_PATH,
-  authenticateJwt,
-  checkPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
+  authenticateWithPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
   validateWithZod({ body: updateUserPasswordZod }),
   routeCatchAsync(usersController.updatePassword),
 );
