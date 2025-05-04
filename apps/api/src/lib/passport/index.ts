@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { jwtStrategy } from './strategies/jwt.strategy';
 
-// Merge all strategies
+// Strategies
 passport.use(jwtStrategy);
 
 export { passport };
