@@ -1,4 +1,5 @@
-import { swaggerSpecV1 } from '@/lib/swagger/swagger-spec-v1';
+import { RegisterRoutes } from '@/lib/tsoa/generated/routes';
+import swaggerDocument from '@/lib/tsoa/generated/swagger.json';
 import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
 import { Router } from 'express';
@@ -14,7 +15,8 @@ const API_V1_PATH = '/api/v1';
 const router = Router();
 
 // Swagger
-router.use(API_DOCS_V1_PATH, swaggerUi.serve, swaggerUi.setup(swaggerSpecV1));
+router.use(API_DOCS_V1_PATH, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+RegisterRoutes(router); // Register tsoa routes after swagger ui
 
 // API routes
 router.use(`${API_V1_PATH}/auth`, authRoute);
