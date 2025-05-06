@@ -2,7 +2,7 @@ import { ReadAllUserRolesZod } from '@/lib/zod/schemas/user-roles.zod';
 import { Request, Response } from 'express';
 import { userRolesService } from './user-roles.service';
 
-class UserRolesController {
+export class UserRolesController {
   public async readAll(
     req: Request<unknown, unknown, unknown, ReadAllUserRolesZod>,
     res: Response,

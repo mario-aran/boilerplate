@@ -5,7 +5,7 @@ import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { authService } from './auth.service';
 
-class AuthController {
+export class AuthController {
   public async login(req: Request, res: Response) {
     const record = await authService.login(req.body);
     if (!record)
