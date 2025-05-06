@@ -9,6 +9,7 @@ export default tseslint.config(
     ignores: [
       'dist',
       'coverage', // "@vitest/coverage-v8"
+      'src/lib/tsoa/generated', // "tsoa"
     ],
   },
 

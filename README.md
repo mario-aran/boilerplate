@@ -32,15 +32,15 @@ This template was created manually.
 - [x] express | @types/express
       dotenv
       cors | @types/cors
+      cookie-parser | @types/cookie-parser
 - [x] swagger-ui-express | @types/swagger-ui-express
-      swagger-jsdoc | @types/swagger-jsdoc
+      tsoa | @tsoa/runtime
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
       @faker-js/faker
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
       bcryptjs
       jsonwebtoken | @types/jsonwebtoken
-      cookie-parser | @types/cookie-parser
 
 ---
 
@@ -63,3 +63,4 @@ This template was created manually.
 - [x] docker-compose.yml
 - [x] drizzle.config.ts
 - [x] vitest.config.ts
+- [x] tsoa.json

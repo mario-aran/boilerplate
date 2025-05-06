@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+    // Base
     "target": "ES2022",
     "module": "commonjs",
     "rootDir": "./src",
     "outDir": "./dist",
+
+    // Compatibility
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true, // import json files
 
     // Linting
     "strict": true,
@@ -15,14 +19,19 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // Types
+    // Experimental
+    "experimentalDecorators": true, // "tsoa": enable decorators
+
+    // Global Types
     "types": [
       "vitest/globals" // "vitest"
     ],
 
-    // Path aliases
+    // Paths
     "baseUrl": "./",
     "paths": { "@/*": ["./src/*"] }
   },
+
+  // File Inclusion
   "include": ["src"]
 }
