@@ -1,3 +1,7 @@
+// Types
+export type PERMISSIONS = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
+
+// Constants
 export const PERMISSIONS = {
   READ_USERS: 'read_users',
   READ_USER: 'read_user',
@@ -6,3 +10,5 @@ export const PERMISSIONS = {
   READ_USER_ROLES: 'read_user_roles',
   READ_PERMISSIONS: 'read_permissions',
 } as const;
+
+export const PERMISSION_VALUES = Object.values(PERMISSIONS) as [PERMISSIONS];
