@@ -1,5 +1,4 @@
-import { RegisterRoutes } from '@/lib/tsoa/generated/routes';
-import swaggerDocument from '@/lib/tsoa/generated/swagger.json';
+import { openAPIDocumentV1 } from '@/lib/zod-to-openapi/openapi-documents';
 import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
 import { Router } from 'express';
@@ -9,14 +8,12 @@ import { permissionsRoute } from './v1/permissions.route';
 import { userRolesRoute } from './v1/user-roles.route';
 import { usersRoute } from './v1/users.route';
 
-const API_DOCS_V1_PATH = '/api-docs/v1';
+// Constants
 const API_V1_PATH = '/api/v1';
 
+// Router
 const router = Router();
-
-// Swagger
-router.use(API_DOCS_V1_PATH, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-RegisterRoutes(router); // Register tsoa routes after swagger ui
+router.use('/api-docs/v1', swaggerUi.serve, swaggerUi.setup(openAPIDocumentV1));
 
 // API routes
 router.use(`${API_V1_PATH}/auth`, authRoute);
