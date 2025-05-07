@@ -1,8 +1,12 @@
-import { runScriptWithTryCatch } from '@/scripts/utils/run-script-with-try-catch';
+import { runScript } from '@/scripts/run-script';
 import { authSeeder } from './utils/auth-seeder';
 
+// Utils
+const scriptFn = async () => {
+  await authSeeder.runSeeds();
+};
+
+// Run the script
 (async () => {
-  await runScriptWithTryCatch('Seeding', async () => {
-    await authSeeder.runSeeds();
-  });
+  await runScript({ processName: 'Seeding', scriptFn });
 })();

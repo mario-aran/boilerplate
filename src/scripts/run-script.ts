@@ -1,5 +1,6 @@
 import '@/config/load-dotenv';
 
+// Types
 interface RunScriptParams {
   processName: string;
   scriptFn: () => Promise<void>;

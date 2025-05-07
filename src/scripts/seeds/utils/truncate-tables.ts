@@ -1,5 +1,6 @@
 import { db } from '@/lib/drizzle/db';
 
+// Constants
 const SELECT_TABLES_QUERY = `
   SELECT table_name
   FROM information_schema.tables
@@ -7,11 +8,11 @@ const SELECT_TABLES_QUERY = `
 `;
 
 export const truncateTables = async () => {
+  // Check if tables contain data
   const { rows } = await db.execute<{ table_name: string }>(
     SELECT_TABLES_QUERY,
   );
 
-  // Check if tables contain data
   if (!rows.length) {
     console.log('No tables to truncate');
     return;
@@ -19,6 +20,7 @@ export const truncateTables = async () => {
 
   // Prepare queries
   const joinedTableNames = rows.map(({ table_name }) => table_name).join(', ');
+
   const truncateTablesQuery = `
     TRUNCATE TABLE ${joinedTableNames}
     RESTART IDENTITY
