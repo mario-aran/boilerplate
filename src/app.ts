@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json()); // JSON body parser
-app.use(passport.initialize()); // Custom passport strategies
+app.use(passport.initialize()); // Passport strategies
 
 app.use('/', router);
 
