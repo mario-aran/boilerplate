@@ -34,13 +34,13 @@ This template was created manually.
       cors | @types/cors
       cookie-parser | @types/cookie-parser
 - [x] swagger-ui-express | @types/swagger-ui-express
-      tsoa | @tsoa/runtime
+      @asteasolutions/zod-to-openapi
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
       @faker-js/faker
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
-      bcryptjs
       jsonwebtoken | @types/jsonwebtoken
+      bcryptjs
 
 ---
 
@@ -63,4 +63,3 @@ This template was created manually.
 - [x] docker-compose.yml
 - [x] drizzle.config.ts
 - [x] vitest.config.ts
-- [x] tsoa.json
