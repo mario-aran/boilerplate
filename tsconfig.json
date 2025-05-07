@@ -10,7 +10,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true, // import json files
 
     // Linting
     "strict": true,
@@ -18,9 +17,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
-    // Experimental
-    "experimentalDecorators": true, // "tsoa": enable decorators
 
     // Global Types
     "types": [
