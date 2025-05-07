@@ -1,4 +1,5 @@
 import { USERS_COLUMNS } from '@/lib/drizzle/schemas';
+import { z } from '@/lib/zod';
 import { createSortSchema } from '@/lib/zod/utils/field-helpers';
 import {
   email,
@@ -8,7 +9,6 @@ import {
   text,
   textId,
 } from '@/lib/zod/utils/fields';
-import { z } from 'zod';
 
 // Prepare values
 const usersWithoutPassword = USERS_COLUMNS.filter(
