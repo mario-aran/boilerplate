@@ -29,17 +29,17 @@ This template was created manually.
 
 - [x] tsx | tsc-alias
 - [x] supertest | @types/supertest
+- [x] swagger-ui-express | @types/swagger-ui-express
+      @asteasolutions/zod-to-openapi
 - [x] express | @types/express
       dotenv
       cors | @types/cors
-      cookie-parser | @types/cookie-parser
-- [x] swagger-ui-express | @types/swagger-ui-express
-      @asteasolutions/zod-to-openapi
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
       @faker-js/faker
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
       jsonwebtoken | @types/jsonwebtoken
+      cookie-parser | @types/cookie-parser
       bcryptjs
 
 ---
