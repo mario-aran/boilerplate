@@ -1,6 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
-import { z } from 'zod';
+import * as zod from 'zod';
 
-extendZodWithOpenApi(z); // Adds .openapi support to zod
+// Adds .openapi support to zod
+extendZodWithOpenApi(zod.z);
 
-export { z };
+// Re-export everything from Zod
+export * from 'zod';
