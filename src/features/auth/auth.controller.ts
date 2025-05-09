@@ -1,6 +1,6 @@
 import { NODE_ENV } from '@/config/env';
 import { HTTP_STATUS } from '@/constants/http-status';
-import { JWT_COOKIE } from '@/lib/passport/constants/jwt-cookie';
+import { JWT_COOKIE } from '@/lib/passport/constants';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { authService } from './auth.service';
