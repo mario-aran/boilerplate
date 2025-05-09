@@ -5,7 +5,7 @@ import { USER_ROLES } from '@/constants/user-roles';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { runScript } from '@/scripts/utils/run-script';
 import { faker } from '@faker-js/faker';
-import { SEEDS_LENGTH } from './constants/seeds-length';
+import { SEEDS_LENGTH } from './constants';
 import { authSeeder } from './utils/auth-seeder';
 import { truncateTables } from './utils/truncate-tables';
 
