@@ -7,19 +7,17 @@ import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
 
 // Router
-const router = Router();
+export const authRoute = Router();
 
 // Route definitions
-router.post(
+authRoute.post(
   ROUTE_PATHS.AUTH_LOGIN,
   validateWithZod({ body: LoginAuthZod }),
   routeCatchAsync(authController.login),
 );
 
-router.post(
+authRoute.post(
   ROUTE_PATHS.AUTH_LOGOUT,
   authenticateWithPermission('read_users'),
   authController.logout,
 );
-
-export { router as authRoute };

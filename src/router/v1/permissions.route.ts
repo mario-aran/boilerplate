@@ -7,14 +7,12 @@ import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
 
 // Router
-const router = Router();
+export const permissionsRoute = Router();
 
 // Route definitions
-router.get(
+permissionsRoute.get(
   '/',
   authenticateWithPermission(PERMISSIONS.READ_PERMISSIONS),
   validateWithZod({ query: ReadAllPermissionsZod }),
   routeCatchAsync(permissionsController.readAll),
 );
-
-export { router as permissionsRoute };
