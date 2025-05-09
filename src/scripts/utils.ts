@@ -1,5 +1,3 @@
-import '@/config/load-dotenv';
-
 // Types
 interface RunScriptParams {
   processName: string;
