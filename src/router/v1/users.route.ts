@@ -1,4 +1,5 @@
 import { PERMISSIONS } from '@/constants/permissions';
+import { ROUTE_PATHS } from '@/constants/routes';
 import { usersController } from '@/features/users/users.controller';
 import {
   createUserZod,
@@ -11,9 +12,7 @@ import { validateWithZod } from '@/middleware/validate-with-zod';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
 
-const ID_PATH = '/:id';
-const ID_PASSWORD_PATH = '/:id/password';
-
+// Router
 const router = Router();
 
 // Route definitions
@@ -31,20 +30,20 @@ router.get(
 );
 
 router.get(
-  ID_PATH,
+  ROUTE_PATHS.USERS_ID,
   authenticateWithPermission(PERMISSIONS.READ_USER),
   routeCatchAsync(usersController.read),
 );
 
 router.patch(
-  ID_PATH,
+  ROUTE_PATHS.USERS_ID,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER),
   validateWithZod({ body: updateUserZod }),
   routeCatchAsync(usersController.update),
 );
 
 router.patch(
-  ID_PASSWORD_PATH,
+  ROUTE_PATHS.USERS_ID_PASSWORD,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
   validateWithZod({ body: updateUserPasswordZod }),
   routeCatchAsync(usersController.updatePassword),
