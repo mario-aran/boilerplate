@@ -1,3 +1,4 @@
+import { ROUTES_V1 } from '@/constants/routes';
 import { openAPIDocumentV1 } from '@/lib/zod-to-openapi/openapi-documents';
 import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
@@ -8,18 +9,20 @@ import { permissionsRoute } from './v1/permissions.route';
 import { userRolesRoute } from './v1/user-roles.route';
 import { usersRoute } from './v1/users.route';
 
-// Constants
-const API_V1_PATH = '/api/v1';
-
 // Router
 const router = Router();
-router.use('/api-docs/v1', swaggerUi.serve, swaggerUi.setup(openAPIDocumentV1));
+
+router.use(
+  ROUTES_V1.API_DOCS,
+  swaggerUi.serve,
+  swaggerUi.setup(openAPIDocumentV1),
+);
 
 // API routes
-router.use(`${API_V1_PATH}/auth`, authRoute);
-router.use(`${API_V1_PATH}/users`, usersRoute);
-router.use(`${API_V1_PATH}/user-roles`, userRolesRoute);
-router.use(`${API_V1_PATH}/permissions`, permissionsRoute);
+router.use(ROUTES_V1.AUTH, authRoute);
+router.use(ROUTES_V1.PERMISSIONS, permissionsRoute);
+router.use(ROUTES_V1.USER_ROLES, userRolesRoute);
+router.use(ROUTES_V1.USERS, usersRoute);
 
 router.get('/', (_, res) => {
   res.json({ message: 'Service is up and running' });
