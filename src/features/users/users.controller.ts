@@ -8,9 +8,9 @@ class UsersController {
   public async create(req: Request, res: Response) {
     const createdRecord = await usersService.create(req.body);
 
-    res.status(HTTP_STATUS.CREATED).json({
-      message: `User ${createdRecord.email} created successfully`,
-    });
+    res
+      .status(HTTP_STATUS.CREATED)
+      .json({ message: `User ${createdRecord.email} created successfully` });
   }
 
   public async readAll(
@@ -32,9 +32,7 @@ class UsersController {
     const updatedRecord = await usersService.update(req.params.id, req.body);
     if (!updatedRecord) this.throwNotFoundHttpError();
 
-    res.json({
-      message: `User ${updatedRecord.email} updated successfully`,
-    });
+    res.json({ message: `User ${updatedRecord.email} updated successfully` });
   }
 
   public async updatePassword(req: Request, res: Response) {

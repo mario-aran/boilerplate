@@ -2,7 +2,7 @@ import { ReadAllPermissionsZod } from '@/lib/zod/schemas/permissions.zod';
 import { Request, Response } from 'express';
 import { permissionsService } from './permissions.service';
 
-export class PermissionsController {
+class PermissionsController {
   public async readAll(
     req: Request<unknown, unknown, unknown, ReadAllPermissionsZod>,
     res: Response,
