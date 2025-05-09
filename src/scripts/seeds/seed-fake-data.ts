@@ -3,7 +3,7 @@
 import { NODE_ENV } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
 import { usersSchema } from '@/lib/drizzle/schemas';
-import { runScript } from '@/scripts/run-script';
+import { runScript } from '@/scripts/utils/run-script';
 import { faker } from '@faker-js/faker';
 import { SEEDS_LENGTH } from './constants/seeds-length';
 import { authSeeder } from './utils/auth-seeder';

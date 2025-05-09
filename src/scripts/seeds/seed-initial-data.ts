@@ -1,4 +1,4 @@
-import { runScript } from '@/scripts/run-script';
+import { runScript } from '@/scripts/utils/run-script';
 import { authSeeder } from './utils/auth-seeder';
 
 // Utils
