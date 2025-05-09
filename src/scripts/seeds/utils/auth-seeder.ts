@@ -7,7 +7,7 @@ import {
   userRolesToPermissionsSchema,
   usersSchema,
 } from '@/lib/drizzle/schemas';
-import { hashPassword } from '@/lib/passport/utils/hash-password';
+import { hashPassword } from '@/lib/passport/utils';
 
 // Types
 type User = typeof usersSchema.$inferInsert;
