@@ -8,7 +8,7 @@ import {
   ReadAllUsersZod,
   UpdateUserPasswordZod,
   UpdateUserZod,
-} from '@/lib/zod/schemas/users.zod';
+} from '@/lib/zod/schemas/v1/users.zod';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {

@@ -1,7 +1,7 @@
 import { db } from '@/lib/drizzle/db';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { signJwtToken } from '@/lib/passport/utils/sign-jwt-token';
-import { LoginAuthZod } from '@/lib/zod/schemas/auth.zod';
+import { LoginAuthZod } from '@/lib/zod/schemas/v1/auth.zod';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 

@@ -1,4 +1,4 @@
-import { ReadAllUserRolesZod } from '@/lib/zod/schemas/user-roles.zod';
+import { ReadAllUserRolesZod } from '@/lib/zod/schemas/v1/user-roles.zod';
 import { Request, Response } from 'express';
 import { userRolesService } from './user-roles.service';
 

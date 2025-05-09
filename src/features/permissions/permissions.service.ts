@@ -4,7 +4,7 @@ import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
   CreatePermissionZod,
   ReadAllPermissionsZod,
-} from '@/lib/zod/schemas/permissions.zod';
+} from '@/lib/zod/schemas/v1/permissions.zod';
 
 class PermissionsService {
   public async create(data: CreatePermissionZod) {

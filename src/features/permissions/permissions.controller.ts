@@ -1,4 +1,4 @@
-import { ReadAllPermissionsZod } from '@/lib/zod/schemas/permissions.zod';
+import { ReadAllPermissionsZod } from '@/lib/zod/schemas/v1/permissions.zod';
 import { Request, Response } from 'express';
 import { permissionsService } from './permissions.service';
 

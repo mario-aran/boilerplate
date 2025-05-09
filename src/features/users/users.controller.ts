@@ -1,5 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { ReadAllUsersZod } from '@/lib/zod/schemas/users.zod';
+import { ReadAllUsersZod } from '@/lib/zod/schemas/v1/users.zod';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { usersService } from './users.service';
