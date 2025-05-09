@@ -1,6 +1,6 @@
 import { ROUTE_PATHS } from '@/constants/routes';
 import { authController } from '@/features/auth/auth.controller';
-import { LoginAuthZod } from '@/lib/zod/schemas/auth.zod';
+import { LoginAuthZod } from '@/lib/zod/schemas/v1/auth.zod';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
 import { routeCatchAsync } from '@/utils/route-catch-async';

@@ -6,7 +6,7 @@ import {
   readAllUsersZod,
   updateUserPasswordZod,
   updateUserZod,
-} from '@/lib/zod/schemas/users.zod';
+} from '@/lib/zod/schemas/v1/users.zod';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
 import { routeCatchAsync } from '@/utils/route-catch-async';
