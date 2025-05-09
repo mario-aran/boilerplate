@@ -10,8 +10,9 @@ import { userRolesRoute } from './v1/user-roles.route';
 import { usersRoute } from './v1/users.route';
 
 // Router
-const router = Router();
+export const router = Router();
 
+// "swagger-ui-express"
 router.use(
   ROUTES_V1.API_DOCS,
   swaggerUi.serve,
@@ -28,8 +29,6 @@ router.get('/', (_, res) => {
   res.json({ message: 'Service is up and running' });
 });
 
-// Middleware
+// API middleware
 router.use(handleNotFound); // Must be placed after all routes
 router.use(handleRouteError); // Must be the last middleware
-
-export { router };
