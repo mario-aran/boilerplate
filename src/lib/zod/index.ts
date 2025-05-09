@@ -1,8 +1,7 @@
+/* eslint-disable no-restricted-imports */
+
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
 import * as zod from 'zod';
 
-// Adds ".openapi()" support to zod
-extendZodWithOpenApi(zod.z);
-
-// Re-export everything from Zod
-export * from 'zod';
+extendZodWithOpenApi(zod.z); // Adds ".openapi()" support to zod
+export * from 'zod'; // Re-export everything from Zod

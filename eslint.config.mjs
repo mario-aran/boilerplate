@@ -35,7 +35,10 @@ export default tseslint.config(
       'no-restricted-imports': [
         'error',
         {
-          patterns: [{ group: ['../**', 'src/*'] }],
+          patterns: [
+            { group: ['../**', 'src/*'], message: "Use '@/' instead" },
+          ],
+          paths: [{ name: 'zod', message: "Use '@/lib/zod' instead" }],
         },
       ],
 
