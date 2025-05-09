@@ -1,4 +1,5 @@
 // "zod-to-openapi": Load zod schemas registry.definitions
+import { ROUTES_V1 } from '@/constants/routes';
 import '@/lib/zod/schemas/v1';
 
 import {
@@ -20,5 +21,5 @@ export const openAPIDocumentV1 = generatorV1.generateDocument({
     title: 'My API',
     description: 'This is the API',
   },
-  servers: [{ url: 'v1' }],
+  servers: [{ url: ROUTES_V1.API }],
 });
