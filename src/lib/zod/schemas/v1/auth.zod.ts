@@ -6,3 +6,5 @@ export type LoginAuthZod = z.infer<typeof LoginAuthZod>;
 
 // Schemas
 export const LoginAuthZod = z.object({ email, password });
+
+// OpenAPI registries
