@@ -1,6 +1,7 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by a script in "package.json"
 
-import '@/config/load-dotenv';
+import '@/config/load-dotenv'; // "dotenv": Ensure its loaded before env imports
+
 import { app } from './app';
 import { SERVER_PORT } from './config/env';
 

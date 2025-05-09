@@ -1,5 +1,6 @@
-import { ROUTES_V1 } from '@/constants/routes';
 import '@/lib/zod/schemas/v1'; // "zod-to-openapi": Load zod schemas registry.definitions
+
+import { ROUTES_V1 } from '@/constants/routes';
 
 import {
   OpenApiGeneratorV31,
