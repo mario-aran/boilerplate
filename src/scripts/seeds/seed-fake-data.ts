@@ -7,7 +7,6 @@ import { USER_ROLES } from '@/constants/user-roles';
 import { usersSchema } from '@/lib/drizzle/schemas';
 import { scriptCatchAsync } from '@/scripts/utils';
 import { faker } from '@faker-js/faker';
-import { SEEDS_LENGTH } from './constants';
 import { authSeeder } from './utils/auth-seeder';
 import { truncateTables } from './utils/truncate-tables';
 
@@ -19,17 +18,15 @@ if (NODE_ENV === 'production')
 type User = typeof usersSchema.$inferInsert;
 
 // Utils
-const mockedUsers = faker.helpers
-  .uniqueArray(faker.internet.email, SEEDS_LENGTH)
-  .map(
-    (email): User => ({
-      userRoleId: USER_ROLES.USER,
-      email,
-      password: '12345678',
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-    }),
-  );
+const mockedUsers = faker.helpers.uniqueArray(faker.internet.email, 20).map(
+  (email): User => ({
+    userRoleId: USER_ROLES.USER,
+    email,
+    password: '12345678',
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+  }),
+);
 
 const runScript = async () => {
   await truncateTables();
