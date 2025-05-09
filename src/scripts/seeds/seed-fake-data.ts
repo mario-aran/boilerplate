@@ -9,7 +9,7 @@ import { SEEDS_LENGTH } from './constants/seeds-length';
 import { authSeeder } from './utils/auth-seeder';
 import { truncateTables } from './utils/truncate-tables';
 
-// Guard: prevent running in production
+// Guards
 if (NODE_ENV === 'production')
   throw new Error('Seeding not allowed in production');
 

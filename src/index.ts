@@ -1,4 +1,4 @@
-// WARNING: This file is used by a script in "package.json". Do not rename or move
+// DO NOT RENAME OR MOVE THIS FILE — used by a script in "package.json"
 
 import '@/config/load-dotenv';
 import { app } from './app';
