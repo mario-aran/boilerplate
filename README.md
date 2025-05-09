@@ -2,20 +2,36 @@
 
 This template was created manually.
 
+---
+
 # To-Do
 
 ## Instructions
 
-- launch db: `docker compose up -d`
-- install packages: `pnpm install`
-- launch app: `pnpm run dev`
-- url: "http://localhost:3000/api"
+1. Build & Lint
+   `pnpm install`: Install dependencies
+   `pnpm run format`: Run formatter
+   `pnpm run lint`: Run linter and typechecking
+   `pnpm run build`: Build app to check additional types
 
----
+2. Database
+   `docker compose up -d`: Launch database
+   `pnpm run db:generate`: Update migrations
+   `pnpm run db:migrate`: Run migrations
+   `pnpm run db:seed:fake`: Seed fake data
+
+3. Testing
+   `pnpm run test`: Run tests
+   `pnpm run test:coverage`: Run coverage
+
+4. Launch
+   `pnpm run dev`: Run app in development mode
+   "http://localhost:3000/api": Access api
+   "http://localhost:3000/api-docs/v1": Access swagger ui
 
 ## Installers
 
-1. Installers Full-stack
+Installers Full-stack
 
 - [x] prettier
 - [x] typescript | @types/node
@@ -25,7 +41,7 @@ This template was created manually.
 - [x] vitest | vitest/coverage-v8
 - [x] zod
 
-2. Installers Backend
+Installers Backend
 
 - [x] tsx | tsc-alias
 - [x] supertest | @types/supertest
@@ -42,11 +58,9 @@ This template was created manually.
       cookie-parser | @types/cookie-parser
       bcryptjs
 
----
-
 ## Setups
 
-1. Setups Full-stack
+Setups Full-stack
 
 - [x] .editorconfig
 - [x] .gitignore
@@ -58,7 +72,7 @@ This template was created manually.
 - [x] eslint.config
 - [x] tsconfig.json
 
-2. Setups Backend
+Setups Backend
 
 - [x] docker-compose.yml
 - [x] drizzle.config.ts
