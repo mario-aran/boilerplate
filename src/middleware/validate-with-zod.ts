@@ -1,7 +1,7 @@
 import { HTTP_STATUS } from '@/constants/http-status';
+import { AnyZodObject, ZodError, ZodIssue } from '@/lib/zod';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
-import { AnyZodObject, ZodError, ZodIssue } from 'zod';
 
 interface Schema {
   params?: AnyZodObject;
