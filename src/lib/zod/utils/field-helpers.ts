@@ -1,4 +1,4 @@
-import { z, ZodTypeAny } from 'zod';
+import { z, ZodTypeAny } from '@/lib/zod';
 
 export const createUniqueArraySchema = <T extends ZodTypeAny>(schema: T) =>
   schema.array().refine(
