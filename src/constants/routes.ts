@@ -1,69 +1,30 @@
-// Types
-type Version = 'v1' | 'v2' | 'v3';
+export const ROUTE_PATHS = {
+  AUTH_LOGIN: '/login',
+  AUTH_LOGOUT: '/logout',
+  USERS_ID: '/:id',
+  USERS_ID_PASSWORD: '/:id/password',
+} as const;
 
-// Utils
-class RoutesBuilder<T extends Version> {
-  private readonly ID_PATH = '/:id';
-  private readonly baseApiRoute;
-  private readonly baseApiDocsRoute;
+// Routes
+const buildRoutes = <T extends 'v1' | 'v2'>(version: T) => {
+  const API = `/api/${version}` as const;
+  const AUTH = `${API}/auth` as const;
+  const PERMISSIONS = `${API}/permissions` as const;
+  const USER_ROLES = `${API}/user-roles` as const;
+  const USERS = `${API}/users` as const;
 
-  constructor(version: T) {
-    this.baseApiRoute = `/api/${version}` as const;
-    this.baseApiDocsRoute = `/api-docs/${version}` as const;
-  }
+  return {
+    API_DOCS: `/api-docs/${version}`,
+    API,
+    AUTH,
+    AUTH_LOGIN: `${AUTH}${ROUTE_PATHS.AUTH_LOGIN}`,
+    AUTH_LOGOUT: `${AUTH}${ROUTE_PATHS.AUTH_LOGOUT}`,
+    PERMISSIONS,
+    USER_ROLES,
+    USERS,
+    USERS_ID: `${USERS}${ROUTE_PATHS.USERS_ID}`,
+    USERS_ID_PASSWORD: `${USERS}${ROUTE_PATHS.USERS_ID_PASSWORD}`,
+  } as const;
+};
 
-  public getRoutes() {
-    return {
-      API: this.baseApiRoute,
-      API_DOCS: this.baseApiDocsRoute,
-      AUTH: this.buildAuthRoutes(),
-      PERMISSIONS: this.buildPermissionsRoutes(),
-      USER_ROLES: this.buildUserRolesRoutes(),
-      USERS: this.buildUsersRoutes(),
-    };
-  }
-
-  private buildBaseRoute<T extends string>(path: T) {
-    return `${this.baseApiRoute}${path}` as const;
-  }
-
-  private buildAuthRoutes() {
-    const base = this.buildBaseRoute('/auth');
-    const loginPath = '/login';
-    const logoutPath = '/logout';
-
-    return {
-      BASE: base,
-      LOGIN: `${base}${loginPath}`,
-      LOGOUT: `${base}${logoutPath}`,
-      LOGIN_PATH: loginPath,
-      LOGOUT_PATH: logoutPath,
-    } as const;
-  }
-
-  private buildPermissionsRoutes() {
-    const base = this.buildBaseRoute('/permissions');
-    return { BASE: base } as const;
-  }
-
-  private buildUserRolesRoutes() {
-    const base = this.buildBaseRoute('/user-roles');
-    return { BASE: base } as const;
-  }
-
-  private buildUsersRoutes() {
-    const base = this.buildBaseRoute('/users');
-    const idPasswordPath = `${this.ID_PATH}/password` as const;
-
-    return {
-      BASE: base,
-      ID: `${base}${this.ID_PATH}`,
-      ID_PASSWORD: `${base}${idPasswordPath}`,
-      ID_PATH: this.ID_PATH,
-      ID_PASSWORD_PATH: idPasswordPath,
-    } as const;
-  }
-}
-
-// Constants
-export const ROUTES_V1 = new RoutesBuilder('v1').getRoutes();
+export const ROUTES_V1 = buildRoutes('v1');
