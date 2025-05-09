@@ -1,12 +1,15 @@
-import { runScript } from '@/scripts/utils';
+import { scriptCatchAsync } from '@/scripts/utils';
 import { authSeeder } from './utils/auth-seeder';
 
 // Utils
-const scriptFn = async () => {
+const runScript = async () => {
   await authSeeder.runSeeds();
 };
 
 // Run the script
 (async () => {
-  await runScript({ processName: 'Seeding', scriptFn });
+  await scriptCatchAsync({
+    processName: 'Seeding',
+    asyncFn: runScript,
+  });
 })();

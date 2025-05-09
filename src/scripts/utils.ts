@@ -1,12 +1,15 @@
 // Types
 interface RunScriptParams {
   processName: string;
-  scriptFn: () => Promise<void>;
+  asyncFn: () => Promise<void>;
 }
 
-export const runScript = async ({ processName, scriptFn }: RunScriptParams) => {
+export const scriptCatchAsync = async ({
+  processName,
+  asyncFn,
+}: RunScriptParams) => {
   try {
-    await scriptFn();
+    await asyncFn();
     console.log(`${processName} completed successfully`);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';

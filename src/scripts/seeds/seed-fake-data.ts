@@ -5,7 +5,7 @@ import '@/config/load-dotenv'; // "dotenv": Ensure its loaded before env imports
 import { NODE_ENV } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
 import { usersSchema } from '@/lib/drizzle/schemas';
-import { runScript } from '@/scripts/utils';
+import { scriptCatchAsync } from '@/scripts/utils';
 import { faker } from '@faker-js/faker';
 import { SEEDS_LENGTH } from './constants';
 import { authSeeder } from './utils/auth-seeder';
@@ -31,7 +31,7 @@ const mockedUsers = faker.helpers
     }),
   );
 
-const scriptFn = async () => {
+const runScript = async () => {
   await truncateTables();
   await authSeeder.runSeeds();
   await authSeeder.seedUsers(mockedUsers);
@@ -39,5 +39,8 @@ const scriptFn = async () => {
 
 // Run the script
 (async () => {
-  await runScript({ processName: 'Seeding', scriptFn });
+  await scriptCatchAsync({
+    processName: 'Seeding',
+    asyncFn: runScript,
+  });
 })();
