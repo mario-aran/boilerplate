@@ -1,16 +1,16 @@
 import { PERMISSIONS_COLUMNS } from '@/lib/drizzle/schemas';
 import { z } from '@/lib/zod';
 import { createSortSchema } from '@/lib/zod/utils/field-helpers';
-import { limit, page, textId } from '@/lib/zod/utils/fields';
+import { limit, page, permissionId } from '@/lib/zod/utils/fields';
 
 // Types
-export type CreatePermissionZod = z.infer<typeof CreatePermissionZod>;
 export type ReadAllPermissionsZod = z.infer<typeof ReadAllPermissionsZod>;
+export type CreatePermissionZod = z.infer<typeof CreatePermissionZod>;
 
 // Fields
-const id = textId;
 const sort = createSortSchema(PERMISSIONS_COLUMNS);
+const id = permissionId;
 
 // Schemas
+export const ReadAllPermissionsZod = z.object({ sort, limit, page }).partial();
 export const CreatePermissionZod = z.object({ id });
-export const ReadAllPermissionsZod = z.object({ limit, page, sort }).partial();
