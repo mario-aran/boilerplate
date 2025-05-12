@@ -8,9 +8,11 @@ import { authService } from './auth.service';
 class AuthController {
   public async login(req: Request, res: Response) {
     const record = await authService.login(req.body);
-
     if (!record)
-      throw new HttpError(HTTP_STATUS.UNAUTHORIZED, 'Invalid credentials');
+      throw new HttpError({
+        status: HTTP_STATUS.UNAUTHORIZED,
+        message: 'Invalid credentials',
+      });
 
     res.cookie(JWT_COOKIE, record.token, {
       httpOnly: true,
