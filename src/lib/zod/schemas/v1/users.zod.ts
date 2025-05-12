@@ -1,6 +1,4 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { z } from '@/lib/zod';
-import { registryV1 } from '@/lib/zod/openapi/registries';
 import {
   email,
   firstName,
@@ -33,20 +31,3 @@ export const UpdateUserZod = z
 export const UpdateUserPasswordZod = z.object({ password });
 
 // OpenAPI registries
-registryV1.registerPath({
-  tags: ['users'],
-  method: 'get',
-  path: '/users',
-  summary: 'Get all users',
-  request: { query: ReadAllUsersZod },
-  responses: {
-    [HTTP_STATUS.OK]: {
-      description: 'Array of objects with user data.',
-      content: {
-        'application/json': {
-          schema: {},
-        },
-      },
-    },
-  },
-});
