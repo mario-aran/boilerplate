@@ -12,6 +12,57 @@ import {
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
+  public async readAll({
+    limit,
+    page,
+    sort,
+    userRoleId = '',
+    search = '',
+  }: ReadAllUsersZod) {
+    const filters = and(
+      ilike(usersSchema.userRoleId, `%${userRoleId}%`),
+      or(
+        ilike(usersSchema.email, `%${search}%`),
+        ilike(usersSchema.firstName, `%${search}%`),
+        ilike(usersSchema.lastName, `%${search}%`),
+      ),
+    );
+
+    const { data, ...pagination } = await queryPaginatedData({
+      schema: usersSchema,
+      filters,
+      limit,
+      sort,
+      page,
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const dataWithoutPassword = data.map(({ password: _, ...rest }) => rest);
+    return { data: dataWithoutPassword, ...pagination };
+  }
+
+  public async read(id: string) {
+    const record = await db.query.usersSchema.findFirst({
+      columns: { password: false },
+      with: {
+        userRole: {
+          columns: {},
+          with: { userRolesToPermissions: { columns: { permissionId: true } } },
+        },
+      },
+      where: eq(usersSchema.id, id),
+    });
+    if (!record) return null;
+
+    // Flatten info
+    const { userRole, ...restOfRecord } = record;
+    return {
+      ...restOfRecord,
+      permissionIds: userRole.userRolesToPermissions.map(
+        ({ permissionId }) => permissionId,
+      ),
+    };
+  }
+
   public async create({ password, ...restOfData }: CreateUserZod) {
     const hashedPassword = await hashPassword(password);
     const [createdRecord] = await db
@@ -22,73 +73,7 @@ class UsersService {
         password: hashedPassword,
       })
       .returning({ email: usersSchema.email });
-
     return createdRecord;
-  }
-
-  public async readAll({
-    limit,
-    page,
-    sort,
-    userRoleId = '',
-    search = '',
-  }: ReadAllUsersZod) {
-    // Prepare filters
-    const filters = and(
-      ilike(usersSchema.userRoleId, `%${userRoleId}%`),
-      or(
-        ilike(usersSchema.email, `%${search}%`),
-        ilike(usersSchema.firstName, `%${search}%`),
-        ilike(usersSchema.lastName, `%${search}%`),
-      ),
-    );
-
-    // Query results
-    const { data, ...restOfResults } = await queryPaginatedData({
-      schema: usersSchema,
-      filters,
-      limit,
-      sort,
-      page,
-    });
-
-    // Remove password from results
-    const dataWithNoPassword = data.map(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ({ password: _, ...restOfData }) => restOfData,
-    );
-
-    return {
-      data: dataWithNoPassword,
-      ...restOfResults,
-    };
-  }
-
-  public async read(id: string) {
-    // Check record
-    const record = await db.query.usersSchema.findFirst({
-      columns: { password: false },
-      with: {
-        userRole: {
-          columns: {},
-          with: {
-            userRolesToPermissions: {
-              columns: { permissionId: true },
-            },
-          },
-        },
-      },
-      where: eq(usersSchema.id, id),
-    });
-    if (!record) return null;
-
-    // Flatten info
-    const { userRole, ...restOfRecord } = record;
-    const permissionIds = userRole.userRolesToPermissions.map(
-      ({ permissionId }) => permissionId,
-    );
-
-    return { ...restOfRecord, permissionIds };
   }
 
   public async update(id: string, data: UpdateUserZod) {
@@ -97,7 +82,6 @@ class UsersService {
       .set(data)
       .where(eq(usersSchema.id, id))
       .returning({ email: usersSchema.email });
-
     return updatedRecord;
   }
 
@@ -108,7 +92,6 @@ class UsersService {
       .set({ password: hashedPassword })
       .where(eq(usersSchema.id, id))
       .returning({ email: usersSchema.email });
-
     return updatedRecord;
   }
 }
