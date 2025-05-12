@@ -82,16 +82,16 @@ class AuthSeeder {
   }
 
   private async seedUserRolesToPermissions() {
-    const values = PERMISSION_VALUES.map(
-      (permissionId): UserRoleToPermission => ({
-        userRoleId: USER_ROLES.SUPERADMIN,
-        permissionId,
-      }),
-    );
-
     const createdRecords = await db
       .insert(userRolesToPermissionsSchema)
-      .values(values)
+      .values(
+        PERMISSION_VALUES.map(
+          (permissionId): UserRoleToPermission => ({
+            userRoleId: USER_ROLES.SUPERADMIN,
+            permissionId,
+          }),
+        ),
+      )
       .onConflictDoNothing()
       .returning({ userRoleId: userRolesToPermissionsSchema.userRoleId });
 
