@@ -1,3 +1,4 @@
+// Constants
 export const ROUTE_PATHS = {
   AUTH_LOGIN: '/login',
   AUTH_LOGOUT: '/logout',
@@ -5,7 +6,7 @@ export const ROUTE_PATHS = {
   USERS_ID_PASSWORD: '/:id/password',
 } as const;
 
-// Routes
+// Utils
 const buildRoutes = <T extends 'v1' | 'v2'>(version: T) => {
   const API = `/api/${version}` as const;
   const AUTH = `${API}/auth` as const;
@@ -27,4 +28,5 @@ const buildRoutes = <T extends 'v1' | 'v2'>(version: T) => {
   } as const;
 };
 
+// Constants
 export const ROUTES_V1 = buildRoutes('v1');
