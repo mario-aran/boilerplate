@@ -28,7 +28,6 @@ export const queryPaginatedData = async ({
   const totalPages = Math.ceil(total / safeLimit) || 1;
   const currentPage = Math.max(1, Math.min(page, totalPages));
 
-  // Prepare results
   const results = {
     total,
     limit: safeLimit,
@@ -37,8 +36,6 @@ export const queryPaginatedData = async ({
     nextPage: currentPage < totalPages ? currentPage + 1 : null,
     totalPages,
   };
-
-  // Return results with empty data
   if (!total) return { data: [], ...results };
 
   // Query data
@@ -57,7 +54,5 @@ export const queryPaginatedData = async ({
     .orderBy(...orderBy) // Spread orderBy as individual arguments
     .limit(limit)
     .offset((page - 1) * limit);
-
-  // Return results with data
   return { data, ...results };
 };

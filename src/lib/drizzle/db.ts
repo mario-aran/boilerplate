@@ -5,9 +5,9 @@ import * as schemas from './schemas';
 
 const pool = new Pool({ connectionString: DATABASE_URL });
 
-// Drizzle database connection
+// Database connection
 export const db = drizzle({
   client: pool, // DB connection with driver
   logger: NODE_ENV !== 'production' && true,
-  schema: schemas, // Enable usage of "drizzle.query" within all schemas
+  schema: schemas, // Enable usage of "drizzle.query" with all schemas
 });
