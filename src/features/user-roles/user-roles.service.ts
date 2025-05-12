@@ -44,11 +44,12 @@ class UserRolesService {
           .where(eq(userRolesToPermissionsSchema.userRoleId, id));
 
         // Insert new permissions
-        const values = permissionIds.map((permissionId) => ({
-          userRoleId: id,
-          permissionId,
-        }));
-        await tx.insert(userRolesToPermissionsSchema).values(values);
+        await tx.insert(userRolesToPermissionsSchema).values(
+          permissionIds.map((permissionId) => ({
+            userRoleId: id,
+            permissionId,
+          })),
+        );
       }
 
       // Update values
