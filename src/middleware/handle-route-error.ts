@@ -10,11 +10,10 @@ export const handleRouteError = (
   _next: NextFunction,
 ) => {
   const errorStatus = err.status ?? HTTP_STATUS.SERVER_ERROR;
-
   res.status(errorStatus).json({
     status: errorStatus,
     message: err.message || 'Internal Server Error',
-    details: err.details || undefined,
+    validationErrors: err.validationErrors || undefined,
     stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
   });
 };
