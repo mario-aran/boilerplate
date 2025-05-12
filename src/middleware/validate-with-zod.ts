@@ -16,26 +16,26 @@ export const validateWithZod = ({ params, query, body }: Schema) => {
       query?.parse(req.query);
       body?.parse(req.body);
 
-      // Pass
+      // Succeeded
       return next();
     } catch (err) {
       if (err instanceof ZodError) {
-        const details = err.errors.map((issue: ZodIssue) => ({
+        const validationErrors = err.errors.map((issue: ZodIssue) => ({
           path: `${issue.path.join('.')}`,
           message: issue.message,
         }));
 
-        const zodError = new HttpError(
-          HTTP_STATUS.UNPROCESSABLE,
-          'Invalid inputs',
-          details,
-        );
+        const zodHttpError = new HttpError({
+          status: HTTP_STATUS.UNPROCESSABLE,
+          message: 'Invalid inputs',
+          validationErrors,
+        });
 
-        // Fail: zod error
-        return next(zodError);
+        // Failed: zod error
+        return next(zodHttpError);
       }
 
-      // Fail: internal error
+      // Failed: internal error
       return next(err);
     }
   };
