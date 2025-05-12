@@ -9,7 +9,6 @@ import { permissionsRoute } from './v1/permissions.route';
 import { userRolesRoute } from './v1/user-roles.route';
 import { usersRoute } from './v1/users.route';
 
-// Router
 export const router = Router();
 
 // "swagger-ui-express"
