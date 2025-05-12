@@ -1,8 +1,8 @@
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
-// Initialize registries
+// Registries
 export const registryV1 = new OpenAPIRegistry();
 
-// Load zod schema registry definitions synchronously
+// Synchronously load schema registry definitions
 /* eslint-disable @typescript-eslint/no-require-imports */
 require('@/lib/zod/schemas/v1');
