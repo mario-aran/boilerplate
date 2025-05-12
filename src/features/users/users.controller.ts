@@ -1,22 +1,10 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { ReadAllUsersZod } from '@/lib/zod/schemas/v1/users.zod';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { usersService } from './users.service';
 
 class UsersController {
-  public async create(req: Request, res: Response) {
-    const createdRecord = await usersService.create(req.body);
-
-    res
-      .status(HTTP_STATUS.CREATED)
-      .json({ message: `User ${createdRecord.email} created successfully` });
-  }
-
-  public async readAll(
-    req: Request<unknown, unknown, unknown, ReadAllUsersZod>,
-    res: Response,
-  ) {
+  public async readAll(req: Request, res: Response) {
     const results = await usersService.readAll(req.query);
     res.json(results);
   }
@@ -26,6 +14,13 @@ class UsersController {
     if (!record) this.throwNotFoundHttpError();
 
     res.json(record);
+  }
+
+  public async create(req: Request, res: Response) {
+    const createdRecord = await usersService.create(req.body);
+    res
+      .status(HTTP_STATUS.CREATED)
+      .json({ message: `User ${createdRecord.email} created successfully` });
   }
 
   public async update(req: Request, res: Response) {
@@ -48,7 +43,10 @@ class UsersController {
   }
 
   private throwNotFoundHttpError() {
-    throw new HttpError(HTTP_STATUS.NOT_FOUND, 'User not found');
+    throw new HttpError({
+      status: HTTP_STATUS.NOT_FOUND,
+      message: 'User not found',
+    });
   }
 }
 
