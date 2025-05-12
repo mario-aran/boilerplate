@@ -1,28 +1,10 @@
-import { db } from '@/lib/drizzle/db';
 import { permissionsSchema } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import {
-  CreatePermissionZod,
-  ReadAllPermissionsZod,
-} from '@/lib/zod/schemas/v1/permissions.zod';
+import { ReadAllPermissionsZod } from '@/lib/zod/schemas/v1/permissions.zod';
 
 class PermissionsService {
-  public async create(data: CreatePermissionZod) {
-    const [createdRecord] = await db
-      .insert(permissionsSchema)
-      .values(data)
-      .returning({ id: permissionsSchema.id });
-
-    return createdRecord;
-  }
-
   public async readAll({ limit, page, sort }: ReadAllPermissionsZod) {
-    return queryPaginatedData({
-      schema: permissionsSchema,
-      limit,
-      sort,
-      page,
-    });
+    return queryPaginatedData({ schema: permissionsSchema, limit, sort, page });
   }
 }
 
