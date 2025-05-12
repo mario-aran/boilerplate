@@ -1,24 +1,22 @@
 import { db } from '@/lib/drizzle/db';
 import { asc, count, desc, SQL } from 'drizzle-orm';
-import { AnyPgTable } from 'drizzle-orm/pg-core';
+import { AnyPgColumn, AnyPgTable } from 'drizzle-orm/pg-core';
 
+// Types
 interface QueryParams {
   schema: AnyPgTable;
   filters?: SQL<unknown>;
-  page?: number;
   limit?: number;
-  sort?: {
-    field: keyof AnyPgTable['$inferSelect'];
-    direction: 'asc' | 'desc';
-  }[];
+  page?: number;
+  sort?: string[];
 }
 
 export const queryPaginatedData = async ({
   schema,
   filters,
-  page = 1,
   limit = 10,
-  sort = [{ field: 'id', direction: 'asc' }],
+  page = 1,
+  sort = [],
 }: QueryParams) => {
   // Query count
   const [{ count: total }] = await db
@@ -26,25 +24,29 @@ export const queryPaginatedData = async ({
     .from(schema)
     .where(filters);
 
-  const totalPages = total ? Math.ceil(total / limit) : 1;
+  const safeLimit = Math.max(limit, 1);
+  const totalPages = Math.ceil(total / safeLimit) || 1;
+  const currentPage = Math.max(1, Math.min(page, totalPages));
 
   // Prepare results
   const results = {
     total,
-    limit,
-    page,
+    limit: safeLimit,
+    page: currentPage,
+    prevPage: currentPage > 1 ? currentPage - 1 : null,
+    nextPage: currentPage < totalPages ? currentPage + 1 : null,
     totalPages,
-    prevPage: page > 1 ? page - 1 : null,
-    nextPage: page < totalPages ? page + 1 : null,
   };
 
-  // If count is zero, Return results with empty data
+  // Return results with empty data
   if (!total) return { data: [], ...results };
 
   // Query data
-  const orderBy = sort.map(({ field, direction }) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const column = (schema as any)[field];
+  const orderBy = sort.map((el) => {
+    const isDesc = el.startsWith('-');
+    const field = (isDesc ? el.slice(1) : el) as keyof typeof schema;
+    const column = schema[field] as AnyPgColumn;
+    const direction = isDesc ? 'desc' : 'asc';
     return direction === 'asc' ? asc(column) : desc(column);
   });
 
@@ -52,7 +54,7 @@ export const queryPaginatedData = async ({
     .select()
     .from(schema)
     .where(filters)
-    .orderBy(...orderBy) // Spread orderBy array as individual arguments
+    .orderBy(...orderBy) // Spread orderBy as individual arguments
     .limit(limit)
     .offset((page - 1) * limit);
 
