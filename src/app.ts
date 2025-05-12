@@ -6,11 +6,13 @@ import { router } from './router';
 
 const app = express();
 
+// Middleware definitions
 app.use(cors());
-app.use(cookieParser());
-app.use(express.json()); // JSON body parser
-app.use(passport.initialize()); // Passport strategies
 
-app.use('/', router);
+// Router setup
+app.use(cookieParser());
+app.use(express.json()); // Body parser
+app.use(passport.initialize()); // Passport strategies: must be placed after all request middleware
+app.use('/', router); // Must be placed last
 
 export { app };
