@@ -6,7 +6,6 @@ import { validateWithZod } from '@/middleware/validate-with-zod';
 import { routeCatchAsync } from '@/utils/route-catch-async';
 import { Router } from 'express';
 
-// Router
 export const permissionsRoute = Router();
 
 // Route definitions
