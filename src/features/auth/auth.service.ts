@@ -11,6 +11,7 @@ class AuthService {
     const userExists = await db.query.usersSchema.findFirst({
       where: eq(usersSchema.email, email),
     });
+
     if (!userExists) return null;
 
     // Check password
@@ -18,15 +19,8 @@ class AuthService {
     if (!passwordValid) return null;
 
     // Generate token
-    const token = signJwtToken({
-      id: userExists.id,
-      email: userExists.email,
-    });
-
-    return {
-      token,
-      email: userExists.email,
-    };
+    const token = signJwtToken({ id: userExists.id, email: userExists.email });
+    return { token, email: userExists.email };
   }
 }
 

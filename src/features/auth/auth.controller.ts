@@ -8,6 +8,7 @@ import { authService } from './auth.service';
 class AuthController {
   public async login(req: Request, res: Response) {
     const record = await authService.login(req.body);
+
     if (!record)
       throw new HttpError(HTTP_STATUS.UNAUTHORIZED, 'Invalid credentials');
 
@@ -23,7 +24,6 @@ class AuthController {
 
   public logout(_: Request, res: Response) {
     res.clearCookie(JWT_COOKIE);
-
     res.json({ message: 'User logged out successfully' });
   }
 }
