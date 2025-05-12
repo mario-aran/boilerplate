@@ -15,8 +15,9 @@ class AuthService {
     const passwordIsValid = await bcrypt.compare(password, userExists.password);
     if (!passwordIsValid) return null;
 
-    const token = signJwtToken({ id: userExists.id, email: userExists.email });
-    return { token, email: userExists.email };
+    return {
+      token: signJwtToken({ id: userExists.id, email: userExists.email }),
+    };
   }
 }
 
