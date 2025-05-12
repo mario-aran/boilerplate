@@ -5,13 +5,16 @@ import { JwtUser } from '@/lib/passport/types';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
-// HTTP errors
-const unauthorizedError = new HttpError(
-  HTTP_STATUS.UNAUTHORIZED,
-  'Unauthorized',
-);
+// Errors
+const unauthorizedHttpError = new HttpError({
+  status: HTTP_STATUS.UNAUTHORIZED,
+  message: 'Unauthorized',
+});
 
-const forbiddenError = new HttpError(HTTP_STATUS.FORBIDDEN, 'Forbidden');
+const forbiddenHttpError = new HttpError({
+  status: HTTP_STATUS.FORBIDDEN,
+  message: 'Forbidden',
+});
 
 export const authenticateWithPermission = (requiredPermission?: string) => {
   return (req: Request, res: Response, next: NextFunction) =>
@@ -19,24 +22,24 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
       'jwt',
       { session: false },
       async (err: unknown, user: JwtUser | undefined) => {
-        if (err) return next(err); // Fail: passport internal error
-        if (!user) return next(unauthorizedError); // Fail: invalid or missing JWT
+        if (err) return next(err); // Failed: internal error
+        if (!user) return next(unauthorizedHttpError); // Failed: invalid or missing JWT
 
-        // Attach user manually when using a callback
+        // Attach user manually when using callback
         req.user = user;
 
-        // Pass: user is the owner or no required permission
+        // Succeeded: user is the owner or doesn't require permission
         const userIsOwner = req.params.id === user.id;
         if (userIsOwner || !requiredPermission) return next();
 
-        // Pass: user has the required permission
+        // Succeeded: user has required permission
         const dbUser = await usersService.read(user.id);
         const hasPermission =
           dbUser?.permissionIds.includes(requiredPermission);
         if (hasPermission) return next();
 
-        // Fail: user missing or lacks permission
-        return next(forbiddenError);
+        // Failed: user missing or lacks permission
+        return next(forbiddenHttpError);
       },
     )(req, res, next);
 };
