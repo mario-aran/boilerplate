@@ -23,7 +23,6 @@ class AuthSeeder {
     await authSeeder.seedPermissions();
     await authSeeder.seedUserRoles();
     await authSeeder.seedUserRolesToPermissions();
-
     await authSeeder.seedUsers([
       {
         userRoleId: USER_ROLES.SUPERADMIN,
@@ -42,7 +41,6 @@ class AuthSeeder {
         return { ...restOfRecord, password: hashedPassword };
       },
     );
-
     const usersWithHashedPassword = await Promise.all(hashedUserPromises);
 
     const createdRecords = await db
@@ -97,13 +95,9 @@ class AuthSeeder {
       .onConflictDoNothing()
       .returning({ userRoleId: userRolesToPermissionsSchema.userRoleId });
 
-    const uniqueKeys = [
-      ...new Set(createdRecords.map(({ userRoleId }) => userRoleId)),
-    ];
-
     this.logSeedMessage({
       entityName: 'userRolesToPermissions',
-      keys: uniqueKeys,
+      keys: [...new Set(createdRecords.map(({ userRoleId }) => userRoleId))],
     });
   }
 
