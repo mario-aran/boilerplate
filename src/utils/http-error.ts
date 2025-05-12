@@ -18,8 +18,4 @@ export class HttpError extends Error {
     this.validationErrors = validationErrors;
     Error.captureStackTrace(this, HttpError);
   }
-
-  static throw({ status, message = '', validationErrors }: HttpErrorOptions) {
-    throw new HttpError({ status, message, validationErrors });
-  }
 }
