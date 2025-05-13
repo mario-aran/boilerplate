@@ -1,32 +1,55 @@
-// Constants
-export const ROUTE_PATHS = {
-  AUTH_LOGIN: '/login',
-  AUTH_LOGOUT: '/logout',
-  USERS_ID: '/:id',
-  USERS_ID_PASSWORD: '/:id/password',
-} as const;
+// Types
+type RoutePaths = Record<string, `/${string}`>;
+
+interface RoutesBuilderOptions<T extends RoutePaths, V extends string> {
+  routePaths: T;
+  version: V;
+}
 
 // Utils
-const buildRoutes = <T extends 'v1' | 'v2'>(version: T) => {
+const routesBuilder = <T extends RoutePaths, V extends string>({
+  routePaths,
+  version,
+}: RoutesBuilderOptions<T, V>) => {
+  const API_DOCS = `/api-docs/${version}` as const;
   const API = `/api/${version}` as const;
-  const AUTH = `${API}/auth` as const;
-  const PERMISSIONS = `${API}/permissions` as const;
-  const USER_ROLES = `${API}/user-roles` as const;
-  const USERS = `${API}/users` as const;
 
-  return {
-    API_DOCS: `/api-docs/${version}`,
-    API,
-    AUTH,
-    AUTH_LOGIN: `${AUTH}${ROUTE_PATHS.AUTH_LOGIN}`,
-    AUTH_LOGOUT: `${AUTH}${ROUTE_PATHS.AUTH_LOGOUT}`,
-    PERMISSIONS,
-    USER_ROLES,
-    USERS,
-    USERS_ID: `${USERS}${ROUTE_PATHS.USERS_ID}`,
-    USERS_ID_PASSWORD: `${USERS}${ROUTE_PATHS.USERS_ID_PASSWORD}`,
-  } as const;
+  const routesEntries = Object.entries(routePaths).map(([key, value]) => [
+    key,
+    `${API}${value}`,
+  ]);
+
+  const routes = Object.fromEntries(routesEntries) as {
+    [K in keyof T]: `${typeof API}${T[K]}`;
+  };
+
+  return { API_DOCS, API, ...routes };
 };
 
 // Constants
-export const ROUTES_V1 = buildRoutes('v1');
+const BASE_PATHS = {
+  AUTH: '/auth',
+  PERMISSIONS: '/permissions',
+  USER_ROLES: '/user-roles',
+  USERS: '/users',
+} as const;
+
+export const ROUTE_SEGMENTS = {
+  ID: '/:id',
+  ID_PASSWORD: '/:id/password',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+} as const;
+
+const ROUTE_PATHS = {
+  ...BASE_PATHS,
+  AUTH_LOGIN: `${BASE_PATHS.AUTH}${ROUTE_SEGMENTS.LOGIN}`,
+  AUTH_LOGOUT: `${BASE_PATHS.AUTH}${ROUTE_SEGMENTS.LOGOUT}`,
+  USERS_ID: `${BASE_PATHS.USERS}${ROUTE_SEGMENTS.ID}`,
+  USERS_ID_PASSWORD: `${BASE_PATHS.USERS}${ROUTE_SEGMENTS.ID_PASSWORD}`,
+} as const;
+
+export const ROUTES_V1 = routesBuilder({
+  routePaths: ROUTE_PATHS,
+  version: 'v1',
+});
