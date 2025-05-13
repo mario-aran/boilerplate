@@ -15,12 +15,6 @@ import { Router } from 'express';
 export const usersRoute = Router();
 
 // Route definitions
-usersRoute.post(
-  '/',
-  validateWithZod({ body: CreateUserZod }),
-  routeCatchAsync(usersController.create),
-);
-
 usersRoute.get(
   '/',
   authenticateWithPermission(PERMISSIONS.READ_USERS),
@@ -32,6 +26,12 @@ usersRoute.get(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.READ_USER),
   routeCatchAsync(usersController.read),
+);
+
+usersRoute.post(
+  '/',
+  validateWithZod({ body: CreateUserZod }),
+  routeCatchAsync(usersController.create),
 );
 
 usersRoute.patch(
