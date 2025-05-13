@@ -1,4 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
+import { ROUTES_V1 } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
 import {
@@ -22,7 +23,7 @@ const tags = ['user roles'];
 registryV1.registerPath({
   tags,
   method: 'get',
-  path: '/api/v1/user-roles',
+  path: ROUTES_V1.USER_ROLES,
   summary: 'Get user roles',
   request: { query: ReadAllUserRolesZod },
   responses: {
@@ -36,7 +37,7 @@ registryV1.registerPath({
 registryV1.registerPath({
   tags,
   method: 'get',
-  path: '/api/v1/user-roles/{id}',
+  path: ROUTES_V1.USER_ROLES_ID,
   summary: 'Get user role',
   responses: {
     [HTTP_STATUS.OK]: {
@@ -49,7 +50,7 @@ registryV1.registerPath({
 registryV1.registerPath({
   tags,
   method: 'put',
-  path: '/api/v1/user-roles/{id}',
+  path: ROUTES_V1.USER_ROLES_ID,
   summary: 'Update user role',
   responses: {
     [HTTP_STATUS.OK]: {

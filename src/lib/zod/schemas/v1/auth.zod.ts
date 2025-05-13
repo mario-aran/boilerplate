@@ -1,4 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
+import { ROUTES_V1 } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
 import { email, password } from '@/lib/zod/utils/fields';
@@ -15,7 +16,7 @@ const tags = ['auth'];
 registryV1.registerPath({
   tags,
   method: 'post',
-  path: '/api/v1/auth/login',
+  path: ROUTES_V1.AUTH_LOGIN,
   summary: 'Login',
   responses: {
     [HTTP_STATUS.OK]: {
@@ -28,7 +29,7 @@ registryV1.registerPath({
 registryV1.registerPath({
   tags,
   method: 'post',
-  path: '/api/v1/auth/logout',
+  path: ROUTES_V1.AUTH_LOGOUT,
   summary: 'Logout',
   responses: {
     [HTTP_STATUS.OK]: {

@@ -1,4 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
+import { ROUTES_V1 } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
 import {
@@ -38,7 +39,7 @@ const tags = ['users'];
 registryV1.registerPath({
   tags,
   method: 'get',
-  path: '/api/v1/users',
+  path: ROUTES_V1.USERS,
   summary: 'Get users',
   request: { query: ReadAllUsersZod },
   responses: {
@@ -52,7 +53,7 @@ registryV1.registerPath({
 registryV1.registerPath({
   tags,
   method: 'get',
-  path: '/api/v1/users/{id}',
+  path: ROUTES_V1.USERS_ID_DOC,
   summary: 'Get user',
   responses: {
     [HTTP_STATUS.OK]: {
@@ -65,7 +66,7 @@ registryV1.registerPath({
 registryV1.registerPath({
   tags,
   method: 'post',
-  path: '/api/v1/users',
+  path: ROUTES_V1.USERS,
   summary: 'Create user',
   responses: {
     [HTTP_STATUS.CREATED]: {
@@ -78,7 +79,7 @@ registryV1.registerPath({
 registryV1.registerPath({
   tags,
   method: 'patch',
-  path: '/api/v1/users/{id}',
+  path: ROUTES_V1.USERS_ID_DOC,
   summary: 'Update user',
   responses: {
     [HTTP_STATUS.OK]: {
@@ -91,7 +92,7 @@ registryV1.registerPath({
 registryV1.registerPath({
   tags,
   method: 'patch',
-  path: '/api/v1/users/{id}/password',
+  path: ROUTES_V1.USERS_ID_PASSWORD_DOC,
   summary: 'Update user password',
   responses: {
     [HTTP_STATUS.OK]: {

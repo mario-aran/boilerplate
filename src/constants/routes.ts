@@ -27,6 +27,15 @@ const routesBuilder = <T extends RoutePaths, V extends string>({
 };
 
 // Constants
+export const ROUTE_SEGMENTS = {
+  ID: '/:id',
+  ID_DOC: '/{id}',
+  ID_PASSWORD: '/:id/password',
+  ID_PASSWORD_DOC: '/{id}/password',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+} as const;
+
 const BASE_PATHS = {
   AUTH: '/auth',
   PERMISSIONS: '/permissions',
@@ -34,19 +43,16 @@ const BASE_PATHS = {
   USERS: '/users',
 } as const;
 
-export const ROUTE_SEGMENTS = {
-  ID: '/:id',
-  ID_PASSWORD: '/:id/password',
-  LOGIN: '/login',
-  LOGOUT: '/logout',
-} as const;
-
 const ROUTE_PATHS = {
   ...BASE_PATHS,
   AUTH_LOGIN: `${BASE_PATHS.AUTH}${ROUTE_SEGMENTS.LOGIN}`,
   AUTH_LOGOUT: `${BASE_PATHS.AUTH}${ROUTE_SEGMENTS.LOGOUT}`,
+  USER_ROLES_ID: `${BASE_PATHS.USER_ROLES}${ROUTE_SEGMENTS.ID}`,
+  USER_ROLES_ID_DOC: `${BASE_PATHS.USER_ROLES}${ROUTE_SEGMENTS.ID_DOC}`,
   USERS_ID: `${BASE_PATHS.USERS}${ROUTE_SEGMENTS.ID}`,
+  USERS_ID_DOC: `${BASE_PATHS.USERS}${ROUTE_SEGMENTS.ID_DOC}`,
   USERS_ID_PASSWORD: `${BASE_PATHS.USERS}${ROUTE_SEGMENTS.ID_PASSWORD}`,
+  USERS_ID_PASSWORD_DOC: `${BASE_PATHS.USERS}${ROUTE_SEGMENTS.ID_PASSWORD_DOC}`,
 } as const;
 
 export const ROUTES_V1 = routesBuilder({
