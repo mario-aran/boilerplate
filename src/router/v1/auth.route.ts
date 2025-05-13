@@ -1,4 +1,4 @@
-import { ROUTE_PATHS } from '@/constants/routes';
+import { ROUTE_SEGMENTS } from '@/constants/routes';
 import { authController } from '@/features/auth/auth.controller';
 import { LoginAuthZod } from '@/lib/zod/schemas/v1/auth.zod';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
@@ -10,13 +10,13 @@ export const authRoute = Router();
 
 // Route definitions
 authRoute.post(
-  ROUTE_PATHS.AUTH_LOGIN,
+  ROUTE_SEGMENTS.LOGIN,
   validateWithZod({ body: LoginAuthZod }),
   routeCatchAsync(authController.login),
 );
 
 authRoute.post(
-  ROUTE_PATHS.AUTH_LOGOUT,
+  ROUTE_SEGMENTS.LOGOUT,
   authenticateWithPermission('read_users'),
   authController.logout,
 );

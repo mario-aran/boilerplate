@@ -1,5 +1,5 @@
 import { PERMISSIONS } from '@/constants/permissions';
-import { ROUTE_PATHS } from '@/constants/routes';
+import { ROUTE_SEGMENTS } from '@/constants/routes';
 import { usersController } from '@/features/users/users.controller';
 import {
   CreateUserZod,
@@ -29,20 +29,20 @@ usersRoute.get(
 );
 
 usersRoute.get(
-  ROUTE_PATHS.USERS_ID,
+  ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.READ_USER),
   routeCatchAsync(usersController.read),
 );
 
 usersRoute.patch(
-  ROUTE_PATHS.USERS_ID,
+  ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER),
   validateWithZod({ body: UpdateUserZod }),
   routeCatchAsync(usersController.update),
 );
 
 usersRoute.patch(
-  ROUTE_PATHS.USERS_ID_PASSWORD,
+  ROUTE_SEGMENTS.ID_PASSWORD,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
   validateWithZod({ body: UpdateUserPasswordZod }),
   routeCatchAsync(usersController.updatePassword),
