@@ -1,64 +1,65 @@
 // Types
-type Version = `v${number}`;
-
-interface RoutesBuilderOptions<T extends Version> {
-  segments: typeof ROUTE_SEGMENTS;
-  version: T;
-}
-
-type Routes<T extends Record<string, `/${string}`>, V extends string> = {
-  [K in keyof T]: `${V}${T[K]}`;
-};
+type ReplaceIdWithDoc<T extends string> = T extends `${infer P}:id${infer S}`
+  ? `${P}{id}${ReplaceIdWithDoc<S>}`
+  : T;
 
 // Utils
-const routesBuilder = <T extends Version>({
-  segments,
+const openapiPathsBuilder = <T extends Record<string, string>>(paths: T) => {
+  const entries = Object.entries(paths).map(([key, value]) => [
+    key,
+    value.replace(':id', '{id}'),
+  ]);
+
+  return Object.fromEntries(entries) as {
+    [K in keyof T]: ReplaceIdWithDoc<T[K]>;
+  };
+};
+
+const routesBuilder = <T extends Record<string, string>, V extends string>({
+  paths,
   version,
-}: RoutesBuilderOptions<T>) => {
-  // Base paths
-  const auth = '/auth';
-  const permissions = '/permissions';
-  const userRoles = '/user-roles';
-  const users = '/users';
+}: {
+  paths: T;
+  version: V;
+}) => {
+  const apiDocsPrefix = `/api-docs/${version}` as const;
+  const apiPrefix = `/api/${version}` as const;
 
-  // Route paths
-  const paths = {
-    AUTH: auth,
-    AUTH_LOGIN: `${auth}${segments.LOGIN}`,
-    AUTH_LOGOUT: `${auth}${segments.LOGOUT}`,
-    PERMISSIONS: permissions,
-    USER_ROLES: userRoles,
-    USER_ROLES_ID: `${userRoles}${segments.ID}`,
-    USER_ROLES_ID_DOC: `${userRoles}${segments.ID_DOC}`,
-    USERS: users,
-    USERS_ID: `${users}${segments.ID}`,
-    USERS_ID_DOC: `${users}${segments.ID_DOC}`,
-    USERS_ID_PASSWORD: `${users}${segments.ID_PASSWORD}`,
-    USERS_ID_PASSWORD_DOC: `${users}${segments.ID_PASSWORD_DOC}`,
-  } as const;
+  const entries = Object.entries(paths).map(([key, value]) => [
+    key,
+    `${apiPrefix}${value}`,
+  ]);
 
-  // Routes
-  const apiDocs = `/api-docs/${version}` as const;
-  const api = `/api/${version}` as const;
-  const entries = Object.entries(paths).map(([k, v]) => [k, `${api}${v}`]);
-  const routes = Object.fromEntries(entries) as Routes<
-    typeof paths,
-    typeof api
-  >;
-  return { API_DOCS: apiDocs, API: api, ...routes };
+  const routes = Object.fromEntries(entries) as {
+    [K in keyof T]: `${typeof apiPrefix}${T[K]}`;
+  };
+
+  return { API_DOCS: apiDocsPrefix, API: apiPrefix, ...routes };
 };
 
 // Constants
 export const ROUTE_SEGMENTS = {
   ID: '/:id',
-  ID_DOC: '/{id}',
   ID_PASSWORD: '/:id/password',
-  ID_PASSWORD_DOC: '/{id}/password',
+  AUTH: '/auth',
+  PERMISSIONS: '/permissions',
+  USER_ROLES: '/user-roles',
+  USERS: '/users',
   LOGIN: '/login',
   LOGOUT: '/logout',
 } as const;
 
-export const ROUTES_V1 = routesBuilder({
-  segments: ROUTE_SEGMENTS,
-  version: 'v1',
-});
+export const ROUTE_PATHS = {
+  AUTH: ROUTE_SEGMENTS.AUTH,
+  AUTH_LOGIN: `${ROUTE_SEGMENTS.AUTH}${ROUTE_SEGMENTS.LOGIN}`,
+  AUTH_LOGOUT: `${ROUTE_SEGMENTS.AUTH}${ROUTE_SEGMENTS.LOGOUT}`,
+  PERMISSIONS: ROUTE_SEGMENTS.PERMISSIONS,
+  USER_ROLES: ROUTE_SEGMENTS.USER_ROLES,
+  USER_ROLES_ID: `${ROUTE_SEGMENTS.USER_ROLES}${ROUTE_SEGMENTS.ID}`,
+  USERS: ROUTE_SEGMENTS.USERS,
+  USERS_ID: `${ROUTE_SEGMENTS.USERS}${ROUTE_SEGMENTS.ID}`,
+  USERS_ID_PASSWORD: `${ROUTE_SEGMENTS.USERS}${ROUTE_SEGMENTS.ID_PASSWORD}`,
+} as const;
+
+export const OPENAPI_PATHS_V1 = openapiPathsBuilder(ROUTE_PATHS);
+export const ROUTES_V1 = routesBuilder({ version: 'v1', paths: ROUTE_PATHS });
