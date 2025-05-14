@@ -9,7 +9,6 @@ const openapiPathsBuilder = <T extends Record<string, string>>(paths: T) => {
     key,
     value.replace(':id', '{id}'),
   ]);
-
   return Object.fromEntries(entries) as {
     [K in keyof T]: ReplaceIdWithDoc<T[K]>;
   };
@@ -29,7 +28,6 @@ const routesBuilder = <T extends Record<string, string>, V extends string>({
     key,
     `${apiPrefix}${value}`,
   ]);
-
   const routes = Object.fromEntries(entries) as {
     [K in keyof T]: `${typeof apiPrefix}${T[K]}`;
   };
