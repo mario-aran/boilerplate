@@ -21,7 +21,7 @@ export const validateWithZod = ({ params, query, body }: Schema) => {
     } catch (err) {
       if (err instanceof ZodError) {
         const validationErrors = err.errors.map((issue: ZodIssue) => ({
-          path: `${issue.path.join('.')}`,
+          field: `${issue.path.join('.')}`,
           message: issue.message,
         }));
 
