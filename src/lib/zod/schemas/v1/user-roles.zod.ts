@@ -2,12 +2,11 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { OPENAPI_PATHS } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
+import { limit, page } from '@/lib/zod/utils/fields';
 import {
-  limit,
-  page,
   permissionIds,
   sortUserRoles as sort,
-} from '@/lib/zod/utils/fields';
+} from '@/lib/zod/utils/generated-fields';
 
 // Types
 export type ReadAllUserRolesZod = z.infer<typeof ReadAllUserRolesZod>;

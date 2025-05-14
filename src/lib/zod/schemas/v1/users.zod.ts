@@ -10,9 +10,9 @@ import {
   page,
   password,
   search,
-  sortUsers as sort,
   userRoleId,
 } from '@/lib/zod/utils/fields';
+import { sortUsers as sort } from '@/lib/zod/utils/generated-fields';
 
 // Types
 export type ReadAllUsersZod = z.infer<typeof ReadAllUsersZod>;
