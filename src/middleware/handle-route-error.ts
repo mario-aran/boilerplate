@@ -9,9 +9,7 @@ export const handleRouteError = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
-  const errorStatus = err.status ?? HTTP_STATUS.SERVER_ERROR;
-  res.status(errorStatus).json({
-    status: errorStatus,
+  res.status(err.status ?? HTTP_STATUS.SERVER_ERROR).json({
     message: err.message || 'Internal Server Error',
     validationErrors: err.validationErrors || undefined,
     stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
