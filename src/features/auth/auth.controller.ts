@@ -22,6 +22,7 @@ class AuthController {
 
   public logout(_: Request, res: Response) {
     res.clearCookie(JWT_COOKIE);
+
     res.json({ message: 'User logged out successfully' });
   }
 

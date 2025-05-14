@@ -27,7 +27,6 @@ class UsersService {
         ilike(usersSchema.lastName, `%${search}%`),
       ),
     );
-
     const { data, ...pagination } = await queryPaginatedData({
       schema: usersSchema,
       filters,
@@ -35,6 +34,7 @@ class UsersService {
       sort,
       page,
     });
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const dataWithoutPassword = data.map(({ password: _, ...rest }) => rest);
     return { data: dataWithoutPassword, ...pagination };
