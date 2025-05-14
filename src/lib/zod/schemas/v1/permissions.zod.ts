@@ -1,5 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { ROUTES_V1 } from '@/constants/routes';
+import { OPENAPI_PATHS } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
 import { limit, page, sortPermissions as sort } from '@/lib/zod/utils/fields';
@@ -16,7 +16,7 @@ const tags = ['permissions'];
 registryV1.registerPath({
   tags,
   method: 'get',
-  path: ROUTES_V1.PERMISSIONS,
+  path: OPENAPI_PATHS.PERMISSIONS,
   summary: 'Get permissions',
   request: { query: ReadAllPermissionsZod },
   responses: {

@@ -9,6 +9,7 @@ const openapiPathsBuilder = <T extends Record<string, string>>(paths: T) => {
     key,
     value.replace(':id', '{id}'),
   ]);
+
   return Object.fromEntries(entries) as {
     [K in keyof T]: ReplaceIdWithDoc<T[K]>;
   };
@@ -23,13 +24,16 @@ const routesBuilder = <T extends Record<string, string>, V extends string>({
 }) => {
   const apiDocsPrefix = `/api-docs/${version}` as const;
   const apiPrefix = `/api/${version}` as const;
+
   const entries = Object.entries(paths).map(([key, value]) => [
     key,
     `${apiPrefix}${value}`,
   ]);
+
   const routes = Object.fromEntries(entries) as {
     [K in keyof T]: `${typeof apiPrefix}${T[K]}`;
   };
+
   return { API_DOCS: apiDocsPrefix, API: apiPrefix, ...routes };
 };
 
@@ -57,5 +61,5 @@ export const ROUTE_PATHS = {
   USERS_ID_PASSWORD: `${ROUTE_SEGMENTS.USERS}${ROUTE_SEGMENTS.ID_PASSWORD}`,
 } as const;
 
-export const OPENAPI_PATHS_V1 = openapiPathsBuilder(ROUTE_PATHS);
+export const OPENAPI_PATHS = openapiPathsBuilder(ROUTE_PATHS);
 export const ROUTES_V1 = routesBuilder({ version: 'v1', paths: ROUTE_PATHS });
