@@ -77,3 +77,13 @@ Setups Backend
 - [x] docker-compose.yml
 - [x] drizzle.config.ts
 - [x] vitest.config.ts
+
+## To-do
+
+- [ ] rename drizzle schemas to tables
+- [ ] rename zod files to schemas and zodSchemas to just schemas
+- [ ] separate zod types from schemas by naming them "CreateUser"
+- [ ] add tests with supertest
+- [ ] finish swagger docs
+- [ ] add token to swagger
+- [ ] add db connection error handler with retry? investigate retry
