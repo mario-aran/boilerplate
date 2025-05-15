@@ -1,7 +1,7 @@
 import { db } from '@/lib/drizzle/db';
 import {
-  userRolesSchema,
-  userRolesToPermissionsSchema,
+  userRolesTable,
+  userRolesToPermissionsTable,
 } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
@@ -12,13 +12,13 @@ import { eq } from 'drizzle-orm';
 
 class UserRolesService {
   public async getAll({ limit, page, sort }: GetAllUserRoles) {
-    return queryPaginatedData({ schema: userRolesSchema, limit, sort, page });
+    return queryPaginatedData({ schema: userRolesTable, limit, sort, page });
   }
 
   public async get(id: string) {
-    const record = await db.query.userRolesSchema.findFirst({
+    const record = await db.query.userRolesTable.findFirst({
       with: { userRolesToPermissions: { columns: { permissionId: true } } },
-      where: eq(userRolesSchema.id, id),
+      where: eq(userRolesTable.id, id),
     });
     if (!record) return null;
 
@@ -40,11 +40,11 @@ class UserRolesService {
       if (permissionIds) {
         // Delete old permissions
         await tx
-          .delete(userRolesToPermissionsSchema)
-          .where(eq(userRolesToPermissionsSchema.userRoleId, id));
+          .delete(userRolesToPermissionsTable)
+          .where(eq(userRolesToPermissionsTable.userRoleId, id));
 
         // Insert new permissions
-        await tx.insert(userRolesToPermissionsSchema).values(
+        await tx.insert(userRolesToPermissionsTable).values(
           permissionIds.map((permissionId) => ({
             userRoleId: id,
             permissionId,
@@ -54,10 +54,10 @@ class UserRolesService {
 
       // Update values
       const [updatedRecord] = await tx
-        .update(userRolesSchema)
+        .update(userRolesTable)
         .set(restOfData)
-        .where(eq(userRolesSchema.id, id))
-        .returning({ id: userRolesSchema.id });
+        .where(eq(userRolesTable.id, id))
+        .returning({ id: userRolesTable.id });
       return updatedRecord;
     });
   }
