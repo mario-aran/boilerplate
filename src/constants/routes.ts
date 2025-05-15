@@ -40,11 +40,11 @@ export const ROUTE_SEGMENTS = {
   ID: '/:id',
   ID_PASSWORD: '/:id/password',
   AUTH: '/auth',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
   PERMISSIONS: '/permissions',
   USER_ROLES: '/user-roles',
   USERS: '/users',
-  LOGIN: '/login',
-  LOGOUT: '/logout',
 } as const;
 
 export const ROUTE_PATHS = {
