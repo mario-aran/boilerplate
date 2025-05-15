@@ -2,8 +2,8 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { OPENAPI_PATHS } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
-import { limit, page } from '@/lib/zod/utils/zod-fields';
-import { sortPermissions as sort } from '@/lib/zod/utils/zod-generated-fields';
+import { limit, page } from '@/lib/zod/utils/base-fields';
+import { sortPermissions as sort } from '@/lib/zod/utils/derived-fields';
 
 // Types
 export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;

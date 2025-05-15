@@ -2,7 +2,7 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { OPENAPI_PATHS } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
-import { email, password } from '@/lib/zod/utils/zod-fields';
+import { email, password } from '@/lib/zod/utils/base-fields';
 
 // Types
 export type LoginAuth = z.infer<typeof loginAuthSchema>;

@@ -5,9 +5,9 @@ import {
   USERS_COLUMNS,
 } from '@/lib/drizzle/schemas';
 import { z } from '@/lib/zod';
+import { permissionId } from './base-fields';
 import { generateSortColumns } from './helpers';
-import { permissionId } from './zod-fields';
-import { refineUniqueValues } from './zod-refines';
+import { refineUniqueValues } from './refines';
 
 // OpenAPI fields
 export const permissionIds = refineUniqueValues(

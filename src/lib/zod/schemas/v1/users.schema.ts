@@ -3,10 +3,6 @@ import { OPENAPI_PATHS } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
 import {
-  invalidInputsResponse,
-  messageResponse,
-} from '@/lib/zod/utils/openapi-responses';
-import {
   dateTime,
   email,
   firstName,
@@ -17,9 +13,13 @@ import {
   search,
   userRoleId,
   uuid,
-} from '@/lib/zod/utils/zod-fields';
-import { sortUsers as sort } from '@/lib/zod/utils/zod-generated-fields';
-import { idSchema } from '@/lib/zod/utils/zod-schemas';
+} from '@/lib/zod/utils/base-fields';
+import { idSchema } from '@/lib/zod/utils/base-schemas';
+import { sortUsers as sort } from '@/lib/zod/utils/derived-fields';
+import {
+  invalidInputsResponse,
+  messageResponse,
+} from '@/lib/zod/utils/openapi-responses';
 
 // Types
 export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
@@ -57,6 +57,7 @@ const getUserResponseSchema = z.object({
 });
 
 const getAllUsersResponseSchema = getUserResponseSchema.array();
+
 const tags = ['users'];
 
 registryV1.registerPath({
