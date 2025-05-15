@@ -33,7 +33,7 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
         if (userIsOwner || !requiredPermission) return next();
 
         // Succeeded: user has required permission
-        const dbUser = await usersService.read(user.id);
+        const dbUser = await usersService.get(user.id);
         const hasPermission =
           dbUser?.permissionIds.includes(requiredPermission);
         if (hasPermission) return next();
