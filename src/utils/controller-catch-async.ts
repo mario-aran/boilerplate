@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 
 // Types
-type Handler = (
+type AsyncHandler = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => Promise<void>;
 
-export const routeCatchAsync = (handler: Handler) => {
+export const controllerCatchAsync = (asyncHandler: AsyncHandler) => {
   return (req: Request, res: Response, next: NextFunction) =>
-    handler(req, res, next).catch(next);
+    asyncHandler(req, res, next).catch(next);
 };
