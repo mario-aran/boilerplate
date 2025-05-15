@@ -1,6 +1,6 @@
 import { JWT_SECRET } from '@/config/env';
 import { db } from '@/lib/drizzle/db';
-import { usersSchema } from '@/lib/drizzle/schemas';
+import { usersTable } from '@/lib/drizzle/schemas';
 import { JWT_COOKIE } from '@/lib/passport/constants';
 import { eq } from 'drizzle-orm';
 import { Request } from 'express';
@@ -16,8 +16,8 @@ export const jwtStrategy = new Strategy(
   },
   async (payload, done) => {
     try {
-      const userExists = await db.query.usersSchema.findFirst({
-        where: eq(usersSchema.id, payload.id),
+      const userExists = await db.query.usersTable.findFirst({
+        where: eq(usersTable.id, payload.id),
       });
       // Failed: user not found
       if (!userExists) return done(null, false);
