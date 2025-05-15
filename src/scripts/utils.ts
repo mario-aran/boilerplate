@@ -1,5 +1,5 @@
 // Types
-interface RunScriptParams {
+interface ScriptCatchAsyncParams {
   processName: string;
   asyncFn: () => Promise<void>;
 }
@@ -7,7 +7,7 @@ interface RunScriptParams {
 export const scriptCatchAsync = async ({
   processName,
   asyncFn,
-}: RunScriptParams) => {
+}: ScriptCatchAsyncParams) => {
   try {
     await asyncFn();
     console.log(`${processName} completed successfully`);

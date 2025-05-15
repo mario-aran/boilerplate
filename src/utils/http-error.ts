@@ -1,15 +1,15 @@
 // Types
-type ValidationError = Record<string, string>;
+type ValidationErrors = Record<string, string>[];
 
 interface HttpErrorOptions {
   status: number;
   message?: string;
-  validationErrors?: ValidationError[];
+  validationErrors?: ValidationErrors;
 }
 
 export class HttpError extends Error {
   public status: number;
-  public validationErrors?: ValidationError[];
+  public validationErrors?: ValidationErrors;
 
   constructor({ status, message = '', validationErrors }: HttpErrorOptions) {
     super(message);

@@ -4,13 +4,17 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 // Types
-interface Schema {
+interface ValidateWithZodOptions {
   params?: AnyZodObject;
   query?: AnyZodObject;
   body?: AnyZodObject;
 }
 
-export const validateWithZod = ({ params, query, body }: Schema) => {
+export const validateWithZod = ({
+  params,
+  query,
+  body,
+}: ValidateWithZodOptions) => {
   return (req: Request, _: Response, next: NextFunction) => {
     try {
       params?.parse(req.params);

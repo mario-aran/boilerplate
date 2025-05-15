@@ -7,7 +7,7 @@ type AsyncHandler = (
   next: NextFunction,
 ) => Promise<void>;
 
-export const controllerCatchAsync = (asyncHandler: AsyncHandler) => {
+export const controllerCatchAsync = (handler: AsyncHandler) => {
   return (req: Request, res: Response, next: NextFunction) =>
-    asyncHandler(req, res, next).catch(next);
+    handler(req, res, next).catch(next);
 };
