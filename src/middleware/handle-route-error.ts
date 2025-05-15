@@ -12,6 +12,9 @@ export const handleRouteError = (
   res.status(err.status ?? HTTP_STATUS.SERVER_ERROR).json({
     message: err.message || 'Internal Server Error',
     validationErrors: err.validationErrors || undefined,
-    stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
+    stack:
+      process.env.NODE_ENV !== 'production'
+        ? err.stack?.split('\n')
+        : undefined,
   });
 };
