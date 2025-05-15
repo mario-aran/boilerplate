@@ -2,18 +2,18 @@ import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { getColumns } from '@/lib/drizzle/utils/get-columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, primaryKey, varchar } from 'drizzle-orm/pg-core';
-import { permissionsSchema } from './permissions.schema';
-import { userRolesSchema } from './user-roles.schema';
+import { permissionsTable } from './permissions.schema';
+import { userRolesTable } from './user-roles.schema';
 
-export const userRolesToPermissionsSchema = pgTable(
+export const userRolesToPermissionsTable = pgTable(
   'user_roles_to_permissions',
   {
     userRoleId: varchar('user_role_id', { length: 255 })
       .notNull()
-      .references(() => userRolesSchema.id),
+      .references(() => userRolesTable.id),
     permissionId: varchar('permission_id', { length: 255 })
       .notNull()
-      .references(() => permissionsSchema.id),
+      .references(() => permissionsTable.id),
     createdAt,
     updatedAt,
   },
@@ -21,19 +21,19 @@ export const userRolesToPermissionsSchema = pgTable(
 );
 
 export const userRolesToPermissionsRelations = relations(
-  userRolesToPermissionsSchema,
+  userRolesToPermissionsTable,
   ({ one }) => ({
-    userRole: one(userRolesSchema, {
-      fields: [userRolesToPermissionsSchema.userRoleId],
-      references: [userRolesSchema.id],
+    userRole: one(userRolesTable, {
+      fields: [userRolesToPermissionsTable.userRoleId],
+      references: [userRolesTable.id],
     }),
-    permission: one(permissionsSchema, {
-      fields: [userRolesToPermissionsSchema.permissionId],
-      references: [permissionsSchema.id],
+    permission: one(permissionsTable, {
+      fields: [userRolesToPermissionsTable.permissionId],
+      references: [permissionsTable.id],
     }),
   }),
 );
 
 export const USER_ROLES_TO_PERMISSIONS_COLUMNS = getColumns(
-  userRolesToPermissionsSchema,
+  userRolesToPermissionsTable,
 );
