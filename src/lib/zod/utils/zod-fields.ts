@@ -2,7 +2,7 @@ import { PERMISSIONS } from '@/constants/permissions';
 import { USER_ROLES } from '@/constants/user-roles';
 import { z } from '@/lib/zod';
 
-// Internal fields
+// Internal
 const baseText = z.string().trim().nonempty().max(60);
 
 const baseTextId = z
