@@ -2,18 +2,19 @@ import { PERMISSION_VALUES } from '@/constants/permissions';
 import { USER_ROLE_VALUES, USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import {
-  permissionsSchema,
-  userRolesSchema,
-  userRolesToPermissionsSchema,
-  usersSchema,
+  permissionsTable,
+  userRolesTable,
+  userRolesToPermissionsTable,
+  usersTable,
 } from '@/lib/drizzle/schemas';
 import { hashPassword } from '@/lib/passport/utils';
 
 // Types
-type User = typeof usersSchema.$inferInsert;
-type UserRoleToPermission = typeof userRolesToPermissionsSchema.$inferInsert;
+type UserInsert = typeof usersTable.$inferInsert;
+type UserRoleToPermissionInsert =
+  typeof userRolesToPermissionsTable.$inferInsert;
 
-interface LogSeedMessageProps {
+interface LogSeedMessageParams {
   entityName: string;
   keys: string[];
 }
@@ -34,7 +35,7 @@ class AuthSeeder {
     ]);
   }
 
-  public async seedUsers(data: User[]) {
+  public async seedUsers(data: UserInsert[]) {
     const hashedUserPromises = data.map(
       async ({ password, ...restOfRecord }) => {
         const hashedPassword = await hashPassword(password);
@@ -44,10 +45,10 @@ class AuthSeeder {
     const usersWithHashedPassword = await Promise.all(hashedUserPromises);
 
     const createdRecords = await db
-      .insert(usersSchema)
+      .insert(usersTable)
       .values(usersWithHashedPassword)
       .onConflictDoNothing()
-      .returning({ email: usersSchema.email });
+      .returning({ email: usersTable.email });
 
     this.logSeedMessage({
       entityName: 'users',
@@ -57,10 +58,10 @@ class AuthSeeder {
 
   private async seedPermissions() {
     const createdRecords = await db
-      .insert(permissionsSchema)
+      .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
-      .returning({ id: permissionsSchema.id });
+      .returning({ id: permissionsTable.id });
 
     this.logSeedMessage({
       entityName: 'permissions',
@@ -70,10 +71,10 @@ class AuthSeeder {
 
   private async seedUserRoles() {
     const createdRecords = await db
-      .insert(userRolesSchema)
+      .insert(userRolesTable)
       .values(USER_ROLE_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
-      .returning({ id: userRolesSchema.id });
+      .returning({ id: userRolesTable.id });
 
     this.logSeedMessage({
       entityName: 'userRoles',
@@ -83,17 +84,17 @@ class AuthSeeder {
 
   private async seedUserRolesToPermissions() {
     const createdRecords = await db
-      .insert(userRolesToPermissionsSchema)
+      .insert(userRolesToPermissionsTable)
       .values(
         PERMISSION_VALUES.map(
-          (permissionId): UserRoleToPermission => ({
+          (permissionId): UserRoleToPermissionInsert => ({
             userRoleId: USER_ROLES.SUPERADMIN,
             permissionId,
           }),
         ),
       )
       .onConflictDoNothing()
-      .returning({ userRoleId: userRolesToPermissionsSchema.userRoleId });
+      .returning({ userRoleId: userRolesToPermissionsTable.userRoleId });
 
     this.logSeedMessage({
       entityName: 'userRolesToPermissions',
@@ -101,7 +102,7 @@ class AuthSeeder {
     });
   }
 
-  private logSeedMessage({ entityName, keys }: LogSeedMessageProps) {
+  private logSeedMessage({ entityName, keys }: LogSeedMessageParams) {
     if (!keys.length) {
       console.log(`Skipping seeding ${entityName}: no new records.`);
       return;

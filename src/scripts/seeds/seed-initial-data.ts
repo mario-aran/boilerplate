@@ -7,9 +7,8 @@ const runScript = async () => {
 };
 
 // Run the script
-(async () => {
+(async () =>
   await scriptCatchAsync({
     processName: 'Seeding',
     asyncFn: runScript,
-  });
-})();
+  }))();

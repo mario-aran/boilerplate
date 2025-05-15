@@ -4,7 +4,7 @@ import '@/config/load-dotenv'; // "dotenv": Ensure its loaded before env imports
 
 import { NODE_ENV } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
-import { usersSchema } from '@/lib/drizzle/schemas';
+import { usersTable } from '@/lib/drizzle/schemas';
 import { scriptCatchAsync } from '@/scripts/utils';
 import { faker } from '@faker-js/faker';
 import { authSeeder } from './utils/auth-seeder';
@@ -15,11 +15,11 @@ if (NODE_ENV === 'production')
   throw new Error('Seeding not allowed in production');
 
 // Types
-type User = typeof usersSchema.$inferInsert;
+type UserInsert = typeof usersTable.$inferInsert;
 
 // Utils
 const mockedUsers = faker.helpers.uniqueArray(faker.internet.email, 20).map(
-  (email): User => ({
+  (email): UserInsert => ({
     userRoleId: USER_ROLES.USER,
     email,
     password: '12345678',
