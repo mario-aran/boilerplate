@@ -1,5 +1,5 @@
 import { createdAt, id, updatedAt } from '@/lib/drizzle/utils/columns';
-import { getColumns } from '@/lib/drizzle/utils/get-columns';
+import { getColumns } from '@/lib/drizzle/utils/helpers';
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { userRolesTable } from './user-roles.schema';
