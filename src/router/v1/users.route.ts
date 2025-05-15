@@ -2,14 +2,14 @@ import { PERMISSIONS } from '@/constants/permissions';
 import { ROUTE_SEGMENTS } from '@/constants/routes';
 import { usersController } from '@/features/users/users.controller';
 import {
-  CreateUserZod,
-  ReadAllUsersZod,
-  UpdateUserPasswordZod,
-  UpdateUserZod,
-} from '@/lib/zod/schemas/v1/users.zod';
+  createUserSchema,
+  getAllUsersSchema,
+  updateUserPasswordSchema,
+  updateUserSchema,
+} from '@/lib/zod/schemas/v1';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
-import { routeCatchAsync } from '@/utils/route-catch-async';
+import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Router } from 'express';
 
 export const usersRoute = Router();
@@ -18,32 +18,32 @@ export const usersRoute = Router();
 usersRoute.get(
   '/',
   authenticateWithPermission(PERMISSIONS.READ_USERS),
-  validateWithZod({ query: ReadAllUsersZod }),
-  routeCatchAsync(usersController.readAll),
+  validateWithZod({ query: getAllUsersSchema }),
+  controllerCatchAsync(usersController.getAll),
 );
 
 usersRoute.get(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.READ_USER),
-  routeCatchAsync(usersController.read),
+  controllerCatchAsync(usersController.get),
 );
 
 usersRoute.post(
   '/',
-  validateWithZod({ body: CreateUserZod }),
-  routeCatchAsync(usersController.create),
+  validateWithZod({ body: createUserSchema }),
+  controllerCatchAsync(usersController.create),
 );
 
 usersRoute.patch(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER),
-  validateWithZod({ body: UpdateUserZod }),
-  routeCatchAsync(usersController.update),
+  validateWithZod({ body: updateUserSchema }),
+  controllerCatchAsync(usersController.update),
 );
 
 usersRoute.patch(
   ROUTE_SEGMENTS.ID_PASSWORD,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
-  validateWithZod({ body: UpdateUserPasswordZod }),
-  routeCatchAsync(usersController.updatePassword),
+  validateWithZod({ body: updateUserPasswordSchema }),
+  controllerCatchAsync(usersController.updatePassword),
 );

@@ -2,12 +2,12 @@ import { PERMISSIONS } from '@/constants/permissions';
 import { ROUTE_SEGMENTS } from '@/constants/routes';
 import { userRolesController } from '@/features/user-roles/user-roles.controller';
 import {
-  ReadAllUserRolesZod,
-  UpdateUserRoleZod,
-} from '@/lib/zod/schemas/v1/user-roles.zod';
+  getAllUserRolesSchema,
+  updateUserRoleSchema,
+} from '@/lib/zod/schemas/v1';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
-import { routeCatchAsync } from '@/utils/route-catch-async';
+import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Router } from 'express';
 
 export const userRolesRoute = Router();
@@ -16,19 +16,19 @@ export const userRolesRoute = Router();
 userRolesRoute.get(
   '/',
   authenticateWithPermission(PERMISSIONS.READ_USER_ROLES),
-  validateWithZod({ query: ReadAllUserRolesZod }),
-  routeCatchAsync(userRolesController.readAll),
+  validateWithZod({ query: getAllUserRolesSchema }),
+  controllerCatchAsync(userRolesController.getAll),
 );
 
 userRolesRoute.get(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.READ_USER_ROLE),
-  routeCatchAsync(userRolesController.read),
+  controllerCatchAsync(userRolesController.read),
 );
 
 userRolesRoute.put(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER_ROLE),
-  validateWithZod({ body: UpdateUserRoleZod }),
-  routeCatchAsync(userRolesController.update),
+  validateWithZod({ body: updateUserRoleSchema }),
+  controllerCatchAsync(userRolesController.update),
 );
