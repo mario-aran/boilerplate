@@ -4,13 +4,13 @@ import { Request, Response } from 'express';
 import { userRolesService } from './user-roles.service';
 
 class UserRolesController {
-  public async readAll(req: Request, res: Response) {
-    const results = await userRolesService.readAll(req.query);
+  public async getAll(req: Request, res: Response) {
+    const results = await userRolesService.getAll(req.query);
     res.json(results);
   }
 
   public async read(req: Request, res: Response) {
-    const record = await userRolesService.read(req.params.id);
+    const record = await userRolesService.get(req.params.id);
     if (!record) this.throwNotFoundHttpError();
 
     res.json(record);

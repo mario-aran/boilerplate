@@ -5,17 +5,17 @@ import {
 } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
-  ReadAllUserRolesZod,
-  UpdateUserRoleZod,
-} from '@/lib/zod/schemas/v1/user-roles.zod';
+  GetAllUserRoles,
+  UpdateUserRole,
+} from '@/lib/zod/schemas/v1/user-roles.schema';
 import { eq } from 'drizzle-orm';
 
 class UserRolesService {
-  public async readAll({ limit, page, sort }: ReadAllUserRolesZod) {
+  public async getAll({ limit, page, sort }: GetAllUserRoles) {
     return queryPaginatedData({ schema: userRolesSchema, limit, sort, page });
   }
 
-  public async read(id: string) {
+  public async get(id: string) {
     const record = await db.query.userRolesSchema.findFirst({
       with: { userRolesToPermissions: { columns: { permissionId: true } } },
       where: eq(userRolesSchema.id, id),
@@ -34,7 +34,7 @@ class UserRolesService {
 
   public async update(
     id: string,
-    { permissionIds, ...restOfData }: UpdateUserRoleZod,
+    { permissionIds, ...restOfData }: UpdateUserRole,
   ) {
     return db.transaction(async (tx) => {
       if (permissionIds) {

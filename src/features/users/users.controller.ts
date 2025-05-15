@@ -4,13 +4,13 @@ import { Request, Response } from 'express';
 import { usersService } from './users.service';
 
 class UsersController {
-  public async readAll(req: Request, res: Response) {
-    const results = await usersService.readAll(req.query);
+  public async getAll(req: Request, res: Response) {
+    const results = await usersService.getAll(req.query);
     res.json(results);
   }
 
-  public async read(req: Request, res: Response) {
-    const record = await usersService.read(req.params.id);
+  public async get(req: Request, res: Response) {
+    const record = await usersService.get(req.params.id);
     if (!record) this.throwNotFoundHttpError();
 
     res.json(record);
@@ -42,7 +42,7 @@ class UsersController {
     });
   }
 
-  private throwNotFoundHttpError() {
+  private throwNotFoundHttpError(): never {
     throw new HttpError({
       status: HTTP_STATUS.NOT_FOUND,
       message: 'User not found',

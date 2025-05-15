@@ -4,21 +4,21 @@ import { usersSchema } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { hashPassword } from '@/lib/passport/utils';
 import {
-  CreateUserZod,
-  ReadAllUsersZod,
-  UpdateUserPasswordZod,
-  UpdateUserZod,
-} from '@/lib/zod/schemas/v1/users.zod';
+  CreateUser,
+  GetAllUsers,
+  UpdateUser,
+  UpdateUserPassword,
+} from '@/lib/zod/schemas/v1';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
-  public async readAll({
+  public async getAll({
     limit,
     page,
     sort,
     userRoleId = '',
     search = '',
-  }: ReadAllUsersZod) {
+  }: GetAllUsers) {
     const filters = and(
       ilike(usersSchema.userRoleId, `%${userRoleId}%`),
       or(
@@ -40,7 +40,7 @@ class UsersService {
     return { data: dataWithoutPassword, ...pagination };
   }
 
-  public async read(id: string) {
+  public async get(id: string) {
     const record = await db.query.usersSchema.findFirst({
       columns: { password: false },
       with: {
@@ -63,12 +63,12 @@ class UsersService {
     };
   }
 
-  public async create({ password, ...restOfData }: CreateUserZod) {
+  public async create({ password, ...dataWithNoPassword }: CreateUser) {
     const hashedPassword = await hashPassword(password);
     const [createdRecord] = await db
       .insert(usersSchema)
       .values({
-        ...restOfData,
+        ...dataWithNoPassword,
         userRoleId: USER_ROLES.USER,
         password: hashedPassword,
       })
@@ -76,7 +76,7 @@ class UsersService {
     return createdRecord;
   }
 
-  public async update(id: string, data: UpdateUserZod) {
+  public async update(id: string, data: UpdateUser) {
     const [updatedRecord] = await db
       .update(usersSchema)
       .set(data)
@@ -85,8 +85,8 @@ class UsersService {
     return updatedRecord;
   }
 
-  public async updatePassword(id: string, data: UpdateUserPasswordZod) {
-    const hashedPassword = await hashPassword(data.password);
+  public async updatePassword(id: string, { password }: UpdateUserPassword) {
+    const hashedPassword = await hashPassword(password);
     const [updatedRecord] = await db
       .update(usersSchema)
       .set({ password: hashedPassword })

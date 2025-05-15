@@ -17,7 +17,7 @@ class AuthController {
       maxAge: 60 * 60 * 1000, // 1 hour
     });
 
-    res.json({ message: `User logged in successfully` });
+    res.json({ message: 'User logged in successfully' });
   }
 
   public logout(_: Request, res: Response) {
