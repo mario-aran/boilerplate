@@ -6,10 +6,10 @@ import { limit, page } from '@/lib/zod/utils/zod-fields';
 import { sortPermissions as sort } from '@/lib/zod/utils/zod-generated-fields';
 
 // Types
-export type ReadAllPermissions = z.infer<typeof readAllPermissionsSchema>;
+export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
 
 // Schemas
-export const readAllPermissionsSchema = z
+export const getAllPermissionsSchema = z
   .object({ sort, limit, page })
   .partial();
 
@@ -21,7 +21,7 @@ registryV1.registerPath({
   method: 'get',
   path: OPENAPI_PATHS.PERMISSIONS,
   summary: 'Get permissions',
-  request: { query: readAllPermissionsSchema },
+  request: { query: getAllPermissionsSchema },
   responses: {
     [HTTP_STATUS.OK]: {
       description: '',

@@ -9,11 +9,11 @@ import {
 } from '@/lib/zod/utils/zod-generated-fields';
 
 // Types
-export type ReadAllUserRoles = z.infer<typeof readAllUserRolesSchema>;
+export type GetAllUserRoles = z.infer<typeof getAllUserRolesSchema>;
 export type UpdateUserRole = z.infer<typeof updateUserRoleSchema>;
 
 // Schemas
-export const readAllUserRolesSchema = z.object({ sort, limit, page }).partial();
+export const getAllUserRolesSchema = z.object({ sort, limit, page }).partial();
 export const updateUserRoleSchema = z.object({ permissionIds }).partial();
 
 // OpenAPI registries
@@ -24,7 +24,7 @@ registryV1.registerPath({
   method: 'get',
   path: OPENAPI_PATHS.USER_ROLES,
   summary: 'Get user roles',
-  request: { query: readAllUserRolesSchema },
+  request: { query: getAllUserRolesSchema },
   responses: {
     [HTTP_STATUS.OK]: {
       description: '',
