@@ -5,10 +5,10 @@ import '@/config/load-dotenv'; // "dotenv": Ensure its loaded before env imports
 import { NODE_ENV } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
 import { usersTable } from '@/lib/drizzle/schemas';
-import { authSeeder } from '@/scripts/utils/auth-seeder';
-import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
-import { truncateTables } from '@/scripts/utils/truncate-tables';
 import { faker } from '@faker-js/faker';
+import { authSeeder } from './utils/auth-seeder';
+import { scriptCatchAsync } from './utils/script-catch-async';
+import { truncateTables } from './utils/truncate-tables';
 
 // Guards
 if (NODE_ENV === 'production')

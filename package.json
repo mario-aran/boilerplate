@@ -15,8 +15,8 @@
     "test:coverage": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed:fake": "tsx src/scripts/seeds/seed-fake-data.ts",
-    "db:seed:initial": "node dist/scripts/seeds/seed-initial-data.js",
+    "db:seed:fake": "tsx src/scripts/seed-fake-data.ts",
+    "db:seed:initial": "node dist/scripts/seed-initial-data.js",
     "clean:all": "find . -type d \\( -name 'node_modules' -o -name 'dist' -o -name 'coverage' \\) -prune -exec rm -rf {} + && rm -f *tsbuildinfo*",
     "files:to-lf": "find . -type f \\( ! -path './node_modules/*' -a ! -path './dist/*' -a ! -path './coverage/*' \\) -exec dos2unix {} +"
   },
