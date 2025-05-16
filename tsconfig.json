@@ -24,8 +24,8 @@
     ],
 
     // Paths
-    "baseUrl": "./",
-    "paths": { "@/*": ["./src/*"] }
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] }
   },
 
   // File Inclusion
