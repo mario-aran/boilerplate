@@ -9,7 +9,7 @@ class UserRolesController {
     res.json(results);
   }
 
-  public async read(req: Request, res: Response) {
+  public async get(req: Request, res: Response) {
     const record = await userRolesService.get(req.params.id);
     if (!record) this.throwNotFoundHttpError();
 

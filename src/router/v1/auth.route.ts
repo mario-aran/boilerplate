@@ -17,6 +17,6 @@ authRoute.post(
 
 authRoute.post(
   ROUTE_SEGMENTS.LOGOUT,
-  authenticateWithPermission('read_users'),
+  authenticateWithPermission(),
   authController.logout,
 );

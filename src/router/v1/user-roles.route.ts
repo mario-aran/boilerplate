@@ -23,7 +23,7 @@ userRolesRoute.get(
 userRolesRoute.get(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.READ_USER_ROLE),
-  controllerCatchAsync(userRolesController.read),
+  controllerCatchAsync(userRolesController.get),
 );
 
 userRolesRoute.put(
