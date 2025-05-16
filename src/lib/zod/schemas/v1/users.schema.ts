@@ -1,3 +1,4 @@
+import { USERS_COLUMNS } from '@/lib/drizzle/schemas';
 import { z } from '@/lib/zod';
 import {
   email,
@@ -7,10 +8,11 @@ import {
   page,
   password,
   search,
-  sortUsers,
   textId,
   uuid,
 } from '@/lib/zod/utils/fields';
+import { generateSortColumns } from '@/lib/zod/utils/helpers';
+import { refineUniqueValues } from '@/lib/zod/utils/refines';
 
 // Types
 export type UserId = z.infer<typeof userIdSchema>;
@@ -21,8 +23,19 @@ export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
 
 // Fields
 const id = uuid;
-const sort = sortUsers;
 const userRoleId = textId;
+
+const sort = refineUniqueValues(
+  z
+    .enum(
+      generateSortColumns(
+        USERS_COLUMNS.filter((column) => column !== 'password'),
+      ),
+    )
+    .array()
+    .min(1)
+    .max(50),
+);
 
 // Schemas
 export const userIdSchema = z.object({ id });
