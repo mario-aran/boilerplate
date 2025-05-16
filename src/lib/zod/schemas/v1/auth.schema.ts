@@ -22,7 +22,7 @@ registryV1.registerPath({
   tags,
   method: 'post',
   path: OPENAPI_PATHS.AUTH_LOGIN,
-  summary: 'Login',
+  summary: 'Login user',
   responses: {
     [HTTP_STATUS.OK]: {
       description: 'Set jwt cookie and returns a message object',
@@ -37,7 +37,7 @@ registryV1.registerPath({
   tags,
   method: 'post',
   path: OPENAPI_PATHS.AUTH_LOGOUT,
-  summary: 'Logout',
+  summary: 'Logout user',
   responses: {
     [HTTP_STATUS.OK]: {
       description: 'Clear jwt cookie and returns a message object',
