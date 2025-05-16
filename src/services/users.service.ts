@@ -8,6 +8,7 @@ import {
   GetAllUsers,
   UpdateUser,
   UpdateUserPassword,
+  UserId,
 } from '@/lib/zod/schemas/v1';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
@@ -35,12 +36,14 @@ class UsersService {
       page,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const dataWithoutPassword = data.map(({ password: _, ...rest }) => rest);
+    const dataWithoutPassword = data.map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ({ password: _, ...restOfRecord }) => restOfRecord,
+    );
     return { data: dataWithoutPassword, ...pagination };
   }
 
-  public async get(id: string) {
+  public async get({ id }: UserId) {
     const record = await db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
@@ -76,7 +79,7 @@ class UsersService {
     return createdRecord;
   }
 
-  public async update(id: string, data: UpdateUser) {
+  public async update({ id }: UserId, data: UpdateUser) {
     const [updatedRecord] = await db
       .update(usersTable)
       .set(data)
@@ -85,7 +88,10 @@ class UsersService {
     return updatedRecord;
   }
 
-  public async updatePassword(id: string, { password }: UpdateUserPassword) {
+  public async updatePassword(
+    { id }: UserId,
+    { password }: UpdateUserPassword,
+  ) {
     const hashedPassword = await hashPassword(password);
     const [updatedRecord] = await db
       .update(usersTable)
