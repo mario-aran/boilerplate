@@ -6,6 +6,7 @@ import {
   getAllUsersSchema,
   updateUserPasswordSchema,
   updateUserSchema,
+  userIdSchema,
 } from '@/lib/zod/schemas/v1';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
@@ -25,6 +26,7 @@ usersRoute.get(
 usersRoute.get(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.READ_USER),
+  validateWithZod({ params: userIdSchema }),
   controllerCatchAsync(usersController.get),
 );
 
@@ -37,13 +39,13 @@ usersRoute.post(
 usersRoute.patch(
   ROUTE_SEGMENTS.ID,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER),
-  validateWithZod({ body: updateUserSchema }),
+  validateWithZod({ params: userIdSchema, body: updateUserSchema }),
   controllerCatchAsync(usersController.update),
 );
 
 usersRoute.patch(
   ROUTE_SEGMENTS.ID_PASSWORD,
   authenticateWithPermission(PERMISSIONS.UPDATE_USER_PASSWORD),
-  validateWithZod({ body: updateUserPasswordSchema }),
+  validateWithZod({ params: userIdSchema, body: updateUserPasswordSchema }),
   controllerCatchAsync(usersController.updatePassword),
 );
