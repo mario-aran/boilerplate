@@ -1,5 +1,5 @@
 // Types
-interface ScriptCatchAsyncParams {
+interface ScriptCatchAsyncProps {
   processName: string;
   asyncFn: () => Promise<void>;
 }
@@ -7,7 +7,7 @@ interface ScriptCatchAsyncParams {
 export const scriptCatchAsync = async ({
   processName,
   asyncFn,
-}: ScriptCatchAsyncParams) => {
+}: ScriptCatchAsyncProps) => {
   try {
     await asyncFn();
     console.log(`${processName} completed successfully`);

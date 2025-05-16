@@ -4,7 +4,7 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 // Types
-interface ValidateWithZodOptions {
+interface ValidateWithZodProps {
   params?: AnyZodObject;
   query?: AnyZodObject;
   body?: AnyZodObject;
@@ -14,7 +14,7 @@ export const validateWithZod = ({
   params,
   query,
   body,
-}: ValidateWithZodOptions) => {
+}: ValidateWithZodProps) => {
   return (req: Request, _: Response, next: NextFunction) => {
     try {
       params?.parse(req.params);

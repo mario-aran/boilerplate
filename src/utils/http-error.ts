@@ -1,7 +1,7 @@
 // Types
 type ValidationErrors = Record<string, string>[];
 
-interface HttpErrorOptions {
+interface HttpErrorProps {
   status: number;
   message?: string;
   validationErrors?: ValidationErrors;
@@ -11,7 +11,7 @@ export class HttpError extends Error {
   public status: number;
   public validationErrors?: ValidationErrors;
 
-  constructor({ status, message = '', validationErrors }: HttpErrorOptions) {
+  constructor({ status, message = '', validationErrors }: HttpErrorProps) {
     super(message);
     this.name = this.constructor.name;
     this.status = status;

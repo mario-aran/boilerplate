@@ -3,7 +3,7 @@ import { asc, count, desc, SQL } from 'drizzle-orm';
 import { AnyPgColumn, AnyPgTable } from 'drizzle-orm/pg-core';
 
 // Types
-interface QueryPaginatedDataOptions {
+interface QueryPaginatedDataProps {
   schema: AnyPgTable;
   filters?: SQL<unknown>;
   limit?: number;
@@ -17,7 +17,7 @@ export const queryPaginatedData = async ({
   limit = 10,
   page = 1,
   sort = [],
-}: QueryPaginatedDataOptions) => {
+}: QueryPaginatedDataProps) => {
   // Query count
   const [{ count: total }] = await db
     .select({ count: count() })
