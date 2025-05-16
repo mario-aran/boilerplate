@@ -6,6 +6,3 @@ export type LoginAuth = z.infer<typeof loginAuthSchema>;
 
 // Schemas
 export const loginAuthSchema = z.object({ email, password });
-
-// OpenAPI registries
-const tags = ['auth'];
