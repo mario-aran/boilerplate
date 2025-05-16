@@ -1,8 +1,7 @@
 import { PERMISSIONS_COLUMNS } from '@/lib/drizzle/schemas';
 import { z } from '@/lib/zod';
 import { limit, page, search } from '@/lib/zod/utils/fields';
-import { getSortColumns } from '@/lib/zod/utils/helpers';
-import { refineUniqueValues } from '@/lib/zod/utils/refines';
+import { getSortColumns, refineUniqueValues } from '@/lib/zod/utils/helpers';
 
 // Types
 export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
