@@ -5,7 +5,7 @@ import {
   getAllUserRolesSchema,
   updateUserRoleSchema,
   userRoleIdSchema,
-} from '@/lib/zod/schemas/v1';
+} from '@/lib/zod/schemas/v1/user-roles.schema';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
