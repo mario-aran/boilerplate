@@ -2,14 +2,14 @@ import { z } from '@/lib/zod';
 import {
   email,
   firstName,
-  uuid as id,
   lastName,
   limit,
   page,
   password,
   search,
-  sortUsers as sort,
-  textId as userRoleId,
+  sortUsers,
+  textId,
+  uuid,
 } from '@/lib/zod/utils/fields';
 
 // Types
@@ -18,6 +18,11 @@ export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
 export type CreateUser = z.infer<typeof createUserSchema>;
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
+
+// Fields
+const id = uuid;
+const sort = sortUsers;
+const userRoleId = textId;
 
 // Schemas
 export const userIdSchema = z.object({ id });
@@ -38,6 +43,3 @@ export const updateUserSchema = z
   .partial();
 
 export const updateUserPasswordSchema = z.object({ password });
-
-// OpenAPI registries
-const tags = ['users'];
