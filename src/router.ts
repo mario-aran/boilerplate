@@ -1,5 +1,5 @@
 import { ROUTES_V1 } from '@/constants/routes';
-import { openAPIDocumentV1 } from '@/lib/zod/openapi/openapi-documents';
+import { openAPIDocumentV1 } from '@/lib/zod-to-openapi/openapi-documents';
 import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
 import { Router } from 'express';
