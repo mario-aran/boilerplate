@@ -13,18 +13,18 @@ import {
 } from '@/lib/zod/utils/fields';
 
 // Types
+export type UserId = z.infer<typeof userIdSchema>;
 export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
-export type GetUser = z.infer<typeof getUserSchema>;
 export type CreateUser = z.infer<typeof createUserSchema>;
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
 
 // Schemas
+export const userIdSchema = z.object({ id });
+
 export const getAllUsersSchema = z
   .object({ sort, limit, page, search, userRoleId })
   .partial();
-
-export const getUserSchema = z.object({ id });
 
 export const createUserSchema = z.object({
   email,
