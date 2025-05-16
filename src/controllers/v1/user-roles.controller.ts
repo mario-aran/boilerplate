@@ -1,5 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { UserRoleId } from '@/lib/zod/schemas/v1';
+import { UserRoleId } from '@/lib/zod/schemas/v1/user-roles.schema';
 import { userRolesService } from '@/services/user-roles.service';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';

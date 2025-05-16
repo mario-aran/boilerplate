@@ -9,7 +9,7 @@ import {
   UpdateUser,
   UpdateUserPassword,
   UserId,
-} from '@/lib/zod/schemas/v1';
+} from '@/lib/zod/schemas/v1/users.schema';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
