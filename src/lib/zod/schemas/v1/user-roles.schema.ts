@@ -2,7 +2,7 @@ import { PERMISSION_VALUES } from '@/constants/permissions';
 import { USER_ROLES_COLUMNS } from '@/lib/drizzle/schemas';
 import { z } from '@/lib/zod';
 import { limit, page, search, textId } from '@/lib/zod/utils/fields';
-import { generateSortColumns } from '@/lib/zod/utils/helpers';
+import { getSortColumns } from '@/lib/zod/utils/helpers';
 import { refineUniqueValues } from '@/lib/zod/utils/refines';
 
 // Types
@@ -14,7 +14,7 @@ export type UpdateUserRole = z.infer<typeof updateUserRoleSchema>;
 const id = textId;
 
 const sort = refineUniqueValues(
-  z.enum(generateSortColumns(USER_ROLES_COLUMNS)).array().min(1).max(50),
+  z.enum(getSortColumns(USER_ROLES_COLUMNS)).array().min(1).max(50),
 );
 
 const permissionIds = refineUniqueValues(

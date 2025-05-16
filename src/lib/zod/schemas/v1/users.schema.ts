@@ -11,7 +11,7 @@ import {
   textId,
   uuid,
 } from '@/lib/zod/utils/fields';
-import { generateSortColumns } from '@/lib/zod/utils/helpers';
+import { getSortColumns } from '@/lib/zod/utils/helpers';
 import { refineUniqueValues } from '@/lib/zod/utils/refines';
 
 // Types
@@ -28,9 +28,7 @@ const userRoleId = textId;
 const sort = refineUniqueValues(
   z
     .enum(
-      generateSortColumns(
-        USERS_COLUMNS.filter((column) => column !== 'password'),
-      ),
+      getSortColumns(USERS_COLUMNS.filter((column) => column !== 'password')),
     )
     .array()
     .min(1)
