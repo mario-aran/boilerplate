@@ -2,7 +2,12 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { OPENAPI_PATHS } from '@/constants/routes';
 import { z } from '@/lib/zod';
 import { registryV1 } from '@/lib/zod/openapi/registries';
-import { email, password } from '@/lib/zod/utils/base-fields';
+import { messageSchema } from '@/lib/zod/utils/base-schemas';
+import { email, password } from '@/lib/zod/utils/fields';
+import {
+  invalidInputsResponse,
+  messageResponse,
+} from '@/lib/zod/utils/openapi-responses';
 
 // Types
 export type LoginAuth = z.infer<typeof loginAuthSchema>;
@@ -20,9 +25,11 @@ registryV1.registerPath({
   summary: 'Login',
   responses: {
     [HTTP_STATUS.OK]: {
-      description: '',
-      content: { 'application/json': { schema: {} } },
+      description: 'Set jwt cookie and returns a message object',
+      content: { 'application/json': { schema: messageSchema } },
     },
+    [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+    [HTTP_STATUS.UNAUTHORIZED]: messageResponse,
   },
 });
 
@@ -33,8 +40,8 @@ registryV1.registerPath({
   summary: 'Logout',
   responses: {
     [HTTP_STATUS.OK]: {
-      description: '',
-      content: { 'application/json': { schema: {} } },
+      description: 'Clear jwt cookie and returns a message object',
+      content: { 'application/json': { schema: messageSchema } },
     },
   },
 });
