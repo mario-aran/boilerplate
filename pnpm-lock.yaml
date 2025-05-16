@@ -19,7 +19,7 @@ importers:
         version: 2.8.5
       drizzle-orm:
         specifier: ^0.43.1
-        version: 0.43.1(@types/pg@8.15.1)(pg@8.16.0)
+        version: 0.43.1(@types/pg@8.15.2)(pg@8.16.0)
       express:
         specifier: ^5.1.0
         version: 5.1.0
@@ -73,8 +73,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       '@types/pg':
-        specifier: ^8.15.1
-        version: 8.15.1
+        specifier: ^8.15.2
+        version: 8.15.2
       '@types/supertest':
         specifier: ^6.0.3
         version: 6.0.3
@@ -723,8 +723,8 @@ packages:
   '@types/passport@1.0.17':
     resolution: {integrity: sha512-aciLyx+wDwT2t2/kJGJR2AEeBz0nJU4WuRX04Wu9Dqc5lSUtwu0WERPHYsLhF9PtseiAMPBGNUOtFjxZ56prsg==}
 
-  '@types/pg@8.15.1':
-    resolution: {integrity: sha512-YKHrkGWBX5+ivzvOQ66I0fdqsQTsvxqM0AGP2i0XrVZ9DP5VA/deEbTf7VuLPGpY7fJB9uGbkZ6KjVhuHcrTkQ==}
+  '@types/pg@8.15.2':
+    resolution: {integrity: sha512-+BKxo5mM6+/A1soSHBI7ufUglqYXntChLDyTbvcAn1Lawi9J7J9Ok3jt6w7I0+T/UDJ4CyhHk66+GZbwmkYxSg==}
 
   '@types/qs@6.9.18':
     resolution: {integrity: sha512-kK7dgTYDyGqS+e2Q4aK9X3D7q234CIZ1Bv0q/7Z5IwRDoADNU81xXJK/YVyLbLTZCoIwUoDoffFeF+p/eIklAA==}
@@ -2661,7 +2661,7 @@ snapshots:
     dependencies:
       '@types/express': 5.0.1
 
-  '@types/pg@8.15.1':
+  '@types/pg@8.15.2':
     dependencies:
       '@types/node': 22.15.18
       pg-protocol: 1.10.0
@@ -3035,9 +3035,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.43.1(@types/pg@8.15.1)(pg@8.16.0):
+  drizzle-orm@0.43.1(@types/pg@8.15.2)(pg@8.16.0):
     optionalDependencies:
-      '@types/pg': 8.15.1
+      '@types/pg': 8.15.2
       pg: 8.16.0
 
   dunder-proto@1.0.1:
