@@ -1,5 +1,5 @@
 import { PERMISSIONS } from '@/constants/permissions';
-import { permissionsController } from '@/features/permissions/permissions.controller';
+import { permissionsController } from '@/controllers/v1/permissions.controller';
 import { getAllPermissionsSchema } from '@/lib/zod/schemas/v1';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';

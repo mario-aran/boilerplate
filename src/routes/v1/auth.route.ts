@@ -1,5 +1,5 @@
 import { ROUTE_SEGMENTS } from '@/constants/routes';
-import { authController } from '@/features/auth/auth.controller';
+import { authController } from '@/controllers/v1/auth.controller';
 import { loginAuthSchema } from '@/lib/zod/schemas/v1/auth.schema';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';

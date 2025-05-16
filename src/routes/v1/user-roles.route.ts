@@ -1,6 +1,6 @@
 import { PERMISSIONS } from '@/constants/permissions';
 import { ROUTE_SEGMENTS } from '@/constants/routes';
-import { userRolesController } from '@/features/user-roles/user-roles.controller';
+import { userRolesController } from '@/controllers/v1/user-roles.controller';
 import {
   getAllUserRolesSchema,
   updateUserRoleSchema,

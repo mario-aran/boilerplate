@@ -1,6 +1,6 @@
 import { PERMISSIONS } from '@/constants/permissions';
 import { ROUTE_SEGMENTS } from '@/constants/routes';
-import { usersController } from '@/features/users/users.controller';
+import { usersController } from '@/controllers/v1/users.controller';
 import {
   createUserSchema,
   getAllUsersSchema,

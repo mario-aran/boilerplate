@@ -4,10 +4,10 @@ import { handleNotFound } from '@/middleware/handle-not-found';
 import { handleRouteError } from '@/middleware/handle-route-error';
 import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { authRoute } from './v1/auth.route';
-import { permissionsRoute } from './v1/permissions.route';
-import { userRolesRoute } from './v1/user-roles.route';
-import { usersRoute } from './v1/users.route';
+import { authRoute } from './routes/v1/auth.route';
+import { permissionsRoute } from './routes/v1/permissions.route';
+import { userRolesRoute } from './routes/v1/user-roles.route';
+import { usersRoute } from './routes/v1/users.route';
 
 export const router = Router();
 
