@@ -4,6 +4,7 @@ import {
   limit,
   page,
   permissionIds,
+  search,
   sortUserRoles as sort,
 } from '@/lib/zod/utils/fields';
 
@@ -14,7 +15,11 @@ export type UpdateUserRole = z.infer<typeof updateUserRoleSchema>;
 
 // Schemas
 export const userRoleIdSchema = z.object({ id });
-export const getAllUserRolesSchema = z.object({ sort, limit, page }).partial();
+
+export const getAllUserRolesSchema = z
+  .object({ sort, limit, page, search })
+  .partial();
+
 export const updateUserRoleSchema = z.object({ permissionIds }).partial();
 
 // OpenAPI registries
