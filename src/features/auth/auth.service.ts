@@ -1,6 +1,6 @@
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
-import { signJwtToken } from '@/lib/passport/utils';
+import { signJwtToken } from '@/lib/passport/utils/auth';
 import { LoginAuth } from '@/lib/zod/schemas/v1/auth.schema';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
