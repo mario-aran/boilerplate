@@ -8,13 +8,13 @@ import {
 } from '@/lib/zod/utils/fields';
 
 // Types
+export type UserRoleId = z.infer<typeof userRoleIdSchema>;
 export type GetAllUserRoles = z.infer<typeof getAllUserRolesSchema>;
-export type GetUserRole = z.infer<typeof getUserRoleSchema>;
 export type UpdateUserRole = z.infer<typeof updateUserRoleSchema>;
 
 // Schemas
+export const userRoleIdSchema = z.object({ id });
 export const getAllUserRolesSchema = z.object({ sort, limit, page }).partial();
-export const getUserRoleSchema = z.object({ id });
 export const updateUserRoleSchema = z.object({ permissionIds }).partial();
 
 // OpenAPI registries
