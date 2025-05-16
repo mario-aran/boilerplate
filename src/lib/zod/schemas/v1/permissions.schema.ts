@@ -13,20 +13,20 @@ import { invalidInputsResponse } from '@/lib/zod/utils/openapi-responses';
 // Types
 export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
 
+// Fields
+const sort = sortPermissions;
+const limit = positiveNumber;
+const page = positiveNumber;
+const id = textId;
+const createdAt = dateTime;
+const updatedAt = dateTime;
+
 // Schemas
 export const getAllPermissionsSchema = z
-  .object({
-    sort: sortPermissions,
-    limit: positiveNumber,
-    page: positiveNumber,
-  })
+  .object({ sort, limit, page })
   .partial();
 
-const permissionResponseSchema = z.object({
-  id: textId,
-  createdAt: dateTime,
-  updatedAt: dateTime,
-});
+const permissionResponseSchema = z.object({ id, createdAt, updatedAt });
 
 // OpenAPI registries
 const tags = ['permissions'];
