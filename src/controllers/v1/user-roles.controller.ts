@@ -1,4 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
+import { UserRoleId } from '@/lib/zod/schemas/v1';
 import { userRolesService } from '@/services/user-roles.service';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
@@ -9,18 +10,15 @@ class UserRolesController {
     res.json(results);
   }
 
-  public async get(req: Request, res: Response) {
-    const record = await userRolesService.get(req.params.id);
+  public async get(req: Request<UserRoleId>, res: Response) {
+    const record = await userRolesService.get(req.params);
     if (!record) this.throwNotFoundHttpError();
 
     res.json(record);
   }
 
-  public async update(req: Request, res: Response) {
-    const updatedRecord = await userRolesService.update(
-      req.params.id,
-      req.body,
-    );
+  public async update(req: Request<UserRoleId>, res: Response) {
+    const updatedRecord = await userRolesService.update(req.params, req.body);
     if (!updatedRecord) this.throwNotFoundHttpError();
 
     res.json({ message: `User role ${updatedRecord.id} updated successfully` });
