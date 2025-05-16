@@ -9,11 +9,19 @@ import {
   UpdateUserRole,
   UserRoleId,
 } from '@/lib/zod/schemas/v1/user-roles.schema';
-import { eq } from 'drizzle-orm';
+import { eq, ilike } from 'drizzle-orm';
 
 class UserRolesService {
-  public async getAll({ limit, page, sort }: GetAllUserRoles) {
-    return queryPaginatedData({ schema: userRolesTable, limit, sort, page });
+  public async getAll({ limit, page, sort, search = '' }: GetAllUserRoles) {
+    const filters = ilike(userRolesTable.id, `%${search}%`);
+
+    return queryPaginatedData({
+      schema: userRolesTable,
+      filters,
+      limit,
+      sort,
+      page,
+    });
   }
 
   public async get({ id }: UserRoleId) {
