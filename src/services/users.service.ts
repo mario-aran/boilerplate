@@ -2,7 +2,7 @@ import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import { hashPassword } from '@/lib/passport/utils/auth';
+import { hashPassword } from '@/lib/passport/utils';
 import {
   CreateUser,
   GetAllUsers,
