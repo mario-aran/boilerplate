@@ -24,7 +24,7 @@ export const textId = z
   .refine((value) => value.trim() === value, {
     message: 'No leading or trailing spaces',
   })
-  .openapi({ example: 'a1a_b2b' });
+  .openapi({ example: 'read_b2b' });
 
 export const positiveNumber = z
   .number()
