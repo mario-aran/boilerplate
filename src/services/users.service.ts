@@ -66,12 +66,12 @@ class UsersService {
     };
   }
 
-  public async create({ password, ...dataWithNoPassword }: CreateUser) {
+  public async create({ password, ...restOfData }: CreateUser) {
     const hashedPassword = await hashPassword(password);
     const [createdRecord] = await db
       .insert(usersTable)
       .values({
-        ...dataWithNoPassword,
+        ...restOfData,
         userRoleId: USER_ROLES.USER,
         password: hashedPassword,
       })
