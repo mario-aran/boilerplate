@@ -1,5 +1,5 @@
-import { scriptCatchAsync } from '@/scripts/utils';
-import { authSeeder } from './utils/auth-seeder';
+import { authSeeder } from '@/scripts/utils/auth-seeder';
+import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 
 // Utils
 const runScript = async () => {
