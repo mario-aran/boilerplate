@@ -14,7 +14,7 @@ export const handleRouteError = (
     validationErrors: err.validationErrors || undefined,
     stack:
       process.env.NODE_ENV !== 'production'
-        ? err.stack?.split('\n')
+        ? err.stack?.split('\n').map((line) => line.trim())
         : undefined,
   });
 };
