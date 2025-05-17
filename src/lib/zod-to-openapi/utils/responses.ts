@@ -5,9 +5,12 @@ export const invalidInputsResponse = {
   content: {
     'application/json': {
       schema: z.object({
-        message: z.string(),
+        message: z.string().openapi({ example: 'Invalid inputs' }),
         validationErrors: z
-          .object({ field: z.string(), message: z.string() })
+          .object({
+            field: z.string().openapi({ example: 'id' }),
+            message: z.string().openapi({ example: 'Invalid id format' }),
+          })
           .array(),
       }),
     },
@@ -17,6 +20,10 @@ export const invalidInputsResponse = {
 export const createMessageResponse = (description = 'Object with message') => ({
   description,
   content: {
-    'application/json': { schema: z.object({ message: z.string() }) },
+    'application/json': {
+      schema: z.object({
+        message: z.string().openapi({ example: 'Any message' }),
+      }),
+    },
   },
 });
