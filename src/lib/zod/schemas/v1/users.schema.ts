@@ -1,6 +1,7 @@
 import { USERS_COLUMNS } from '@/lib/drizzle/schemas';
 import { z } from '@/lib/zod';
 import {
+  createdAt,
   email,
   firstName,
   lastName,
@@ -9,6 +10,7 @@ import {
   password,
   search,
   textId,
+  updatedAt,
   uuid,
 } from '@/lib/zod/utils/fields';
 import { getSortColumns, refineUniqueValues } from '@/lib/zod/utils/helpers';
@@ -53,3 +55,15 @@ export const updateUserSchema = z
   .partial();
 
 export const updateUserPasswordSchema = z.object({ password });
+
+export const userResponseSchema = z.object({
+  id,
+  userRoleId,
+  createdAt,
+  updatedAt,
+  email,
+  firstName,
+  lastName,
+});
+
+export const usersResponseSchema = userResponseSchema.array();

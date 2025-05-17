@@ -1,7 +1,14 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { USER_ROLES_COLUMNS } from '@/lib/drizzle/schemas';
 import { z } from '@/lib/zod';
-import { limit, page, search, textId } from '@/lib/zod/utils/fields';
+import {
+  createdAt,
+  limit,
+  page,
+  search,
+  textId,
+  updatedAt,
+} from '@/lib/zod/utils/fields';
 import { getSortColumns, refineUniqueValues } from '@/lib/zod/utils/helpers';
 
 // Types
@@ -28,3 +35,5 @@ export const getAllUserRolesSchema = z
   .partial();
 
 export const updateUserRoleSchema = z.object({ permissionIds }).partial();
+export const userRoleResponseSchema = z.object({ id, createdAt, updatedAt });
+export const userRolesResponseSchema = userRoleResponseSchema.array();
