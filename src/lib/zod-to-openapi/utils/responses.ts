@@ -22,7 +22,7 @@ export const createMessageResponse = (description = 'Object with message') => ({
   content: {
     'application/json': {
       schema: z.object({
-        message: z.string().openapi({ example: 'Any message' }),
+        message: z.string().openapi({ example: 'A message' }),
       }),
     },
   },
