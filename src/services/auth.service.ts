@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 
 class AuthService {
-  public async login({ email, password }: LoginAuth) {
+  public login = async ({ email, password }: LoginAuth) => {
     const userExists = await db.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
@@ -18,7 +18,7 @@ class AuthService {
     return {
       token: signJwtToken({ id: userExists.id, email: userExists.email }),
     };
-  }
+  };
 }
 
 export const authService = new AuthService();
