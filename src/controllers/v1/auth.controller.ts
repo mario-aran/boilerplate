@@ -2,13 +2,20 @@ import { NODE_ENV } from '@/config/env';
 import { HTTP_STATUS } from '@/constants/http-status';
 import { JWT_COOKIE } from '@/lib/passport/constants';
 import { authService } from '@/services/auth.service';
+import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 
+// Errors
+const unauthorizedHttpError = new HttpError({
+  status: HTTP_STATUS.UNAUTHORIZED,
+  message: 'Invalid credentials',
+});
+
 class AuthController {
-  public async login(req: Request, res: Response) {
+  public login = controllerCatchAsync(async (req: Request, res: Response) => {
     const record = await authService.login(req.body);
-    if (!record) this.throwUnauthorizedHttpError();
+    if (!record) throw unauthorizedHttpError;
 
     res.cookie(JWT_COOKIE, record.token, {
       httpOnly: true,
@@ -18,20 +25,13 @@ class AuthController {
     });
 
     res.json({ message: 'User logged in successfully' });
-  }
+  });
 
-  public logout(_: Request, res: Response) {
+  public logout = (_: Request, res: Response) => {
     res.clearCookie(JWT_COOKIE);
 
     res.json({ message: 'User logged out successfully' });
-  }
-
-  private throwUnauthorizedHttpError(): never {
-    throw new HttpError({
-      status: HTTP_STATUS.UNAUTHORIZED,
-      message: 'Invalid credentials',
-    });
-  }
+  };
 }
 
 export const authController = new AuthController();
