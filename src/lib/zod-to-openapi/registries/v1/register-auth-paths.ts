@@ -7,10 +7,10 @@ import {
 import { loginAuthSchema } from '@/lib/zod/schemas/auth.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
-export const registerAuthPaths = (registryV1: OpenAPIRegistry) => {
+export const registerAuthPaths = (registry: OpenAPIRegistry) => {
   const authTags = ['auth'];
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: authTags,
     method: 'post',
     path: OPENAPI_PATHS.AUTH_LOGIN,
@@ -27,7 +27,7 @@ export const registerAuthPaths = (registryV1: OpenAPIRegistry) => {
     },
   });
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: authTags,
     method: 'post',
     path: OPENAPI_PATHS.AUTH_LOGOUT,

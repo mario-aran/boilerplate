@@ -14,10 +14,10 @@ import {
 } from '@/lib/zod/schemas/users.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
-export const registerUsersPaths = (registryV1: OpenAPIRegistry) => {
+export const registerUsersPaths = (registry: OpenAPIRegistry) => {
   const usersTags = ['users'];
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: usersTags,
     method: 'get',
     path: OPENAPI_PATHS.USERS,
@@ -32,7 +32,7 @@ export const registerUsersPaths = (registryV1: OpenAPIRegistry) => {
     },
   });
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: usersTags,
     method: 'get',
     path: OPENAPI_PATHS.USERS_ID,
@@ -47,7 +47,7 @@ export const registerUsersPaths = (registryV1: OpenAPIRegistry) => {
     },
   });
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: usersTags,
     method: 'post',
     path: OPENAPI_PATHS.USERS,
@@ -61,7 +61,7 @@ export const registerUsersPaths = (registryV1: OpenAPIRegistry) => {
     },
   });
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: usersTags,
     method: 'patch',
     path: OPENAPI_PATHS.USERS_ID,
@@ -77,7 +77,7 @@ export const registerUsersPaths = (registryV1: OpenAPIRegistry) => {
     },
   });
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: usersTags,
     method: 'patch',
     path: OPENAPI_PATHS.USERS_ID_PASSWORD,

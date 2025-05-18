@@ -13,10 +13,10 @@ import {
 } from '@/lib/zod/schemas/user-roles.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
-export const registerUserRolesPaths = (registryV1: OpenAPIRegistry) => {
+export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
   const userRolesTags = ['user roles'];
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: userRolesTags,
     method: 'get',
     path: OPENAPI_PATHS.USER_ROLES,
@@ -31,7 +31,7 @@ export const registerUserRolesPaths = (registryV1: OpenAPIRegistry) => {
     },
   });
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: userRolesTags,
     method: 'get',
     path: OPENAPI_PATHS.USER_ROLES_ID,
@@ -47,7 +47,7 @@ export const registerUserRolesPaths = (registryV1: OpenAPIRegistry) => {
     },
   });
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: userRolesTags,
     method: 'put',
     path: OPENAPI_PATHS.USER_ROLES_ID,

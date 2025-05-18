@@ -7,10 +7,10 @@ import {
 } from '@/lib/zod/schemas/permissions.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
-export const registerPermissionsPaths = (registryV1: OpenAPIRegistry) => {
+export const registerPermissionsPaths = (registry: OpenAPIRegistry) => {
   const permissionsTags = ['permissions'];
 
-  registryV1.registerPath({
+  registry.registerPath({
     tags: permissionsTags,
     method: 'get',
     path: OPENAPI_PATHS.PERMISSIONS,
