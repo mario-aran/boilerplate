@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '@/constants/http-status';
+import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
@@ -9,7 +9,7 @@ export const handleRouteError = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
-  res.status(err.status ?? HTTP_STATUS.SERVER_ERROR).json({
+  res.status(err.status ?? HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
     message: err.message || 'Internal server error',
     validationErrors: err.validationErrors || undefined,
     stack:
