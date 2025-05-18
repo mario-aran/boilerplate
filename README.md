@@ -80,7 +80,6 @@ Setups Backend
 
 ## To-do
 
-- [ ] finish swagger docs
 - [ ] add token to swagger
 - [ ] add tests with supertest
 - [ ] add db connection error handler with retry? investigate retry
