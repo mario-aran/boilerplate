@@ -3,7 +3,6 @@ import { authController } from '@/controllers/v1/auth.controller';
 import { loginAuthSchema } from '@/lib/zod/schemas/v1/auth.schema';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
-import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Router } from 'express';
 
 export const authRoute = Router();
@@ -12,7 +11,7 @@ export const authRoute = Router();
 authRoute.post(
   ROUTE_SEGMENTS.LOGIN,
   validateWithZod({ body: loginAuthSchema }),
-  controllerCatchAsync(authController.login),
+  authController.login,
 );
 
 authRoute.post(
