@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '@/constants/http-status';
+import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { AnyZodObject, ZodError, ZodIssue } from '@/lib/zod';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
@@ -31,7 +31,7 @@ export const validateWithZod = ({
         }));
 
         const zodHttpError = new HttpError({
-          status: HTTP_STATUS.UNPROCESSABLE,
+          status: HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT,
           message: 'Invalid inputs',
           validationErrors,
         });
