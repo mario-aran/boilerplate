@@ -11,6 +11,7 @@ import { hashPassword } from '@/lib/passport/utils';
 
 // Types
 type UserInsert = typeof usersTable.$inferInsert;
+
 type UserRoleToPermissionInsert =
   typeof userRolesToPermissionsTable.$inferInsert;
 
@@ -20,7 +21,7 @@ interface LogSeedMessageParams {
 }
 
 class AuthSeeder {
-  public async runSeeds() {
+  public runSeeds = async () => {
     await authSeeder.seedPermissions();
     await authSeeder.seedUserRoles();
     await authSeeder.seedUserRolesToPermissions();
@@ -33,9 +34,9 @@ class AuthSeeder {
         lastName: 'Super Admin',
       },
     ]);
-  }
+  };
 
-  public async seedUsers(data: UserInsert[]) {
+  public seedUsers = async (data: UserInsert[]) => {
     const hashedUserPromises = data.map(
       async ({ password, ...restOfRecord }) => {
         const hashedPassword = await hashPassword(password);
@@ -54,9 +55,9 @@ class AuthSeeder {
       entityName: 'users',
       keys: createdRecords.map(({ email }) => email),
     });
-  }
+  };
 
-  private async seedPermissions() {
+  private seedPermissions = async () => {
     const createdRecords = await db
       .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
@@ -67,9 +68,9 @@ class AuthSeeder {
       entityName: 'permissions',
       keys: createdRecords.map(({ id }) => id),
     });
-  }
+  };
 
-  private async seedUserRoles() {
+  private seedUserRoles = async () => {
     const createdRecords = await db
       .insert(userRolesTable)
       .values(USER_ROLE_VALUES.map((id) => ({ id })))
@@ -80,9 +81,9 @@ class AuthSeeder {
       entityName: 'userRoles',
       keys: createdRecords.map(({ id }) => id),
     });
-  }
+  };
 
-  private async seedUserRolesToPermissions() {
+  private seedUserRolesToPermissions = async () => {
     const createdRecords = await db
       .insert(userRolesToPermissionsTable)
       .values(
@@ -100,9 +101,9 @@ class AuthSeeder {
       entityName: 'userRolesToPermissions',
       keys: [...new Set(createdRecords.map(({ userRoleId }) => userRoleId))],
     });
-  }
+  };
 
-  private logSeedMessage({ entityName, keys }: LogSeedMessageParams) {
+  private logSeedMessage = ({ entityName, keys }: LogSeedMessageParams) => {
     if (!keys.length) {
       console.log(`Skipping seeding ${entityName}: no new records.`);
       return;
@@ -110,7 +111,7 @@ class AuthSeeder {
 
     const joinedUniqueKeys = keys.map((key) => key).join(', ');
     console.log(`${entityName} seeded successfully: ${joinedUniqueKeys}.`);
-  }
+  };
 }
 
 export const authSeeder = new AuthSeeder();
