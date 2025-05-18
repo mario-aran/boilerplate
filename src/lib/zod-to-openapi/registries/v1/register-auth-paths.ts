@@ -4,7 +4,7 @@ import {
   createMessageResponse,
   invalidInputsResponse,
 } from '@/lib/zod-to-openapi/utils/responses';
-import { loginAuthSchema } from '@/lib/zod/schemas/v1/auth.schema';
+import { loginAuthSchema } from '@/lib/zod/schemas/auth.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
 export const registerAuthPaths = (registryV1: OpenAPIRegistry) => {

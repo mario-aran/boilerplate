@@ -8,7 +8,7 @@ import {
   GetAllUserRoles,
   UpdateUserRole,
   UserRoleId,
-} from '@/lib/zod/schemas/v1/user-roles.schema';
+} from '@/lib/zod/schemas/user-roles.schema';
 import { eq, ilike } from 'drizzle-orm';
 
 class UserRolesService {

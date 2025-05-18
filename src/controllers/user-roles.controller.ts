@@ -1,5 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
-import { UserRoleId } from '@/lib/zod/schemas/v1/user-roles.schema';
+import { UserRoleId } from '@/lib/zod/schemas/user-roles.schema';
 import { userRolesService } from '@/services/user-roles.service';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { HttpError } from '@/utils/http-error';

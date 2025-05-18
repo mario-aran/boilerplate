@@ -1,13 +1,13 @@
 import { PERMISSIONS } from '@/constants/permissions';
 import { ROUTE_SEGMENTS } from '@/constants/routes';
-import { usersController } from '@/controllers/v1/users.controller';
+import { usersController } from '@/controllers/users.controller';
 import {
   createUserSchema,
   getAllUsersSchema,
   updateUserPasswordSchema,
   updateUserSchema,
   userIdSchema,
-} from '@/lib/zod/schemas/v1/users.schema';
+} from '@/lib/zod/schemas/users.schema';
 import { authenticateWithPermission } from '@/middleware/authenticate-with-permission';
 import { validateWithZod } from '@/middleware/validate-with-zod';
 import { Router } from 'express';

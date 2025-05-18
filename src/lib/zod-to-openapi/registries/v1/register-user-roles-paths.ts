@@ -10,7 +10,7 @@ import {
   userRoleIdSchema,
   userRoleResponseSchema,
   userRolesResponseSchema,
-} from '@/lib/zod/schemas/v1/user-roles.schema';
+} from '@/lib/zod/schemas/user-roles.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
 export const registerUserRolesPaths = (registryV1: OpenAPIRegistry) => {

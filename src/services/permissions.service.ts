@@ -1,6 +1,6 @@
 import { permissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import { GetAllPermissions } from '@/lib/zod/schemas/v1/permissions.schema';
+import { GetAllPermissions } from '@/lib/zod/schemas/permissions.schema';
 import { ilike } from 'drizzle-orm';
 
 class PermissionsService {

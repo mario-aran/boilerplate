@@ -11,7 +11,7 @@ import {
   updateUserSchema,
   userIdSchema,
   usersResponseSchema,
-} from '@/lib/zod/schemas/v1/users.schema';
+} from '@/lib/zod/schemas/users.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
 export const registerUsersPaths = (registryV1: OpenAPIRegistry) => {

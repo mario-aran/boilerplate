@@ -4,7 +4,7 @@ import { invalidInputsResponse } from '@/lib/zod-to-openapi/utils/responses';
 import {
   getAllPermissionsSchema,
   permissionsResponseSchema,
-} from '@/lib/zod/schemas/v1/permissions.schema';
+} from '@/lib/zod/schemas/permissions.schema';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
 export const registerPermissionsPaths = (registryV1: OpenAPIRegistry) => {
