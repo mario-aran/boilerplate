@@ -3,7 +3,7 @@ export type USER_ROLES = (typeof USER_ROLES)[keyof typeof USER_ROLES];
 
 // Constants
 export const USER_ROLES = {
-  SUPERADMIN: 'superadmin',
+  SUPER_ADMIN: 'super_admin',
   USER: 'user',
 } as const;
 
