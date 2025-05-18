@@ -12,7 +12,12 @@ import {
 import { eq, ilike } from 'drizzle-orm';
 
 class UserRolesService {
-  public async getAll({ limit, page, sort, search = '' }: GetAllUserRoles) {
+  public getAll = async ({
+    limit,
+    page,
+    sort,
+    search = '',
+  }: GetAllUserRoles) => {
     const filters = ilike(userRolesTable.id, `%${search}%`);
 
     return queryPaginatedData({
@@ -22,9 +27,9 @@ class UserRolesService {
       sort,
       page,
     });
-  }
+  };
 
-  public async get({ id }: UserRoleId) {
+  public get = async ({ id }: UserRoleId) => {
     const record = await db.query.userRolesTable.findFirst({
       with: { userRolesToPermissions: { columns: { permissionId: true } } },
       where: eq(userRolesTable.id, id),
@@ -39,12 +44,12 @@ class UserRolesService {
         ({ permissionId }) => permissionId,
       ),
     };
-  }
+  };
 
-  public async update(
+  public update = async (
     { id }: UserRoleId,
     { permissionIds, ...restOfData }: UpdateUserRole,
-  ) {
+  ) => {
     return db.transaction(async (tx) => {
       if (permissionIds) {
         // Delete old permissions
@@ -69,7 +74,7 @@ class UserRolesService {
         .returning({ id: userRolesTable.id });
       return updatedRecord;
     });
-  }
+  };
 }
 
 export const userRolesService = new UserRolesService();

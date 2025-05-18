@@ -4,7 +4,12 @@ import { GetAllPermissions } from '@/lib/zod/schemas/v1/permissions.schema';
 import { ilike } from 'drizzle-orm';
 
 class PermissionsService {
-  public async getAll({ limit, page, sort, search = '' }: GetAllPermissions) {
+  public getAll = async ({
+    limit,
+    page,
+    sort,
+    search = '',
+  }: GetAllPermissions) => {
     const filters = ilike(permissionsTable.id, `%${search}%`);
 
     return queryPaginatedData({
@@ -14,7 +19,7 @@ class PermissionsService {
       sort,
       page,
     });
-  }
+  };
 }
 
 export const permissionsService = new PermissionsService();

@@ -13,13 +13,13 @@ import {
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 class UsersService {
-  public async getAll({
+  public getAll = async ({
     limit,
     page,
     sort,
     userRoleId = '',
     search = '',
-  }: GetAllUsers) {
+  }: GetAllUsers) => {
     const filters = and(
       ilike(usersTable.userRoleId, `%${userRoleId}%`),
       or(
@@ -41,9 +41,9 @@ class UsersService {
       ({ password: _, ...restOfRecord }) => restOfRecord,
     );
     return { data: dataWithoutPassword, ...pagination };
-  }
+  };
 
-  public async get({ id }: UserId) {
+  public get = async ({ id }: UserId) => {
     const record = await db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
@@ -64,9 +64,9 @@ class UsersService {
         ({ permissionId }) => permissionId,
       ),
     };
-  }
+  };
 
-  public async create({ password, ...restOfData }: CreateUser) {
+  public create = async ({ password, ...restOfData }: CreateUser) => {
     const hashedPassword = await hashPassword(password);
     const [createdRecord] = await db
       .insert(usersTable)
@@ -77,21 +77,21 @@ class UsersService {
       })
       .returning({ email: usersTable.email });
     return createdRecord;
-  }
+  };
 
-  public async update({ id }: UserId, data: UpdateUser) {
+  public update = async ({ id }: UserId, data: UpdateUser) => {
     const [updatedRecord] = await db
       .update(usersTable)
       .set(data)
       .where(eq(usersTable.id, id))
       .returning({ email: usersTable.email });
     return updatedRecord;
-  }
+  };
 
-  public async updatePassword(
+  public updatePassword = async (
     { id }: UserId,
     { password }: UpdateUserPassword,
-  ) {
+  ) => {
     const hashedPassword = await hashPassword(password);
     const [updatedRecord] = await db
       .update(usersTable)
@@ -99,7 +99,7 @@ class UsersService {
       .where(eq(usersTable.id, id))
       .returning({ email: usersTable.email });
     return updatedRecord;
-  }
+  };
 }
 
 export const usersService = new UsersService();
