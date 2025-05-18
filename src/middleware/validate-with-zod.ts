@@ -30,14 +30,14 @@ export const validateWithZod = ({
           message: issue.message,
         }));
 
-        const zodHttpError = new HttpError({
-          status: HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT,
-          message: 'Invalid inputs',
-          validationErrors,
-        });
-
         // Failed: zod error
-        return next(zodHttpError);
+        return next(
+          new HttpError({
+            status: HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT,
+            message: 'Invalid inputs',
+            validationErrors,
+          }),
+        );
       }
 
       // Failed: internal error
