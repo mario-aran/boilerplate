@@ -21,7 +21,7 @@ type GetResult =
 
 type UpdateResult =
   | { errorCode: typeof ERROR_CODES.NOT_FOUND }
-  | Pick<UserRoleSelect, 'id'>;
+  | UserRoleSelect;
 
 class UserRolesService {
   public getAll = async ({
@@ -68,7 +68,7 @@ class UserRolesService {
         .update(userRolesTable)
         .set(restOfData)
         .where(eq(userRolesTable.id, id))
-        .returning({ id: userRolesTable.id });
+        .returning();
       if (!updatedRecord) return { errorCode: ERROR_CODES.NOT_FOUND };
 
       if (permissionIds) {
