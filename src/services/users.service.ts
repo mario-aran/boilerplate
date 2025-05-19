@@ -1,4 +1,3 @@
-import { ERROR_CODES } from '@/constants/error-codes';
 import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
@@ -12,27 +11,11 @@ import {
   UserId,
 } from '@/lib/zod/schemas/users.schema';
 import { isUniqueViolationError } from '@/utils/db-error-checks';
+import { ConflictError, NotFoundError } from '@/utils/domain-errors';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 // Types
 type UserSelect = typeof usersTable.$inferSelect;
-type UserSelectNoPassword = Omit<UserSelect, 'password'>;
-
-type GetResult =
-  | { errorCode: typeof ERROR_CODES.NOT_FOUND }
-  | (UserSelectNoPassword & { permissionIds: string[] });
-
-type CreateResult =
-  | { errorCode: typeof ERROR_CODES.CONFLICT }
-  | UserSelectNoPassword;
-
-type UpdateResult =
-  | { errorCode: typeof ERROR_CODES.NOT_FOUND | typeof ERROR_CODES.CONFLICT }
-  | UserSelectNoPassword;
-
-type UpdatePasswordResult =
-  | { errorCode: typeof ERROR_CODES.NOT_FOUND }
-  | UserSelectNoPassword;
 
 class UsersService {
   public getAll = async ({
@@ -63,7 +46,7 @@ class UsersService {
     };
   };
 
-  public get = async ({ id }: UserId): Promise<GetResult> => {
+  public get = async ({ id }: UserId) => {
     const record = await db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
@@ -74,7 +57,7 @@ class UsersService {
       },
       where: eq(usersTable.id, id),
     });
-    if (!record) return { errorCode: ERROR_CODES.NOT_FOUND };
+    if (!record) throw this.createNotFoundError();
 
     // Flatten info
     const { userRole, ...restOfRecord } = record;
@@ -86,10 +69,7 @@ class UsersService {
     };
   };
 
-  public create = async ({
-    password,
-    ...restOfData
-  }: CreateUser): Promise<CreateResult> => {
+  public create = async ({ password, ...restOfData }: CreateUser) => {
     try {
       const hashedPassword = await hashPassword(password);
 
@@ -103,29 +83,24 @@ class UsersService {
         .returning();
       return this.omitPassword(createdRecord);
     } catch (err) {
-      if (isUniqueViolationError(err))
-        return { errorCode: ERROR_CODES.CONFLICT };
+      if (isUniqueViolationError(err)) throw this.createConflictError();
 
       throw err;
     }
   };
 
-  public update = async (
-    { id }: UserId,
-    data: UpdateUser,
-  ): Promise<UpdateResult> => {
+  public update = async ({ id }: UserId, data: UpdateUser) => {
     try {
       const [updatedRecord] = await db
         .update(usersTable)
         .set(data)
         .where(eq(usersTable.id, id))
         .returning();
-      if (!updatedRecord) return { errorCode: ERROR_CODES.NOT_FOUND };
+      if (!updatedRecord) throw this.createNotFoundError();
 
       return this.omitPassword(updatedRecord);
     } catch (err) {
-      if (isUniqueViolationError(err))
-        return { errorCode: ERROR_CODES.CONFLICT };
+      if (isUniqueViolationError(err)) throw this.createConflictError();
 
       throw err;
     }
@@ -134,7 +109,7 @@ class UsersService {
   public updatePassword = async (
     { id }: UserId,
     { password }: UpdateUserPassword,
-  ): Promise<UpdatePasswordResult> => {
+  ) => {
     const hashedPassword = await hashPassword(password);
 
     const [updatedRecord] = await db
@@ -142,7 +117,7 @@ class UsersService {
       .set({ password: hashedPassword })
       .where(eq(usersTable.id, id))
       .returning();
-    if (!updatedRecord) return { errorCode: ERROR_CODES.NOT_FOUND };
+    if (!updatedRecord) throw this.createNotFoundError();
 
     return this.omitPassword(updatedRecord);
   };
@@ -152,6 +127,9 @@ class UsersService {
     password: _,
     ...restOfRecord
   }: UserSelect) => restOfRecord;
+
+  private createNotFoundError = () => new NotFoundError('User not found');
+  private createConflictError = () => new ConflictError('Email already in use');
 }
 
 export const usersService = new UsersService();
