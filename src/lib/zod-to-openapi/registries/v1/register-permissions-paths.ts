@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '@/constants/http-status';
+import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { OPENAPI_PATHS } from '@/lib/zod-to-openapi/constants/openapi-paths';
 import { invalidInputsResponse } from '@/lib/zod-to-openapi/utils/responses';
 import {
@@ -17,11 +17,11 @@ export const registerPermissionsPaths = (registry: OpenAPIRegistry) => {
     summary: 'Get all permissions',
     request: { query: getAllPermissionsSchema },
     responses: {
-      [HTTP_STATUS.OK]: {
+      [HTTP_STATUS_CODES.OK]: {
         description: 'Array of permission objects',
         content: { 'application/json': { schema: permissionsResponseSchema } },
       },
-      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
     },
   });
 };

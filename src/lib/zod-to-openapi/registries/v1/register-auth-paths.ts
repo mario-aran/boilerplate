@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '@/constants/http-status';
+import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { OPENAPI_PATHS } from '@/lib/zod-to-openapi/constants/openapi-paths';
 import {
   createMessageResponse,
@@ -19,11 +19,11 @@ export const registerAuthPaths = (registry: OpenAPIRegistry) => {
       body: { content: { 'application/json': { schema: loginAuthSchema } } },
     },
     responses: {
-      [HTTP_STATUS.OK]: createMessageResponse(
+      [HTTP_STATUS_CODES.OK]: createMessageResponse(
         'Set jwt cookie and returns a message object',
       ),
-      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
-      [HTTP_STATUS.UNAUTHORIZED]: createMessageResponse(),
+      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNAUTHORIZED]: createMessageResponse(),
     },
   });
 
@@ -34,7 +34,7 @@ export const registerAuthPaths = (registry: OpenAPIRegistry) => {
     summary: 'Logout user',
     request: undefined,
     responses: {
-      [HTTP_STATUS.OK]: createMessageResponse(
+      [HTTP_STATUS_CODES.OK]: createMessageResponse(
         'Clear jwt cookie and returns a message object',
       ),
     },

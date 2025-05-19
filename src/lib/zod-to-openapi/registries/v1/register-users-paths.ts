@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '@/constants/http-status';
+import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { OPENAPI_PATHS } from '@/lib/zod-to-openapi/constants/openapi-paths';
 import {
   createMessageResponse,
@@ -24,11 +24,11 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     summary: 'Get all users',
     request: { query: getAllUsersSchema },
     responses: {
-      [HTTP_STATUS.OK]: {
+      [HTTP_STATUS_CODES.OK]: {
         description: 'Array of user objects',
         content: { 'application/json': { schema: usersResponseSchema } },
       },
-      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
     },
   });
 
@@ -39,11 +39,11 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     summary: 'Get user',
     request: { params: userIdSchema },
     responses: {
-      [HTTP_STATUS.OK]: {
+      [HTTP_STATUS_CODES.OK]: {
         description: 'User object',
         content: { 'application/json': { schema: usersResponseSchema } },
       },
-      [HTTP_STATUS.NOT_FOUND]: createMessageResponse(),
+      [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
     },
   });
 
@@ -56,8 +56,8 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
       body: { content: { 'application/json': { schema: createUserSchema } } },
     },
     responses: {
-      [HTTP_STATUS.CREATED]: createMessageResponse(),
-      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.CREATED]: createMessageResponse(),
+      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
     },
   });
 
@@ -71,9 +71,9 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
       body: { content: { 'application/json': { schema: updateUserSchema } } },
     },
     responses: {
-      [HTTP_STATUS.OK]: createMessageResponse(),
-      [HTTP_STATUS.NOT_FOUND]: createMessageResponse(),
-      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.OK]: createMessageResponse(),
+      [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
+      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
     },
   });
 
@@ -89,9 +89,9 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
       },
     },
     responses: {
-      [HTTP_STATUS.OK]: createMessageResponse(),
-      [HTTP_STATUS.NOT_FOUND]: createMessageResponse(),
-      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.OK]: createMessageResponse(),
+      [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
+      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
     },
   });
 };
