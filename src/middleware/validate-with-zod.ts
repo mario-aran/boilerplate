@@ -1,13 +1,29 @@
-import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { AnyZodObject, ZodError, ZodIssue } from '@/lib/zod';
-import { HttpError } from '@/utils/http-error';
+import { UnprocessableError } from '@/utils/errors';
 import { NextFunction, Request, Response } from 'express';
 
-// Types
 interface ValidateWithZodProps {
   params?: AnyZodObject;
   query?: AnyZodObject;
   body?: AnyZodObject;
+}
+
+// Types
+type ValidationErrors = Record<string, string>[];
+
+interface ZodValidationErrorProps {
+  validationErrors: ValidationErrors;
+}
+
+// Utils
+class ZodValidationError extends UnprocessableError {
+  public validationErrors: ValidationErrors;
+
+  constructor({ validationErrors }: ZodValidationErrorProps) {
+    super('Invalid inputs');
+    this.name = 'ZodValidationError';
+    this.validationErrors = validationErrors;
+  }
 }
 
 export const validateWithZod = ({
@@ -31,13 +47,7 @@ export const validateWithZod = ({
         }));
 
         // Failed: zod error
-        return next(
-          new HttpError({
-            status: HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT,
-            message: 'Invalid inputs',
-            validationErrors,
-          }),
-        );
+        return next(new ZodValidationError({ validationErrors }));
       }
 
       // Failed: internal error
