@@ -2,7 +2,7 @@ import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
 import { signJwtToken } from '@/lib/passport/utils';
 import { LoginAuth } from '@/lib/zod/schemas/auth.schema';
-import { NotFoundError, UnauthorizedError } from '@/utils/domain-errors';
+import { NotFoundError, UnauthorizedError } from '@/utils/errors';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 
