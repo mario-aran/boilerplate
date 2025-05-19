@@ -1,3 +1,4 @@
+import { ERROR_CODES } from '@/constants/error-codes';
 import { db } from '@/lib/drizzle/db';
 import {
   userRolesTable,
@@ -10,6 +11,17 @@ import {
   UserRoleId,
 } from '@/lib/zod/schemas/user-roles.schema';
 import { eq, ilike } from 'drizzle-orm';
+
+// Types
+type UserRoleSelect = typeof userRolesTable.$inferSelect;
+
+type GetResult =
+  | { errorCode: typeof ERROR_CODES.NOT_FOUND }
+  | (UserRoleSelect & { permissionIds: string[] });
+
+type UpdateResult =
+  | { errorCode: typeof ERROR_CODES.NOT_FOUND }
+  | Pick<UserRoleSelect, 'id'>;
 
 class UserRolesService {
   public getAll = async ({
@@ -29,12 +41,12 @@ class UserRolesService {
     });
   };
 
-  public get = async ({ id }: UserRoleId) => {
+  public get = async ({ id }: UserRoleId): Promise<GetResult> => {
     const record = await db.query.userRolesTable.findFirst({
       with: { userRolesToPermissions: { columns: { permissionId: true } } },
       where: eq(userRolesTable.id, id),
     });
-    if (!record) return null;
+    if (!record) return { errorCode: ERROR_CODES.NOT_FOUND };
 
     // Flatten info
     const { userRolesToPermissions, ...restOfRecord } = record;
@@ -49,15 +61,23 @@ class UserRolesService {
   public update = async (
     { id }: UserRoleId,
     { permissionIds, ...restOfData }: UpdateUserRole,
-  ) => {
+  ): Promise<UpdateResult> => {
     return db.transaction(async (tx) => {
+      // Update values
+      const [updatedRecord] = await tx
+        .update(userRolesTable)
+        .set(restOfData)
+        .where(eq(userRolesTable.id, id))
+        .returning({ id: userRolesTable.id });
+      if (!updatedRecord) return { errorCode: ERROR_CODES.NOT_FOUND };
+
       if (permissionIds) {
-        // Delete old permissions
+        // Remove all existing permissions for this role
         await tx
           .delete(userRolesToPermissionsTable)
           .where(eq(userRolesToPermissionsTable.userRoleId, id));
 
-        // Insert new permissions
+        // Add new permissions for this role
         await tx.insert(userRolesToPermissionsTable).values(
           permissionIds.map((permissionId) => ({
             userRoleId: id,
@@ -66,12 +86,6 @@ class UserRolesService {
         );
       }
 
-      // Update values
-      const [updatedRecord] = await tx
-        .update(userRolesTable)
-        .set(restOfData)
-        .where(eq(userRolesTable.id, id))
-        .returning({ id: userRolesTable.id });
       return updatedRecord;
     });
   };
