@@ -27,7 +27,7 @@ class AuthSeeder {
     await authSeeder.seedUserRolesToPermissions();
     await authSeeder.seedUsers([
       {
-        userRoleId: USER_ROLES.SUPERADMIN,
+        userRoleId: USER_ROLES.SUPER_ADMIN,
         email: 'superadmin@superadmin.com',
         password: '12345678',
         firstName: 'Super Admin',
@@ -89,7 +89,7 @@ class AuthSeeder {
       .values(
         PERMISSION_VALUES.map(
           (permissionId): UserRoleToPermissionInsert => ({
-            userRoleId: USER_ROLES.SUPERADMIN,
+            userRoleId: USER_ROLES.SUPER_ADMIN,
             permissionId,
           }),
         ),
