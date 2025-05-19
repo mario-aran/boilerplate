@@ -1,4 +1,3 @@
-import { ERROR_CODES } from '@/constants/error-codes';
 import { db } from '@/lib/drizzle/db';
 import {
   userRolesTable,
@@ -10,18 +9,8 @@ import {
   UpdateUserRole,
   UserRoleId,
 } from '@/lib/zod/schemas/user-roles.schema';
+import { NotFoundError } from '@/utils/domain-errors';
 import { eq, ilike } from 'drizzle-orm';
-
-// Types
-type UserRoleSelect = typeof userRolesTable.$inferSelect;
-
-type GetResult =
-  | { errorCode: typeof ERROR_CODES.NOT_FOUND }
-  | (UserRoleSelect & { permissionIds: string[] });
-
-type UpdateResult =
-  | { errorCode: typeof ERROR_CODES.NOT_FOUND }
-  | UserRoleSelect;
 
 class UserRolesService {
   public getAll = async ({
@@ -41,12 +30,12 @@ class UserRolesService {
     });
   };
 
-  public get = async ({ id }: UserRoleId): Promise<GetResult> => {
+  public get = async ({ id }: UserRoleId) => {
     const record = await db.query.userRolesTable.findFirst({
       with: { userRolesToPermissions: { columns: { permissionId: true } } },
       where: eq(userRolesTable.id, id),
     });
-    if (!record) return { errorCode: ERROR_CODES.NOT_FOUND };
+    if (!record) throw this.createNotFoundError();
 
     // Flatten info
     const { userRolesToPermissions, ...restOfRecord } = record;
@@ -61,7 +50,7 @@ class UserRolesService {
   public update = async (
     { id }: UserRoleId,
     { permissionIds, ...restOfData }: UpdateUserRole,
-  ): Promise<UpdateResult> => {
+  ) => {
     return db.transaction(async (tx) => {
       // Update values
       const [updatedRecord] = await tx
@@ -69,7 +58,7 @@ class UserRolesService {
         .set(restOfData)
         .where(eq(userRolesTable.id, id))
         .returning();
-      if (!updatedRecord) return { errorCode: ERROR_CODES.NOT_FOUND };
+      if (!updatedRecord) throw this.createNotFoundError();
 
       if (permissionIds) {
         // Remove all existing permissions for this role
@@ -89,6 +78,8 @@ class UserRolesService {
       return updatedRecord;
     });
   };
+
+  private createNotFoundError = () => new NotFoundError('User role not found');
 }
 
 export const userRolesService = new UserRolesService();
