@@ -1,23 +1,30 @@
 import { db } from '@/lib/drizzle/db';
 import { asc, count, desc, SQL } from 'drizzle-orm';
-import { AnyPgColumn, AnyPgTable } from 'drizzle-orm/pg-core';
+import {
+  AnyPgColumn,
+  AnyPgTable,
+  TableLikeHasEmptySelection,
+} from 'drizzle-orm/pg-core';
 
 // Types
-interface QueryPaginatedDataProps {
-  schema: AnyPgTable;
+type Schema<T extends AnyPgTable> =
+  TableLikeHasEmptySelection<T> extends true ? never : T;
+
+interface QueryPaginatedDataProps<T extends AnyPgTable> {
+  schema: Schema<T>;
   filters?: SQL<unknown>;
   limit?: number;
   page?: number;
   sort?: string[];
 }
 
-export const queryPaginatedData = async ({
+export const queryPaginatedData = async <T extends AnyPgTable>({
   schema,
   filters,
   limit = 10,
   page = 1,
   sort = [],
-}: QueryPaginatedDataProps) => {
+}: QueryPaginatedDataProps<T>) => {
   // Query count
   const [{ count: total }] = await db
     .select({ count: count() })
