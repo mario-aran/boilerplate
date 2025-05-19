@@ -1,29 +1,11 @@
 import { AnyZodObject, ZodError, ZodIssue } from '@/lib/zod';
-import { UnprocessableError } from '@/utils/errors';
+import { ZodValidationError } from '@/utils/errors';
 import { NextFunction, Request, Response } from 'express';
 
 interface ValidateWithZodProps {
   params?: AnyZodObject;
   query?: AnyZodObject;
   body?: AnyZodObject;
-}
-
-// Types
-type ValidationErrors = Record<string, string>[];
-
-interface ZodValidationErrorProps {
-  validationErrors: ValidationErrors;
-}
-
-// Utils
-class ZodValidationError extends UnprocessableError {
-  public validationErrors: ValidationErrors;
-
-  constructor({ validationErrors }: ZodValidationErrorProps) {
-    super('Invalid inputs');
-    this.name = 'ZodValidationError';
-    this.validationErrors = validationErrors;
-  }
 }
 
 export const validateWithZod = ({

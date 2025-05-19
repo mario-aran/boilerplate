@@ -1,60 +1,68 @@
 import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 
 export class UnauthorizedError extends Error {
-  constructor(
-    message = 'Unauthorized',
-    public statusCode = HTTP_STATUS_CODES.UNAUTHORIZED,
-  ) {
+  public statusCode = HTTP_STATUS_CODES.UNAUTHORIZED;
+
+  constructor({ message = 'Unauthorized' }) {
     super(message);
     this.name = 'UnauthorizedError';
   }
 }
 
 export class ForbiddenError extends Error {
-  constructor(
-    message = 'Forbidden',
-    public StatusCode = HTTP_STATUS_CODES.FORBIDDEN,
-  ) {
+  public statusCode = HTTP_STATUS_CODES.FORBIDDEN;
+
+  constructor({ message = 'Forbidden' }) {
     super(message);
     this.name = 'ForbiddenError';
   }
 }
 
 export class NotFoundError extends Error {
-  constructor(
-    message = 'Not found',
-    public statusCode = HTTP_STATUS_CODES.NOT_FOUND,
-  ) {
+  public statusCode = HTTP_STATUS_CODES.NOT_FOUND;
+
+  constructor({ message = 'Not found' }) {
     super(message);
     this.name = 'NotFoundError';
   }
 }
 
 export class ConflictError extends Error {
-  constructor(
-    message = 'Conflict',
-    public statusCode = HTTP_STATUS_CODES.CONFLICT,
-  ) {
+  public statusCode = HTTP_STATUS_CODES.CONFLICT;
+
+  constructor({ message = 'Conflict' }) {
     super(message);
     this.name = 'ConflictError';
   }
 }
 
 export class UnprocessableError extends Error {
-  constructor(
-    message = 'Unprocessable',
-    public statusCode = HTTP_STATUS_CODES.UNPROCESSABLE,
-  ) {
+  public statusCode = HTTP_STATUS_CODES.UNPROCESSABLE;
+
+  constructor({ message = 'Unprocessable' }) {
     super(message);
     this.name = 'UnprocessableError';
   }
 }
 
+export class ZodValidationError extends UnprocessableError {
+  public validationErrors: Record<string, string>[];
+
+  constructor({
+    validationErrors,
+  }: {
+    validationErrors: Record<string, string>[];
+  }) {
+    super({ message: 'Invalid inputs' });
+    this.name = 'ZodValidationError';
+    this.validationErrors = validationErrors;
+  }
+}
+
 export class InternalServerError extends Error {
-  constructor(
-    message = 'Internal server error',
-    public statusCode = HTTP_STATUS_CODES.INTERNAL_SERVER,
-  ) {
+  public statusCode = HTTP_STATUS_CODES.INTERNAL_SERVER;
+
+  constructor({ message = 'Internal server error' }) {
     super(message);
     this.name = 'InternalServerError';
   }
