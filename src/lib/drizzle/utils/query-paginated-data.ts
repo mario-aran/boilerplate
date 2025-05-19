@@ -6,25 +6,19 @@ import {
   TableLikeHasEmptySelection,
 } from 'drizzle-orm/pg-core';
 
-// Types
-type Schema<T extends AnyPgTable> =
-  TableLikeHasEmptySelection<T> extends true ? never : T;
-
-interface QueryPaginatedDataProps<T extends AnyPgTable> {
-  schema: Schema<T>;
-  filters?: SQL<unknown>;
-  limit?: number;
-  page?: number;
-  sort?: string[];
-}
-
 export const queryPaginatedData = async <T extends AnyPgTable>({
   schema,
   filters,
   limit = 10,
   page = 1,
   sort = [],
-}: QueryPaginatedDataProps<T>) => {
+}: {
+  schema: TableLikeHasEmptySelection<T> extends true ? never : T;
+  filters?: SQL<unknown>;
+  limit?: number;
+  page?: number;
+  sort?: string[];
+}) => {
   // Query count
   const [{ count: total }] = await db
     .select({ count: count() })
