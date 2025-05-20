@@ -21,7 +21,7 @@ export const registerPermissionsPaths = (registry: OpenAPIRegistry) => {
         description: 'Array of permission objects',
         content: { 'application/json': { schema: permissionsResponseSchema } },
       },
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
     },
   });
 };

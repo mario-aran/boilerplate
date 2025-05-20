@@ -28,7 +28,7 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
         description: 'Array of user objects',
         content: { 'application/json': { schema: usersResponseSchema } },
       },
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
     },
   });
 
@@ -57,7 +57,7 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     },
     responses: {
       [HTTP_STATUS_CODES.CREATED]: createMessageResponse(),
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
     },
   });
 
@@ -73,7 +73,7 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     responses: {
       [HTTP_STATUS_CODES.OK]: createMessageResponse(),
       [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
     },
   });
 
@@ -91,7 +91,7 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     responses: {
       [HTTP_STATUS_CODES.OK]: createMessageResponse(),
       [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
     },
   });
 };

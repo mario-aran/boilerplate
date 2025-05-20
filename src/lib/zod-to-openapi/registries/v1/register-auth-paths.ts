@@ -22,7 +22,7 @@ export const registerAuthPaths = (registry: OpenAPIRegistry) => {
       [HTTP_STATUS_CODES.OK]: createMessageResponse(
         'Set jwt cookie and returns a message object',
       ),
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
       [HTTP_STATUS_CODES.UNAUTHORIZED]: createMessageResponse(),
     },
   });

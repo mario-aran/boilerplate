@@ -27,7 +27,7 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
         description: 'Array of user role objects',
         content: { 'application/json': { schema: userRolesResponseSchema } },
       },
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
     },
   });
 
@@ -42,7 +42,7 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
         description: 'User role object',
         content: { 'application/json': { schema: userRoleResponseSchema } },
       },
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
       [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
     },
   });
@@ -60,7 +60,7 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
     },
     responses: {
       [HTTP_STATUS_CODES.OK]: createMessageResponse(),
-      [HTTP_STATUS_CODES.UNPROCESSABLE_CONTENT]: invalidInputsResponse,
+      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
       [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
     },
   });
