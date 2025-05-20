@@ -7,7 +7,7 @@ import { USER_ROLES } from '@/constants/user-roles';
 import { usersTable } from '@/lib/drizzle/schemas';
 import { faker } from '@faker-js/faker';
 import { authSeeder } from './utils/auth-seeder';
-import { scriptCatchAsync } from './utils/script-catch-async';
+import { runtScriptWithCatch } from './utils/run-script-with-catch';
 import { truncateTables } from './utils/truncate-tables';
 
 // Guards
@@ -35,9 +35,5 @@ const runScript = async () => {
 };
 
 // Run the script
-(async () => {
-  await scriptCatchAsync({
-    processName: 'Seeding',
-    asyncFn: runScript,
-  });
-})();
+(async () =>
+  await runtScriptWithCatch({ processName: 'Seeding', asyncFn: runScript }))();

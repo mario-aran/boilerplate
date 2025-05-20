@@ -1,13 +1,13 @@
 // Types
-interface ScriptCatchAsyncProps {
+interface RunScriptWithCatchProps {
   processName: string;
   asyncFn: () => Promise<void>;
 }
 
-export const scriptCatchAsync = async ({
+export const runtScriptWithCatch = async ({
   processName,
   asyncFn,
-}: ScriptCatchAsyncProps) => {
+}: RunScriptWithCatchProps) => {
   try {
     await asyncFn();
     console.log(`${processName} completed successfully`);

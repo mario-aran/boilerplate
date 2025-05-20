@@ -1,5 +1,5 @@
 import { authSeeder } from './utils/auth-seeder';
-import { scriptCatchAsync } from './utils/script-catch-async';
+import { runtScriptWithCatch } from './utils/run-script-with-catch';
 
 // Utils
 const runScript = async () => {
@@ -8,7 +8,4 @@ const runScript = async () => {
 
 // Run the script
 (async () =>
-  await scriptCatchAsync({
-    processName: 'Seeding',
-    asyncFn: runScript,
-  }))();
+  await runtScriptWithCatch({ processName: 'Seeding', asyncFn: runScript }))();
