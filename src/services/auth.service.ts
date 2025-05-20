@@ -11,10 +11,11 @@ class AuthService {
     const userExists = await db.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
-    if (!userExists) throw new NotFoundError('User not found');
+    if (!userExists) throw new NotFoundError({ message: 'User not found' });
 
     const passwordIsValid = await bcrypt.compare(password, userExists.password);
-    if (!passwordIsValid) throw new UnauthorizedError('Invalid password');
+    if (!passwordIsValid)
+      throw new UnauthorizedError({ message: 'Invalid password' });
 
     return {
       token: signJwtToken({ id: userExists.id, email: userExists.email }),

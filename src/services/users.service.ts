@@ -128,8 +128,11 @@ class UsersService {
     ...restOfRecord
   }: UserSelect) => restOfRecord;
 
-  private createNotFoundError = () => new NotFoundError('User not found');
-  private createConflictError = () => new ConflictError('Email already in use');
+  private createNotFoundError = () =>
+    new NotFoundError({ message: 'User not found' });
+
+  private createConflictError = () =>
+    new ConflictError({ message: 'Email already in use' });
 }
 
 export const usersService = new UsersService();

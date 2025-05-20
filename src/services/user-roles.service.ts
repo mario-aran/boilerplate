@@ -79,7 +79,8 @@ class UserRolesService {
     });
   };
 
-  private createNotFoundError = () => new NotFoundError('User role not found');
+  private createNotFoundError = () =>
+    new NotFoundError({ message: 'User role not found' });
 }
 
 export const userRolesService = new UserRolesService();
