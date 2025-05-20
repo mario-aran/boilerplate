@@ -19,21 +19,17 @@ export const validateWithZod = ({
       query?.parse(req.query);
       body?.parse(req.body);
 
-      // Succeeded
-      return next();
+      return next(); // Succeeded
     } catch (err) {
       if (err instanceof ZodError) {
         const validationErrors = err.errors.map((issue: ZodIssue) => ({
           field: `${issue.path.join('.')}`,
           message: issue.message,
         }));
-
-        // Failed: zod error
-        return next(new ZodValidationError({ validationErrors }));
+        return next(new ZodValidationError({ validationErrors })); // Failed: zod error
       }
 
-      // Failed: internal error
-      return next(err);
+      return next(err); // Failed: internal error
     }
   };
 };
