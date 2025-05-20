@@ -13,7 +13,7 @@ interface ZodValidationErrorProps {
   validationErrors: ValidationErrors;
 }
 
-class HttpError extends Error {
+export class HttpError extends Error {
   public httpStatusCode: number;
   public validationErrors?: ValidationErrors;
 
@@ -67,11 +67,5 @@ export class ZodValidationError extends HttpError {
       httpStatusCode: HTTP_STATUS_CODES.UNPROCESSABLE,
       validationErrors,
     });
-  }
-}
-
-export class InternalServerError extends HttpError {
-  constructor({ message = 'Internal server error' } = {}) {
-    super({ message, httpStatusCode: HTTP_STATUS_CODES.INTERNAL_SERVER });
   }
 }
