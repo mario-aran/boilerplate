@@ -4,7 +4,7 @@ import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 type ValidationErrors = Record<string, string>[];
 
 interface HttpErrorProps {
-  message: string;
+  message?: string;
   httpStatusCode: number;
   validationErrors?: ValidationErrors;
 }
@@ -17,7 +17,11 @@ class HttpError extends Error {
   public httpStatusCode: number;
   public validationErrors?: ValidationErrors;
 
-  constructor({ message, httpStatusCode, validationErrors }: HttpErrorProps) {
+  constructor({
+    message = '',
+    httpStatusCode,
+    validationErrors,
+  }: HttpErrorProps) {
     super(message);
     this.name = new.target.name;
     this.httpStatusCode = httpStatusCode;
@@ -45,8 +49,6 @@ export class NotFoundError extends HttpError {
 }
 
 export class ConflictError extends HttpError {
-  public httpStatusCode = HTTP_STATUS_CODES.CONFLICT;
-
   constructor({ message = 'Conflict' } = {}) {
     super({ message, httpStatusCode: HTTP_STATUS_CODES.CONFLICT });
   }
