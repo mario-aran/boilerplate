@@ -1,69 +1,75 @@
 import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 
-export class UnauthorizedError extends Error {
-  public statusCode = HTTP_STATUS_CODES.UNAUTHORIZED;
+// Types
+type ValidationErrors = Record<string, string>[];
 
-  constructor(message = 'Unauthorized') {
-    super(message);
-    this.name = 'UnauthorizedError';
-  }
+interface HttpErrorProps {
+  message: string;
+  httpStatusCode: number;
+  validationErrors?: ValidationErrors;
 }
 
-export class ForbiddenError extends Error {
-  public statusCode = HTTP_STATUS_CODES.FORBIDDEN;
-
-  constructor(message = 'Forbidden') {
-    super(message);
-    this.name = 'ForbiddenError';
-  }
+interface ZodValidationErrorProps {
+  validationErrors: ValidationErrors;
 }
 
-export class NotFoundError extends Error {
-  public statusCode = HTTP_STATUS_CODES.NOT_FOUND;
+class HttpError extends Error {
+  public httpStatusCode: number;
+  public validationErrors?: ValidationErrors;
 
-  constructor(message = 'Not found') {
+  constructor({ message, httpStatusCode, validationErrors }: HttpErrorProps) {
     super(message);
-    this.name = 'NotFoundError';
-  }
-}
-
-export class ConflictError extends Error {
-  public statusCode = HTTP_STATUS_CODES.CONFLICT;
-
-  constructor(message = 'Conflict') {
-    super(message);
-    this.name = 'ConflictError';
-  }
-}
-
-export class UnprocessableError extends Error {
-  public statusCode = HTTP_STATUS_CODES.UNPROCESSABLE;
-
-  constructor(message = 'Unprocessable') {
-    super(message);
-    this.name = 'UnprocessableError';
-  }
-}
-
-export class ZodValidationError extends UnprocessableError {
-  public validationErrors: Record<string, string>[];
-
-  constructor({
-    validationErrors,
-  }: {
-    validationErrors: Record<string, string>[];
-  }) {
-    super('Invalid inputs');
-    this.name = 'ZodValidationError';
+    this.name = new.target.name;
+    this.httpStatusCode = httpStatusCode;
     this.validationErrors = validationErrors;
+    Error.captureStackTrace(this, new.target);
   }
 }
 
-export class InternalServerError extends Error {
-  public statusCode = HTTP_STATUS_CODES.INTERNAL_SERVER;
+export class UnauthorizedError extends HttpError {
+  constructor({ message = 'Unauthorized' } = {}) {
+    super({ message, httpStatusCode: HTTP_STATUS_CODES.UNAUTHORIZED });
+  }
+}
 
-  constructor(message = 'Internal server error') {
-    super(message);
-    this.name = 'InternalServerError';
+export class ForbiddenError extends HttpError {
+  constructor({ message = 'Forbidden' } = {}) {
+    super({ message, httpStatusCode: HTTP_STATUS_CODES.FORBIDDEN });
+  }
+}
+
+export class NotFoundError extends HttpError {
+  constructor({ message = 'Not found' } = {}) {
+    super({ message, httpStatusCode: HTTP_STATUS_CODES.NOT_FOUND });
+  }
+}
+
+export class ConflictError extends HttpError {
+  public httpStatusCode = HTTP_STATUS_CODES.CONFLICT;
+
+  constructor({ message = 'Conflict' } = {}) {
+    super({ message, httpStatusCode: HTTP_STATUS_CODES.CONFLICT });
+  }
+}
+
+export class UnprocessableError extends HttpError {
+  constructor({ message = 'Unprocessable' } = {}) {
+    super({ message, httpStatusCode: HTTP_STATUS_CODES.UNPROCESSABLE });
+  }
+}
+
+export class ZodValidationError extends HttpError {
+  constructor({ validationErrors }: ZodValidationErrorProps) {
+    super({
+      message: 'Invalid inputs',
+      httpStatusCode: HTTP_STATUS_CODES.UNPROCESSABLE,
+      validationErrors,
+    });
+  }
+}
+
+export class InternalServerError extends HttpError {
+  constructor({ message = 'Internal server error' } = {}) {
+    super({ message, httpStatusCode: HTTP_STATUS_CODES.INTERNAL_SERVER });
   }
 }
