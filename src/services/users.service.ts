@@ -1,3 +1,4 @@
+import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
@@ -11,7 +12,7 @@ import {
   UserId,
 } from '@/lib/zod/schemas/users.schema';
 import { isUniqueViolationError } from '@/utils/db-error-checks';
-import { ConflictError, NotFoundError } from '@/utils/http-error';
+import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 // Types
@@ -129,10 +130,16 @@ class UsersService {
   }: UserSelect) => restOfRecord;
 
   private createNotFoundError = () =>
-    new NotFoundError({ message: 'User not found' });
+    new HttpError({
+      message: 'User not found',
+      httpStatusCode: HTTP_STATUS_CODES.NOT_FOUND,
+    });
 
   private createConflictError = () =>
-    new ConflictError({ message: 'Email already in use' });
+    new HttpError({
+      message: 'Email already in use',
+      httpStatusCode: HTTP_STATUS_CODES.CONFLICT,
+    });
 }
 
 export const usersService = new UsersService();
