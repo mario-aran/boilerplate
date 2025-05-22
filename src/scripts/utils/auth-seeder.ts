@@ -2,9 +2,13 @@ import { PERMISSION_VALUES } from '@/constants/permissions';
 import { USER_ROLE_VALUES, USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import {
+  PERMISSIONS_TABLE_NAME,
   permissionsTable,
+  USER_ROLES_TABLE_NAME,
+  USER_ROLES_TO_PERMISSIONS_TABLE_NAME,
   userRolesTable,
   userRolesToPermissionsTable,
+  USERS_TABLE_NAME,
   usersTable,
 } from '@/lib/drizzle/schemas';
 import { hashPassword } from '@/lib/passport/utils';
@@ -15,8 +19,8 @@ type UserInsert = typeof usersTable.$inferInsert;
 type UserRoleToPermissionInsert =
   typeof userRolesToPermissionsTable.$inferInsert;
 
-interface LogSeedMessageParams {
-  entityName: string;
+interface LogSeedMessageProps {
+  tableName: string;
   keys: string[];
 }
 
@@ -52,7 +56,7 @@ class AuthSeeder {
       .returning({ email: usersTable.email });
 
     this.logSeedMessage({
-      entityName: 'users',
+      tableName: USERS_TABLE_NAME,
       keys: createdRecords.map(({ email }) => email),
     });
   };
@@ -65,7 +69,7 @@ class AuthSeeder {
       .returning({ id: permissionsTable.id });
 
     this.logSeedMessage({
-      entityName: 'permissions',
+      tableName: PERMISSIONS_TABLE_NAME,
       keys: createdRecords.map(({ id }) => id),
     });
   };
@@ -78,7 +82,7 @@ class AuthSeeder {
       .returning({ id: userRolesTable.id });
 
     this.logSeedMessage({
-      entityName: 'userRoles',
+      tableName: USER_ROLES_TABLE_NAME,
       keys: createdRecords.map(({ id }) => id),
     });
   };
@@ -98,19 +102,19 @@ class AuthSeeder {
       .returning({ userRoleId: userRolesToPermissionsTable.userRoleId });
 
     this.logSeedMessage({
-      entityName: 'userRolesToPermissions',
+      tableName: USER_ROLES_TO_PERMISSIONS_TABLE_NAME,
       keys: [...new Set(createdRecords.map(({ userRoleId }) => userRoleId))],
     });
   };
 
-  private logSeedMessage = ({ entityName, keys }: LogSeedMessageParams) => {
+  private logSeedMessage = ({ tableName, keys }: LogSeedMessageProps) => {
     if (!keys.length) {
-      console.log(`Skipping seeding ${entityName}: no new records.`);
+      console.log(`Skipping seeding ${tableName}: no new records.`);
       return;
     }
 
     const joinedUniqueKeys = keys.map((key) => key).join(', ');
-    console.log(`${entityName} seeded successfully: ${joinedUniqueKeys}.`);
+    console.log(`${tableName} seeded successfully: ${joinedUniqueKeys}.`);
   };
 }
 
