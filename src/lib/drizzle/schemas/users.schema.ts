@@ -4,7 +4,11 @@ import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { userRolesTable } from './user-roles.schema';
 
-export const usersTable = pgTable('users', {
+// Constants
+export const USERS_TABLE_NAME = 'users';
+
+// Schema
+export const usersTable = pgTable(USERS_TABLE_NAME, {
   id,
   userRoleId: varchar('user_role_id', { length: 255 })
     .notNull()
@@ -24,4 +28,5 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
   }),
 }));
 
+// Constants
 export const USERS_COLUMNS = getColumnNames(usersTable);

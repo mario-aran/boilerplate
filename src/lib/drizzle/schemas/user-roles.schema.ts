@@ -5,7 +5,11 @@ import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { userRolesToPermissionsTable } from './user-roles-to-permissions.schema';
 import { usersTable } from './users.schema';
 
-export const userRolesTable = pgTable('user_roles', {
+// Constants
+export const USER_ROLES_TABLE_NAME = 'user_roles';
+
+// Schema
+export const userRolesTable = pgTable(USER_ROLES_TABLE_NAME, {
   id: varchar('id', { length: 255 }).primaryKey(),
   createdAt,
   updatedAt,
@@ -16,4 +20,5 @@ export const userRolesRelations = relations(userRolesTable, ({ many }) => ({
   userRolesToPermissions: many(userRolesToPermissionsTable),
 }));
 
+// Constants
 export const USER_ROLES_COLUMNS = getColumnNames(userRolesTable);

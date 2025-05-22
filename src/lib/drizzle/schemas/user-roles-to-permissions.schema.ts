@@ -5,8 +5,12 @@ import { pgTable, primaryKey, varchar } from 'drizzle-orm/pg-core';
 import { permissionsTable } from './permissions.schema';
 import { userRolesTable } from './user-roles.schema';
 
+// Constants
+export const USER_ROLES_TO_PERMISSIONS_TABLE_NAME = 'user_roles_to_permissions';
+
+// Schema
 export const userRolesToPermissionsTable = pgTable(
-  'user_roles_to_permissions',
+  USER_ROLES_TO_PERMISSIONS_TABLE_NAME,
   {
     userRoleId: varchar('user_role_id', { length: 255 })
       .notNull()
@@ -34,6 +38,7 @@ export const userRolesToPermissionsRelations = relations(
   }),
 );
 
+// Constants
 export const USER_ROLES_TO_PERMISSIONS_COLUMNS = getColumnNames(
   userRolesToPermissionsTable,
 );
