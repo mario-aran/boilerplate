@@ -1,3 +1,4 @@
+import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
 import { db } from '@/lib/drizzle/db';
 import {
   userRolesTable,
@@ -9,7 +10,7 @@ import {
   UpdateUserRole,
   UserRoleId,
 } from '@/lib/zod/schemas/user-roles.schema';
-import { NotFoundError } from '@/utils/http-error';
+import { HttpError } from '@/utils/http-error';
 import { eq, ilike } from 'drizzle-orm';
 
 class UserRolesService {
@@ -80,7 +81,10 @@ class UserRolesService {
   };
 
   private createNotFoundError = () =>
-    new NotFoundError({ message: 'User role not found' });
+    new HttpError({
+      message: 'User role not found',
+      httpStatusCode: HTTP_STATUS_CODES.NOT_FOUND,
+    });
 }
 
 export const userRolesService = new UserRolesService();
