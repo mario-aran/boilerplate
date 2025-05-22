@@ -1,5 +1,5 @@
 import { AnyZodObject, ZodError, ZodIssue } from '@/lib/zod';
-import { ZodValidationError } from '@/utils/errors';
+import { ZodValidationError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 interface ValidateWithZodProps {

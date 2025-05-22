@@ -11,7 +11,7 @@ import {
   UserId,
 } from '@/lib/zod/schemas/users.schema';
 import { isUniqueViolationError } from '@/utils/db-error-checks';
-import { ConflictError, NotFoundError } from '@/utils/errors';
+import { ConflictError, NotFoundError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
 // Types

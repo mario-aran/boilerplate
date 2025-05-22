@@ -1,6 +1,6 @@
 import { NODE_ENV } from '@/config/env';
 import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
-import { HttpError } from '@/utils/errors';
+import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 export const handleRouteError = (

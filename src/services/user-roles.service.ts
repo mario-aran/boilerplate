@@ -9,7 +9,7 @@ import {
   UpdateUserRole,
   UserRoleId,
 } from '@/lib/zod/schemas/user-roles.schema';
-import { NotFoundError } from '@/utils/errors';
+import { NotFoundError } from '@/utils/http-error';
 import { eq, ilike } from 'drizzle-orm';
 
 class UserRolesService {

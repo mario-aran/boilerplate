@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/utils/errors';
+import { NotFoundError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 export const handleNotFound = (

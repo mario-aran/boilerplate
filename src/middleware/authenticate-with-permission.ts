@@ -1,7 +1,7 @@
 import { passport } from '@/lib/passport';
 import { JwtUser } from '@/lib/passport/types';
 import { usersService } from '@/services/users.service';
-import { ForbiddenError, UnauthorizedError } from '@/utils/errors';
+import { ForbiddenError, UnauthorizedError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 export const authenticateWithPermission = (requiredPermission?: string) => {
