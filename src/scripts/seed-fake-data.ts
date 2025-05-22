@@ -1,6 +1,6 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by a script in "package.json"
 
-import '@/config/load-dotenv'; // "dotenv": Ensure its loaded before env imports
+import '@/config/load-dotenv'; // "dotenv": Ensure it's loaded before env imports
 
 import { NODE_ENV } from '@/config/env';
 import { USER_ROLES } from '@/constants/user-roles';
