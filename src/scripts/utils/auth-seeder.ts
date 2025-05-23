@@ -109,12 +109,12 @@ class AuthSeeder {
 
   private logSeedMessage = ({ tableName, keys }: LogSeedMessageProps) => {
     if (!keys.length) {
-      console.log(`Skipping seeding ${tableName}: no new records.`);
+      console.log(`Skipping seeding ${tableName}: no new records`);
       return;
     }
 
     const joinedUniqueKeys = keys.map((key) => key).join(', ');
-    console.log(`${tableName} seeded successfully: ${joinedUniqueKeys}.`);
+    console.log(`${tableName} seeded successfully: ${joinedUniqueKeys}`);
   };
 }
 
