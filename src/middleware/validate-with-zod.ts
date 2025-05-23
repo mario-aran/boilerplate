@@ -1,5 +1,6 @@
+import { HTTP_STATUS } from '@/constants/http-status';
 import { AnyZodObject, ZodError, ZodIssue } from '@/lib/zod';
-import { ZodValidationError } from '@/utils/http-error';
+import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 interface ValidateWithZodProps {
@@ -19,17 +20,26 @@ export const validateWithZod = ({
       query?.parse(req.query);
       body?.parse(req.body);
 
-      return next(); // Succeeded
+      // Succeeded
+      return next();
     } catch (err) {
       if (err instanceof ZodError) {
         const validationErrors = err.errors.map((issue: ZodIssue) => ({
           field: `${issue.path.join('.')}`,
           message: issue.message,
         }));
-        return next(new ZodValidationError({ validationErrors })); // Failed: zod error
+
+        // Failed: zod error
+        return next(
+          new HttpError({
+            validationErrors,
+            httpStatus: HTTP_STATUS.UNPROCESSABLE,
+          }),
+        );
       }
 
-      return next(err); // Failed: internal error
+      // Failed: internal error
+      return next(err);
     }
   };
 };
