@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
+import { HTTP_STATUS } from '@/constants/http-status';
 import { UserId } from '@/lib/zod/schemas/users.schema';
 import { usersService } from '@/services/users.service';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
@@ -20,7 +20,7 @@ class UsersController {
   public create = controllerCatchAsync(async (req: Request, res: Response) => {
     const createdRecord = await usersService.create(req.body);
     res
-      .status(HTTP_STATUS_CODES.CREATED)
+      .status(HTTP_STATUS.CREATED)
       .json({ message: `User ${createdRecord.email} created successfully` });
   });
 
