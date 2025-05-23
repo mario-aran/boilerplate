@@ -84,3 +84,4 @@ Setups Backend
 - [ ] add db connection error handler with retry? investigate retry
 - [ ] add tests with supertest
 - [ ] improve superadmin permissions
+- [ ] add winston + morgan logger
