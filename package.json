@@ -31,10 +31,10 @@
     "passport-jwt": "^4.0.1",
     "pg": "^8.16.0",
     "swagger-ui-express": "^5.0.1",
-    "zod": "^3.25.21"
+    "zod": "^3.25.23"
   },
   "devDependencies": {
-    "@asteasolutions/zod-to-openapi": "^7.3.0",
+    "@asteasolutions/zod-to-openapi": "^7.3.2",
     "@eslint/js": "^9.27.0",
     "@faker-js/faker": "^9.8.0",
     "@types/cookie-parser": "^1.4.8",

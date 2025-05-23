@@ -39,12 +39,12 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(express@5.1.0)
       zod:
-        specifier: ^3.25.21
-        version: 3.25.21
+        specifier: ^3.25.23
+        version: 3.25.23
     devDependencies:
       '@asteasolutions/zod-to-openapi':
-        specifier: ^7.3.0
-        version: 7.3.0(zod@3.25.21)
+        specifier: ^7.3.2
+        version: 7.3.2(zod@3.25.23)
       '@eslint/js':
         specifier: ^9.27.0
         version: 9.27.0
@@ -130,8 +130,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@asteasolutions/zod-to-openapi@7.3.0':
-    resolution: {integrity: sha512-7tE/r1gXwMIvGnXVUdIqUhCU1RevEFC4Jk6Bussa0fk1ecbnnINkZzj1EOAJyE/M3AI25DnHT/zKQL1/FPFi8Q==}
+  '@asteasolutions/zod-to-openapi@7.3.2':
+    resolution: {integrity: sha512-Wvl+jHwSgYrRc3tQLMG7Qxq6wn0WjDk8E9ZA0lAyW73FqK18XPHVIKpk0lA6L0S+zmzzNKTndeV2v/Or0LyfHQ==}
     peerDependencies:
       zod: ^3.20.2
 
@@ -2199,8 +2199,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@3.25.21:
-    resolution: {integrity: sha512-k3MXcS5jrVo00Irs53CngVH4gHL1LgcCfOd9fOmZ7Pq/BP8eBop0P5RJDX5SsKchuxTMewJI0/AuK7MdD6ePXw==}
+  zod@3.25.23:
+    resolution: {integrity: sha512-Od2bdMosahjSrSgJtakrwjMDb1zM1A3VIHCPGveZt/3/wlrTWBya2lmEh2OYe4OIu8mPTmmr0gnLHIWQXdtWBg==}
 
 snapshots:
 
@@ -2209,10 +2209,10 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@asteasolutions/zod-to-openapi@7.3.0(zod@3.25.21)':
+  '@asteasolutions/zod-to-openapi@7.3.2(zod@3.25.23)':
     dependencies:
       openapi3-ts: 4.4.0
-      zod: 3.25.21
+      zod: 3.25.23
 
   '@babel/helper-string-parser@7.27.1': {}
 
@@ -4143,4 +4143,4 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@3.25.21: {}
+  zod@3.25.23: {}
