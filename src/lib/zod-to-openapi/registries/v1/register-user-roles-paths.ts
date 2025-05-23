@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
+import { HTTP_STATUS } from '@/constants/http-status';
 import { OPENAPI_PATHS } from '@/lib/zod-to-openapi/constants/openapi-paths';
 import {
   createMessageResponse,
@@ -23,11 +23,11 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
     summary: 'Get all user roles',
     request: { query: getAllUserRolesSchema },
     responses: {
-      [HTTP_STATUS_CODES.OK]: {
+      [HTTP_STATUS.OK]: {
         description: 'Array of user role objects',
         content: { 'application/json': { schema: userRolesResponseSchema } },
       },
-      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
     },
   });
 
@@ -38,12 +38,12 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
     summary: 'Get user role',
     request: { params: userRoleIdSchema },
     responses: {
-      [HTTP_STATUS_CODES.OK]: {
+      [HTTP_STATUS.OK]: {
         description: 'User role object',
         content: { 'application/json': { schema: userRoleResponseSchema } },
       },
-      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
-      [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
+      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS.NOT_FOUND]: createMessageResponse(),
     },
   });
 
@@ -59,9 +59,9 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
       },
     },
     responses: {
-      [HTTP_STATUS_CODES.OK]: createMessageResponse(),
-      [HTTP_STATUS_CODES.UNPROCESSABLE]: invalidInputsResponse,
-      [HTTP_STATUS_CODES.NOT_FOUND]: createMessageResponse(),
+      [HTTP_STATUS.OK]: createMessageResponse(),
+      [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
+      [HTTP_STATUS.NOT_FOUND]: createMessageResponse(),
     },
   });
 };
