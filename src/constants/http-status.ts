@@ -1,4 +1,4 @@
-export const HTTP_STATUS_CODES = {
+export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
   UNAUTHORIZED: 401,
