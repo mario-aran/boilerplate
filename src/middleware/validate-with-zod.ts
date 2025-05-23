@@ -24,12 +24,11 @@ export const validateWithZod = ({
       return next();
     } catch (err) {
       if (err instanceof ZodError) {
+        // Failed: zod error
         const validationErrors = err.errors.map((issue: ZodIssue) => ({
           field: `${issue.path.join('.')}`,
           message: issue.message,
         }));
-
-        // Failed: zod error
         return next(
           new HttpError({
             validationErrors,
