@@ -16,14 +16,17 @@ export const jwtStrategy = new Strategy(
   },
   async (payload, done) => {
     try {
+      // Failed: user not found
       const userExists = await db.query.usersTable.findFirst({
         where: eq(usersTable.id, payload.id),
       });
-      if (!userExists) return done(null, false); // Failed: user not found
+      if (!userExists) return done(null, false);
 
-      return done(null, userExists); // Succeeded
+      // Succeeded
+      return done(null, userExists);
     } catch (err) {
-      return done(err, false); // Failed: internal error
+      // Failed: internal error
+      return done(err, false);
     }
   },
 );
