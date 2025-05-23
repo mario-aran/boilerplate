@@ -81,6 +81,6 @@ Setups Backend
 ## To-do
 
 - [ ] add token to swagger
-- [ ] add tests with supertest
 - [ ] add db connection error handler with retry? investigate retry
+- [ ] add tests with supertest
 - [ ] improve superadmin permissions
