@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
+import { HTTP_STATUS } from '@/constants/http-status';
 import { db } from '@/lib/drizzle/db';
 import {
   userRolesTable,
@@ -83,7 +83,7 @@ class UserRolesService {
   private createNotFoundError = () =>
     new HttpError({
       message: 'User role not found',
-      httpStatusCode: HTTP_STATUS_CODES.NOT_FOUND,
+      httpStatus: HTTP_STATUS.NOT_FOUND,
     });
 }
 

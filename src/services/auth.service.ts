@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
+import { HTTP_STATUS } from '@/constants/http-status';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
 import { signJwtToken } from '@/lib/passport/utils';
@@ -15,14 +15,14 @@ class AuthService {
     if (!userExists)
       throw new HttpError({
         message: 'User not found',
-        httpStatusCode: HTTP_STATUS_CODES.NOT_FOUND,
+        httpStatus: HTTP_STATUS.NOT_FOUND,
       });
 
     const passwordIsValid = await bcrypt.compare(password, userExists.password);
     if (!passwordIsValid)
       throw new HttpError({
         message: 'Invalid password',
-        httpStatusCode: HTTP_STATUS_CODES.UNAUTHORIZED,
+        httpStatus: HTTP_STATUS.UNAUTHORIZED,
       });
 
     return {

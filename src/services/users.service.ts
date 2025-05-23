@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from '@/constants/http-status-codes';
+import { HTTP_STATUS } from '@/constants/http-status';
 import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
@@ -132,13 +132,13 @@ class UsersService {
   private createNotFoundError = () =>
     new HttpError({
       message: 'User not found',
-      httpStatusCode: HTTP_STATUS_CODES.NOT_FOUND,
+      httpStatus: HTTP_STATUS.NOT_FOUND,
     });
 
   private createConflictError = () =>
     new HttpError({
       message: 'Email already in use',
-      httpStatusCode: HTTP_STATUS_CODES.CONFLICT,
+      httpStatus: HTTP_STATUS.CONFLICT,
     });
 }
 
