@@ -5,7 +5,9 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 // Types
-type JwtUser = { id: string } | undefined;
+interface JwtUser {
+  id: string;
+}
 
 export const authenticateWithPermission = (requiredPermission?: string) => {
   return (req: Request, res: Response, next: NextFunction) =>
