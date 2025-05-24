@@ -1,11 +1,12 @@
+import { JWT_EXPIRES_IN, JWT_SECRET } from '@/config/env';
 import { HTTP_STATUS } from '@/constants/http-status';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
-import { signJwtToken } from '@/lib/passport/utils';
 import { LoginAuth } from '@/lib/zod/schemas/auth.schema';
 import { HttpError } from '@/utils/http-error';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
+import jwt from 'jsonwebtoken';
 
 class AuthService {
   public login = async ({ email, password }: LoginAuth) => {
@@ -26,7 +27,9 @@ class AuthService {
       });
 
     return {
-      token: signJwtToken({ id: userExists.id, email: userExists.email }),
+      token: jwt.sign({ id: userExists.id }, JWT_SECRET, {
+        expiresIn: JWT_EXPIRES_IN,
+      }),
     };
   };
 }
