@@ -23,8 +23,8 @@ export const validateWithZod = ({
       // Succeeded
       return next();
     } catch (err) {
+      // Failed: zod error
       if (err instanceof ZodError) {
-        // Failed: zod error
         const validationErrors = err.errors.map((issue: ZodIssue) => ({
           field: `${issue.path.join('.')}`,
           message: issue.message,
