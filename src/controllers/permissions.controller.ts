@@ -4,8 +4,8 @@ import { Request, Response } from 'express';
 
 class PermissionsController {
   public getAll = controllerCatchAsync(async (req: Request, res: Response) => {
-    const results = await permissionsService.getAll(req.query);
-    res.json(results);
+    const records = await permissionsService.getAll(req.query);
+    res.json(records);
   });
 }
 

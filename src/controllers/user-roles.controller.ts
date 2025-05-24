@@ -5,8 +5,8 @@ import { Request, Response } from 'express';
 
 class UserRolesController {
   public getAll = controllerCatchAsync(async (req: Request, res: Response) => {
-    const results = await userRolesService.getAll(req.query);
-    res.json(results);
+    const records = await userRolesService.getAll(req.query);
+    res.json(records);
   });
 
   public get = controllerCatchAsync(
