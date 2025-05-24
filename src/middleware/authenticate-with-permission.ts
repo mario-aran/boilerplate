@@ -1,16 +1,18 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 import { passport } from '@/lib/passport';
-import { JwtUser } from '@/lib/passport/types';
 import { usersService } from '@/services/users.service';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
+
+// Types
+type JwtUser = { id: string } | undefined;
 
 export const authenticateWithPermission = (requiredPermission?: string) => {
   return (req: Request, res: Response, next: NextFunction) =>
     passport.authenticate(
       'jwt',
       { session: false },
-      async (error: unknown, user: JwtUser | undefined) => {
+      async (error: unknown, user: JwtUser) => {
         // Failed: internal error
         if (error) return next(error);
 
