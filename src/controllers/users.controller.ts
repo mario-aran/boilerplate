@@ -6,8 +6,8 @@ import { Request, Response } from 'express';
 
 class UsersController {
   public getAll = controllerCatchAsync(async (req: Request, res: Response) => {
-    const results = await usersService.getAll(req.query);
-    res.json(results);
+    const records = await usersService.getAll(req.query);
+    res.json(records);
   });
 
   public get = controllerCatchAsync(
