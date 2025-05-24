@@ -18,10 +18,8 @@ class UserRolesController {
 
   public update = controllerCatchAsync(
     async (req: Request<UserRoleId>, res: Response) => {
-      const updatedRecord = await userRolesService.update(req.params, req.body);
-      res.json({
-        message: `User role ${updatedRecord.id} updated successfully`,
-      });
+      const { id } = await userRolesService.update(req.params, req.body);
+      res.json({ message: `User role ${id} updated successfully` });
     },
   );
 }
