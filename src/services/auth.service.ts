@@ -3,6 +3,7 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
 import { LoginAuth } from '@/lib/zod/schemas/auth.schema';
+import { JwtUser } from '@/types/jwt-user';
 import { HttpError } from '@/utils/http-error';
 import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
@@ -26,10 +27,9 @@ class AuthService {
         httpStatus: HTTP_STATUS.UNAUTHORIZED,
       });
 
+    const jwtUser: JwtUser = { id: userExists.id };
     return {
-      token: jwt.sign({ id: userExists.id }, JWT_SECRET, {
-        expiresIn: JWT_EXPIRES_IN,
-      }),
+      token: jwt.sign(jwtUser, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN }),
     };
   };
 }

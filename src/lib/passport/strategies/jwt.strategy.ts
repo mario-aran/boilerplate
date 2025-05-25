@@ -1,7 +1,6 @@
 import { JWT_SECRET } from '@/config/env';
-import { db } from '@/lib/drizzle/db';
-import { usersTable } from '@/lib/drizzle/schemas';
-import { eq } from 'drizzle-orm';
+import { usersService } from '@/services/users.service';
+import { JwtUser } from '@/types/jwt-user';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export const jwtStrategy = new Strategy(
@@ -12,13 +11,12 @@ export const jwtStrategy = new Strategy(
   async (payload, done) => {
     try {
       // Failed: user not found
-      const userExists = await db.query.usersTable.findFirst({
-        where: eq(usersTable.id, payload.id),
-      });
+      const userExists = await usersService.get({ id: payload.id });
       if (!userExists) return done(null, false);
 
       // Succeeded
-      return done(null, userExists);
+      const jwtUser: JwtUser = { id: userExists.id };
+      return done(null, jwtUser);
     } catch (err) {
       // Failed: internal error
       return done(err, false);

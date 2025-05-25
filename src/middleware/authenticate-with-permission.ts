@@ -1,25 +1,21 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 import { passport } from '@/lib/passport';
 import { usersService } from '@/services/users.service';
+import { JwtUser } from '@/types/jwt-user';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
-
-// Types
-interface JwtUser {
-  id: string;
-}
 
 export const authenticateWithPermission = (requiredPermission?: string) => {
   return (req: Request, res: Response, next: NextFunction) =>
     passport.authenticate(
       'jwt',
       { session: false },
-      async (error: unknown, user: JwtUser) => {
+      async (error: unknown, jwtUser?: JwtUser) => {
         // Failed: internal error
         if (error) return next(error);
 
         // Failed: invalid or missing JWT
-        if (!user)
+        if (!jwtUser)
           return next(
             new HttpError({
               message: 'Unauthorized',
@@ -28,15 +24,15 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
           );
 
         // Attach user manually when using callback
-        req.user = user;
+        req.user = jwtUser;
 
         // Succeeded: user is the owner or doesn't require permission
-        const userIsOwner = req.params.id === user.id;
+        const userIsOwner = req.params.id === jwtUser.id;
         if (userIsOwner || !requiredPermission) return next();
 
         try {
           // Succeeded: user has required permission
-          const dbUser = await usersService.get({ id: user.id });
+          const dbUser = await usersService.get({ id: jwtUser.id });
           const hasPermission =
             dbUser.permissionIds.includes(requiredPermission);
           if (hasPermission) return next();
