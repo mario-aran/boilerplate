@@ -23,9 +23,7 @@ export const registerAuthPaths = ({
       body: { content: { 'application/json': { schema: loginAuthSchema } } },
     },
     responses: {
-      [HTTP_STATUS.OK]: createMessageResponse(
-        'Set jwt cookie and returns a message object',
-      ),
+      [HTTP_STATUS.OK]: createMessageResponse('Object with token'),
       [HTTP_STATUS.UNPROCESSABLE]: invalidInputsResponse,
       [HTTP_STATUS.UNAUTHORIZED]: createMessageResponse(),
     },
