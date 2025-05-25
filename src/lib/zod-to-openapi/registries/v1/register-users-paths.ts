@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 import { OPENAPI_PATHS } from '@/lib/zod-to-openapi/constants/openapi-paths';
+import { RegisterPathsProps } from '@/lib/zod-to-openapi/types';
 import {
   createMessageResponse,
   invalidInputsResponse,
@@ -12,15 +13,18 @@ import {
   userIdSchema,
   usersResponseSchema,
 } from '@/lib/zod/schemas/users.schema';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
-export const registerUsersPaths = (registry: OpenAPIRegistry) => {
+export const registerUsersPaths = ({
+  registry,
+  security,
+}: RegisterPathsProps) => {
   const usersTags = ['users'];
 
   registry.registerPath({
     tags: usersTags,
     method: 'get',
     path: OPENAPI_PATHS.USERS,
+    security,
     summary: 'Get all users',
     request: { query: getAllUsersSchema },
     responses: {
@@ -36,6 +40,7 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     tags: usersTags,
     method: 'get',
     path: OPENAPI_PATHS.USERS_ID,
+    security,
     summary: 'Get user',
     request: { params: userIdSchema },
     responses: {
@@ -65,6 +70,7 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     tags: usersTags,
     method: 'patch',
     path: OPENAPI_PATHS.USERS_ID,
+    security,
     summary: 'Update user',
     request: {
       params: userIdSchema,
@@ -81,6 +87,7 @@ export const registerUsersPaths = (registry: OpenAPIRegistry) => {
     tags: usersTags,
     method: 'patch',
     path: OPENAPI_PATHS.USERS_ID_PASSWORD,
+    security,
     summary: 'Update user password',
     request: {
       params: userIdSchema,

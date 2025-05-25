@@ -1,5 +1,6 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 import { OPENAPI_PATHS } from '@/lib/zod-to-openapi/constants/openapi-paths';
+import { RegisterPathsProps } from '@/lib/zod-to-openapi/types';
 import {
   createMessageResponse,
   invalidInputsResponse,
@@ -11,15 +12,18 @@ import {
   userRoleResponseSchema,
   userRolesResponseSchema,
 } from '@/lib/zod/schemas/user-roles.schema';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 
-export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
+export const registerUserRolesPaths = ({
+  registry,
+  security,
+}: RegisterPathsProps) => {
   const userRolesTags = ['user roles'];
 
   registry.registerPath({
     tags: userRolesTags,
     method: 'get',
     path: OPENAPI_PATHS.USER_ROLES,
+    security,
     summary: 'Get all user roles',
     request: { query: getAllUserRolesSchema },
     responses: {
@@ -35,6 +39,7 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
     tags: userRolesTags,
     method: 'get',
     path: OPENAPI_PATHS.USER_ROLES_ID,
+    security,
     summary: 'Get user role',
     request: { params: userRoleIdSchema },
     responses: {
@@ -51,6 +56,7 @@ export const registerUserRolesPaths = (registry: OpenAPIRegistry) => {
     tags: userRolesTags,
     method: 'put',
     path: OPENAPI_PATHS.USER_ROLES_ID,
+    security,
     summary: 'Update user role',
     request: {
       params: userRoleIdSchema,
