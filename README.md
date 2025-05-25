@@ -55,7 +55,6 @@ Installers Backend
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
       jsonwebtoken | @types/jsonwebtoken
-      cookie-parser | @types/cookie-parser
       bcryptjs
 
 ## Setups
@@ -83,5 +82,6 @@ Setups Backend
 - [ ] add token to swagger
 - [ ] add db connection error handler with retry? investigate retry
 - [ ] add tests with supertest
+- [ ] google auth
 - [ ] improve superadmin permissions
 - [ ] add winston + morgan logger

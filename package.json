@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
-    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "drizzle-orm": "^0.43.1",
     "express": "^5.1.0",
@@ -37,7 +36,6 @@
     "@asteasolutions/zod-to-openapi": "^7.3.2",
     "@eslint/js": "^9.27.0",
     "@faker-js/faker": "^9.8.0",
-    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
