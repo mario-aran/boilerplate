@@ -25,13 +25,13 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .from(schema)
     .where(filters);
 
-  const safeLimit = Math.max(limit, 1);
-  const totalPages = Math.ceil(total / safeLimit) || 1;
+  const positiveLimit = Math.max(limit, 1);
+  const totalPages = Math.ceil(total / positiveLimit) || 1;
   const currentPage = Math.max(1, Math.min(page, totalPages));
 
   const results = {
     total,
-    limit: safeLimit,
+    limit: positiveLimit,
     page: currentPage,
     prevPage: currentPage > 1 ? currentPage - 1 : null,
     nextPage: currentPage < totalPages ? currentPage + 1 : null,
@@ -53,7 +53,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .from(schema)
     .where(filters)
     .orderBy(...orderBy) // Spread orderBy as individual arguments
-    .limit(limit)
-    .offset((page - 1) * limit);
+    .limit(positiveLimit)
+    .offset((currentPage - 1) * positiveLimit);
   return { data, ...results };
 };
