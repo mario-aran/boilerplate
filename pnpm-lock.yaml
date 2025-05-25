@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@asteasolutions/zod-to-openapi':
+        specifier: ^7.3.2
+        version: 7.3.2(zod@3.25.28)
       bcryptjs:
         specifier: ^3.0.2
         version: 3.0.2
@@ -39,9 +42,6 @@ importers:
         specifier: ^3.25.28
         version: 3.25.28
     devDependencies:
-      '@asteasolutions/zod-to-openapi':
-        specifier: ^7.3.2
-        version: 7.3.2(zod@3.25.28)
       '@eslint/js':
         specifier: ^9.27.0
         version: 9.27.0
@@ -94,8 +94,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(eslint@9.27.0)
       globals:
-        specifier: ^16.1.0
-        version: 16.1.0
+        specifier: ^16.2.0
+        version: 16.2.0
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
@@ -1352,8 +1352,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@16.1.0:
-    resolution: {integrity: sha512-aibexHNbb/jiUSObBgpHLj+sIuUmJnYcgXBlrfsiDZ9rt4aF2TFRbyLgZ2iFQuVZ1K5Mx3FVkbKRSgKrbK3K2g==}
+  globals@16.2.0:
+    resolution: {integrity: sha512-O+7l9tPdHCU320IigZZPj5zmRCFG9xHmx9cU8FqU2Rp+JN714seHV+2S9+JslCpY4gJwU2vOGox0wzgae/MCEg==}
     engines: {node: '>=18'}
 
   globby@11.1.0:
@@ -3310,7 +3310,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@16.1.0: {}
+  globals@16.2.0: {}
 
   globby@11.1.0:
     dependencies:
