@@ -26,17 +26,4 @@ export const registerAuthPaths = (registry: OpenAPIRegistry) => {
       [HTTP_STATUS.UNAUTHORIZED]: createMessageResponse(),
     },
   });
-
-  registry.registerPath({
-    tags: authTags,
-    method: 'post',
-    path: OPENAPI_PATHS.AUTH_LOGOUT,
-    summary: 'Logout user',
-    request: undefined,
-    responses: {
-      [HTTP_STATUS.OK]: createMessageResponse(
-        'Clear jwt cookie and returns a message object',
-      ),
-    },
-  });
 };
