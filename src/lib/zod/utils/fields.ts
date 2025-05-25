@@ -1,8 +1,8 @@
 import { z } from '@/lib/zod';
 
 export const positiveNumber = z.number().int().positive();
-export const limit = positiveNumber;
-export const page = positiveNumber;
+export const limit = z.string().transform(Number).pipe(positiveNumber);
+export const page = z.string().transform(Number).pipe(positiveNumber);
 
 export const text = z.string().trim().nonempty().max(60);
 export const search = text;
