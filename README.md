@@ -79,9 +79,9 @@ Setups Backend
 
 ## To-do
 
-- [ ] add token to swagger
+- [ ] review sort duplicates
 - [ ] add db connection error handler with retry? investigate retry
 - [ ] add tests with supertest
-- [ ] google auth
+- [ ] implement google auth
 - [ ] improve superadmin permissions
 - [ ] add winston + morgan logger
