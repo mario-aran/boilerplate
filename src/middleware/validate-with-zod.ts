@@ -16,9 +16,10 @@ export const validateWithZod = ({
 }: ValidateWithZodProps) => {
   return (req: Request, _: Response, next: NextFunction) => {
     try {
-      params?.parse(req.params);
-      query?.parse(req.query);
-      body?.parse(req.body);
+      // Validate and transform request data
+      if (params) req.params = params.parse(req.params);
+      if (query) req.query = query.parse(req.query);
+      if (body) req.body = body.parse(req.body);
 
       // Succeeded
       return next();
