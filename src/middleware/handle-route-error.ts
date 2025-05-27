@@ -4,15 +4,19 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
 export const handleRouteError = (
-  err: HttpError,
+  err: Error,
   _: Request,
   res: Response,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
-  res.status(err.httpStatus || HTTP_STATUS.INTERNAL_SERVER).json({
+  const isHttpError = err instanceof HttpError;
+  const httpStatus = isHttpError ? err.httpStatus : HTTP_STATUS.INTERNAL_SERVER;
+  const validationErrors = isHttpError ? err.validationErrors : undefined;
+
+  res.status(httpStatus).json({
     message: err.message || 'Internal server error',
-    validationErrors: err.validationErrors || undefined,
+    validationErrors,
     stack:
       NODE_ENV !== 'production'
         ? err.stack?.split('\n').map((line) => line.trim())

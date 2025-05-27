@@ -31,8 +31,9 @@ export const validateWithZod = ({
         }));
         return next(
           new HttpError({
-            validationErrors,
+            message: 'Invalid inputs',
             httpStatus: HTTP_STATUS.UNPROCESSABLE,
+            validationErrors,
           }),
         );
       }
