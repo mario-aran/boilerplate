@@ -8,16 +8,13 @@ import {
   textId,
   updatedAt,
 } from '@/lib/zod/utils/fields';
-import { getSortColumns, refineUniqueValues } from '@/lib/zod/utils/helpers';
+import { createSortField } from '@/lib/zod/utils/helpers';
 
 // Types
 export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
 
 // Fields
-const sort = refineUniqueValues(
-  z.enum(getSortColumns(PERMISSIONS_COLUMNS)).array().min(1).max(50),
-);
-
+const sort = createSortField(PERMISSIONS_COLUMNS);
 const id = textId;
 
 // Schemas
