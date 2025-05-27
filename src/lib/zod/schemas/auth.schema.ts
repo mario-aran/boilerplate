@@ -5,4 +5,4 @@ import { email, password } from '@/lib/zod/utils/fields';
 export type LoginAuth = z.infer<typeof loginAuthSchema>;
 
 // Schemas
-export const loginAuthSchema = z.object({ email, password });
+export const loginAuthSchema = z.strictObject({ email, password });

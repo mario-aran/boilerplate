@@ -37,13 +37,13 @@ const sort = refineUniqueValues(
 );
 
 // Schemas
-export const userIdSchema = z.object({ id });
+export const userIdSchema = z.strictObject({ id });
 
 export const getAllUsersSchema = z
-  .object({ sort, limit, page, search, userRoleId })
+  .strictObject({ sort, limit, page, search, userRoleId })
   .partial();
 
-export const createUserSchema = z.object({
+export const createUserSchema = z.strictObject({
   email,
   password,
   firstName,
@@ -51,12 +51,12 @@ export const createUserSchema = z.object({
 });
 
 export const updateUserSchema = z
-  .object({ email, firstName, lastName, userRoleId })
+  .strictObject({ email, firstName, lastName, userRoleId })
   .partial();
 
-export const updateUserPasswordSchema = z.object({ password });
+export const updateUserPasswordSchema = z.strictObject({ password });
 
-export const userResponseSchema = z.object({
+export const userResponseSchema = z.strictObject({
   id,
   userRoleId,
   createdAt,

@@ -28,12 +28,18 @@ const permissionIds = refineUniqueValues(
 );
 
 // Schemas
-export const userRoleIdSchema = z.object({ id });
+export const userRoleIdSchema = z.strictObject({ id });
 
 export const getAllUserRolesSchema = z
-  .object({ sort, limit, page, search })
+  .strictObject({ sort, limit, page, search })
   .partial();
 
-export const updateUserRoleSchema = z.object({ permissionIds }).partial();
-export const userRoleResponseSchema = z.object({ id, createdAt, updatedAt });
+export const updateUserRoleSchema = z.strictObject({ permissionIds }).partial();
+
+export const userRoleResponseSchema = z.strictObject({
+  id,
+  createdAt,
+  updatedAt,
+});
+
 export const userRolesResponseSchema = userRoleResponseSchema.array();

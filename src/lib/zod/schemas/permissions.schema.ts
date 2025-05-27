@@ -22,9 +22,9 @@ const id = textId;
 
 // Schemas
 export const getAllPermissionsSchema = z
-  .object({ sort, limit, page, search })
+  .strictObject({ sort, limit, page, search })
   .partial();
 
 export const permissionsResponseSchema = z
-  .object({ id, createdAt, updatedAt })
+  .strictObject({ id, createdAt, updatedAt })
   .array();
