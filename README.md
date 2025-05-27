@@ -81,7 +81,7 @@ Setups Backend
 
 - [ ] review sort duplicates
 - [ ] add db connection error handler with retry? investigate retry
+- [ ] improve superadmin permissions
 - [ ] add tests with supertest
 - [ ] implement google auth
-- [ ] improve superadmin permissions
 - [ ] add winston + morgan logger
