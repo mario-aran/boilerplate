@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { ROUTES_V1 } from './constants/routes';
-import swaggerDocumentV1 from './lib/swagger/swagger-document-v1.json';
+import { swaggerDocumentV1 } from './lib/swagger/swagger-documents';
 import { handleNotFound } from './middleware/handle-not-found';
 import { handleRouteError } from './middleware/handle-route-error';
 import { authRoute } from './routes/v1/auth.route';

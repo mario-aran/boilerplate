@@ -32,8 +32,11 @@ export const openapiPathsBuilder = <T extends Record<string, string>>(
     key,
     value.replace(':id', '{id}'),
   ]);
-  return Object.fromEntries(entries) as {
-    [K in keyof T]: ReplaceIdWithDoc<T[K]>;
+  return {
+    API: '/api' as const,
+    ...(Object.fromEntries(entries) as {
+      [K in keyof T]: ReplaceIdWithDoc<T[K]>;
+    }),
   };
 };
 
