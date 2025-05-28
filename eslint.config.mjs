@@ -42,7 +42,6 @@ export default tseslint.config(
               message: 'Use "@/lib/drizzle/schemas" instead',
             },
           ],
-          paths: [{ name: 'zod', message: 'Use "@/lib/zod" instead' }],
         },
       ],
 
