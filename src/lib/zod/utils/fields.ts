@@ -1,4 +1,4 @@
-import { z } from '@/lib/zod';
+import { z } from 'zod';
 
 export const positiveNumber = z.number().int().positive();
 export const limit = z.string().transform(Number).pipe(positiveNumber);
