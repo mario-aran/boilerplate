@@ -7,4 +7,7 @@ export const USER_ROLES = {
   USER: 'user',
 } as const;
 
-export const USER_ROLE_VALUES = Object.values(USER_ROLES) as [USER_ROLES];
+export const USER_ROLE_VALUES = Object.values(USER_ROLES) as [
+  USER_ROLES,
+  ...USER_ROLES[],
+];
