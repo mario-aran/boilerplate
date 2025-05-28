@@ -19,7 +19,7 @@ export const generateDocument = ({
   openapi: '3.1.0',
   info: {
     title: 'My API',
-    description: `API docs for version ${version}`,
+    description: `API documentation for version ${version}`,
     version: '1.0.0',
   },
   servers: [
