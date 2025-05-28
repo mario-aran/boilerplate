@@ -10,11 +10,9 @@ class PermissionsService {
     sort,
     search = '',
   }: GetAllPermissions) => {
-    const filters = ilike(permissionsTable.id, `%${search}%`);
-
     return queryPaginatedData({
       schema: permissionsTable,
-      filters,
+      filters: ilike(permissionsTable.id, `%${search}%`),
       limit,
       sort,
       page,

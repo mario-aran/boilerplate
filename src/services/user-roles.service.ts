@@ -20,11 +20,9 @@ class UserRolesService {
     sort,
     search = '',
   }: GetAllUserRoles) => {
-    const filters = ilike(userRolesTable.id, `%${search}%`);
-
     return queryPaginatedData({
       schema: userRolesTable,
-      filters,
+      filters: ilike(userRolesTable.id, `%${search}%`),
       limit,
       sort,
       page,
