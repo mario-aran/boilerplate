@@ -1,4 +1,5 @@
 import { USERS_COLUMNS_NO_PASSWORD } from '@/lib/drizzle/schemas';
+import { createSortField } from '@/lib/zod/utils/create-sort-field';
 import {
   email,
   firstName,
@@ -10,7 +11,6 @@ import {
   textId,
   uuid,
 } from '@/lib/zod/utils/fields';
-import { createSortField } from '@/lib/zod/utils/helpers';
 import { z } from 'zod';
 
 // Types

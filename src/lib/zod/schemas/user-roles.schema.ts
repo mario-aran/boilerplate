@@ -1,7 +1,7 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { USER_ROLES_COLUMNS } from '@/lib/drizzle/schemas';
+import { createSortField } from '@/lib/zod/utils/create-sort-field';
 import { limit, page, search, textId } from '@/lib/zod/utils/fields';
-import { createSortField } from '@/lib/zod/utils/helpers';
 import { z } from 'zod';
 
 // Types

@@ -1,6 +1,6 @@
 import { PERMISSIONS_COLUMNS } from '@/lib/drizzle/schemas';
+import { createSortField } from '@/lib/zod/utils/create-sort-field';
 import { limit, page, search } from '@/lib/zod/utils/fields';
-import { createSortField } from '@/lib/zod/utils/helpers';
 import { z } from 'zod';
 
 // Types
