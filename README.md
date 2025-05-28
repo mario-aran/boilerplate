@@ -79,9 +79,9 @@ Setups Backend
 
 ## To-do
 
-- [ ] review sort duplicates
-- [ ] add db connection error handler with retry? investigate retry
+- [ ] improve openapi docs
 - [ ] improve superadmin permissions
+- [ ] add db connection error handler with retry? investigate retry
 - [ ] add tests with supertest
 - [ ] implement google auth
 - [ ] add winston + morgan logger
