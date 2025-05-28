@@ -68,6 +68,7 @@ This template was created manually.
 
 ## To-do
 
+- [ ] replace everything with generate (creates and builds)
 - [ ] openapi docs
 - [ ] super_admin permissions
 - [ ] add db connection error handler with retry? investigate retry
