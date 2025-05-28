@@ -1,7 +1,7 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { USER_ROLES_COLUMNS } from '@/lib/drizzle/schemas';
 import { limit, page, search, textId } from '@/lib/zod/utils/fields';
-import { createSortField, refineUniqueValues } from '@/lib/zod/utils/helpers';
+import { createSortField } from '@/lib/zod/utils/helpers';
 import { z } from 'zod';
 
 // Types
@@ -13,9 +13,12 @@ export type UpdateUserRole = z.infer<typeof updateUserRoleSchema>;
 const id = textId;
 const sort = createSortField(USER_ROLES_COLUMNS);
 
-const permissionIds = refineUniqueValues(
-  textId.array().max(PERMISSION_VALUES.length),
-);
+const permissionIds = textId
+  .array()
+  .max(PERMISSION_VALUES.length)
+  .refine((values) => new Set(values).size === values.length, {
+    message: 'Array must not contain duplicate values',
+  });
 
 // Schemas
 export const userRoleIdSchema = z.strictObject({ id });
