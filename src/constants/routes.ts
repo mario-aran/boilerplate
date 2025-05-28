@@ -1,3 +1,8 @@
+// Types
+type ReplaceIdWithDoc<T extends string> = T extends `${infer P}:id${infer S}`
+  ? `${P}{id}${ReplaceIdWithDoc<S>}`
+  : T;
+
 // Utils
 const routesBuilder = <T extends Record<string, string>, V extends string>({
   paths,
@@ -18,6 +23,18 @@ const routesBuilder = <T extends Record<string, string>, V extends string>({
   };
 
   return { API_DOCS: apiDocsPrefix, API: apiPrefix, ...routes };
+};
+
+export const openapiPathsBuilder = <T extends Record<string, string>>(
+  paths: T,
+) => {
+  const entries = Object.entries(paths).map(([key, value]) => [
+    key,
+    value.replace(':id', '{id}'),
+  ]);
+  return Object.fromEntries(entries) as {
+    [K in keyof T]: ReplaceIdWithDoc<T[K]>;
+  };
 };
 
 // Constants
@@ -43,3 +60,4 @@ export const ROUTE_PATHS = {
 } as const;
 
 export const ROUTES_V1 = routesBuilder({ version: 'v1', paths: ROUTE_PATHS });
+export const OPENAPI_PATHS = openapiPathsBuilder(ROUTE_PATHS);
