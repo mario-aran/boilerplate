@@ -1,9 +1,9 @@
-import { ROUTES_V1 } from '@/constants/routes';
-import { openAPIDocumentV1 } from '@/lib/zod-to-openapi/openapi-documents';
-import { handleNotFound } from '@/middleware/handle-not-found';
-import { handleRouteError } from '@/middleware/handle-route-error';
 import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
+import { ROUTES_V1 } from './constants/routes';
+import swaggerDocumentV1 from './lib/swagger/swagger-document-v1.json';
+import { handleNotFound } from './middleware/handle-not-found';
+import { handleRouteError } from './middleware/handle-route-error';
 import { authRoute } from './routes/v1/auth.route';
 import { permissionsRoute } from './routes/v1/permissions.route';
 import { userRolesRoute } from './routes/v1/user-roles.route';
@@ -15,7 +15,7 @@ export const router = Router();
 router.use(
   ROUTES_V1.API_DOCS,
   swaggerUi.serve,
-  swaggerUi.setup(openAPIDocumentV1),
+  swaggerUi.setup(swaggerDocumentV1),
 );
 
 // API routes
