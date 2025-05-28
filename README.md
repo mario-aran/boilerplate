@@ -6,7 +6,7 @@ This template was created manually.
 
 # To-Do
 
-## Instructions
+## Development Instructions
 
 1. Build & Lint
    `pnpm install`: Install dependencies
@@ -19,7 +19,6 @@ This template was created manually.
    `pnpm run db:generate`: Update migrations
    `pnpm run db:migrate`: Run migrations
    `pnpm run db:seed:fake`: Seed fake data
-   `pnpm run db:seed:initial`: Seed production data
 
 3. Testing
    `pnpm run test`: Run tests
@@ -28,7 +27,7 @@ This template was created manually.
 4. Launch
    `pnpm run dev`: Run app in development mode
    "http://localhost:3000/api": Access api
-   "http://localhost:3000/api-docs/v1": Access swagger ui
+   "http://localhost:3000/api-docs": Access swagger ui
 
 ## Installers
 
