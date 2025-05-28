@@ -1,9 +1,6 @@
-# Folders
 node_modules
 dist
 coverage
-
-# Files
 **/package-lock.json
 **/yarn.lock
 package-lock.json
