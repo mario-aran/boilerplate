@@ -1,7 +1,5 @@
-import { USERS_COLUMNS } from '@/lib/drizzle/schemas';
-import { z } from '@/lib/zod';
+import { USERS_COLUMNS_NO_PASSWORD } from '@/lib/drizzle/schemas';
 import {
-  createdAt,
   email,
   firstName,
   lastName,
@@ -10,10 +8,10 @@ import {
   password,
   search,
   textId,
-  updatedAt,
   uuid,
 } from '@/lib/zod/utils/fields';
-import { getSortColumns, refineUniqueValues } from '@/lib/zod/utils/helpers';
+import { createSortField } from '@/lib/zod/utils/helpers';
+import { z } from 'zod';
 
 // Types
 export type UserId = z.infer<typeof userIdSchema>;
@@ -25,16 +23,7 @@ export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
 // Fields
 const id = uuid;
 const userRoleId = textId;
-
-const sort = refineUniqueValues(
-  z
-    .enum(
-      getSortColumns(USERS_COLUMNS.filter((column) => column !== 'password')),
-    )
-    .array()
-    .min(1)
-    .max(50),
-);
+const sort = createSortField(USERS_COLUMNS_NO_PASSWORD);
 
 // Schemas
 export const userIdSchema = z.strictObject({ id });
@@ -55,15 +44,3 @@ export const updateUserSchema = z
   .partial();
 
 export const updateUserPasswordSchema = z.strictObject({ password });
-
-export const userResponseSchema = z.strictObject({
-  id,
-  userRoleId,
-  createdAt,
-  updatedAt,
-  email,
-  firstName,
-  lastName,
-});
-
-export const usersResponseSchema = userResponseSchema.array();

@@ -1,15 +1,8 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { USER_ROLES_COLUMNS } from '@/lib/drizzle/schemas';
-import { z } from '@/lib/zod';
-import {
-  createdAt,
-  limit,
-  page,
-  search,
-  textId,
-  updatedAt,
-} from '@/lib/zod/utils/fields';
-import { getSortColumns, refineUniqueValues } from '@/lib/zod/utils/helpers';
+import { limit, page, search, textId } from '@/lib/zod/utils/fields';
+import { createSortField, refineUniqueValues } from '@/lib/zod/utils/helpers';
+import { z } from 'zod';
 
 // Types
 export type UserRoleId = z.infer<typeof userRoleIdSchema>;
@@ -18,10 +11,7 @@ export type UpdateUserRole = z.infer<typeof updateUserRoleSchema>;
 
 // Fields
 const id = textId;
-
-const sort = refineUniqueValues(
-  z.enum(getSortColumns(USER_ROLES_COLUMNS)).array().min(1).max(50),
-);
+const sort = createSortField(USER_ROLES_COLUMNS);
 
 const permissionIds = refineUniqueValues(
   textId.array().max(PERMISSION_VALUES.length),
@@ -35,11 +25,3 @@ export const getAllUserRolesSchema = z
   .partial();
 
 export const updateUserRoleSchema = z.strictObject({ permissionIds }).partial();
-
-export const userRoleResponseSchema = z.strictObject({
-  id,
-  createdAt,
-  updatedAt,
-});
-
-export const userRolesResponseSchema = userRoleResponseSchema.array();
