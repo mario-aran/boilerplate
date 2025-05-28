@@ -19,6 +19,7 @@ This template was created manually.
    `pnpm run db:generate`: Update migrations
    `pnpm run db:migrate`: Run migrations
    `pnpm run db:seed:fake`: Seed fake data
+   `pnpm run db:seed:initial`: Seed production data
 
 3. Testing
    `pnpm run test`: Run tests
@@ -31,57 +32,46 @@ This template was created manually.
 
 ## Installers
 
-Installers Full-stack
-
-- [x] prettier
-- [x] typescript | @types/node
-- [x] typescript-eslint | eslint | @eslint/js | globals
-      eslint-plugin-check-file
-      eslint-config-prettier
-- [x] vitest | vitest/coverage-v8
-- [x] zod
-
-Installers Backend
-
-- [x] tsx | tsc-alias
-- [x] supertest | @types/supertest
-- [x] swagger-ui-express | @types/swagger-ui-express
-      @asteasolutions/zod-to-openapi
-- [x] express | @types/express
-      dotenv
-      cors | @types/cors
-- [x] drizzle-orm | drizzle-kit | pg | @types/pg
-      @faker-js/faker
-- [x] passport | @types/passport
-      passport-jwt | @types/passport-jwt
-      jsonwebtoken | @types/jsonwebtoken
-      bcryptjs
+- [x] (FS) prettier
+- [x] (FS) typescript | @types/node
+- [x] (FS) typescript-eslint | eslint | @eslint/js | globals
+      (FS) eslint-plugin-check-file
+      (FS) eslint-config-prettier
+- [x] (FS) vitest | vitest/coverage-v8
+- [x] (FS) zod
+- [x] (BE) tsx | tsc-alias
+- [x] (BE) supertest | @types/supertest
+- [x] (BE) swagger-ui-express | @types/swagger-ui-express
+- [x] (BE) express | @types/express
+      (BE) dotenv
+      (BE) cors | @types/cors
+- [x] (BE) drizzle-orm | drizzle-kit | pg | @types/pg
+      (BE) @faker-js/faker
+- [x] (BE) passport | @types/passport
+      (BE) passport-jwt | @types/passport-jwt
+      (BE) jsonwebtoken | @types/jsonwebtoken
+      (BE) bcryptjs
 
 ## Setups
 
-Setups Full-stack
-
-- [x] .editorconfig
-- [x] .gitignore
-- [x] package.json
-- [x] pnpm-lock.yaml | pnpm-workspace.yaml
-- [x] README.md
-- [x] .env
-- [x] .prettierignore | .prettierrc.json
-- [x] eslint.config
-- [x] tsconfig.json
-
-Setups Backend
-
-- [x] docker-compose.yml
-- [x] drizzle.config.ts
-- [x] vitest.config.ts
+- [x] (ROOT) .editorconfig
+- [x] (FS) .env
+- [x] (FS) .gitignore
+- [x] (FS) .prettierignore | .prettierrc.json
+- [x] (FS) eslint.config
+- [x] (FS) package.json
+- [x] (FS) pnpm-lock.yaml | pnpm-workspace.yaml
+- [x] (FS) README.md
+- [x] (FS) tsconfig.json
+- [x] (BE) docker-compose.yml
+- [x] (BE) drizzle.config.ts
+- [x] (BE) vitest.config.ts
 
 ## To-do
 
-- [ ] improve openapi docs
-- [ ] improve superadmin permissions
+- [ ] openapi docs
+- [ ] super_admin permissions
 - [ ] add db connection error handler with retry? investigate retry
-- [ ] add tests with supertest
-- [ ] implement google auth
-- [ ] add winston + morgan logger
+- [ ] google auth
+- [ ] winston + morgan logger
+- [ ] tests with supertest
