@@ -1,5 +1,5 @@
-import { z } from '@/lib/zod';
 import { email, password } from '@/lib/zod/utils/fields';
+import { z } from 'zod';
 
 // Types
 export type LoginAuth = z.infer<typeof loginAuthSchema>;
