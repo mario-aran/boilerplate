@@ -1,5 +1,5 @@
 // Utils
-const routesBuilder = <T extends Record<string, string>, V extends string>({
+const generateRoutes = <T extends Record<string, string>, V extends string>({
   paths,
   version,
 }: {
@@ -42,4 +42,4 @@ export const ROUTE_PATHS = {
   USERS_ID_PASSWORD: `${ROUTE_SEGMENTS.USERS}${ROUTE_SEGMENTS.ID_PASSWORD}`,
 } as const;
 
-export const ROUTES_V1 = routesBuilder({ version: 'v1', paths: ROUTE_PATHS });
+export const ROUTES_V1 = generateRoutes({ version: 'v1', paths: ROUTE_PATHS });
