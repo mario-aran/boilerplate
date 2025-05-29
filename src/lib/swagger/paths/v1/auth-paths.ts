@@ -8,8 +8,9 @@ export const authPaths = {
   [SWAGGER_PATHS.AUTH_LOGIN]: {
     post: {
       tags,
+      summary: 'Authenticate user',
       requestBody: {
-        description: 'Login credentials',
+        description: 'User credentials',
         required: true,
         content: {
           'application/json': {
