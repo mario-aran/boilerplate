@@ -47,8 +47,10 @@ const generateDocument = ({ version, paths }: GenerateDocumentProps) => ({
       },
     },
     responses: {
-      [HTTP_STATUS.NOT_FOUND]: generateMessageResponse('Not found'),
-      [HTTP_STATUS.UNAUTHORIZED]: generateMessageResponse('Unauthorized'),
+      [HTTP_STATUS.NOT_FOUND]: generateMessageResponse('Data not found'),
+      [HTTP_STATUS.UNAUTHORIZED]: generateMessageResponse(
+        'Invalid credentials',
+      ),
       [HTTP_STATUS.UNPROCESSABLE]: {
         description: 'Object with message and validation error details',
         content: {
