@@ -1,4 +1,6 @@
 import { SERVER_PORT } from '@/config/env';
+import { HTTP_STATUS } from '@/constants/http-status';
+import { BEARER_AUTH } from '@/lib/swagger/constants/components';
 
 // Types
 interface GenerateDocumentProps {
@@ -6,11 +8,19 @@ interface GenerateDocumentProps {
   paths: Record<string, unknown>;
 }
 
-// Constants
-const SECURITY_SCHEME = 'bearerAuth';
-export const SECURITY = [{ [SECURITY_SCHEME]: [] }] as const;
-
 // Utils
+const generateMessageResponse = (example: string) => ({
+  description: 'Object with message',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: { message: { type: 'string', example } },
+      },
+    },
+  },
+});
+
 export const generateDocument = ({
   version,
   paths,
@@ -29,13 +39,40 @@ export const generateDocument = ({
     },
   ],
 
-  // Auth
+  // Components
   components: {
     securitySchemes: {
-      [SECURITY_SCHEME]: {
+      [BEARER_AUTH]: {
         type: 'http',
         scheme: 'bearer',
         bearerFormat: 'JWT',
+      },
+    },
+    responses: {
+      [HTTP_STATUS.NOT_FOUND]: generateMessageResponse('Not found'),
+      [HTTP_STATUS.UNAUTHORIZED]: generateMessageResponse('Unauthorized'),
+      [HTTP_STATUS.UNPROCESSABLE]: {
+        description: 'Object with message and validation error details',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                message: { type: 'string', example: 'Invalid inputs' },
+                validationErrors: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      field: { type: 'string', example: 'id' },
+                      message: { type: 'string', example: 'Invalid id format' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     },
   },
