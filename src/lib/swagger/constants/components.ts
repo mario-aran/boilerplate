@@ -1,6 +1,5 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 
-// Constants
 export const BEARER_AUTH_COMPONENT = 'bearerAuth';
 export const SECURITY = [{ [BEARER_AUTH_COMPONENT]: [] }] as const;
 
