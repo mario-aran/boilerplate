@@ -56,7 +56,7 @@ const generateDocument = ({ version, paths }: GenerateDocumentProps) => ({
             schema: {
               type: 'object',
               properties: {
-                message: { type: 'string', example: 'Invalid inputs' },
+                message: { type: 'string', example: 'Unprocessable' },
                 validationErrors: {
                   type: 'array',
                   items: {
