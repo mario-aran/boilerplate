@@ -32,7 +32,7 @@ export const validateWithZod = ({
         }));
         return next(
           new HttpError({
-            message: 'Invalid inputs',
+            message: 'Unprocessable',
             httpStatus: HTTP_STATUS.UNPROCESSABLE,
             validationErrors,
           }),
