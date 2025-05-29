@@ -58,7 +58,7 @@ class UsersService {
       },
       where: eq(usersTable.id, id),
     });
-    if (!record) throw this.createNotFoundError();
+    if (!record) throw this.generateNotFoundError();
 
     // Flatten info
     const { userRole, ...restOfRecord } = record;
@@ -84,7 +84,7 @@ class UsersService {
         .returning();
       return this.omitPassword(createdRecord);
     } catch (err) {
-      if (isUniqueViolationError(err)) throw this.createConflictError();
+      if (isUniqueViolationError(err)) throw this.generateConflictError();
 
       throw err;
     }
@@ -97,11 +97,11 @@ class UsersService {
         .set(data)
         .where(eq(usersTable.id, id))
         .returning();
-      if (!updatedRecord) throw this.createNotFoundError();
+      if (!updatedRecord) throw this.generateNotFoundError();
 
       return this.omitPassword(updatedRecord);
     } catch (err) {
-      if (isUniqueViolationError(err)) throw this.createConflictError();
+      if (isUniqueViolationError(err)) throw this.generateConflictError();
 
       throw err;
     }
@@ -118,7 +118,7 @@ class UsersService {
       .set({ password: hashedPassword })
       .where(eq(usersTable.id, id))
       .returning();
-    if (!updatedRecord) throw this.createNotFoundError();
+    if (!updatedRecord) throw this.generateNotFoundError();
 
     return this.omitPassword(updatedRecord);
   };
@@ -129,13 +129,13 @@ class UsersService {
     ...restOfRecord
   }: UserSelect) => restOfRecord;
 
-  private createNotFoundError = () =>
+  private generateNotFoundError = () =>
     new HttpError({
       message: 'User not found',
       httpStatus: HTTP_STATUS.NOT_FOUND,
     });
 
-  private createConflictError = () =>
+  private generateConflictError = () =>
     new HttpError({
       message: 'Email already in use',
       httpStatus: HTTP_STATUS.CONFLICT,

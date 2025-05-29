@@ -34,7 +34,7 @@ class UserRolesService {
       with: { userRolesToPermissions: { columns: { permissionId: true } } },
       where: eq(userRolesTable.id, id),
     });
-    if (!record) throw this.createNotFoundError();
+    if (!record) throw this.generateNotFoundError();
 
     // Flatten info
     const { userRolesToPermissions, ...restOfRecord } = record;
@@ -57,7 +57,7 @@ class UserRolesService {
         .set(restOfData)
         .where(eq(userRolesTable.id, id))
         .returning();
-      if (!updatedRecord) throw this.createNotFoundError();
+      if (!updatedRecord) throw this.generateNotFoundError();
 
       if (permissionIds) {
         // Remove all existing permissions for this role
@@ -78,7 +78,7 @@ class UserRolesService {
     });
   };
 
-  private createNotFoundError = () =>
+  private generateNotFoundError = () =>
     new HttpError({
       message: 'User role not found',
       httpStatus: HTTP_STATUS.NOT_FOUND,
