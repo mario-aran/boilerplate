@@ -52,7 +52,7 @@ const generateDocument = ({ version, paths }: GenerateDocumentProps) => ({
         'Invalid credentials',
       ),
       [HTTP_STATUS.UNPROCESSABLE]: {
-        description: 'Object with message and validation error details',
+        description: 'Object with message and validation errors',
         content: {
           'application/json': {
             schema: {
