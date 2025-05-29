@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createSortField = <T extends string>(columns: [T, ...T[]]) => {
+export const generateSortField = <T extends string>(columns: [T, ...T[]]) => {
   const columnsWithOrder = columns.flatMap((col) => [col, `-${col}`]) as [
     T | `-${T}`,
     ...(T | `-${T}`)[],

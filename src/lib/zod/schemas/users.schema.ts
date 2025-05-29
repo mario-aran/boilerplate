@@ -1,5 +1,4 @@
 import { USERS_COLUMNS_NO_PASSWORD } from '@/lib/drizzle/schemas';
-import { createSortField } from '@/lib/zod/utils/create-sort-field';
 import {
   email,
   firstName,
@@ -11,6 +10,7 @@ import {
   textId,
   uuid,
 } from '@/lib/zod/utils/fields';
+import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
 // Types
@@ -23,7 +23,7 @@ export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
 // Fields
 const id = uuid;
 const userRoleId = textId;
-const sort = createSortField(USERS_COLUMNS_NO_PASSWORD);
+const sort = generateSortField(USERS_COLUMNS_NO_PASSWORD);
 
 // Schemas
 export const userIdSchema = z.strictObject({ id });
