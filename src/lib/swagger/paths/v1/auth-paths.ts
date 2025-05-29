@@ -9,7 +9,7 @@ export const authPaths = {
     post: {
       tags,
       requestBody: {
-        description: 'Credentials',
+        description: 'Login credentials',
         required: true,
         content: {
           'application/json': {
