@@ -68,6 +68,7 @@ This template was created manually.
 
 ## To-do
 
+- [ ] add better "not body error", but watch out for empty fields
 - [ ] super_admin permissions
 - [ ] add db connection error handler with retry? investigate retry
 - [ ] google auth
