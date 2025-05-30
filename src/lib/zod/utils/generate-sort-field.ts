@@ -1,11 +1,7 @@
 import { z } from 'zod';
 
 export const generateSortField = <T extends string>(columns: [T, ...T[]]) => {
-  const columnsWithOrder = columns.flatMap((col) => [col, `-${col}`]) as [
-    T | `-${T}`,
-    ...(T | `-${T}`)[],
-  ];
-  const field = z.enum(columnsWithOrder);
+  const field = z.enum(columns);
 
   const fields = field
     .array()
