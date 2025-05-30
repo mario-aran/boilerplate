@@ -29,6 +29,7 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
 }));
 
 // Constants
-export const USERS_COLUMNS_NO_PASSWORD = getSortColumns(usersTable).filter(
-  (col) => col !== 'password' && col !== '-password',
-);
+export const USERS_SORT_COLUMNS_NO_PASSWORD = getSortColumns({
+  table: usersTable,
+  excludedColumns: ['password'],
+});
