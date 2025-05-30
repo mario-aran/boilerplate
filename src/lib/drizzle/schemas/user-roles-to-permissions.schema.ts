@@ -1,5 +1,4 @@
 import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
-import { getSortColumns } from '@/lib/drizzle/utils/get-sort-columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, primaryKey, varchar } from 'drizzle-orm/pg-core';
 import { permissionsTable } from './permissions.schema';
@@ -36,9 +35,4 @@ export const userRolesToPermissionsRelations = relations(
       references: [permissionsTable.id],
     }),
   }),
-);
-
-// Constants
-export const USER_ROLES_TO_PERMISSIONS_SORT_COLUMNS = getSortColumns(
-  userRolesToPermissionsTable,
 );
