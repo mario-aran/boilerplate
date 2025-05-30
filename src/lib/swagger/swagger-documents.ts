@@ -4,70 +4,75 @@ import { BEARER_AUTH_COMPONENT } from './constants/components';
 import { pathsV1 } from './paths/v1';
 
 // Types
-interface GenerateDocumentProps {
-  version: string;
-  paths: Record<string, unknown>;
+type Paths = Record<string, unknown>;
+
+interface SwaggerDocumentProps {
+  apiVersion: string;
+  paths: Paths;
 }
 
 // Utils
-const generateMessageResponse = (example: string) => ({
-  description: 'Object with message',
-  content: {
-    'application/json': {
-      schema: {
-        type: 'object',
-        properties: { message: { type: 'string', example } },
+class SwaggerDocumentGenerator {
+  private apiVersion: string;
+  private paths: Paths;
+
+  constructor({ apiVersion, paths }: SwaggerDocumentProps) {
+    this.apiVersion = apiVersion;
+    this.paths = paths;
+  }
+
+  public generateDocument = () => ({
+    // Base
+    openapi: '3.1.0',
+    info: {
+      title: 'My API',
+      description: `API documentation for version ${this.apiVersion}`,
+      version: '1.0.0',
+    },
+    servers: [
+      {
+        url: `http://localhost:${SERVER_PORT}/api/${this.apiVersion}`,
+        description: 'development',
+      },
+    ],
+
+    // Components
+    components: {
+      securitySchemes: {
+        [BEARER_AUTH_COMPONENT]: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+      responses: {
+        [HTTP_STATUS.NOT_FOUND]: this.generateMessageResponse('Data not found'),
+        [HTTP_STATUS.UNAUTHORIZED]: this.generateMessageResponse(
+          'Invalid credentials',
+        ),
+        [HTTP_STATUS.UNPROCESSABLE]: this.generateUnprocessableResponse(),
       },
     },
-  },
-});
 
-const generateDocument = ({ version, paths }: GenerateDocumentProps) => ({
-  // Base
-  openapi: '3.1.0',
-  info: {
-    title: 'My API',
-    description: `API documentation for version ${version}`,
-    version: '1.0.0',
-  },
-  servers: [
-    {
-      url: `http://localhost:${SERVER_PORT}/api/${version}`,
-      description: 'development',
-    },
-  ],
+    // Paths
+    paths: this.paths,
+  });
 
-  // Components
-  components: {
-    securitySchemes: {
-      [BEARER_AUTH_COMPONENT]: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-      },
-    },
-    responses: {
-      [HTTP_STATUS.NOT_FOUND]: generateMessageResponse('Data not found'),
-      [HTTP_STATUS.UNAUTHORIZED]: generateMessageResponse(
-        'Invalid credentials',
-      ),
-      [HTTP_STATUS.UNPROCESSABLE]: {
-        description: 'Object with message and validation errors',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                message: { type: 'string', example: 'Invalid inputs' },
-                validationErrors: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      field: { type: 'string', example: 'id' },
-                      message: { type: 'string', example: 'Invalid id format' },
-                    },
-                  },
+  private generateUnprocessableResponse = () => ({
+    description: 'Object with message and validation errors',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            message: { type: 'string', example: 'Invalid inputs' },
+            validationErrors: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  field: { type: 'string', example: 'id' },
+                  message: { type: 'string', example: 'Invalid id format' },
                 },
               },
             },
@@ -75,14 +80,23 @@ const generateDocument = ({ version, paths }: GenerateDocumentProps) => ({
         },
       },
     },
-  },
+  });
 
-  // Paths
-  paths,
-});
+  private generateMessageResponse = (example: string) => ({
+    description: 'Object with message',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: { message: { type: 'string', example } },
+        },
+      },
+    },
+  });
+}
 
 // Swagger documents
-export const swaggerDocumentV1 = generateDocument({
-  version: 'v1',
+export const swaggerDocumentV1 = new SwaggerDocumentGenerator({
+  apiVersion: 'v1',
   paths: pathsV1,
-});
+}).generateDocument();
