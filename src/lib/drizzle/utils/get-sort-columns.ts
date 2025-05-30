@@ -2,13 +2,26 @@ import { getTableColumns } from 'drizzle-orm';
 import { AnyPgTable } from 'drizzle-orm/pg-core';
 
 // Types
-type SortColumns<T extends string> = [T | `-${T}`, ...(T | `-${T}`)[]];
+type Column<T extends AnyPgTable> =
+  | `${keyof T['$inferInsert'] & string}`
+  | `-${keyof T['$inferInsert'] & string}`;
+type SortColumns<T extends AnyPgTable> = [Column<T>, ...Column<T>[]];
 
-export const getSortColumns = <T extends AnyPgTable>(table: T) => {
+export const getSortColumns = <T extends AnyPgTable>({
+  table,
+  excludedColumns,
+}: {
+  table: T;
+  excludedColumns?: string[];
+}) => {
   const tableColumns = getTableColumns(table);
-  const columns = Object.keys(tableColumns);
+  const columnNames = Object.keys(tableColumns);
+  const filteredColumns = columnNames.filter(
+    (col) => !excludedColumns?.includes(col),
+  );
 
-  return columns.flatMap((col) => [col, `-${col}`]) as SortColumns<
-    keyof T['$inferInsert'] & string
-  >;
+  return filteredColumns.flatMap((col) => [
+    `${col}`,
+    `-${col}`,
+  ]) as SortColumns<T>;
 };
