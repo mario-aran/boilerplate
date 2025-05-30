@@ -16,7 +16,6 @@ export const generateSwaggerPaths = <T extends Record<string, string>>(
   const swaggerIdPaths = Object.fromEntries(entries) as {
     [K in keyof T]: ReplaceIdWithDoc<T[K]>;
   };
-
   return { API: '/api', ...swaggerIdPaths } as const;
 };
 
