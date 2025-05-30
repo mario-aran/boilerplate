@@ -14,8 +14,8 @@ class PermissionsService {
       schema: permissionsTable,
       filters: ilike(permissionsTable.id, `%${search}%`),
       limit,
-      sort,
       page,
+      sort,
     });
   };
 }

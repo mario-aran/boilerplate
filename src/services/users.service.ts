@@ -23,8 +23,8 @@ class UsersService {
     limit,
     page,
     sort,
-    userRoleId = '',
     search = '',
+    userRoleId = '',
   }: GetAllUsers) => {
     const { data, ...paginationData } = await queryPaginatedData({
       schema: usersTable,
@@ -37,14 +37,11 @@ class UsersService {
         ),
       ),
       limit,
-      sort,
       page,
+      sort,
     });
 
-    return {
-      data: data.map(this.omitPassword),
-      ...paginationData,
-    };
+    return { data: data.map(this.omitPassword), ...paginationData };
   };
 
   public get = async ({ id }: UserId) => {

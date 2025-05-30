@@ -24,8 +24,8 @@ class UserRolesService {
       schema: userRolesTable,
       filters: ilike(userRolesTable.id, `%${search}%`),
       limit,
-      sort,
       page,
+      sort,
     });
   };
 
