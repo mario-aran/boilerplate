@@ -68,7 +68,7 @@ This template was created manually.
 
 ## To-do
 
-- [ ] try to convert swagger-doc to a class
+- [ ] finish swagger docs
 - [ ] add better "not body error", but watch out for empty fields
 - [ ] super_admin permissions
 - [ ] add db connection error handler with retry? investigate retry
