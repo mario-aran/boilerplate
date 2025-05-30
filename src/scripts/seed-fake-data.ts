@@ -28,12 +28,13 @@ const mockedUsers = faker.helpers.uniqueArray(faker.internet.email, 20).map(
   }),
 );
 
-const runScript = async () => {
-  await truncateTables();
-  await authSeeder.runSeeds();
-  await authSeeder.seedUsers(mockedUsers);
-};
-
 // Run the script
 (async () =>
-  await runtScriptWithCatch({ processName: 'Seeding', asyncFn: runScript }))();
+  await runtScriptWithCatch({
+    processName: 'Seeding',
+    asyncFn: async () => {
+      await truncateTables();
+      await authSeeder.runSeeds();
+      await authSeeder.seedUsers(mockedUsers);
+    },
+  }))();
