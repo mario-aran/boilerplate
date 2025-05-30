@@ -1,13 +1,9 @@
 import { z } from 'zod';
 
-export const positiveNumber = z.number().int().positive();
-export const limit = z.string().transform(Number).pipe(positiveNumber);
-export const page = z.string().transform(Number).pipe(positiveNumber);
+export const positiveInt = z.number().int().positive();
+export const paramPositiveInt = z.string().transform(Number).pipe(positiveInt);
 
 export const text = z.string().trim().min(1).max(60);
-export const search = text;
-export const firstName = text;
-export const lastName = text;
 
 export const textId = z
   .string()
@@ -25,8 +21,6 @@ export const uuid = z.string().uuid();
 export const dateTime = z
   .string()
   .datetime({ message: 'Invalid datetime, must be UTC' });
-export const createdAt = dateTime;
-export const updatedAt = dateTime;
 
 export const email = z.string().email().min(5).max(60);
 
