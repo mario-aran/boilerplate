@@ -68,6 +68,7 @@ This template was created manually.
 
 ## To-do
 
+- [ ] review uppercase vs lowercase constants
 - [ ] try to convert swagger-doc to a class
 - [ ] add better "not body error", but watch out for empty fields
 - [ ] super_admin permissions

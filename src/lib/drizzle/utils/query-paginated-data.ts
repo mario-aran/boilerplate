@@ -37,6 +37,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     nextPage: currentPage < totalPages ? currentPage + 1 : null,
     totalPages,
   };
+
   if (!total) return { data: [], ...results };
 
   // Query data
@@ -45,6 +46,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     const field = (isDesc ? el.slice(1) : el) as keyof typeof schema;
     const column = schema[field] as AnyPgColumn;
     const direction = isDesc ? 'desc' : 'asc';
+
     return direction === 'asc' ? asc(column) : desc(column);
   });
 
@@ -55,5 +57,6 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .orderBy(...orderBy) // Spread orderBy as individual arguments
     .limit(positiveLimit)
     .offset((currentPage - 1) * positiveLimit);
+
   return { data, ...results };
 };

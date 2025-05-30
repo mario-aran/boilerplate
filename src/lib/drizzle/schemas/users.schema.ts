@@ -1,14 +1,8 @@
 import { createdAt, id, updatedAt } from '@/lib/drizzle/utils/columns';
-import { getColumnNames } from '@/lib/drizzle/utils/get-column-names';
+import { getSortColumns } from '@/lib/drizzle/utils/get-sort-columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { userRolesTable } from './user-roles.schema';
-
-// Types
-type UsersColumnNoPassword = Exclude<
-  (typeof USERS_COLUMNS)[number],
-  'password'
->;
 
 // Constants
 export const USERS_TABLE_NAME = 'users';
@@ -35,7 +29,6 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
 }));
 
 // Constants
-export const USERS_COLUMNS = getColumnNames(usersTable);
-export const USERS_COLUMNS_NO_PASSWORD = USERS_COLUMNS.filter(
-  (col) => col !== 'password',
-) as [UsersColumnNoPassword, ...UsersColumnNoPassword[]];
+export const USERS_COLUMNS_NO_PASSWORD = getSortColumns(usersTable).filter(
+  (col) => col !== 'password' && col !== '-password',
+);
