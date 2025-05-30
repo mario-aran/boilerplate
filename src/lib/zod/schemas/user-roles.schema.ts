@@ -1,6 +1,6 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
-import { USER_ROLES_COLUMNS } from '@/lib/drizzle/schemas';
-import { limit, page, search, textId } from '@/lib/zod/utils/fields';
+import { USER_ROLES_SORT_COLUMNS } from '@/lib/drizzle/schemas';
+import { paramPositiveInt, text, textId } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
@@ -11,7 +11,10 @@ export type UpdateUserRole = z.infer<typeof updateUserRoleSchema>;
 
 // Fields
 const id = textId;
-const sort = generateSortField(USER_ROLES_COLUMNS);
+const limit = paramPositiveInt;
+const page = paramPositiveInt;
+const sort = generateSortField(USER_ROLES_SORT_COLUMNS);
+const search = text;
 
 const permissionIds = textId
   .array()
@@ -24,7 +27,7 @@ const permissionIds = textId
 export const userRoleIdSchema = z.strictObject({ id });
 
 export const getAllUserRolesSchema = z
-  .strictObject({ sort, limit, page, search })
+  .strictObject({ limit, page, sort, search })
   .partial();
 
 export const updateUserRoleSchema = z.strictObject({ permissionIds }).partial();
