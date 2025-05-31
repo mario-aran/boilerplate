@@ -1,5 +1,12 @@
+// Types
+type Paths = Record<string, string>;
+
+type Routes<T extends Paths, U extends string> = {
+  [K in keyof T]: `${U}${T[K]}`;
+};
+
 // Utils
-const generateRoutes = <T extends Record<string, string>, V extends string>({
+const generateRoutes = <T extends Paths, V extends string>({
   paths,
   version,
 }: {
@@ -13,11 +20,13 @@ const generateRoutes = <T extends Record<string, string>, V extends string>({
     key,
     `${apiPrefix}${value}`,
   ]);
-  const routes = Object.fromEntries(entries) as {
-    [K in keyof T]: `${typeof apiPrefix}${T[K]}`;
-  };
+  const routes = Object.fromEntries(entries) as Routes<T, typeof apiPrefix>;
 
-  return { API_DOCS: apiDocsPrefix, API: apiPrefix, ...routes };
+  return {
+    API_DOCS: apiDocsPrefix,
+    API: apiPrefix,
+    ...routes,
+  };
 };
 
 // Constants
