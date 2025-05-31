@@ -68,7 +68,8 @@ This template was created manually.
 
 ## To-do
 
-- [ ] compact vs separated
+- [ ] finish sort props swagger class
+- [ ] compact vs separated lines in functions
 - [ ] finish swagger docs
 - [ ] super_admin permissions
 - [ ] add db connection error handler with retry? investigate retry
