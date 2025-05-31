@@ -68,6 +68,7 @@ This template was created manually.
 
 ## To-do
 
+- [ ] compact vs separated
 - [ ] finish swagger docs
 - [ ] super_admin permissions
 - [ ] add db connection error handler with retry? investigate retry
