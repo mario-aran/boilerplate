@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
-export const generateSortField = <T extends string>(columns: [T, ...T[]]) => {
+export const generateSortField = <T extends [string, ...string[]]>(
+  columns: T,
+) => {
   const field = z.enum(columns);
 
   const fields = field
