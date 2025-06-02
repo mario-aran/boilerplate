@@ -68,9 +68,9 @@ This template was created manually.
 
 ## To-do
 
-- [ ] finish sort props swagger class
-- [ ] compact vs separated lines in functions
-- [ ] finish swagger docs
+- [ ] finish swagger paths
+- [ ] finish swagger sort props class
+- [ ] review compact vs separated lines in functions
 - [ ] super_admin permissions
 - [ ] add db connection error handler with retry? investigate retry
 - [ ] google auth
