@@ -1,0 +1,10 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: storage
+provisioner: rancher.io/local-path
+parameters:
+  path: "/opt/local-path-provisioner"
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer

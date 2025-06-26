@@ -1,78 +1,26 @@
-# TypeScript + Express.js + Node.js
+## Commands
 
-This template was created manually.
+Management
 
----
+- `kubectl apply -f ./kubernetes -R`
+- `kubectl delete -f ./kubernetes -R`
 
-# To-Do
+Check
 
-## Development Instructions
+- `kubectl get pods --all-namespaces`
+- `kubectl get pvc --all-namespaces`
+- `kubectl get pv`
+- `kubectl get storageclass`
 
-1. Build & Lint
-   `pnpm install`: Install dependencies
-   `pnpm run format`: Run formatter
-   `pnpm run lint`: Run linter and typechecking
-   `pnpm run build`: Build app to check additional types
+Storage Classes Path Installers
 
-2. Database
-   `docker compose up -d`: Launch database
-   `pnpm run db:generate`: Update migrations
-   `pnpm run db:migrate`: Run migrations
-   `pnpm run db:seed:fake`: Seed fake data
+- `kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.31/deploy/local-path-storage.yaml`
 
-3. Testing
-   `pnpm run test`: Run tests
-   `pnpm run test:coverage`: Run coverage
+## Docker images
 
-4. Launch
-   `pnpm run dev`: Run app in development mode
-   "http://localhost:3000/api": Access api
-   "http://localhost:3000/api-docs": Access swagger ui
-
-## Installers
-
-- [x] (FS) prettier
-- [x] (FS) typescript | @types/node
-- [x] (FS) typescript-eslint | eslint | @eslint/js | globals
-      (FS) eslint-plugin-check-file
-      (FS) eslint-config-prettier
-- [x] (FS) vitest | vitest/coverage-v8
-- [x] (FS) zod
-- [x] (BE) tsx | tsc-alias
-- [x] (BE) supertest | @types/supertest
-- [x] (BE) swagger-ui-express | @types/swagger-ui-express
-- [x] (BE) express | @types/express
-      (BE) dotenv
-      (BE) cors | @types/cors
-- [x] (BE) drizzle-orm | drizzle-kit | pg | @types/pg
-      (BE) @faker-js/faker
-- [x] (BE) passport | @types/passport
-      (BE) passport-jwt | @types/passport-jwt
-      (BE) jsonwebtoken | @types/jsonwebtoken
-      (BE) bcryptjs
-
-## Setups
-
-- [x] (ROOT) .editorconfig
-- [x] (FS) .env
-- [x] (FS) .gitignore
-- [x] (FS) .prettierignore | .prettierrc.json
-- [x] (FS) eslint.config
-- [x] (FS) package.json
-- [x] (FS) pnpm-lock.yaml | pnpm-workspace.yaml
-- [x] (FS) README.md
-- [x] (FS) tsconfig.json
-- [x] (BE) docker-compose.yml
-- [x] (BE) drizzle.config.ts
-- [x] (BE) vitest.config.ts
-
-## To-do
-
-- [ ] finish swagger paths
-- [ ] finish swagger sort props class
-- [ ] review compact vs separated lines in functions
-- [ ] super_admin permissions
-- [ ] add db connection error handler with retry? investigate retry
-- [ ] google auth
-- [ ] winston + morgan logger
-- [ ] tests with supertest
+- nginx:1.28.0-alpine3.21 # "https://hub.docker.com/_/nginx"
+- php:8.4.8-fpm-alpine3.22 # "https://hub.docker.com/_/php"
+- node:22.17.0-alpine3.22 # "https://hub.docker.com/_/node"
+- mongo:8.0.10-noble # "https://hub.docker.com/_/mongo"
+- postgres:17.5-alpine3.22 # "https://hub.docker.com/_/postgres"
+- mysql:8.4.5-oraclelinux9 # "https://hub.docker.com/_/mysql"
