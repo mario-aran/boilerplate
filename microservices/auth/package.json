@@ -17,8 +17,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:seed:fake": "tsx src/scripts/seed-fake-data.ts",
     "db:seed:initial": "node dist/scripts/seed-initial-data.js",
-    "clean:all": "find . -type d \\( -name 'node_modules' -o -name 'dist' -o -name 'coverage' \\) -prune -exec rm -rf {} + && rm -f *tsbuildinfo*",
-    "files:to-lf": "find . -type f \\( ! -path './node_modules/*' -a ! -path './dist/*' -a ! -path './coverage/*' \\) -exec dos2unix {} +"
+    "files:to-lf": "find . -type f -exec dos2unix {} +",
+    "delete:ignored": "find . -type d \\( -name 'node_modules' -o -name 'dist' -o -name 'coverage' \\) -prune -exec rm -rf {} + && rm -f *tsbuildinfo* .env"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
