@@ -1,3 +1,10 @@
+## Namespaces
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: auth
+
 ## Postgres
 ---
 apiVersion: apps/v1
