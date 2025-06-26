@@ -3,18 +3,14 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'), // Path aliases
-    },
+    // Path aliases
+    alias: { '@': path.resolve(__dirname, './src') },
   },
   test: {
-    // "vitest"
-    globals: true, // Vitest variables without imports
-
-    // "@vitest/coverage-v8"
+    // "@vitest/coverage-v8" setup
     coverage: {
       reporter: ['text', 'html'], // Coverage report formats
-      include: ['src'], // Define coverage.include to optimize coverage
+      include: ['src'], // Optimize test coverage with specific files
     },
   },
 });

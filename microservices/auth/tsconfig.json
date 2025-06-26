@@ -18,16 +18,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // Global Types
-    "types": [
-      "vitest/globals" // "vitest"
-    ],
-
-    // Paths
+    // Path aliases
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"] }
   },
 
-  // File Inclusion
+  // Files inclusion
   "include": ["src"]
 }
