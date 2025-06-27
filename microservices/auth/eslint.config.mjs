@@ -1,34 +1,25 @@
-import js from '@eslint/js';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import checkFile from 'eslint-plugin-check-file';
+import eslint from '@eslint/js';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
+import eslintPluginCheckFile from 'eslint-plugin-check-file';
+import { globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
-  {
-    ignores: [
-      'dist',
-      'coverage', // "@vitest/coverage-v8"
-    ],
-  },
-
-  // Base config
+export default tseslint.config([
+  globalIgnores(['dist', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022, // Should match target version in "tsconfig.json"
-      globals: globals.node,
+      globals: globals.node, // Environment
     },
     extends: [
-      // "eslint", "typescript-eslint": Must be placed first, starting with eslint
-      js.configs.recommended,
+      eslint.configs.recommended,
       tseslint.configs.strict,
       tseslint.configs.stylistic,
-
-      eslintConfigPrettier, // "eslint-config-prettier": Must be placed last
     ],
     plugins: {
-      'check-file': checkFile, // "eslint-plugin-check-file"
+      'check-file': eslintPluginCheckFile,
     },
     rules: {
       // "eslint": Prevent imports
@@ -46,15 +37,16 @@ export default tseslint.config(
       ],
 
       // "eslint-plugin-check-file": Force naming conventions
-      'check-file/folder-naming-convention': [
-        'error',
-        { 'src/**/!(__tests__)': 'KEBAB_CASE' },
-      ],
       'check-file/filename-naming-convention': [
         'error',
         { '**/*.{ts,tsx}': 'KEBAB_CASE' },
         { ignoreMiddleExtensions: true },
       ],
+      'check-file/folder-naming-convention': [
+        'error',
+        { 'src/**/!(__tests__)': 'KEBAB_CASE' },
+      ],
     },
   },
-);
+  eslintConfigPrettier, // Must be placed last
+]);
