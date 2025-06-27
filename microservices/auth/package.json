@@ -15,8 +15,8 @@
     "lint": "tsc --noEmit && eslint . --fix",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed:dev": "tsx src/scripts/seed-fake-data.ts",
-    "db:seed:prod": "node dist/scripts/seed-initial-data.js",
+    "db:seed:dev": "tsx src/scripts/seed-dev-data.ts",
+    "db:seed:prod": "node dist/scripts/seed-prod-data.js",
     "test": "vitest --watch",
     "test:coverage": "vitest run --coverage"
   },
