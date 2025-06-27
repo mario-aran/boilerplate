@@ -1,4 +1,4 @@
-import { JWT_EXPIRES_IN, JWT_SECRET } from '@/config/env';
+import { JWT_SECRET } from '@/config/env';
 import { HTTP_STATUS } from '@/constants/http-status';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
@@ -29,7 +29,7 @@ class AuthService {
 
     const jwtUser: JwtUser = { id: userExists.id };
     return {
-      token: jwt.sign(jwtUser, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN }),
+      token: jwt.sign(jwtUser, JWT_SECRET, { expiresIn: '1h' }),
     };
   };
 }
