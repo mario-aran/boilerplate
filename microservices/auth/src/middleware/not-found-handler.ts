@@ -2,7 +2,7 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
-export const handleNotFound = (
+export const notFoundHandler = (
   _: Request,
   _res: Response,
   next: NextFunction,

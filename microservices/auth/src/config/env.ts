@@ -14,6 +14,6 @@ const getEnv = (key: string) => {
 
 // Constants
 export const NODE_ENV = getEnv('NODE_ENV');
-export const SERVER_PORT = Number(getEnv('PORT'));
+export const PORT = Number(getEnv('PORT'));
 export const DATABASE_URL = getEnv('DATABASE_URL');
 export const JWT_SECRET = getEnv('JWT_SECRET');

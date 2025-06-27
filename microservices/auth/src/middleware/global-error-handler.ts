@@ -3,7 +3,7 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 
-export const handleRouteError = (
+export const globalErrorHandler = (
   err: Error,
   _: Request,
   res: Response,
