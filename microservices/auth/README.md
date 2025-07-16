@@ -47,7 +47,6 @@ Launch app
 - [x] typescript-eslint | eslint | @eslint/js | globals
       eslint-config-prettier
       eslint-plugin-check-file
-      eslint-plugin-import
 - [x] vitest | vitest/coverage-v8
       supertest | @types/supertest
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
