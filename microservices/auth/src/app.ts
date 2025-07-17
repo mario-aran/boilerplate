@@ -8,7 +8,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json()); // Body parser
-app.use(passport.initialize()); // Passport strategies, must be placed after parsers
+app.use(passport.initialize()); // Passport strategies, must be placed after all parsers
 app.use(router); // Must be placed last
 
 export { app };
