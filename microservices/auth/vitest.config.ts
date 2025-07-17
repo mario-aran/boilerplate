@@ -10,7 +10,7 @@ export default defineConfig({
     // "@vitest/coverage-v8": Setup
     coverage: {
       reporter: ['text', 'html'], // Coverage report formats
-      include: ['src'], // Optimize test coverage with specific files
+      include: ['src'],
     },
   },
 });

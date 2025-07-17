@@ -27,7 +27,7 @@ Prepare database
 
 - `pnpm run db:generate`: Update migrations
 - `pnpm run db:migrate`: Run migrations
-- `pnpm run db:seed:dev`: Seed fake data
+- `pnpm run db:seed:dev`: Seed dev data
 
 Testing
 
@@ -37,7 +37,7 @@ Testing
 Launch app
 
 - `pnpm run dev`: Run app in development mode
-- "http://localhost:3000": Access api
+- "http://localhost:3000": Entrypoint
 
 ## Dependencies
 
@@ -74,12 +74,3 @@ Launch app
 - [x] README.md
 - [x] tsconfig.json
 - [x] vitest.config.ts
-
-## To-do
-
-- [ ] finish swagger paths | swagger sort props class
-- [ ] add db connection error handler with retry? investigate retry
-- [ ] super_admin permissions in api
-- [ ] winston + morgan logger
-- [ ] tests with supertest
-- [ ] google auth

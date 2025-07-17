@@ -17,8 +17,8 @@
     "test:coverage": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed:dev": "tsx src/scripts/seed-dev-data.ts",
-    "db:seed:prod": "node dist/scripts/seed-prod-data.js"
+    "db:seed:dev": "tsx src/scripts/seed-dev.ts",
+    "db:seed:prod": "node dist/scripts/seed-prod.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
