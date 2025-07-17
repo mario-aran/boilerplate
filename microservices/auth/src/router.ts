@@ -1,34 +1,46 @@
-import { Router } from 'express';
-import swaggerUi from 'swagger-ui-express';
-import { ROUTES_V1 } from './constants/routes';
-import { swaggerDocumentV1 } from './lib/swagger/swagger-documents';
-import { globalErrorHandler } from './middleware/global-error-handler';
-import { notFoundHandler } from './middleware/not-found-handler';
-import { authRoute } from './routes/v1/auth.route';
-import { permissionsRoute } from './routes/v1/permissions.route';
-import { userRolesRoute } from './routes/v1/user-roles.route';
-import { usersRoute } from './routes/v1/users.route';
+import { NODE_ENV } from '@/config/env';
+import { HTTP_STATUS } from '@/constants/http-status';
+import { HttpError } from '@/utils/http-error';
+import { NextFunction, Request, Response, Router } from 'express';
+import { v1Router } from './routes/v1';
 
+// Utils
+const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
+  next(
+    new HttpError({
+      message: 'Not found',
+      httpStatus: HTTP_STATUS.NOT_FOUND,
+    }),
+  );
+
+const globalErrorHandler = (
+  err: Error,
+  _: Request,
+  res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _next: NextFunction,
+) => {
+  const isHttpError = err instanceof HttpError;
+  const httpStatus = isHttpError ? err.httpStatus : HTTP_STATUS.INTERNAL_SERVER;
+  const validationErrors = isHttpError ? err.validationErrors : undefined;
+
+  res.status(httpStatus).json({
+    message: err.message || 'Internal server error',
+    validationErrors,
+    stack:
+      NODE_ENV !== 'production'
+        ? err.stack?.split('\n').map((line) => line.trim())
+        : undefined,
+  });
+};
+
+// Router
 export const router = Router();
 
-// Health check
-router.get('/', (_, res) => {
-  res.json({ message: 'Service is up and running' });
-});
+// Routes
+router.get('/', (_, res) => res.json({ message: 'Service is up and running' }));
+router.use(v1Router);
 
-// Api routes
-router.use(ROUTES_V1.AUTH, authRoute);
-router.use(ROUTES_V1.PERMISSIONS, permissionsRoute);
-router.use(ROUTES_V1.USER_ROLES, userRolesRoute);
-router.use(ROUTES_V1.USERS, usersRoute);
-
-// "swagger-ui-express" routes
-router.use(
-  ROUTES_V1.API_DOCS,
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocumentV1),
-);
-
-// API middleware
+// Middleware
 router.use(notFoundHandler); // Must be placed after all routes
-router.use(globalErrorHandler); // Must be the last middleware
+router.use(globalErrorHandler); // Must be placed last
