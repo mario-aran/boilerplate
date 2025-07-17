@@ -2,6 +2,7 @@ import { HTTP_STATUS } from '@/constants/http-status';
 import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
+import { isUniqueViolationError } from '@/lib/drizzle/utils/db-error-checks';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { hashPassword } from '@/lib/passport/utils';
 import {
@@ -11,7 +12,6 @@ import {
   UpdateUserPassword,
   UserId,
 } from '@/lib/zod/schemas/users.schema';
-import { isUniqueViolationError } from '@/utils/db-error-checks';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 
