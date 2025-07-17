@@ -14,7 +14,6 @@ import { Router } from 'express';
 
 export const usersRoute = Router();
 
-// Route definitions
 usersRoute.get(
   '/',
   authenticateWithPermission(PERMISSIONS.READ_USERS),

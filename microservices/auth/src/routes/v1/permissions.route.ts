@@ -7,7 +7,6 @@ import { Router } from 'express';
 
 export const permissionsRoute = Router();
 
-// Route definitions
 permissionsRoute.get(
   '/',
   authenticateWithPermission(PERMISSIONS.READ_PERMISSIONS),

@@ -2,7 +2,7 @@ import { NODE_ENV } from '@/config/env';
 import { HTTP_STATUS } from '@/constants/http-status';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response, Router } from 'express';
-import { v1Router } from './routes/v1';
+import { routesV1 } from './routes/v1';
 
 // Utils
 const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
@@ -34,12 +34,11 @@ const globalErrorHandler = (
   });
 };
 
-// Router
 export const router = Router();
 
 // Routes
 router.get('/', (_, res) => res.json({ message: 'Service is up and running' }));
-router.use(v1Router);
+router.use(routesV1);
 
 // Middleware
 router.use(notFoundHandler); // Must be placed after all routes

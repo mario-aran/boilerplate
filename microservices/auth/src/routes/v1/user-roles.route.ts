@@ -12,7 +12,6 @@ import { Router } from 'express';
 
 export const userRolesRoute = Router();
 
-// Route definitions
 userRolesRoute.get(
   '/',
   authenticateWithPermission(PERMISSIONS.READ_USER_ROLES),

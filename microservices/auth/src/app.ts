@@ -5,7 +5,6 @@ import { router } from './router';
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json()); // Body parser
 app.use(passport.initialize()); // Passport strategies, must be placed after all parsers

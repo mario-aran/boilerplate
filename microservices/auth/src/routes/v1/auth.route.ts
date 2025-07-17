@@ -6,7 +6,6 @@ import { Router } from 'express';
 
 export const authRoute = Router();
 
-// Route definitions
 authRoute.post(
   ROUTE_SEGMENTS.LOGIN,
   validateWithZod({ body: loginAuthSchema }),
