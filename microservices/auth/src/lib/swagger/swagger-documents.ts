@@ -1,4 +1,4 @@
-import { SERVER_PORT } from '@/config/env';
+import { PORT } from '@/config/env';
 import { HTTP_STATUS } from '@/constants/http-status';
 import { BEARER_AUTH_COMPONENT } from './constants/components';
 import { pathsV1 } from './paths/v1';
@@ -31,7 +31,7 @@ class SwaggerDocumentGenerator {
     },
     servers: [
       {
-        url: `http://localhost:${SERVER_PORT}/api/${this.apiVersion}`,
+        url: `http://localhost:${PORT}/api/${this.apiVersion}`,
         description: 'development',
       },
     ],

@@ -1,12 +1,12 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
-import { AnyZodObject, ZodError, ZodIssue } from 'zod';
+import { ZodError, ZodObject } from 'zod';
 
 interface ValidateWithZodProps {
-  params?: AnyZodObject;
-  query?: AnyZodObject;
-  body?: AnyZodObject;
+  params?: ZodObject;
+  query?: ZodObject;
+  body?: ZodObject;
 }
 
 export const validateWithZod = ({
@@ -17,8 +17,8 @@ export const validateWithZod = ({
   return (req: Request, _: Response, next: NextFunction) => {
     try {
       // Validate and transform request data
-      if (params) req.params = params.parse(req.params);
-      if (query) req.query = query.parse(req.query);
+      if (params) req.params = params.parse(req.params) as typeof req.params;
+      if (query) req.query = query.parse(req.query) as typeof req.query;
       if (body) req.body = body.parse(req.body);
 
       // Succeeded
@@ -26,7 +26,7 @@ export const validateWithZod = ({
     } catch (err) {
       // Failed: zod error
       if (err instanceof ZodError) {
-        const validationErrors = err.errors.map((issue: ZodIssue) => ({
+        const validationErrors = err.issues.map((issue) => ({
           field: `${issue.path.join('.')}`,
           message: issue.message,
         }));
