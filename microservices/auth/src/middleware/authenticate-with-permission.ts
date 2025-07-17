@@ -1,7 +1,7 @@
 import { HTTP_STATUS } from '@/constants/http-status';
 import { passport } from '@/lib/passport';
+import { JwtUser } from '@/lib/passport/types';
 import { usersService } from '@/services/users.service';
-import { JwtUser } from '@/types/jwt-user';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 

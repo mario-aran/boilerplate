@@ -1,6 +1,6 @@
 import { JWT_SECRET } from '@/config/env';
+import { JwtUser } from '@/lib/passport/types';
 import { usersService } from '@/services/users.service';
-import { JwtUser } from '@/types/jwt-user';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export const jwtStrategy = new Strategy(
