@@ -34,6 +34,7 @@ const globalErrorHandler = (
   });
 };
 
+// Router
 export const router = Router();
 
 // Routes
