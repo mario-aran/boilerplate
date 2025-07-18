@@ -55,6 +55,7 @@ Launch app
       swagger-ui-express | @types/swagger-ui-express
 - [x] dotenv
 - [x] cors | @types/cors
+- [x] http-status-codes
 - [x] zod
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
