@@ -33,11 +33,16 @@ const generateRoutes = <T extends Paths, V extends string>({
 export const ROUTE_SEGMENTS = {
   ID: '/:id',
   ID_PASSWORD: '/:id/password',
-  AUTH: '/auth',
+  REGISTER: '/register',
   LOGIN: '/login',
-  PERMISSIONS: '/permissions',
-  USER_ROLES: '/user-roles',
+  REFRESH: '/refresh',
+  LOGOUT: '/logout',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
   USERS: '/users',
+  ME: '/me',
+  ROLES: '/roles',
+  PERMISSIONS: '/permissions',
 } as const;
 
 export const ROUTE_PATHS = {
