@@ -1,6 +1,6 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { RESPONSES, SECURITY } from '@/lib/swagger/constants/components';
 import { SWAGGER_PATHS } from '@/lib/swagger/constants/swagger-paths';
+import { StatusCodes } from 'http-status-codes';
 
 const tags = ['permissions'];
 
@@ -36,7 +36,7 @@ export const permissionsPaths = {
         },
       ],
       responses: {
-        [HTTP_STATUS.OK]: {
+        [StatusCodes.OK]: {
           description: 'Array of permission objects',
           content: {
             'application/json': {
@@ -61,7 +61,7 @@ export const permissionsPaths = {
             },
           },
         },
-        [HTTP_STATUS.UNPROCESSABLE]: RESPONSES.UNPROCESSABLE,
+        [StatusCodes.UNPROCESSABLE_ENTITY]: RESPONSES.UNPROCESSABLE,
       },
     },
   },

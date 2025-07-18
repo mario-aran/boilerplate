@@ -1,5 +1,5 @@
 import { PORT } from '@/config/env';
-import { HTTP_STATUS } from '@/constants/http-status';
+import { StatusCodes } from 'http-status-codes';
 import { BEARER_AUTH_COMPONENT } from './constants/components';
 import { pathsV1 } from './paths/v1';
 
@@ -46,11 +46,12 @@ class SwaggerDocumentGenerator {
         },
       },
       responses: {
-        [HTTP_STATUS.NOT_FOUND]: this.generateMessageResponse('Data not found'),
-        [HTTP_STATUS.UNAUTHORIZED]: this.generateMessageResponse(
+        [StatusCodes.NOT_FOUND]: this.generateMessageResponse('Data not found'),
+        [StatusCodes.UNAUTHORIZED]: this.generateMessageResponse(
           'Invalid credentials',
         ),
-        [HTTP_STATUS.UNPROCESSABLE]: this.generateUnprocessableResponse(),
+        [StatusCodes.UNPROCESSABLE_ENTITY]:
+          this.generateUnprocessableResponse(),
       },
     },
 

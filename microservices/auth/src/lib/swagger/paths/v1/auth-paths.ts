@@ -1,6 +1,6 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { RESPONSES } from '@/lib/swagger/constants/components';
 import { SWAGGER_PATHS } from '@/lib/swagger/constants/swagger-paths';
+import { StatusCodes } from 'http-status-codes';
 
 const tags = ['auth'];
 
@@ -26,7 +26,7 @@ export const authPaths = {
         },
       },
       responses: {
-        [HTTP_STATUS.OK]: {
+        [StatusCodes.OK]: {
           description: 'Object with jwt token',
           content: {
             'application/json': {
@@ -37,9 +37,9 @@ export const authPaths = {
             },
           },
         },
-        [HTTP_STATUS.UNPROCESSABLE]: RESPONSES.UNPROCESSABLE,
-        [HTTP_STATUS.NOT_FOUND]: RESPONSES.NOT_FOUND,
-        [HTTP_STATUS.UNAUTHORIZED]: RESPONSES.UNAUTHORIZED,
+        [StatusCodes.UNPROCESSABLE_ENTITY]: RESPONSES.UNPROCESSABLE,
+        [StatusCodes.NOT_FOUND]: RESPONSES.NOT_FOUND,
+        [StatusCodes.UNAUTHORIZED]: RESPONSES.UNAUTHORIZED,
       },
     },
   },
