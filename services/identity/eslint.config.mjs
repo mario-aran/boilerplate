@@ -11,7 +11,7 @@ export default tseslint.config([
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022, // Should match target version in "tsconfig.json"
-      globals: globals.node, // Environment
+      globals: globals.node, // Environment: browser or node
     },
     extends: [
       eslint.configs.recommended,
@@ -22,7 +22,7 @@ export default tseslint.config([
       'check-file': eslintPluginCheckFile,
     },
     rules: {
-      // "eslint": Prevent imports
+      // "eslint"
       'no-restricted-imports': [
         'error',
         {
@@ -36,7 +36,7 @@ export default tseslint.config([
         },
       ],
 
-      // "eslint-plugin-check-file": Force naming conventions
+      // "eslint-plugin-check-file"
       'check-file/filename-naming-convention': [
         'error',
         { '**/*.{ts,tsx}': 'KEBAB_CASE' },
