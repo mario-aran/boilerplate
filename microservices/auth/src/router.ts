@@ -1,7 +1,7 @@
 import { NODE_ENV } from '@/config/env';
-import { HTTP_STATUS } from '@/constants/http-status';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response, Router } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { routesV1 } from './routes/v1';
 
 // Utils
@@ -9,7 +9,7 @@ const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
   next(
     new HttpError({
       message: 'Not found',
-      httpStatus: HTTP_STATUS.NOT_FOUND,
+      httpStatus: StatusCodes.NOT_FOUND,
     }),
   );
 
@@ -21,7 +21,9 @@ const globalErrorHandler = (
   _next: NextFunction,
 ) => {
   const isHttpError = err instanceof HttpError;
-  const httpStatus = isHttpError ? err.httpStatus : HTTP_STATUS.INTERNAL_SERVER;
+  const httpStatus = isHttpError
+    ? err.httpStatus
+    : StatusCodes.INTERNAL_SERVER_ERROR;
   const validationErrors = isHttpError ? err.validationErrors : undefined;
 
   res.status(httpStatus).json({

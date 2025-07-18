@@ -1,4 +1,3 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { USER_ROLES } from '@/constants/user-roles';
 import { db } from '@/lib/drizzle/db';
 import { usersTable } from '@/lib/drizzle/schemas';
@@ -14,6 +13,7 @@ import {
 } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
+import { StatusCodes } from 'http-status-codes';
 
 // Types
 type UserSelect = typeof usersTable.$inferSelect;
@@ -129,13 +129,13 @@ class UsersService {
   private generateNotFoundError = () =>
     new HttpError({
       message: 'User not found',
-      httpStatus: HTTP_STATUS.NOT_FOUND,
+      httpStatus: StatusCodes.NOT_FOUND,
     });
 
   private generateConflictError = () =>
     new HttpError({
       message: 'Email already in use',
-      httpStatus: HTTP_STATUS.CONFLICT,
+      httpStatus: StatusCodes.CONFLICT,
     });
 }
 

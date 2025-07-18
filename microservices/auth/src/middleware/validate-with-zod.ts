@@ -1,6 +1,6 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { ZodError, ZodObject } from 'zod';
 
 interface ValidateWithZodProps {
@@ -33,7 +33,7 @@ export const validateWithZod = ({
         return next(
           new HttpError({
             message: 'Unprocessable',
-            httpStatus: HTTP_STATUS.UNPROCESSABLE,
+            httpStatus: StatusCodes.UNPROCESSABLE_ENTITY,
             validationErrors,
           }),
         );

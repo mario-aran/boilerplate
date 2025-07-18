@@ -1,9 +1,9 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { passport } from '@/lib/passport';
 import { JwtUser } from '@/lib/passport/types';
 import { usersService } from '@/services/users.service';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
 export const authenticateWithPermission = (requiredPermission?: string) => {
   return (req: Request, res: Response, next: NextFunction) =>
@@ -19,7 +19,7 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
           return next(
             new HttpError({
               message: 'Unauthorized',
-              httpStatus: HTTP_STATUS.UNAUTHORIZED,
+              httpStatus: StatusCodes.UNAUTHORIZED,
             }),
           );
 
@@ -41,7 +41,7 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
           return next(
             new HttpError({
               message: 'Forbidden',
-              httpStatus: HTTP_STATUS.FORBIDDEN,
+              httpStatus: StatusCodes.FORBIDDEN,
             }),
           );
         } catch (err) {

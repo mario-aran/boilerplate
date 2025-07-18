@@ -1,4 +1,3 @@
-import { HTTP_STATUS } from '@/constants/http-status';
 import { db } from '@/lib/drizzle/db';
 import {
   userRolesTable,
@@ -12,6 +11,7 @@ import {
 } from '@/lib/zod/schemas/user-roles.schema';
 import { HttpError } from '@/utils/http-error';
 import { eq, ilike } from 'drizzle-orm';
+import { StatusCodes } from 'http-status-codes';
 
 class UserRolesService {
   public getAll = async ({
@@ -81,7 +81,7 @@ class UserRolesService {
   private generateNotFoundError = () =>
     new HttpError({
       message: 'User role not found',
-      httpStatus: HTTP_STATUS.NOT_FOUND,
+      httpStatus: StatusCodes.NOT_FOUND,
     });
 }
 
