@@ -1,7 +1,7 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by a script in "package.json"
 
 import { NODE_ENV } from '@/config/env';
-import { USER_ROLES } from '@/constants/user-roles';
+import { ROLES } from '@/constants/roles';
 import { usersTable } from '@/lib/drizzle/schemas';
 import { faker } from '@faker-js/faker';
 import { authSeeder } from './utils/auth-seeder';
@@ -18,7 +18,7 @@ type UserInsert = typeof usersTable.$inferInsert;
 // Utils
 const mockedUsers = faker.helpers.uniqueArray(faker.internet.email, 20).map(
   (email): UserInsert => ({
-    userRoleId: USER_ROLES.USER,
+    userRoleId: ROLES.USER,
     email,
     password: '12345678',
     firstName: faker.person.firstName(),

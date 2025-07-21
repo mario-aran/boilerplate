@@ -1,5 +1,5 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
-import { USER_ROLE_VALUES, USER_ROLES } from '@/constants/user-roles';
+import { ROLE_VALUES, ROLES } from '@/constants/roles';
 import { db } from '@/lib/drizzle/db';
 import {
   PERMISSIONS_TABLE_NAME,
@@ -31,7 +31,7 @@ class AuthSeeder {
     await authSeeder.seedUserRolesToPermissions();
     await authSeeder.seedUsers([
       {
-        userRoleId: USER_ROLES.SUPER_ADMIN,
+        userRoleId: ROLES.SUPER_ADMIN,
         email: 'superadmin@superadmin.com',
         password: '12345678',
         firstName: 'Super Admin',
@@ -77,7 +77,7 @@ class AuthSeeder {
   private seedUserRoles = async () => {
     const createdRecords = await db
       .insert(userRolesTable)
-      .values(USER_ROLE_VALUES.map((id) => ({ id })))
+      .values(ROLE_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: userRolesTable.id });
 
@@ -93,7 +93,7 @@ class AuthSeeder {
       .values(
         PERMISSION_VALUES.map(
           (permissionId): UserRoleToPermissionInsert => ({
-            userRoleId: USER_ROLES.SUPER_ADMIN,
+            userRoleId: ROLES.SUPER_ADMIN,
             permissionId,
           }),
         ),
