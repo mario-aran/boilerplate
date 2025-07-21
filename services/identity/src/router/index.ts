@@ -46,7 +46,7 @@ router.use(ROUTES.API_DOCS, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Api routes
 router.use(ROUTES.API, (_, res) =>
   res.json({
-    message: 'Welcome to identity service',
+    message: 'identity service',
     version: '1.0',
     docs: ROUTES.API_DOCS,
   }),
