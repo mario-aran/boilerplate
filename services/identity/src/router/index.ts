@@ -1,8 +1,14 @@
 import { NODE_ENV } from '@/config/env';
+import { ROUTES } from '@/constants/routes';
+import { swaggerDocumentV1 } from '@/lib/swagger/swagger-documents';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { routesV1 } from './routes/v1';
+import swaggerUi from 'swagger-ui-express';
+import { authRoute } from './auth.route';
+import { permissionsRoute } from './permissions.route';
+import { rolesRoute } from './roles.route';
+import { usersRoute } from './users.route';
 
 // Utils
 const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
@@ -39,9 +45,26 @@ const globalErrorHandler = (
 // Router
 export const router = Router();
 
-// Routes
-router.get('/', (_, res) => res.json({ message: 'Service is up and running' }));
-router.use(routesV1);
+// "swagger-ui-express" routes
+router.use(
+  ROUTES.API_DOCS,
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocumentV1),
+);
+
+// Api routes
+router.use(ROUTES.API, (_, res) =>
+  res.json({
+    message: 'Welcome to identity service',
+    version: '1.0',
+    docs: ROUTES.API_DOCS,
+  }),
+);
+
+router.use(ROUTES.AUTH, authRoute);
+router.use(ROUTES.USERS, usersRoute);
+router.use(ROUTES.ROLES, rolesRoute);
+router.use(ROUTES.PERMISSIONS, permissionsRoute);
 
 // Middleware
 router.use(notFoundHandler); // Must be placed after all routes
