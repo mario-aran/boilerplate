@@ -1,6 +1,5 @@
 import { PORT } from '@/config/env';
 
-// Swagger documents
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
