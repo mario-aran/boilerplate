@@ -8,6 +8,6 @@ const pool = new Pool({ connectionString: DATABASE_URL });
 // Database connection
 export const db = drizzle({
   client: pool, // DB connection with driver
-  logger: NODE_ENV !== 'production' && true,
+  logger: NODE_ENV !== 'production',
   schema: schemas, // Enable usage of "drizzle.query" with all schemas
 });
