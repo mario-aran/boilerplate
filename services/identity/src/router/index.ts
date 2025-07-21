@@ -11,10 +11,7 @@ import { usersRoute } from './users.route';
 // Utils
 const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
   next(
-    new HttpError({
-      message: 'Not found',
-      httpStatus: StatusCodes.NOT_FOUND,
-    }),
+    new HttpError({ message: 'Not found', httpStatus: StatusCodes.NOT_FOUND }),
   );
 
 const globalErrorHandler = (
