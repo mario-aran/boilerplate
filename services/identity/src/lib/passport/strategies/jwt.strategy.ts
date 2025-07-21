@@ -3,23 +3,22 @@ import { JwtUser } from '@/lib/passport/types';
 import { usersService } from '@/services/users.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-export const jwtStrategy = new Strategy(
-  {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: JWT_ACCESS_SECRET,
-  },
-  async (payload, done) => {
-    try {
-      // Failed: user not found
-      const userExists = await usersService.get({ id: payload.id });
-      if (!userExists) return done(null, false);
+const opts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: JWT_ACCESS_SECRET,
+};
 
-      // Succeeded
-      const jwtUser: JwtUser = { id: userExists.id };
-      return done(null, jwtUser);
-    } catch (err) {
-      // Failed: internal error
-      return done(err, false);
-    }
-  },
-);
+export const jwtStrategy = new Strategy(opts, async (payload, done) => {
+  try {
+    // Failed: user not found
+    const user = await usersService.get({ id: payload.id });
+    if (!user) return done(null, false);
+
+    // Succeeded
+    const jwtUser: JwtUser = { id: user.id };
+    return done(null, jwtUser);
+  } catch (err) {
+    // Failed: internal error
+    return done(err, false);
+  }
+});
