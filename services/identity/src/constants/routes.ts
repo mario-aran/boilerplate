@@ -14,26 +14,26 @@ const replaceDotIdPaths = <T extends Paths>(paths: T) => {
   return Object.fromEntries(entries) as { [K in keyof T]: ReplaceDotId<T[K]> };
 };
 
-const addPrefixToPaths = <T extends Paths, U extends string>({
-  paths,
-  prefix,
-}: {
-  paths: T;
-  prefix: U;
-}) => {
+const generateRoutes = <T extends Paths>(paths: T) => {
+  const prefix = '/api';
+
   const entries = Object.entries(paths).map(([key, value]) => [
     key,
     `${prefix}${value}`,
   ]);
-  return Object.fromEntries(entries) as {
+  const routes = Object.fromEntries(entries) as {
     [K in keyof T]: `${typeof prefix}${T[K]}`;
   };
+
+  return {
+    API_DOCS: '/api-docs',
+    API: prefix,
+    ...routes,
+  } as const;
 };
 
 // Constants
 export const SEGMENTS = {
-  API_DOCS: '/api-docs',
-  API: '/api',
   ID: '/:id',
   AUTH: '/auth',
   REGISTER: '/register',
@@ -46,7 +46,7 @@ export const SEGMENTS = {
   LOGOUT: '/logout',
   USERS: '/users',
   ME: '/me',
-  PASSWORD: '/password',
+  ME_PASSWORD: '/me/password',
 } as const;
 
 const PATHS = {
@@ -62,13 +62,8 @@ const PATHS = {
   USERS: SEGMENTS.USERS,
   USERS_ID: `${SEGMENTS.USERS}${SEGMENTS.ID}`,
   USERS_ME: `${SEGMENTS.USERS}${SEGMENTS.ME}`,
-  USERS_ME_PASSWORD: `${SEGMENTS.USERS}${SEGMENTS.ME}${SEGMENTS.PASSWORD}`,
+  USERS_ME_PASSWORD: `${SEGMENTS.USERS}${SEGMENTS.ME_PASSWORD}`,
 } as const;
 
 export const SWAGGER_PATHS = replaceDotIdPaths(PATHS);
-
-export const ROUTES = {
-  API_DOCS: SEGMENTS.API_DOCS,
-  API: SEGMENTS.API,
-  ...addPrefixToPaths({ paths: PATHS, prefix: SEGMENTS.API }),
-};
+export const ROUTES = generateRoutes(PATHS);
