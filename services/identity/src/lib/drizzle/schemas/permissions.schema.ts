@@ -2,7 +2,7 @@ import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { getSortColumns } from '@/lib/drizzle/utils/get-sort-columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
-import { userRolesToPermissionsTable } from './roles-to-permissions.schema';
+import { rolesToPermissionsTable } from './roles-to-permissions.schema';
 
 // Constants
 export const PERMISSIONS_TABLE_NAME = 'permissions';
@@ -15,7 +15,7 @@ export const permissionsTable = pgTable(PERMISSIONS_TABLE_NAME, {
 });
 
 export const permissionsRelations = relations(permissionsTable, ({ many }) => ({
-  userRolesToPermissions: many(userRolesToPermissionsTable),
+  rolesToPermissions: many(rolesToPermissionsTable),
 }));
 
 // Constants
