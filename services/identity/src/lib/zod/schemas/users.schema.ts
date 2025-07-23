@@ -1,10 +1,9 @@
 import { USERS_SORT_COLUMNS_NO_PASSWORD } from '@/lib/drizzle/schemas';
 import {
   email,
-  paramPositiveInt,
   password,
+  stringToPositiveInt,
   text,
-  textId,
   uuid,
 } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
@@ -19,19 +18,18 @@ export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
 
 // Fields
 const id = uuid;
-const limit = paramPositiveInt;
-const page = paramPositiveInt;
+const limit = stringToPositiveInt;
+const page = stringToPositiveInt;
 const sort = generateSortField(USERS_SORT_COLUMNS_NO_PASSWORD);
 const search = text;
-const userRoleId = textId;
-const firstName = text;
-const lastName = text;
+const firstName = text.optional();
+const lastName = text.optional();
 
 // Schemas
 export const userIdSchema = z.strictObject({ id });
 
 export const getAllUsersSchema = z
-  .strictObject({ limit, page, sort, search, userRoleId })
+  .strictObject({ limit, page, sort, search })
   .partial();
 
 export const createUserSchema = z.strictObject({
@@ -42,7 +40,7 @@ export const createUserSchema = z.strictObject({
 });
 
 export const updateUserSchema = z
-  .strictObject({ email, firstName, lastName, userRoleId })
+  .strictObject({ email, firstName, lastName })
   .partial();
 
 export const updateUserPasswordSchema = z.strictObject({ password });
