@@ -53,14 +53,15 @@ Launch app
       @faker-js/faker
 - [x] express | @types/express
       swagger-ui-express | @types/swagger-ui-express
+- [x] http-status-codes
 - [x] dotenv
 - [x] cors | @types/cors
-- [x] http-status-codes
 - [x] zod
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
       jsonwebtoken | @types/jsonwebtoken
       bcryptjs
+- [x] nodemailer | @types/nodemailer
 
 ## Configs
 
