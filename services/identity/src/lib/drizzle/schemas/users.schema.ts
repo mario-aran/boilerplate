@@ -1,6 +1,7 @@
 import { createdAt, id, updatedAt } from '@/lib/drizzle/utils/columns';
 import { getSortColumns } from '@/lib/drizzle/utils/get-sort-columns';
 import { boolean, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { rolesTable } from './roles.schema';
 
 // Constants
 export const USERS_TABLE_NAME = 'users';
@@ -12,6 +13,9 @@ export const USERS_CONSTRAINTS = {
 // Schema
 export const usersTable = pgTable(USERS_TABLE_NAME, {
   id,
+  roleId: varchar('user_role_id', { length: 255 })
+    .notNull()
+    .references(() => rolesTable.id),
   createdAt,
   updatedAt,
   email: varchar('email', { length: 255 })
