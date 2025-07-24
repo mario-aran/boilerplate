@@ -22,3 +22,4 @@ export const SMTP_HOST = getEnv('SMTP_HOST');
 export const SMTP_PORT = Number(getEnv('SMTP_PORT'));
 export const SMTP_USER = getEnv('SMTP_USER');
 export const SMTP_PASS = getEnv('SMTP_PASS');
+export const VERIFY_EMAIL_FROM = getEnv('VERIFY_EMAIL_FROM');
