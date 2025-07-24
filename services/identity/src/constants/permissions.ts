@@ -10,7 +10,7 @@ export const PERMISSIONS = {
   UPDATE_USER_PASSWORD: 'update_user_password',
 } as const;
 
-export const SYSTEM_PERMISSION_VALUES = Object.values(PERMISSIONS) as [
+export const PERMISSION_VALUES = Object.values(PERMISSIONS) as [
   Permissions,
   ...Permissions[],
 ];
