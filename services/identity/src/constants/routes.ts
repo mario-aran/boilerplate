@@ -25,11 +25,7 @@ const generateRoutes = <T extends Paths>(paths: T) => {
     [K in keyof T]: `${typeof prefix}${T[K]}`;
   };
 
-  return {
-    API_DOCS: '/api-docs',
-    API: prefix,
-    ...routes,
-  } as const;
+  return { API_DOCS: '/api-docs', API: prefix, ...routes } as const;
 };
 
 // Constants
