@@ -14,7 +14,7 @@ const getEnv = (key: string) => {
 
 // Constants
 export const NODE_ENV = getEnv('NODE_ENV');
+export const BASE_URL = getEnv('BASE_URL');
 export const PORT = Number(getEnv('PORT'));
-export const JWT_ACCESS_SECRET = getEnv('JWT_ACCESS_SECRET');
-export const JWT_REFRESH_SECRET = getEnv('JWT_REFRESH_SECRET');
+export const JWT_SECRET = getEnv('JWT_SECRET');
 export const DATABASE_URL = getEnv('DATABASE_URL');
