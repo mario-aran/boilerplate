@@ -18,3 +18,7 @@ export const BASE_URL = getEnv('BASE_URL');
 export const PORT = Number(getEnv('PORT'));
 export const JWT_SECRET = getEnv('JWT_SECRET');
 export const DATABASE_URL = getEnv('DATABASE_URL');
+export const SMTP_HOST = getEnv('SMTP_HOST');
+export const SMTP_PORT = Number(getEnv('SMTP_PORT'));
+export const SMTP_USER = getEnv('SMTP_USER');
+export const SMTP_PASS = getEnv('SMTP_PASS');
