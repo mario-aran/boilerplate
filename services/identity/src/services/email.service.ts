@@ -12,7 +12,7 @@ import nodemailer from 'nodemailer';
 // Types
 interface SendVerificationEmailProps {
   email: string;
-  emailToken: string;
+  token: string;
 }
 
 class EmailService {
@@ -24,9 +24,9 @@ class EmailService {
 
   public sendVerificationEmail = async ({
     email,
-    emailToken,
+    token,
   }: SendVerificationEmailProps) => {
-    const verifyEmailUrl = `${BASE_URL}${SEGMENTS.VERIFY_EMAIL}/${emailToken}`;
+    const verifyEmailUrl = `${BASE_URL}${SEGMENTS.VERIFY_EMAIL}/${token}`;
 
     await this.transporter.sendMail({
       from: VERIFY_EMAIL_FROM,
