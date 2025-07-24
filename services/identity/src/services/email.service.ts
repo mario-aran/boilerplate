@@ -9,6 +9,12 @@ import {
 import { SEGMENTS } from '@/constants/routes';
 import nodemailer from 'nodemailer';
 
+// Types
+interface SendVerificationEmailProps {
+  email: string;
+  emailToken: string;
+}
+
 class EmailService {
   private transporter = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -16,7 +22,10 @@ class EmailService {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  public sendVerificationEmail = async (email: string, emailToken: string) => {
+  public sendVerificationEmail = async ({
+    email,
+    emailToken,
+  }: SendVerificationEmailProps) => {
     const verifyEmailUrl = `${BASE_URL}${SEGMENTS.VERIFY_EMAIL}/${emailToken}`;
 
     await this.transporter.sendMail({
