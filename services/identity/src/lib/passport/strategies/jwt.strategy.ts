@@ -1,5 +1,5 @@
 import { JWT_SECRET } from '@/config/env';
-import { JwtPayload } from '@/lib/jsonwebtoken/types';
+import { JwtPayload } from '@/lib/jwt/types';
 import { usersService } from '@/services/users.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
