@@ -15,15 +15,14 @@ const replaceDotIdPaths = <T extends Paths>(paths: T) => {
 };
 
 const generateRoutes = <T extends Paths>(paths: T) => {
-  const keyPrefix = 'API_';
   const prefix = '/api';
 
   const entries = Object.entries(paths).map(([key, value]) => [
-    `${keyPrefix}${key}`,
+    key,
     `${prefix}${value}`,
   ]);
   const routes = Object.fromEntries(entries) as {
-    [K in keyof T as `${typeof keyPrefix}${string & K}`]: `${typeof prefix}${T[K]}`;
+    [K in keyof T]: `${typeof prefix}${T[K]}`;
   };
 
   return { API_DOCS: '/api-docs', API: prefix, ...routes } as const;

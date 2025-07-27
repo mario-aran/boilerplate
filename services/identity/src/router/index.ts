@@ -43,15 +43,18 @@ export const router = Router();
 router.use(ROUTES.API_DOCS, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Api routes
+router.use(ROUTES.AUTH, authRoute);
+
 router.use(ROUTES.API, (_, res) =>
   res.json({
-    message: 'identity service',
+    message: 'Identity service',
     version: '1.0',
     docs: ROUTES.API_DOCS,
   }),
 );
 
-router.use(ROUTES.AUTH, authRoute);
+// Health check
+router.use('/', (_, res) => res.json({ message: 'Service is up and running' }));
 
 // Middleware
 router.use(notFoundHandler); // Must be placed after all routes
