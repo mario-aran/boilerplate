@@ -1,3 +1,4 @@
+import { VerifyEmail } from '@/lib/zod/schemas/auth.schema';
 import { authService } from '@/services/auth.service';
 import { usersService } from '@/services/users.service';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
@@ -16,8 +17,11 @@ class AuthController {
   );
 
   public verifyEmail = controllerCatchAsync(
-    async (req: Request<{ id: string }>, res: Response) => {
-      const result = await authService.verifyEmail(req.params.id);
+    async (
+      req: Request<unknown, unknown, unknown, VerifyEmail>,
+      res: Response,
+    ) => {
+      const result = await authService.verifyEmail(req.query);
       res.json({ message: `Email ${result.email} verified successfully.` });
     },
   );
