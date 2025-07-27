@@ -4,43 +4,42 @@ import {
   password,
   stringToPositiveInt,
   text,
+  textId,
   uuid,
 } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
 // Types
-export type UserId = z.infer<typeof userIdSchema>;
 export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
-export type CreateUser = z.infer<typeof createUserSchema>;
-export type UpdateUser = z.infer<typeof updateUserSchema>;
-export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
-
-// Fields
-const id = uuid;
-const limit = stringToPositiveInt;
-const page = stringToPositiveInt;
-const sort = generateSortField(USERS_SORT_COLUMNS_NO_PASSWORD);
-const search = text;
-const firstName = text.optional();
-const lastName = text.optional();
+export type UpdateUser = z.infer<typeof updateUserSchema> &
+  z.infer<typeof updateUserPasswordSchema>;
 
 // Schemas
-export const userIdSchema = z.strictObject({ id });
+export const userIdSchema = z.strictObject({ id: uuid });
 
 export const getAllUsersSchema = z
-  .strictObject({ limit, page, sort, search })
+  .strictObject({
+    limit: stringToPositiveInt,
+    page: stringToPositiveInt,
+    sort: generateSortField(USERS_SORT_COLUMNS_NO_PASSWORD),
+    roleId: textId,
+    search: text,
+  })
   .partial();
 
-export const createUserSchema = z.strictObject({
-  email,
-  password,
-  firstName,
-  lastName,
-});
-
 export const updateUserSchema = z
-  .strictObject({ email, firstName, lastName })
+  .strictObject({ email, firstName: text, lastName: text })
   .partial();
 
 export const updateUserPasswordSchema = z.strictObject({ password });
+
+/*
+  roleId: varchar('user_role_id', { length: 255 })
+  email: varchar('email', { length: 255 }).unique().notNull(),
+  emailVerified: boolean('email_verified').default(false).notNull(),
+  pendingEmail: varchar('pending_email', { length: 255 }),
+  password: varchar('password', { length: 255 }).notNull(),
+  firstName: varchar('first_name', { length: 255 }),
+  lastName: varchar('last_name', { length: 255 }),
+*/
