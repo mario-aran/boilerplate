@@ -2,7 +2,7 @@ import { getTableColumns } from 'drizzle-orm';
 import { AnyPgTable } from 'drizzle-orm/pg-core';
 
 // Types
-type Column<T extends AnyPgTable> = `${keyof T['$inferInsert'] & string}`;
+type Column<T extends AnyPgTable> = `${string & keyof T['$inferInsert']}`;
 
 export const getSortColumns = <
   T extends AnyPgTable,
