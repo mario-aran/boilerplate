@@ -1,13 +1,8 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { createdAt, id, updatedAt } from '@/lib/drizzle/utils/columns';
-import { getSortColumns } from '@/lib/drizzle/utils/get-sort-columns';
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { rolesTable } from './roles.schema';
-
-// Types
-export type UserInsert = typeof usersTable.$inferInsert;
-export type UserSelect = typeof usersTable.$inferSelect;
 
 // Constants
 export const USERS_TABLE_NAME = 'users';
@@ -36,9 +31,3 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
     references: [rolesTable.id],
   }),
 }));
-
-// Constants
-export const USERS_SORT_COLUMNS_NO_PASSWORD = getSortColumns({
-  table: usersTable,
-  excludedColumns: ['password'],
-});
