@@ -47,8 +47,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     const isDesc = el.startsWith('-');
     const field = (isDesc ? el.slice(1) : el) as keyof typeof schema;
     const column = schema[field] as AnyPgColumn;
-    const direction = isDesc ? 'desc' : 'asc';
-    return direction === 'asc' ? asc(column) : desc(column);
+    return isDesc ? desc(column) : asc(column);
   });
 
   const data = await db
