@@ -1,6 +1,5 @@
 import {
   BASE_URL,
-  JWT_VERIFY_EMAIL_SECRET,
   SMTP_HOST,
   SMTP_PASS,
   SMTP_PORT,
@@ -8,7 +7,7 @@ import {
   VERIFY_EMAIL_FROM,
 } from '@/config/env';
 import { SEGMENTS } from '@/constants/routes';
-import jwt from 'jsonwebtoken';
+import { signVerifyEmailToken } from '@/lib/jwt/utils';
 import nodemailer from 'nodemailer';
 
 class EmailService {
@@ -19,9 +18,7 @@ class EmailService {
   });
 
   public sendVerificationEmail = async (userId: string, email: string) => {
-    const token = jwt.sign({ userId }, JWT_VERIFY_EMAIL_SECRET, {
-      expiresIn: '1d',
-    });
+    const token = signVerifyEmailToken(userId);
 
     const tokenUrl = `${BASE_URL}${SEGMENTS.VERIFY_EMAIL}/${token}`;
     await this.transporter.sendMail({
