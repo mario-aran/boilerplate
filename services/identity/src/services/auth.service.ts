@@ -6,10 +6,10 @@ import {
 } from '@/lib/jwt/utils';
 import {
   Login,
+  Register,
   ResendEmailVerification,
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
-import { CreateUser } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { StatusCodes } from 'http-status-codes';
 import { emailService } from './email.service';
@@ -21,7 +21,7 @@ class AuthService {
     httpStatus: StatusCodes.CONFLICT,
   });
 
-  public register = async (props: CreateUser) => {
+  public register = async (props: Register) => {
     const { id, email } = await usersService.create(props);
 
     await emailService.sendVerificationEmail(id, email);
