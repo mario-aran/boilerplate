@@ -27,17 +27,19 @@ class AuthService {
     const { id, email } = await usersService.create(props);
 
     await emailService.sendVerificationEmail(id, email);
+
+    return { email };
   };
 
-  public resendEmailVerification = async ({
-    email,
-  }: ResendEmailVerification) => {
-    const user = await usersService.readByEmailWithPassword(email);
-    if (user.emailVerified && !user.pendingEmail)
-      throw this.emailAlreadyVerifiedError;
+  public resendEmailVerification = async (props: ResendEmailVerification) => {
+    const { id, email, emailVerified, pendingEmail } =
+      await usersService.readByEmailWithPassword(props.email);
+    if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
 
-    const targetEmail = user.pendingEmail ?? user.email;
-    await emailService.sendVerificationEmail(user.id, targetEmail);
+    const targetEmail = pendingEmail ?? email;
+    await emailService.sendVerificationEmail(id, targetEmail);
+
+    return { email };
   };
 
   public verifyEmail = async ({ token }: VerifyEmail) => {
@@ -46,12 +48,12 @@ class AuthService {
     const { id, emailVerified, pendingEmail } = await usersService.read(userId);
     if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
 
-    const updateData = {
+    const { email } = await usersService.update(id, {
       emailVerifiedAt: new Date(),
       pendingEmail: null,
       ...(!emailVerified ? { emailVerified: true } : { email: pendingEmail }),
-    };
-    return usersService.update(id, updateData);
+    });
+    return { email };
   };
 
   public login = async ({ email, password }: Login) => {
