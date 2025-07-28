@@ -5,19 +5,16 @@ import {
   stringToPositiveInt,
   text,
   textId,
-  uuid,
 } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
 // Types
 export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
-export type UpdateUser = z.infer<typeof updateUserSchema> &
-  z.infer<typeof updateUserPasswordSchema>;
+export type CreateUser = z.infer<typeof createUserSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
 
 // Schemas
-export const userIdSchema = z.strictObject({ id: uuid });
-
 export const getAllUsersSchema = z
   .strictObject({
     limit: stringToPositiveInt,
@@ -28,18 +25,13 @@ export const getAllUsersSchema = z
   })
   .partial();
 
+export const createUserSchema = z.strictObject({
+  email,
+  password,
+  firstName: text.optional(),
+  lastName: text.optional(),
+});
+
 export const updateUserSchema = z
-  .strictObject({ email, firstName: text, lastName: text })
+  .strictObject({ email, password, firstName: text, lastName: text })
   .partial();
-
-export const updateUserPasswordSchema = z.strictObject({ password });
-
-/*
-  roleId: varchar('user_role_id', { length: 255 })
-  email: varchar('email', { length: 255 }).unique().notNull(),
-  emailVerified: boolean('email_verified').default(false).notNull(),
-  pendingEmail: varchar('pending_email', { length: 255 }),
-  password: varchar('password', { length: 255 }).notNull(),
-  firstName: varchar('first_name', { length: 255 }),
-  lastName: varchar('last_name', { length: 255 }),
-*/
