@@ -1,10 +1,9 @@
-import {
-  JWT_ACCESS_SECRET,
-  JWT_REFRESH_SECRET,
-  JWT_VERIFY_EMAIL_SECRET,
-} from '@/config/env';
 import { validatePassword } from '@/lib/bcrypt/utils';
-import { JwtPayload } from '@/lib/jwt/types';
+import {
+  signAccessToken,
+  signRefreshToken,
+  verifyEmailToken,
+} from '@/lib/jwt/utils';
 import {
   Login,
   Register,
@@ -13,7 +12,6 @@ import {
 } from '@/lib/zod/schemas/auth.schema';
 import { HttpError } from '@/utils/http-error';
 import { StatusCodes } from 'http-status-codes';
-import jwt from 'jsonwebtoken';
 import { emailService } from './email.service';
 import { usersService } from './users.service';
 
@@ -43,7 +41,7 @@ class AuthService {
   };
 
   public verifyEmail = async ({ token }: VerifyEmail) => {
-    const { userId } = this.verifyEmailToken(token);
+    const { userId } = verifyEmailToken(token);
 
     const { id, emailVerified, pendingEmail } = await usersService.read(userId);
     if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
@@ -62,19 +60,10 @@ class AuthService {
     await validatePassword(password, user.password);
 
     const payload = { userId: user.id };
-    const accessToken = this.signAccessToken(payload);
-    const refreshToken = this.signRefreshToken(payload);
+    const accessToken = signAccessToken(payload);
+    const refreshToken = signRefreshToken(payload);
     return { accessToken, refreshToken };
   };
-
-  private verifyEmailToken = (token: string) =>
-    jwt.verify(token, JWT_VERIFY_EMAIL_SECRET) as JwtPayload;
-
-  private signAccessToken = (payload: JwtPayload) =>
-    jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: '15m' });
-
-  private signRefreshToken = (payload: JwtPayload) =>
-    jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' });
 }
 
 export const authService = new AuthService();

@@ -1,23 +1,21 @@
-import { JWT_SECRET } from '@/config/env';
+import {
+  JWT_ACCESS_SECRET,
+  JWT_REFRESH_SECRET,
+  JWT_VERIFY_EMAIL_SECRET,
+} from '@/config/env';
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from './types';
 
-export const signJwt = (payload: JwtPayload) => {
-  let expiresIn: jwt.SignOptions['expiresIn'] = '15m';
-  switch (payload.tokenType) {
-    case 'email_verification':
-      expiresIn = '1d';
-      break;
-    case 'access':
-      expiresIn = '15m';
-      break;
-    case 'refresh':
-      expiresIn = '7d';
-      break;
-  }
+export const signVerifyEmailToken = (userId: string) =>
+  jwt.sign({ userId }, JWT_VERIFY_EMAIL_SECRET, {
+    expiresIn: '1d',
+  });
 
-  return jwt.sign(payload, JWT_SECRET, { expiresIn });
-};
+export const signAccessToken = (payload: JwtPayload) =>
+  jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: '15m' });
 
-export const verifyJwt = (token: string) =>
-  jwt.verify(token, JWT_SECRET) as JwtPayload;
+export const signRefreshToken = (payload: JwtPayload) =>
+  jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' });
+
+export const verifyEmailToken = (token: string) =>
+  jwt.verify(token, JWT_VERIFY_EMAIL_SECRET) as JwtPayload;
