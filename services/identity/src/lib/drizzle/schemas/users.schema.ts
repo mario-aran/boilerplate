@@ -5,6 +5,9 @@ import { relations } from 'drizzle-orm';
 import { boolean, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { rolesTable } from './roles.schema';
 
+// Types
+export type UserSelect = (typeof usersTable)['$inferSelect'];
+
 // Constants
 export const USERS_TABLE_NAME = 'users';
 
