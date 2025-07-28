@@ -24,7 +24,7 @@ class AuthService {
   public register = async (props: Register) => {
     const { id, email } = await usersService.create(props);
 
-    await emailService.sendVerificationEmail(id, email);
+    await emailService.sendVerificationEmail({ userId: id, email });
 
     return { email };
   };
@@ -35,7 +35,10 @@ class AuthService {
     if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
 
     const targetEmail = pendingEmail ?? email;
-    await emailService.sendVerificationEmail(id, targetEmail);
+    await emailService.sendVerificationEmail({
+      userId: id,
+      email: targetEmail,
+    });
 
     return { email };
   };
