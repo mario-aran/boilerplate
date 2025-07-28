@@ -8,10 +8,10 @@ import { StatusCodes } from 'http-status-codes';
 class AuthController {
   public register = controllerCatchAsync(
     async (req: Request, res: Response) => {
-      const result = await usersService.create(req.body);
+      const { email } = await usersService.create(req.body);
 
       res.status(StatusCodes.CREATED).json({
-        message: `User ${result.email} registered successfully. Check your email to verify your account.`,
+        message: `User ${email} registered successfully. Check your email to verify your account.`,
       });
     },
   );
@@ -21,8 +21,8 @@ class AuthController {
       req: Request<unknown, unknown, unknown, VerifyEmail>,
       res: Response,
     ) => {
-      const result = await authService.verifyEmail(req.query);
-      res.json({ message: `Email ${result.email} verified successfully.` });
+      const { email } = await authService.verifyEmail(req.query);
+      res.json({ message: `Email ${email} verified successfully.` });
     },
   );
 
