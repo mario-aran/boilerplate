@@ -49,10 +49,15 @@ class AuthService {
     const { id, emailVerified, pendingEmail } = await usersService.read(userId);
     if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
 
+    const conditionalData = !emailVerified
+      ? { emailVerified: true }
+      : pendingEmail
+        ? { email: pendingEmail }
+        : {};
     const { email } = await usersService.update(id, {
       emailVerifiedAt: new Date(),
       pendingEmail: null,
-      ...(!emailVerified ? { emailVerified: true } : { email: pendingEmail }),
+      ...conditionalData,
     });
     return { email };
   };
