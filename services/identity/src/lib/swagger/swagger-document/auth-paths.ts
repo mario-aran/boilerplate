@@ -1,7 +1,8 @@
-import { RESPONSES } from '@/lib/swagger/constants/components';
-import { SWAGGER_PATHS } from '@/lib/swagger/constants/swagger-paths';
+import { SWAGGER_PATHS } from '@/constants/routes';
+import { RESPONSES } from '@/lib/swagger/constants';
 import { StatusCodes } from 'http-status-codes';
 
+// Values
 const tags = ['auth'];
 
 export const authPaths = {
@@ -37,7 +38,7 @@ export const authPaths = {
             },
           },
         },
-        [StatusCodes.UNPROCESSABLE_ENTITY]: RESPONSES.UNPROCESSABLE,
+        [StatusCodes.UNPROCESSABLE_ENTITY]: RESPONSES.UNPROCESSABLE_ENTITY,
         [StatusCodes.NOT_FOUND]: RESPONSES.NOT_FOUND,
         [StatusCodes.UNAUTHORIZED]: RESPONSES.UNAUTHORIZED,
       },
