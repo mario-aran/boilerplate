@@ -15,8 +15,8 @@ importers:
         specifier: ^2.8.5
         version: 2.8.5
       drizzle-orm:
-        specifier: ^0.44.3
-        version: 0.44.3(@types/pg@8.15.4)(pg@8.16.3)
+        specifier: ^0.44.4
+        version: 0.44.4(@types/pg@8.15.5)(pg@8.16.3)
       express:
         specifier: ^5.1.0
         version: 5.1.0
@@ -42,8 +42,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(express@5.1.0)
       zod:
-        specifier: ^4.0.10
-        version: 4.0.10
+        specifier: ^4.0.13
+        version: 4.0.13
     devDependencies:
       '@eslint/js':
         specifier: ^9.32.0
@@ -73,8 +73,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       '@types/pg':
-        specifier: ^8.15.4
-        version: 8.15.4
+        specifier: ^8.15.5
+        version: 8.15.5
       '@types/supertest':
         specifier: ^6.0.3
         version: 6.0.3
@@ -719,8 +719,8 @@ packages:
   '@types/passport@1.0.17':
     resolution: {integrity: sha512-aciLyx+wDwT2t2/kJGJR2AEeBz0nJU4WuRX04Wu9Dqc5lSUtwu0WERPHYsLhF9PtseiAMPBGNUOtFjxZ56prsg==}
 
-  '@types/pg@8.15.4':
-    resolution: {integrity: sha512-I6UNVBAoYbvuWkkU3oosC8yxqH21f4/Jc4DK71JLG3dT2mdlGe1z+ep/LQGXaKaOgcvUrsQoPRqfgtMcvZiJhg==}
+  '@types/pg@8.15.5':
+    resolution: {integrity: sha512-LF7lF6zWEKxuT3/OR8wAZGzkg4ENGXFNyiV/JeOt9z5B+0ZVwbql9McqX5c/WStFq1GaGso7H1AzP/qSzmlCKQ==}
 
   '@types/qs@6.14.0':
     resolution: {integrity: sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==}
@@ -1051,8 +1051,8 @@ packages:
     resolution: {integrity: sha512-tCPWVZWZqWVx2XUsVpJRnH9Mx0ClVOf5YUHerZ5so1OKSlqww4zy1R5ksEdGRcO3tM3zj0PYN6V48TbQCL1RfA==}
     hasBin: true
 
-  drizzle-orm@0.44.3:
-    resolution: {integrity: sha512-8nIiYQxOpgUicEL04YFojJmvC4DNO4KoyXsEIqN44+g6gNBr6hmVpWk3uyAt4CaTiRGDwoU+alfqNNeonLAFOQ==}
+  drizzle-orm@0.44.4:
+    resolution: {integrity: sha512-ZyzKFpTC/Ut3fIqc2c0dPZ6nhchQXriTsqTNs4ayRgl6sZcFlMs9QZKPSHXK4bdOf41GHGWf+FrpcDDYwW+W6Q==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -2189,8 +2189,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@4.0.10:
-    resolution: {integrity: sha512-3vB+UU3/VmLL2lvwcY/4RV2i9z/YU0DTV/tDuYjrwmx5WeJ7hwy+rGEEx8glHp6Yxw7ibRbKSaIFBgReRPe5KA==}
+  zod@4.0.13:
+    resolution: {integrity: sha512-jv+zRxuZQxTrFHzxZ46ezL2FtnE+M4HIJHJEwLsZ7UjrXHltdG6HrxvqM0twoVCWxJiYf8WqKjAcjztegpkB+Q==}
 
 snapshots:
 
@@ -2610,7 +2610,7 @@ snapshots:
     dependencies:
       '@types/express': 5.0.3
 
-  '@types/pg@8.15.4':
+  '@types/pg@8.15.5':
     dependencies:
       '@types/node': 24.1.0
       pg-protocol: 1.10.3
@@ -3002,9 +3002,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.3(@types/pg@8.15.4)(pg@8.16.3):
+  drizzle-orm@0.44.4(@types/pg@8.15.5)(pg@8.16.3):
     optionalDependencies:
-      '@types/pg': 8.15.4
+      '@types/pg': 8.15.5
       pg: 8.16.3
 
   dunder-proto@1.0.1:
@@ -4136,4 +4136,4 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@4.0.10: {}
+  zod@4.0.13: {}
