@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 // Types
 export type GetAllRoles = z.infer<typeof getAllRolesSchema>;
-export type UpdateRolePermissions = z.infer<typeof updateRolePermissionsSchema>;
+export type UpdateRole = z.infer<typeof updateRoleSchema>;
 
 // Fields
 const sort = generateSortField(ROLES_SORT_COLUMNS);
@@ -26,4 +26,4 @@ export const getAllRolesSchema = z
   })
   .partial();
 
-export const updateRolePermissionsSchema = z.strictObject({ permissionIds });
+export const updateRoleSchema = z.strictObject({ permissionIds });
