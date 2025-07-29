@@ -5,8 +5,20 @@ import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-export const authenticateWithPermission = (requiredPermission?: string) => {
-  return (req: Request, res: Response, next: NextFunction) =>
+// Values
+const unauthorizedError = new HttpError({
+  message: 'Unauthorized',
+  httpStatus: StatusCodes.UNAUTHORIZED,
+});
+
+const forbiddenError = new HttpError({
+  message: 'Forbidden',
+  httpStatus: StatusCodes.FORBIDDEN,
+});
+
+export const authenticateWithPermission =
+  (requiredPermission?: string) =>
+  (req: Request, res: Response, next: NextFunction) =>
     passport.authenticate(
       'jwt',
       { session: false },
@@ -15,13 +27,7 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
         if (error) return next(error);
 
         // Failed: invalid or missing JWT
-        if (!jwtPayload)
-          return next(
-            new HttpError({
-              message: 'Unauthorized',
-              httpStatus: StatusCodes.UNAUTHORIZED,
-            }),
-          );
+        if (!jwtPayload) return next(unauthorizedError);
 
         // Attach user manually when using callback
         req.user = { id: jwtPayload.userId };
@@ -32,22 +38,16 @@ export const authenticateWithPermission = (requiredPermission?: string) => {
 
         try {
           // Succeeded: user has required permission
-          const dbUser = await usersService.read(jwtPayload.userId);
+          const dbUser = await usersService.get(jwtPayload.userId);
           const hasPermission =
             dbUser.permissionIds.includes(requiredPermission);
           if (hasPermission) return next();
 
           // Failed: user missing or lacks permission
-          return next(
-            new HttpError({
-              message: 'Forbidden',
-              httpStatus: StatusCodes.FORBIDDEN,
-            }),
-          );
+          return next(forbiddenError);
         } catch (err) {
           // Failed: users service error
           return next(err);
         }
       },
     )(req, res, next);
-};
