@@ -10,7 +10,7 @@ export const lowerAlphanumUnder = (field: z.ZodString) =>
     message: 'Must be lowercase alphanumeric and may include underscores (_)',
   });
 
-export const noDuplicateValues = (fieldArr: z.ZodArray) =>
+export const noDuplicateStrs = (fieldArr: z.ZodArray<z.ZodString>) =>
   fieldArr.refine((vals) => new Set(vals).size === vals.length, {
     message: 'Array must not contain duplicate values',
   });
