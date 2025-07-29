@@ -18,6 +18,4 @@ export const permissionsRelations = relations(permissionsTable, ({ many }) => ({
   rolesToPermissions: many(rolesToPermissionsTable),
 }));
 
-export const PERMISSIONS_SORT_COLUMNS = getSortColumns({
-  table: permissionsTable,
-});
+export const PERMISSIONS_SORT_COLUMNS = getSortColumns(permissionsTable);
