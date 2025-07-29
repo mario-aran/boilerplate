@@ -6,12 +6,15 @@ import { z } from 'zod';
 // Types
 export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
 
+// Fields
+const sort = generateSortField(PERMISSIONS_SORT_COLUMNS);
+
 // Schemas
 export const getAllPermissionsSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,
-    sort: generateSortField(PERMISSIONS_SORT_COLUMNS),
+    sort,
     search: text,
   })
   .partial();

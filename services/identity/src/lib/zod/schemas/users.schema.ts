@@ -6,12 +6,15 @@ import { z } from 'zod';
 // Types
 export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
 
+// Fields
+const sort = generateSortField(USERS_SORT_COLUMNS_NO_PASSWORD);
+
 // Schemas
 export const getAllUsersSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,
-    sort: generateSortField(USERS_SORT_COLUMNS_NO_PASSWORD),
+    sort,
     roleId: textId,
     search: text,
   })
