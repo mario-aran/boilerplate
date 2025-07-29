@@ -6,6 +6,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import swaggerUi from 'swagger-ui-express';
 import { authRoute } from './auth.route';
+import { permissionsRoute } from './permissions.route';
 
 // Utils
 const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
@@ -44,6 +45,7 @@ router.use(ROUTES.API_DOCS, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Api routes
 router.use(ROUTES.AUTH, authRoute);
+router.use(ROUTES.PERMISSIONS, permissionsRoute);
 
 router.use(ROUTES.API, (_, res) =>
   res.json({
