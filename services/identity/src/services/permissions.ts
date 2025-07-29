@@ -1,8 +1,12 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { db } from '@/lib/drizzle/db';
-import { permissionsTable } from '@/lib/drizzle/schemas';
+import {
+  PERMISSIONS_TABLE_NAME,
+  permissionsTable,
+} from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { GetAllPermissions } from '@/lib/zod/schemas/permissions.schema';
+import { getSeedMessage } from '@/utils/get-seed-message';
 import { ilike } from 'drizzle-orm';
 
 class PermissionsService {
@@ -20,12 +24,16 @@ class PermissionsService {
       sort,
     });
 
-  public seed = async () =>
-    db
+  public seed = async () => {
+    const createdRecords = await db
       .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: permissionsTable.id });
+
+    const seededKeys = createdRecords.map(({ id }) => id);
+    return getSeedMessage(PERMISSIONS_TABLE_NAME, seededKeys);
+  };
 }
 
 export const permissionsService = new PermissionsService();
