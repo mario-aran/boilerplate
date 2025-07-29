@@ -4,6 +4,10 @@ import { pgTable, primaryKey, varchar } from 'drizzle-orm/pg-core';
 import { permissionsTable } from './permissions.schema';
 import { rolesTable } from './roles.schema';
 
+// Types
+export type RoleToPermissionInsert =
+  typeof rolesToPermissionsTable.$inferInsert;
+
 // Constants
 export const ROLES_TO_PERMISSIONS_TABLE_NAME = 'roles_to_permissions';
 

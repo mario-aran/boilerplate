@@ -6,6 +6,7 @@ import { boolean, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { rolesTable } from './roles.schema';
 
 // Types
+export type UserInsert = typeof usersTable.$inferInsert;
 export type UserSelect = typeof usersTable.$inferSelect;
 
 // Constants
