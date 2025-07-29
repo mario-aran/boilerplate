@@ -6,7 +6,7 @@ import { GetAllPermissions } from '@/lib/zod/schemas/permissions.schema';
 import { ilike } from 'drizzle-orm';
 
 class PermissionsService {
-  public readAll = async ({
+  public getAll = async ({
     limit,
     page,
     sort,
