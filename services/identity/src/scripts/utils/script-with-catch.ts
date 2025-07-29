@@ -1,15 +1,10 @@
-// Types
-interface RunScriptWithCatchProps {
-  processName: string;
-  asyncFn: () => Promise<void>;
-}
-
-export const runtScriptWithCatch = async ({
-  processName,
-  asyncFn,
-}: RunScriptWithCatchProps) => {
+export const scriptCatchAsync = async (
+  processName: string,
+  asyncFn: () => Promise<void>,
+) => {
   try {
     await asyncFn();
+
     console.log(`${processName} completed successfully`);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';

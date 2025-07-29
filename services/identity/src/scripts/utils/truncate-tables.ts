@@ -23,5 +23,6 @@ export const truncateTables = async () => {
     CASCADE;
   `;
   await db.execute(truncateTablesQuery);
+
   console.log(`${joinedTableNames} tables truncated successfully`);
 };
