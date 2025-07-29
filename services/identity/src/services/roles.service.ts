@@ -3,7 +3,6 @@ import { SYSTEM_ROLE_VALUES, SYSTEM_ROLES } from '@/constants/system-roles';
 import { db } from '@/lib/drizzle/db';
 import {
   ROLES_TABLE_NAME,
-  ROLES_TO_PERMISSIONS_TABLE_NAME,
   rolesTable,
   rolesToPermissionsTable,
   RoleToPermissionInsert,
@@ -60,7 +59,12 @@ class RolesService {
         );
     });
 
-  public seed = async () => {
+  public seedProductionData = async () => {
+    await this.seedSystemRoles();
+    await this.seedSuperAdminPermissions();
+  };
+
+  private seedSystemRoles = async () => {
     const createdRecords = await db
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
@@ -68,10 +72,11 @@ class RolesService {
       .returning({ id: rolesTable.id });
 
     const createdKeys = createdRecords.map(({ id }) => id);
-    return getSeedMessage(ROLES_TABLE_NAME, createdKeys);
+    const seedMessage = getSeedMessage(ROLES_TABLE_NAME, createdKeys);
+    console.log(seedMessage);
   };
 
-  public seedToPermissions = async () => {
+  private seedSuperAdminPermissions = async () => {
     const createdRecords = await db
       .insert(rolesToPermissionsTable)
       .values(
@@ -88,7 +93,8 @@ class RolesService {
     const createdKeys = createdRecords.map(
       ({ roleId, permissionId }) => `${roleId}.${permissionId}`,
     );
-    return getSeedMessage(ROLES_TO_PERMISSIONS_TABLE_NAME, createdKeys);
+    const seedMessage = getSeedMessage(ROLES_TABLE_NAME, createdKeys);
+    console.log(seedMessage);
   };
 }
 
