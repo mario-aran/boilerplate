@@ -1,7 +1,7 @@
-export const getSeedMessage = (tableName: string, seededKeys: string[]) => {
-  if (!seededKeys.length)
+export const getSeedMessage = (tableName: string, createdKeys: string[]) => {
+  if (!createdKeys.length)
     return `Skipping seeding ${tableName}: no new records`;
 
-  const joinedUniqueKeys = seededKeys.map((key) => key).join(', ');
+  const joinedUniqueKeys = createdKeys.map((key) => key).join(', ');
   return `${tableName} seeded: ${joinedUniqueKeys}`;
 };
