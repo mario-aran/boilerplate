@@ -10,12 +10,6 @@ import { SEGMENTS } from '@/constants/routes';
 import { signVerifyEmailToken } from '@/lib/jwt/utils';
 import nodemailer from 'nodemailer';
 
-// Types
-interface SendVerificationEmailProps {
-  userId: string;
-  email: string;
-}
-
 class EmailService {
   private transporter = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -23,11 +17,8 @@ class EmailService {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  public sendVerificationEmail = async ({
-    userId,
-    email,
-  }: SendVerificationEmailProps) => {
-    const token = signVerifyEmailToken(userId);
+  public sendVerificationEmail = async (userId: string, email: string) => {
+    const token = signVerifyEmailToken({ userId });
 
     const tokenUrl = `${BASE_URL}${SEGMENTS.VERIFY_EMAIL}/${token}`;
     await this.transporter.sendMail({
