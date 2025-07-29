@@ -9,12 +9,9 @@ interface ValidateWithZodProps {
   body?: ZodObject;
 }
 
-export const validateWithZod = ({
-  params,
-  query,
-  body,
-}: ValidateWithZodProps) => {
-  return (req: Request, _: Response, next: NextFunction) => {
+export const validateWithZod =
+  ({ params, query, body }: ValidateWithZodProps) =>
+  (req: Request, _: Response, next: NextFunction) => {
     try {
       // Validate and transform request data
       if (params) req.params = params.parse(req.params) as typeof req.params;
@@ -43,4 +40,3 @@ export const validateWithZod = ({
       return next(err);
     }
   };
-};
