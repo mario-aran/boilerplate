@@ -2,17 +2,17 @@ import { PERMISSION_VALUES } from '@/constants/permissions';
 import { ROLES_SORT_COLUMNS } from '@/lib/drizzle/schemas';
 import { stringToPositiveInt, text, textId } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
-import { noDuplicateValues } from '@/lib/zod/utils/refines';
+import { noDuplicateStrs } from '@/lib/zod/utils/refines';
 import { z } from 'zod';
 
 // Types
 export type GetAllRoles = z.infer<typeof getAllRolesSchema>;
-export type UpdateRole = z.infer<typeof updateRoleSchema>;
+export type UpdateRolePermissions = z.infer<typeof updateRolePermissionsSchema>;
 
 // Fields
 const sort = generateSortField(ROLES_SORT_COLUMNS);
 
-const permissionIds = noDuplicateValues(
+const permissionIds = noDuplicateStrs(
   textId.array().max(PERMISSION_VALUES.length),
 );
 
@@ -26,4 +26,4 @@ export const getAllRolesSchema = z
   })
   .partial();
 
-export const updateRoleSchema = z.strictObject({ permissionIds }).partial();
+export const updateRolePermissionsSchema = z.strictObject({ permissionIds });
