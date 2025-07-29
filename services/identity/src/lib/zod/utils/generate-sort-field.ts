@@ -16,7 +16,7 @@ export const generateSortField = <T extends [string, ...string[]]>(
         );
         return new Set(colArray).size === colArray.length;
       },
-      { message: 'Duplicate fields are forbidden' },
+      { message: 'Array must not contain duplicate values' },
     );
 
   return z
