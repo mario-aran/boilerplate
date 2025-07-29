@@ -60,7 +60,7 @@ class RolesService {
         );
     });
 
-  public seedSystemRoles = async () => {
+  public seed = async () => {
     const createdRecords = await db
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
@@ -71,7 +71,7 @@ class RolesService {
     return getSeedMessage(ROLES_TABLE_NAME, seededKeys);
   };
 
-  public seedSystemRolesToPermissions = async () => {
+  public seedToPermissions = async () => {
     const createdRecords = await db
       .insert(rolesToPermissionsTable)
       .values(

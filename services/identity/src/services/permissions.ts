@@ -24,7 +24,7 @@ class PermissionsService {
       sort,
     });
 
-  public seedSystemPermissions = async () => {
+  public seed = async () => {
     const createdRecords = await db
       .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
