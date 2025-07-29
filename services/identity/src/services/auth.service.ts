@@ -2,7 +2,7 @@ import { validatePassword } from '@/lib/bcrypt/utils';
 import {
   signAccessToken,
   signRefreshToken,
-  verifyEmailToken,
+  verifyEmailVerificationToken,
 } from '@/lib/jwt/utils';
 import {
   Login,
@@ -24,29 +24,26 @@ class AuthService {
   public register = async (props: Register) => {
     const { id, email } = await usersService.create(props);
 
-    await emailService.sendVerificationEmail({ userId: id, email });
+    await emailService.sendVerification(id, email);
 
     return { email };
   };
 
   public resendEmailVerification = async (props: ResendEmailVerification) => {
     const { id, email, emailVerified, pendingEmail } =
-      await usersService.readByEmailWithPassword(props.email);
+      await usersService.getByEmailWithPassword(props.email);
     if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
 
     const targetEmail = pendingEmail ?? email;
-    await emailService.sendVerificationEmail({
-      userId: id,
-      email: targetEmail,
-    });
+    await emailService.sendVerification(id, targetEmail);
 
     return { email };
   };
 
   public verifyEmail = async ({ token }: VerifyEmail) => {
-    const { userId } = verifyEmailToken(token);
+    const { userId } = verifyEmailVerificationToken(token);
 
-    const { id, emailVerified, pendingEmail } = await usersService.read(userId);
+    const { id, emailVerified, pendingEmail } = await usersService.get(userId);
     if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
 
     const conditionalData = !emailVerified
@@ -63,7 +60,7 @@ class AuthService {
   };
 
   public login = async ({ email, password }: Login) => {
-    const user = await usersService.readByEmailWithPassword(email);
+    const user = await usersService.getByEmailWithPassword(email);
 
     await validatePassword(password, user.password);
 
