@@ -1,17 +1,6 @@
 import { z } from 'zod';
+import { lowerAlphanumUnder, noSpaces } from './refines';
 
-// Utils
-const noSpaces = (field: z.ZodString) =>
-  field.refine((val) => /^[^\s]+$/.test(val), {
-    message: 'Must not contain spaces',
-  });
-
-const lowerAlphanumUnder = (field: z.ZodString) =>
-  field.refine((val) => /^[a-z0-9_]+$/.test(val), {
-    message: 'Must be lowercase alphanumeric and may include underscores (_)',
-  });
-
-// Fields
 export const positiveInt = z.number().int().positive();
 export const stringToPositiveInt = z
   .string()
