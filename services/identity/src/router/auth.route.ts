@@ -1,5 +1,5 @@
 import { SEGMENTS } from '@/constants/routes';
-import { authController } from '@/controllers/auth.controller';
+import { authController } from '@/features/auth/auth.controller';
 import {
   loginSchema,
   registerSchema,
