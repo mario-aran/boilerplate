@@ -17,7 +17,7 @@ class EmailService {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  public sendVerification = async (userId: string, email: string) => {
+  public sendEmailVerification = async (userId: string, email: string) => {
     const token = signEmailVerificationToken({ userId });
 
     const tokenUrl = `${BASE_URL}${SEGMENTS.VERIFY_EMAIL}/${token}`;
