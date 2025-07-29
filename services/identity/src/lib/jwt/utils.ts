@@ -6,10 +6,8 @@ import {
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from './types';
 
-export const signVerifyEmailToken = (userId: string) =>
-  jwt.sign({ userId }, JWT_VERIFY_EMAIL_SECRET, {
-    expiresIn: '1d',
-  });
+export const signVerifyEmailToken = (payload: JwtPayload) =>
+  jwt.sign(payload, JWT_VERIFY_EMAIL_SECRET, { expiresIn: '1d' });
 
 export const signAccessToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: '15m' });
