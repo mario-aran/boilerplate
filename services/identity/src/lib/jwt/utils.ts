@@ -1,13 +1,13 @@
 import {
   JWT_ACCESS_SECRET,
+  JWT_EMAIL_VERIFICATION_SECRET,
   JWT_REFRESH_SECRET,
-  JWT_VERIFY_EMAIL_SECRET,
 } from '@/config/env';
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from './types';
 
-export const signVerifyEmailToken = (payload: JwtPayload) =>
-  jwt.sign(payload, JWT_VERIFY_EMAIL_SECRET, { expiresIn: '1d' });
+export const signEmailVerificationToken = (payload: JwtPayload) =>
+  jwt.sign(payload, JWT_EMAIL_VERIFICATION_SECRET, { expiresIn: '1d' });
 
 export const signAccessToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: '15m' });
@@ -15,5 +15,5 @@ export const signAccessToken = (payload: JwtPayload) =>
 export const signRefreshToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' });
 
-export const verifyEmailToken = (token: string) =>
-  jwt.verify(token, JWT_VERIFY_EMAIL_SECRET) as JwtPayload;
+export const verifyEmailVerificationToken = (token: string) =>
+  jwt.verify(token, JWT_EMAIL_VERIFICATION_SECRET) as JwtPayload;
