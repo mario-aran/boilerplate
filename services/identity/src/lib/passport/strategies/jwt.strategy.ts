@@ -12,7 +12,7 @@ export const jwtStrategy = new Strategy(
   opts,
   async (payload: JwtPayload, done) => {
     try {
-      const { id } = await usersService.read(payload.userId);
+      const { id } = await usersService.get(payload.userId);
 
       // Succeeded: Attached values to "req.user"
       return done(null, { id });
