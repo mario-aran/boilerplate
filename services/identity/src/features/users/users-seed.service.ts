@@ -1,5 +1,4 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
-import { hashPassword } from '@/lib/bcrypt/utils';
 import { db } from '@/lib/drizzle/db';
 import {
   UserInsert,
@@ -7,6 +6,7 @@ import {
   usersTable,
 } from '@/lib/drizzle/schemas';
 import { getSeedMessage } from '@/utils/get-seed-message';
+import { hashPassword } from './utils/hash-password';
 
 class UsersSeedService {
   public seed = async (users: UserInsert[]) => {
