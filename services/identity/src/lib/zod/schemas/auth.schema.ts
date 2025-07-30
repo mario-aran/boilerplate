@@ -23,6 +23,9 @@ export const registerAuthSchema = z.strictObject({
   lastName,
 });
 
-export const resendEmailVerificationAuthSchema = z.strictObject({ email });
+export const resendEmailVerificationAuthSchema = z.strictObject({
+  currentEmail: email,
+});
+
 export const verifyEmailAuthSchema = z.strictObject({ token });
 export const loginAuthSchema = z.strictObject({ email, password });
