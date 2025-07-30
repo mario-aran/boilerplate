@@ -1,4 +1,5 @@
 import { rolesService } from '@/features/roles/roles.service';
+import { RoleId } from '@/lib/zod/schemas/roles.schema';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
 
@@ -9,20 +10,28 @@ class RolesController {
   });
 
   public get = controllerCatchAsync(
-    async (req: Request<{ id: string }>, res: Response) => {
+    async (req: Request<RoleId>, res: Response) => {
       const result = await rolesService.get(req.params.id);
       res.json(result);
     },
   );
 
-  public updatePermissions = controllerCatchAsync(
-    async (req: Request<{ id: string }>, res: Response) => {
-      const { roleId } = await rolesService.updatePermissions(
-        req.params.id,
-        req.body,
-      );
+  public create = async (req: Request, res: Response) => {
+    const { id } = await rolesService.create(req.body);
+    res.json({ message: `Role ${id} created successfully.` });
+  };
 
-      res.json({ message: `Permissions for ${roleId} updated successfully.` });
+  public update = controllerCatchAsync(
+    async (req: Request<RoleId>, res: Response) => {
+      const { id } = await rolesService.update(req.params.id, req.body);
+      res.json({ message: `Role ${id} updated successfully.` });
+    },
+  );
+
+  public delete = controllerCatchAsync(
+    async (req: Request<RoleId>, res: Response) => {
+      const { id } = await rolesService.delete(req.params.id);
+      res.json({ message: `Role ${id} deleted successfully.` });
     },
   );
 }
