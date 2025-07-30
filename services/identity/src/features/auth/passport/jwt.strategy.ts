@@ -3,14 +3,11 @@ import { usersService } from '@/features/users/users.service';
 import { JwtPayload } from '@/lib/jwt/types';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-// Values
-const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: JWT_ACCESS_SECRET,
-};
-
 export const jwtStrategy = new Strategy(
-  opts,
+  {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: JWT_ACCESS_SECRET,
+  },
   async (payload: JwtPayload, done) => {
     try {
       const { id } = await usersService.get(payload.userId);
