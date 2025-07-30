@@ -11,16 +11,12 @@ export type ResendEmailVerificationAuth = z.infer<
 export type VerifyEmailAuth = z.infer<typeof verifyEmailAuthSchema>;
 export type LoginAuth = z.infer<typeof loginAuthSchema>;
 
-// Fields
-const firstName = text.optional();
-const lastName = text.optional();
-
 // Schemas
 export const registerAuthSchema = z.strictObject({
   email,
   password,
-  firstName,
-  lastName,
+  firstName: text.optional(),
+  lastName: text.optional(),
 });
 
 export const resendEmailVerificationAuthSchema = z.strictObject({

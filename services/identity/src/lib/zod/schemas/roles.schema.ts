@@ -6,24 +6,33 @@ import { noDuplicateStrs } from '@/lib/zod/utils/refines';
 import { z } from 'zod';
 
 // Types
+export type RoleId = z.infer<typeof roleIdSchema>;
 export type GetAllRoles = z.infer<typeof getAllRolesSchema>;
-export type UpdateRolePermissions = z.infer<typeof updateRolePermissionsSchema>;
+export type CreateRole = z.infer<typeof createRoleSchema>;
+export type UpdateRole = z.infer<typeof updateRoleSchema>;
 
 // Fields
-const sort = generateSortField(ROLES_SORT_COLUMNS);
+const id = textId;
 
 const permissionIds = noDuplicateStrs(
   textId.array().max(PERMISSION_VALUES.length),
 );
 
 // Schemas
+export const roleIdSchema = z.strictObject({ id });
+
 export const getAllRolesSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,
-    sort,
+    sort: generateSortField(ROLES_SORT_COLUMNS),
     search: text,
   })
   .partial();
 
-export const updateRolePermissionsSchema = z.strictObject({ permissionIds });
+export const createRoleSchema = z.strictObject({
+  id,
+  permissionIds: permissionIds.optional(),
+});
+
+export const updateRoleSchema = z.strictObject({ permissionIds }).partial();
