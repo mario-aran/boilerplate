@@ -21,6 +21,7 @@ class RolesController {
         req.params.id,
         req.body,
       );
+
       res.json({ message: `Permissions for ${roleId} updated successfully.` });
     },
   );
