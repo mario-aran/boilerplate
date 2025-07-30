@@ -1,6 +1,5 @@
 import { emailService } from '@/features/email/email.service';
 import { usersService } from '@/features/users/users.service';
-import { validatePassword } from '@/lib/bcrypt/utils';
 import {
   signAccessToken,
   signRefreshToken,
@@ -14,6 +13,7 @@ import {
 } from '@/lib/zod/schemas/auth.schema';
 import { HttpError } from '@/utils/http-error';
 import { StatusCodes } from 'http-status-codes';
+import { validatePassword } from './utils/validate-password';
 
 class AuthService {
   private emailAlreadyVerifiedError = new HttpError({
