@@ -1,13 +1,10 @@
-export const scriptCatchAsync = async (
-  processName: string,
-  asyncFn: () => Promise<void>,
-) => {
+export const scriptCatchAsync = async (asyncFn: () => Promise<void>) => {
   try {
     await asyncFn();
 
-    console.log(`${processName} completed successfully`);
+    console.log('Script completed successfully');
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    throw new Error(`${processName} failed: ${errorMessage}`);
+    const errorMessage = err instanceof Error ? err.message : 'unknown error';
+    throw new Error(`Script failed: ${errorMessage}`);
   }
 };
