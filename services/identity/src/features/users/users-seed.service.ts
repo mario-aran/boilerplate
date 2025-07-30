@@ -29,7 +29,7 @@ class UsersSeedService {
     console.log(seedMessage);
   };
 
-  public seedProductionData = async () =>
+  public seedSystemData = async () =>
     this.seed([
       {
         roleId: SYSTEM_ROLES.SUPER_ADMIN,

@@ -11,9 +11,9 @@ import {
 import { getSeedMessage } from '@/utils/get-seed-message';
 
 class RolesSeedService {
-  public seedProductionData = async () => {
+  public seedSystemData = async () => {
     await this.seedSystemRoles();
-    await this.seedSuperAdminPermissions();
+    await this.seedSystemRolesToPermissions();
   };
 
   private seedSystemRoles = async () => {
@@ -28,7 +28,7 @@ class RolesSeedService {
     console.log(seedMessage);
   };
 
-  private seedSuperAdminPermissions = async () => {
+  private seedSystemRolesToPermissions = async () => {
     const createdRecords = await db
       .insert(rolesToPermissionsTable)
       .values(

@@ -7,7 +7,7 @@ import {
 import { getSeedMessage } from '@/utils/get-seed-message';
 
 class PermissionsSeedService {
-  public seedProductionData = async () => {
+  public seedSystemData = async () => {
     const createdRecords = await db
       .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
