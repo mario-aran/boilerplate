@@ -15,10 +15,13 @@ class RolesController {
     },
   );
 
-  public update = controllerCatchAsync(
+  public updatePermissions = controllerCatchAsync(
     async (req: Request<{ id: string }>, res: Response) => {
-      const { id } = await rolesService.update(req.params.id, req.body);
-      res.json({ message: `Role ${id} updated successfully` });
+      const { roleId } = await rolesService.updatePermissions(
+        req.params.id,
+        req.body,
+      );
+      res.json({ message: `Permissions for ${roleId} updated successfully.` });
     },
   );
 }
