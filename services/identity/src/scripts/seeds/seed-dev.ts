@@ -5,7 +5,7 @@ import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert } from '@/lib/drizzle/schemas';
-import { scriptCatchAsync } from '@/scripts/utils/script-with-catch';
+import { scriptCatchAsync } from '@/utils/script-catch-async';
 import { faker } from '@faker-js/faker';
 import { seedSystemData } from './utils/seed-system-data';
 
@@ -39,7 +39,7 @@ const truncateTables = async () => {
   console.log(`${joinedTableNames} tables truncated successfully`);
 };
 
-const seedDevelopmentData = async () => {
+const seedDev = async () => {
   await truncateTables();
   await seedSystemData();
 
@@ -57,5 +57,5 @@ const seedDevelopmentData = async () => {
 
 // Run script
 (async () => {
-  await scriptCatchAsync(seedDevelopmentData);
+  await scriptCatchAsync(seedDev);
 })();
