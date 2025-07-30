@@ -17,8 +17,11 @@ class AuthController {
 
   public resendEmailVerification = controllerCatchAsync(
     async (req: Request, res: Response) => {
-      const { email } = await authService.resendEmailVerification(req.body);
-      res.json({ message: `Verification email sent to ${email}.` });
+      const { targetEmail } = await authService.resendEmailVerification(
+        req.body,
+      );
+
+      res.json({ message: `Verification email sent to ${targetEmail}.` });
     },
   );
 
