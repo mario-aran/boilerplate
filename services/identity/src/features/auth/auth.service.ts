@@ -32,12 +32,12 @@ class AuthService {
   public resendEmailVerification = async ({
     currentEmail,
   }: ResendEmailVerificationAuth) => {
-    const user = await usersService.getByEmailWithPassword(currentEmail);
-    if (user.emailVerified && !user.pendingEmail)
-      throw this.emailAlreadyVerifiedError;
+    const { id, email, emailVerified, pendingEmail } =
+      await usersService.getByEmailWithPassword(currentEmail);
+    if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
 
-    const targetEmail = user.pendingEmail ?? user.email;
-    await emailService.sendEmailVerification(user.id, targetEmail);
+    const targetEmail = pendingEmail ?? email;
+    await emailService.sendEmailVerification(id, targetEmail);
 
     return { targetEmail };
   };
