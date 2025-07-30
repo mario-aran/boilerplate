@@ -14,10 +14,8 @@ export const jwtStrategy = new Strategy(
     try {
       const { id } = await usersService.get(payload.userId);
 
-      // Succeeded: Attached values to "req.user"
-      return done(null, { id });
+      return done(null, { id }); // Succeeded: Attached values to "req.user"
     } catch (err) {
-      // Failed
       return done(err, false);
     }
   },
