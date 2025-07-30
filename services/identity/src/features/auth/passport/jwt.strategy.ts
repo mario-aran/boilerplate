@@ -3,6 +3,7 @@ import { usersService } from '@/features/users/users.service';
 import { JwtPayload } from '@/lib/jwt/types';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+// Values
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: JWT_ACCESS_SECRET,
