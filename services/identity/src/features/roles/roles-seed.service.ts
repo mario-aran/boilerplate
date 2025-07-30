@@ -12,11 +12,11 @@ import { getSeedMessage } from '@/utils/get-seed-message';
 
 class RolesSeedService {
   public seedSystemData = async () => {
-    await this.seedSystemRoles();
-    await this.seedSystemRolesToPermissions();
+    await this.seed();
+    await this.seedPermissions();
   };
 
-  private seedSystemRoles = async () => {
+  private seed = async () => {
     const createdRecords = await db
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
@@ -28,7 +28,7 @@ class RolesSeedService {
     console.log(seedMessage);
   };
 
-  private seedSystemRolesToPermissions = async () => {
+  private seedPermissions = async () => {
     const createdRecords = await db
       .insert(rolesToPermissionsTable)
       .values(
