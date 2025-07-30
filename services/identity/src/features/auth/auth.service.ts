@@ -7,10 +7,10 @@ import {
   verifyEmailVerificationToken,
 } from '@/lib/jwt/utils';
 import {
-  Login,
-  Register,
-  ResendEmailVerification,
-  VerifyEmail,
+  LoginAuth,
+  RegisterAuth,
+  ResendEmailVerificationAuth,
+  VerifyEmailAuth,
 } from '@/lib/zod/schemas/auth.schema';
 import { HttpError } from '@/utils/http-error';
 import { StatusCodes } from 'http-status-codes';
@@ -21,7 +21,7 @@ class AuthService {
     httpStatus: StatusCodes.CONFLICT,
   });
 
-  public register = async (props: Register) => {
+  public register = async (props: RegisterAuth) => {
     const { id, email } = await usersService.create(props);
 
     await emailService.sendEmailVerification(id, email);
@@ -30,38 +30,35 @@ class AuthService {
   };
 
   public resendEmailVerification = async ({
-    email,
-  }: ResendEmailVerification) => {
-    const user = await usersService.getByEmailWithPassword(email);
+    currentEmail,
+  }: ResendEmailVerificationAuth) => {
+    const user = await usersService.getByEmailWithPassword(currentEmail);
     if (user.emailVerified && !user.pendingEmail)
       throw this.emailAlreadyVerifiedError;
 
     const targetEmail = user.pendingEmail ?? user.email;
     await emailService.sendEmailVerification(user.id, targetEmail);
 
-    return { email };
+    return { targetEmail };
   };
 
-  public verifyEmail = async ({ token }: VerifyEmail) => {
+  public verifyEmail = async ({ token }: VerifyEmailAuth) => {
     const { userId } = verifyEmailVerificationToken(token);
 
-    const { id, emailVerified, pendingEmail } = await usersService.get(userId);
-    if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
+    const user = await usersService.get(userId);
+    if (user.emailVerified && !user.pendingEmail)
+      throw this.emailAlreadyVerifiedError;
 
-    const updateData = {
+    const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
       pendingEmail: null,
-      ...(!emailVerified
-        ? { emailVerified: true }
-        : pendingEmail
-          ? { email: pendingEmail }
-          : {}),
-    };
-    const { email } = await usersService.update(id, updateData);
+      emailVerified: !user.emailVerified ? true : undefined,
+      email: user.pendingEmail ?? undefined,
+    });
     return { email };
   };
 
-  public login = async ({ email, password }: Login) => {
+  public login = async ({ email, password }: LoginAuth) => {
     const user = await usersService.getByEmailWithPassword(email);
 
     await validatePassword(password, user.password);
