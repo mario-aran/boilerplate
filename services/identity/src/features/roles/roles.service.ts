@@ -54,14 +54,11 @@ class RolesService {
     { permissionIds, ...restOfProps }: UpdateRole,
   ) => {
     // Update roles
-    if (Object.keys(restOfProps).length) {
+    if (Object.keys(restOfProps).length)
       await db.update(rolesTable).set(restOfProps).where(eq(rolesTable.id, id));
-    }
 
     // Update roles to permissions
-    if (permissionIds) {
-      await this.updatePermissions(id, permissionIds);
-    }
+    if (permissionIds) await this.updatePermissions(id, { permissionIds });
 
     // Get updated role with permissions
     return this.get(id);
@@ -77,7 +74,10 @@ class RolesService {
     return deletedRecord;
   };
 
-  private updatePermissions = async (id: string, permissionIds: string[]) =>
+  private updatePermissions = async (
+    id: RoleId['id'],
+    { permissionIds }: Required<Pick<UpdateRole, 'permissionIds'>>,
+  ) =>
     db.transaction(async (tx) => {
       // Delete all existing permissions for this role
       await tx
