@@ -63,7 +63,7 @@ class RolesService {
       await this.updatePermissions(id, permissionIds);
     }
 
-    // Get new values
+    // Get updated role with permissions
     return this.get(id);
   };
 
