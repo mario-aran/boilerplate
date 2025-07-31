@@ -6,7 +6,7 @@ import {
   SMTP_USER,
   VERIFY_EMAIL_FROM,
 } from '@/config/env';
-import { SEGMENTS } from '@/constants/routes';
+import { ROUTES } from '@/constants/routes';
 import nodemailer from 'nodemailer';
 
 // Types
@@ -26,7 +26,7 @@ class EmailService {
     email,
     token,
   }: SendEmailVerificationProps) => {
-    const tokenUrl = `${BASE_URL}${SEGMENTS.VERIFY_EMAIL}/${token}`;
+    const tokenUrl = `${BASE_URL}${ROUTES.AUTH_VERIFY_EMAIL}?token=${token}`;
     await this.transporter.sendMail({
       from: VERIFY_EMAIL_FROM,
       to: email,

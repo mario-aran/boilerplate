@@ -11,6 +11,12 @@ import { Router } from 'express';
 
 export const authRoute = Router();
 
+authRoute.get(
+  SEGMENTS.VERIFY_EMAIL,
+  validateWithZod({ query: verifyEmailAuthSchema }),
+  authController.verifyEmail,
+);
+
 authRoute.post(
   SEGMENTS.REGISTER,
   validateWithZod({ body: registerAuthSchema }),
@@ -21,12 +27,6 @@ authRoute.post(
   SEGMENTS.RESEND_EMAIL_VERIFICATION,
   validateWithZod({ body: resendEmailVerificationAuthSchema }),
   authController.resendEmailVerification,
-);
-
-authRoute.get(
-  SEGMENTS.VERIFY_EMAIL,
-  validateWithZod({ query: verifyEmailAuthSchema }),
-  authController.verifyEmail,
 );
 
 authRoute.post(

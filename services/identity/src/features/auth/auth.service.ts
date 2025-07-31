@@ -27,6 +27,22 @@ class AuthService {
     httpStatus: StatusCodes.FORBIDDEN,
   });
 
+  public verifyEmail = async ({ token }: VerifyEmailAuth) => {
+    const { userId } = verifyEmailVerificationToken(token);
+
+    const user = await usersService.get(userId);
+    if (user.emailVerified && !user.pendingEmail)
+      throw this.emailAlreadyVerifiedError;
+
+    const { email } = await usersService.update(user.id, {
+      emailVerifiedAt: new Date(),
+      pendingEmail: null,
+      emailVerified: !user.emailVerified ? true : undefined,
+      email: user.pendingEmail ?? undefined,
+    });
+    return { email };
+  };
+
   public register = async (props: RegisterAuth) => {
     const { id, email } = await usersService.create(props);
 
@@ -47,22 +63,6 @@ class AuthService {
     const token = signEmailVerificationToken({ userId: user.id });
     await emailService.sendEmailVerification({ email, token });
 
-    return { email };
-  };
-
-  public verifyEmail = async ({ token }: VerifyEmailAuth) => {
-    const { userId } = verifyEmailVerificationToken(token);
-
-    const user = await usersService.get(userId);
-    if (user.emailVerified && !user.pendingEmail)
-      throw this.emailAlreadyVerifiedError;
-
-    const { email } = await usersService.update(user.id, {
-      emailVerifiedAt: new Date(),
-      pendingEmail: null,
-      emailVerified: !user.emailVerified ? true : undefined,
-      email: user.pendingEmail ?? undefined,
-    });
     return { email };
   };
 

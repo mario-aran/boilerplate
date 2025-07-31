@@ -5,6 +5,16 @@ import { StatusCodes } from 'http-status-codes';
 import { controllerCatchAsync } from './utils/controller-catch-async';
 
 class AuthController {
+  public verifyEmail = controllerCatchAsync(
+    async (
+      req: Request<unknown, unknown, unknown, VerifyEmailAuth>,
+      res: Response,
+    ) => {
+      const { email } = await authService.verifyEmail(req.query);
+      res.json({ message: `Email ${email} verified successfully.` });
+    },
+  );
+
   public register = controllerCatchAsync(
     async (req: Request, res: Response) => {
       const { email } = await authService.register(req.body);
@@ -20,16 +30,6 @@ class AuthController {
       const { email } = await authService.resendEmailVerification(req.body);
 
       res.json({ message: `Verification email sent to ${email}.` });
-    },
-  );
-
-  public verifyEmail = controllerCatchAsync(
-    async (
-      req: Request<unknown, unknown, unknown, VerifyEmailAuth>,
-      res: Response,
-    ) => {
-      const { email } = await authService.verifyEmail(req.query);
-      res.json({ message: `Email ${email} verified successfully.` });
     },
   );
 
