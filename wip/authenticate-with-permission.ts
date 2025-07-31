@@ -30,15 +30,15 @@ export const authenticateWithPermission =
         if (!jwtPayload) return next(unauthorizedError);
 
         // Attach user manually when using callback
-        req.user = { id: jwtPayload.userId };
+        req.user = { id: jwtPayload.id };
 
         // Succeeded: user is the owner or doesn't require permission
-        const userIsOwner = req.params.id === jwtPayload.userId;
+        const userIsOwner = req.params.id === jwtPayload.id;
         if (userIsOwner || !requiredPermission) return next();
 
         try {
           // Succeeded: user has required permission
-          const dbUser = await usersService.get(jwtPayload.userId);
+          const dbUser = await usersService.get(jwtPayload.id);
           const hasPermission =
             dbUser.permissionIds.includes(requiredPermission);
           if (hasPermission) return next();
