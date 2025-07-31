@@ -21,4 +21,4 @@ export const rolesRelations = relations(rolesTable, ({ many }) => ({
 }));
 
 // Constants
-export const ROLES_SORT_COLUMNS = getSortColumns(rolesTable);
+export const ROLES_SORT_COLUMNS = getSortColumns({ table: rolesTable });

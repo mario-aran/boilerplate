@@ -7,10 +7,13 @@ type Column<T extends AnyPgTable> = `${string & keyof T['$inferInsert']}`;
 export const getSortColumns = <
   T extends AnyPgTable,
   U extends Column<T> = never,
->(
-  table: T,
-  excludedColumns?: U[],
-) => {
+>({
+  table,
+  excludedColumns,
+}: {
+  table: T;
+  excludedColumns?: U[];
+}) => {
   const tableColumns = getTableColumns(table);
   const columnNames = Object.keys(tableColumns);
   const filteredColumns = columnNames.filter(
