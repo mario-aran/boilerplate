@@ -4,6 +4,8 @@ import {
   JWT_REFRESH_SECRET,
 } from '@/config/env';
 import { JwtPayload } from '@/features/auth/types';
+import { HttpError } from '@/utils/http-error';
+import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 
 export const signEmailVerificationToken = (payload: JwtPayload) =>
@@ -15,5 +17,13 @@ export const signAccessToken = (payload: JwtPayload) =>
 export const signRefreshToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' });
 
-export const verifyEmailVerificationToken = (token: string) =>
-  jwt.verify(token, JWT_EMAIL_VERIFICATION_SECRET) as JwtPayload;
+export const verifyEmailVerificationToken = (token: string) => {
+  try {
+    return jwt.verify(token, JWT_EMAIL_VERIFICATION_SECRET) as JwtPayload;
+  } catch {
+    throw new HttpError({
+      message: 'Invalid token.',
+      httpStatus: StatusCodes.UNAUTHORIZED,
+    });
+  }
+};
