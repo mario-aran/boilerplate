@@ -2,6 +2,7 @@ import { BASE_URL, NODE_ENV } from '@/config/env';
 import { ROUTES } from '@/constants/routes';
 import { swaggerDocument } from '@/lib/swagger/swagger-document';
 import { HttpError } from '@/utils/http-error';
+import { DrizzleQueryError } from 'drizzle-orm';
 import { NextFunction, Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import swaggerUi from 'swagger-ui-express';
@@ -22,35 +23,33 @@ const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
-  let message = 'Server error';
   let httpStatus = StatusCodes.INTERNAL_SERVER_ERROR;
-  let validationErrors: HttpError['validationErrors'];
-  let stack: string[] | undefined;
-
-  // Development values
-  if (NODE_ENV !== 'production') {
-    stack = err.stack?.split('\n').map((line) => line.trim());
-  }
+  let message = 'Server error';
+  let validationErrors;
 
   // Http error values
   if (err instanceof HttpError) {
-    message = err.message;
     httpStatus = err.httpStatus;
+    message = err.message;
     validationErrors = err.validationErrors;
   }
 
   // DB error values
-  switch ('code' in err && err.code) {
-    case '23505':
-      httpStatus = StatusCodes.CONFLICT;
-      message = 'Conflict error: Unique key constraint.';
-      break;
-    case '23503':
-      httpStatus = StatusCodes.CONFLICT;
-      message = 'Conflict error: Foreign key constraint.';
-      break;
+  if (err instanceof DrizzleQueryError && err.cause && 'code' in err.cause) {
+    switch (err.cause.code) {
+      case '23503':
+        httpStatus = StatusCodes.CONFLICT;
+        message = 'Conflict error: Foreign key constraint.';
+        break;
+      case '23505':
+        httpStatus = StatusCodes.CONFLICT;
+        message = 'Conflict error: Unique key constraint.';
+        break;
+    }
   }
 
+  // Prepare response
+  const stack = NODE_ENV !== 'production' ? err.stack?.split('\n') : undefined;
   res.status(httpStatus).json({ message, validationErrors, stack });
 };
 
