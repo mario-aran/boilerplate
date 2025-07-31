@@ -1,22 +1,17 @@
-import { hashPassword } from '@/lib/bcrypt/utils';
 import { db } from '@/lib/drizzle/db';
-import { UserSelect, usersTable } from '@/lib/drizzle/schemas';
+import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import { Register } from '@/lib/zod/schemas/auth.schema';
-import { GetAllUsers } from '@/lib/zod/schemas/users.schema';
+import { RegisterAuth } from '@/lib/zod/schemas/auth.schema';
+import { GetAllUsers, UserId } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
+import { hashPassword } from './utils/hash-password';
 
 class UsersService {
   private userNotFoundError = new HttpError({
-    message: 'User not found',
+    message: 'User not found.',
     httpStatus: StatusCodes.NOT_FOUND,
-  });
-
-  private emailAlreadyInUseError = new HttpError({
-    message: 'Email already in use',
-    httpStatus: StatusCodes.CONFLICT,
   });
 
   public getAll = async ({
@@ -46,7 +41,7 @@ class UsersService {
     return { data: usersWithoutPassword, ...restOfRecords };
   };
 
-  public get = async (userId: string) => {
+  public get = async (id: UserId['id']) => {
     const user = await db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
@@ -55,7 +50,7 @@ class UsersService {
           with: { rolesToPermissions: { columns: { permissionId: true } } },
         },
       },
-      where: eq(usersTable.id, userId),
+      where: eq(usersTable.id, id),
     });
     if (!user) throw this.userNotFoundError;
 
@@ -76,9 +71,7 @@ class UsersService {
     return user;
   };
 
-  public create = async ({ password, ...restOfProps }: Register) => {
-    await this.validateEmailUniqueness(restOfProps.email);
-
+  public create = async ({ password, ...restOfProps }: RegisterAuth) => {
     const hashedPassword = await hashPassword(password);
 
     const [createdUser] = await db
@@ -90,25 +83,18 @@ class UsersService {
   };
 
   public update = async (
-    userId: string,
-    { password, ...restOfProps }: Partial<typeof usersTable.$inferInsert>,
+    id: UserId['id'],
+    { password, ...restOfProps }: Partial<UserInsert>,
   ) => {
-    // Guards
-    if (restOfProps.email)
-      await this.validateEmailUniqueness(restOfProps.email);
-
-    // Fields
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
-    // Query
     const [updatedUser] = await db
       .update(usersTable)
       .set({ ...restOfProps, password: hashedPassword })
-      .where(eq(usersTable.id, userId))
+      .where(eq(usersTable.id, id))
       .returning();
     if (!updatedUser) throw this.userNotFoundError;
 
-    // Prepare results
     return this.omitUserPassword(updatedUser);
   };
 
@@ -117,13 +103,6 @@ class UsersService {
     password: _,
     ...restOfProps
   }: T) => restOfProps;
-
-  private validateEmailUniqueness = async (email: string) => {
-    const user = await db.query.usersTable.findFirst({
-      where: eq(usersTable.email, email),
-    });
-    if (user) throw this.emailAlreadyInUseError;
-  };
 }
 
 export const usersService = new UsersService();

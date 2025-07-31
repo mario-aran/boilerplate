@@ -4,9 +4,12 @@ import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
 // Types
+export type UserId = z.infer<typeof userIdSchema>;
 export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
 
 // Schemas
+export const userIdSchema = z.strictObject({ id: textId });
+
 export const getAllUsersSchema = z
   .strictObject({
     limit: stringToPositiveInt,
