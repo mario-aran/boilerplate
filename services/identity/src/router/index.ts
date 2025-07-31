@@ -1,4 +1,4 @@
-import { NODE_ENV } from '@/config/env';
+import { BASE_URL, NODE_ENV } from '@/config/env';
 import { ROUTES } from '@/constants/routes';
 import { swaggerDocument } from '@/lib/swagger/swagger-document';
 import { HttpError } from '@/utils/http-error';
@@ -69,7 +69,7 @@ router.get(ROUTES.API, (_, res) =>
   res.json({
     message: 'Identity service.',
     version: '1.0',
-    docs: ROUTES.API_DOCS,
+    docs: `${BASE_URL}${ROUTES.API_DOCS}`,
   }),
 );
 
