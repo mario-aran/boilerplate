@@ -76,6 +76,6 @@ router.use(ROUTES.API, (_, res) =>
 // Root routes
 router.use('/', (_, res) => res.json({ message: 'Service is up and running' }));
 
-// Middleware
+// Middlewares
 router.use(notFoundHandler); // Must be placed after all routes
 router.use(globalErrorHandler); // Must be placed last
