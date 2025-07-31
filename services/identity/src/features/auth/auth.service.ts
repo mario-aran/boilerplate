@@ -1,30 +1,37 @@
 import { emailService } from '@/features/email/email.service';
 import { usersService } from '@/features/users/users.service';
 import {
-  signAccessToken,
-  signRefreshToken,
-  verifyEmailVerificationToken,
-} from '@/lib/jwt/utils';
-import {
   LoginAuth,
   RegisterAuth,
   ResendEmailVerificationAuth,
   VerifyEmailAuth,
 } from '@/lib/zod/schemas/auth.schema';
 import { HttpError } from '@/utils/http-error';
+import bcrypt from 'bcryptjs';
 import { StatusCodes } from 'http-status-codes';
-import { validatePassword } from './utils/validate-password';
+import {
+  signAccessToken,
+  signEmailVerificationToken,
+  signRefreshToken,
+  verifyEmailVerificationToken,
+} from './utils/jwt-handlers';
 
 class AuthService {
   private emailAlreadyVerifiedError = new HttpError({
-    message: 'Email already verified',
+    message: 'Email already verified.',
     httpStatus: StatusCodes.CONFLICT,
+  });
+
+  private invalidCredentialsError = new HttpError({
+    message: 'Invalid credentials.',
+    httpStatus: StatusCodes.FORBIDDEN,
   });
 
   public register = async (props: RegisterAuth) => {
     const { id, email } = await usersService.create(props);
 
-    await emailService.sendEmailVerification(id, email);
+    const token = signEmailVerificationToken({ userId: id });
+    await emailService.sendEmailVerification({ email, token });
 
     return { email };
   };
@@ -32,14 +39,15 @@ class AuthService {
   public resendEmailVerification = async ({
     currentEmail,
   }: ResendEmailVerificationAuth) => {
-    const { id, email, emailVerified, pendingEmail } =
-      await usersService.getByEmailWithPassword(currentEmail);
-    if (emailVerified && !pendingEmail) throw this.emailAlreadyVerifiedError;
+    const user = await usersService.getByEmailWithPassword(currentEmail);
+    if (user.emailVerified && !user.pendingEmail)
+      throw this.emailAlreadyVerifiedError;
 
-    const targetEmail = pendingEmail ?? email;
-    await emailService.sendEmailVerification(id, targetEmail);
+    const email = user.pendingEmail ?? user.email;
+    const token = signEmailVerificationToken({ userId: user.id });
+    await emailService.sendEmailVerification({ email, token });
 
-    return { targetEmail };
+    return { email };
   };
 
   public verifyEmail = async ({ token }: VerifyEmailAuth) => {
@@ -61,7 +69,8 @@ class AuthService {
   public login = async ({ email, password }: LoginAuth) => {
     const user = await usersService.getByEmailWithPassword(email);
 
-    await validatePassword(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) throw this.invalidCredentialsError;
 
     const payload = { userId: user.id };
     const accessToken = signAccessToken(payload);
