@@ -3,7 +3,7 @@
 import cors from 'cors';
 import express from 'express';
 import { PORT } from './config/env';
-import { passportInit } from './features/auth/passport';
+import { passportInit } from './features/auth/passport/passport-init';
 import { router } from './router';
 
 const app = express();
