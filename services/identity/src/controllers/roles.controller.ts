@@ -1,7 +1,7 @@
 import { rolesService } from '@/features/roles/roles.service';
 import { RoleId } from '@/lib/zod/schemas/roles.schema';
-import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
+import { controllerCatchAsync } from './utils/controller-catch-async';
 
 class RolesController {
   public getAll = controllerCatchAsync(async (req: Request, res: Response) => {

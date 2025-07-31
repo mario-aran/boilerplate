@@ -1,6 +1,6 @@
 import { permissionsService } from '@/features/permissions/permissions.service';
-import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
+import { controllerCatchAsync } from './utils/controller-catch-async';
 
 class PermissionsController {
   public getAll = controllerCatchAsync(async (req: Request, res: Response) => {
