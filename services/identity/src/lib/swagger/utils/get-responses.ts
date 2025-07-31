@@ -5,14 +5,14 @@ export const getUnprocessableResponse = () => ({
       schema: {
         type: 'object',
         properties: {
-          message: { type: 'string', example: 'Invalid inputs' },
+          message: { type: 'string', example: 'Invalid inputs.' },
           validationErrors: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
                 field: { type: 'string', example: 'id' },
-                message: { type: 'string', example: 'Invalid id format' },
+                message: { type: 'string', example: 'Invalid id format.' },
               },
             },
           },

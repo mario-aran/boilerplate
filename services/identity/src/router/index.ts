@@ -12,7 +12,7 @@ import { rolesRoute } from './roles.route';
 // Utils
 const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
   next(
-    new HttpError({ message: 'Not found', httpStatus: StatusCodes.NOT_FOUND }),
+    new HttpError({ message: 'Not found.', httpStatus: StatusCodes.NOT_FOUND }),
   );
 
 const globalErrorHandler = (
@@ -67,14 +67,16 @@ router.use(ROUTES.PERMISSIONS, permissionsRoute);
 
 router.use(ROUTES.API, (_, res) =>
   res.json({
-    message: 'Identity service',
+    message: 'Identity service.',
     version: '1.0',
     docs: ROUTES.API_DOCS,
   }),
 );
 
 // Root routes
-router.use('/', (_, res) => res.json({ message: 'Service is up and running' }));
+router.use('/', (_, res) =>
+  res.json({ message: 'Service is up and running.' }),
+);
 
 // Middlewares
 router.use(notFoundHandler); // Must be placed after all routes

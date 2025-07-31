@@ -1,18 +1,18 @@
-import { JwtPayload } from '@/lib/jwt/types';
-import { passport } from '@/lib/passport';
-import { usersService } from '@/services/users.service';
-import { HttpError } from '@/utils/http-error';
-import { NextFunction, Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
+import { JwtPayload } from "@/lib/jwt/types";
+import { passport } from "@/lib/passport";
+import { usersService } from "@/services/users.service";
+import { HttpError } from "@/utils/http-error";
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 
 // Values
 const unauthorizedError = new HttpError({
-  message: 'Unauthorized',
+  message: "Unauthorized.",
   httpStatus: StatusCodes.UNAUTHORIZED,
 });
 
 const forbiddenError = new HttpError({
-  message: 'Forbidden',
+  message: "Forbidden.",
   httpStatus: StatusCodes.FORBIDDEN,
 });
 
@@ -20,7 +20,7 @@ export const authenticateWithPermission =
   (requiredPermission?: string) =>
   (req: Request, res: Response, next: NextFunction) =>
     passport.authenticate(
-      'jwt',
+      "jwt",
       { session: false },
       async (error: unknown, jwtPayload?: JwtPayload) => {
         // Failed: internal error
@@ -49,5 +49,5 @@ export const authenticateWithPermission =
           // Failed: users service error
           return next(err);
         }
-      },
+      }
     )(req, res, next);
