@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ZodError, ZodObject } from 'zod';
 
+// Types
 interface ValidateWithZodProps {
   params?: ZodObject;
   query?: ZodObject;
