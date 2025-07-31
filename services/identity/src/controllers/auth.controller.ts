@@ -1,8 +1,8 @@
 import { authService } from '@/features/auth/auth.service';
 import { VerifyEmailAuth } from '@/lib/zod/schemas/auth.schema';
-import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { controllerCatchAsync } from './utils/controller-catch-async';
 
 class AuthController {
   public register = controllerCatchAsync(
@@ -17,11 +17,9 @@ class AuthController {
 
   public resendEmailVerification = controllerCatchAsync(
     async (req: Request, res: Response) => {
-      const { targetEmail } = await authService.resendEmailVerification(
-        req.body,
-      );
+      const { email } = await authService.resendEmailVerification(req.body);
 
-      res.json({ message: `Verification email sent to ${targetEmail}.` });
+      res.json({ message: `Verification email sent to ${email}.` });
     },
   );
 
