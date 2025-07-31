@@ -1,6 +1,6 @@
 import { JWT_ACCESS_SECRET } from '@/config/env';
+import { JwtPayload } from '@/features/auth/types';
 import { usersService } from '@/features/users/users.service';
-import { JwtPayload } from '@/lib/jwt/types';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export const jwtStrategy = new Strategy(
@@ -12,7 +12,8 @@ export const jwtStrategy = new Strategy(
     try {
       const { id } = await usersService.get(payload.userId);
 
-      return done(null, { id }); // Succeeded: Attached values to "req.user"
+      // Succeeded: Attached values to "req.user"
+      return done(null, { id });
     } catch (err) {
       return done(err, false);
     }
