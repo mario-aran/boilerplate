@@ -1,6 +1,6 @@
 import { NODE_ENV } from '@/config/env';
 import { ROUTES } from '@/constants/routes';
-import { swaggerDocument } from '@/lib/swagger';
+import { swaggerDocument } from '@/lib/swagger/swagger-document';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
