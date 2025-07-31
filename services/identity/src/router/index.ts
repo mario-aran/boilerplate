@@ -65,7 +65,7 @@ router.use(ROUTES.AUTH, authRoute);
 router.use(ROUTES.ROLES, rolesRoute);
 router.use(ROUTES.PERMISSIONS, permissionsRoute);
 
-router.use(ROUTES.API, (_, res) =>
+router.get(ROUTES.API, (_, res) =>
   res.json({
     message: 'Identity service.',
     version: '1.0',
@@ -74,7 +74,7 @@ router.use(ROUTES.API, (_, res) =>
 );
 
 // Root routes
-router.use('/', (_, res) =>
+router.get('/', (_, res) =>
   res.json({ message: 'Service is up and running.' }),
 );
 

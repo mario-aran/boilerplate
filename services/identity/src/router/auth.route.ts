@@ -23,9 +23,9 @@ authRoute.post(
   authController.resendEmailVerification,
 );
 
-authRoute.post(
+authRoute.get(
   SEGMENTS.VERIFY_EMAIL,
-  validateWithZod({ body: verifyEmailAuthSchema }),
+  validateWithZod({ query: verifyEmailAuthSchema }),
   authController.verifyEmail,
 );
 
