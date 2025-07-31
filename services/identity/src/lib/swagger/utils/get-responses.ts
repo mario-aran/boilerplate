@@ -1,4 +1,4 @@
-export const generateUnprocessableResponse = () => ({
+export const getUnprocessableResponse = () => ({
   description: 'Object with message and validation errors',
   content: {
     'application/json': {
@@ -22,7 +22,7 @@ export const generateUnprocessableResponse = () => ({
   },
 });
 
-export const generateMessageResponse = (example: string) => ({
+export const getMessageResponse = (example: string) => ({
   description: 'Object with message',
   content: {
     'application/json': {
