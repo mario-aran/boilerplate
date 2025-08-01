@@ -9,12 +9,6 @@ import {
 import { ROUTES } from '@/constants/routes';
 import nodemailer from 'nodemailer';
 
-// Types
-interface SendEmailVerificationProps {
-  email: string;
-  token: string;
-}
-
 class EmailService {
   private transporter = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -22,10 +16,7 @@ class EmailService {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  public sendEmailVerification = async ({
-    email,
-    token,
-  }: SendEmailVerificationProps) => {
+  public sendEmailVerification = async (email: string, token: string) => {
     const tokenUrl = `${BASE_URL}${ROUTES.AUTH_VERIFY_EMAIL}?token=${token}`;
     await this.transporter.sendMail({
       from: VERIFY_EMAIL_FROM,
