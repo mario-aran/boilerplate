@@ -7,12 +7,12 @@ import { StatusCodes } from "http-status-codes";
 
 // Values
 const unauthorizedError = new HttpError({
-  message: "Unauthorized.",
+  message: "Unauthorized",
   httpStatus: StatusCodes.UNAUTHORIZED,
 });
 
 const forbiddenError = new HttpError({
-  message: "Forbidden.",
+  message: "Forbidden",
   httpStatus: StatusCodes.FORBIDDEN,
 });
 
