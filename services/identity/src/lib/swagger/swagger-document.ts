@@ -12,7 +12,7 @@ export const swaggerDocument = {
     title: 'API Documentation',
     version: '1.0.0',
   },
-  servers: [{ url: `${BASE_URL}/api`, description: 'api' }],
+  servers: [{ url: `${BASE_URL}/api` }],
   components: {
     securitySchemes: {
       [BEARER_AUTH]: {
