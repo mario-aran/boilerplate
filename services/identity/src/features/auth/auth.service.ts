@@ -13,22 +13,22 @@ import {
   signAccessToken,
   signEmailVerificationToken,
   signRefreshToken,
-  verifyEmailVerificationToken,
+  validateEmailVerificationToken,
 } from './utils/jwt-handlers';
 
 class AuthService {
   private emailAlreadyVerifiedError = new HttpError({
-    message: 'Email already verified.',
+    message: 'Email already verified',
     httpStatus: StatusCodes.CONFLICT,
   });
 
   private invalidCredentialsError = new HttpError({
-    message: 'Invalid credentials.',
+    message: 'Invalid credentials',
     httpStatus: StatusCodes.FORBIDDEN,
   });
 
   public verifyEmail = async ({ token }: VerifyEmailAuth) => {
-    const { userId } = verifyEmailVerificationToken(token);
+    const { userId } = validateEmailVerificationToken(token);
 
     const user = await usersService.get(userId);
     if (user.emailVerified && !user.pendingEmail)
@@ -46,10 +46,7 @@ class AuthService {
   public register = async (props: RegisterAuth) => {
     const { id, email } = await usersService.create(props);
 
-    const token = signEmailVerificationToken({ userId: id });
-    await emailService.sendEmailVerification({ email, token });
-
-    return { email };
+    return this.signTokenAndSendEmail(id, email);
   };
 
   public resendEmailVerification = async ({
@@ -60,10 +57,7 @@ class AuthService {
       throw this.emailAlreadyVerifiedError;
 
     const email = user.pendingEmail ?? user.email;
-    const token = signEmailVerificationToken({ userId: user.id });
-    await emailService.sendEmailVerification({ email, token });
-
-    return { email };
+    return this.signTokenAndSendEmail(user.id, email);
   };
 
   public login = async ({ email, password }: LoginAuth) => {
@@ -76,6 +70,13 @@ class AuthService {
     const accessToken = signAccessToken(payload);
     const refreshToken = signRefreshToken(payload);
     return { accessToken, refreshToken };
+  };
+
+  private signTokenAndSendEmail = async (userId: string, email: string) => {
+    const token = signEmailVerificationToken({ userId });
+    await emailService.sendEmailVerification(email, token);
+
+    return { email };
   };
 }
 
