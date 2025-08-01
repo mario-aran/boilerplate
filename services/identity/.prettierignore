@@ -1,4 +1,5 @@
 ## Add what's not present in ".gitignore"
 
 /resources
+/migrations
 pnpm-lock.yaml
