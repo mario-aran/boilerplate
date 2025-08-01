@@ -21,13 +21,13 @@ class UsersController {
     const result = await usersService.create(req.body);
     res
       .status(StatusCodes.CREATED)
-      .json({ message: `User ${result.email} created successfully.` });
+      .json({ message: `User ${result.email} created successfully` });
   });
 
   public update = controllerCatchAsync(
     async (req: Request<UserId>, res: Response) => {
       const result = await usersService.update(req.params, req.body);
-      res.json({ message: `User ${result.email} updated successfully.` });
+      res.json({ message: `User ${result.email} updated successfully` });
     }
   );
 
@@ -35,7 +35,7 @@ class UsersController {
     async (req: Request<UserId>, res: Response) => {
       const result = await usersService.updatePassword(req.params, req.body);
       res.json({
-        message: `Password for user ${result.email} updated successfully.`,
+        message: `Password for user ${result.email} updated successfully`,
       });
     }
   );
