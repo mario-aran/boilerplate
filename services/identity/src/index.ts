@@ -2,7 +2,7 @@
 
 import cors from 'cors';
 import express from 'express';
-import { PORT } from './config/env';
+import { BASE_URL, PORT } from './config/env';
 import { passportInit } from './features/auth/passport/passport-init';
 import { router } from './router';
 
@@ -17,7 +17,7 @@ app.use(router); // Must be placed last
 // Start the server
 app
   .listen(PORT, () => {
-    console.log(`Server running on port: ${PORT}`);
+    console.log(`Server running on: ${BASE_URL}`);
   })
   .on('error', (error) => {
     console.error(`Server failed to start: ${error}`);

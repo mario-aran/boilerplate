@@ -13,7 +13,7 @@ import { rolesRoute } from './roles.route';
 // Utils
 const notFoundHandler = (_: Request, _res: Response, next: NextFunction) =>
   next(
-    new HttpError({ message: 'Not found.', httpStatus: StatusCodes.NOT_FOUND }),
+    new HttpError({ message: 'Not found', httpStatus: StatusCodes.NOT_FOUND }),
   );
 
 const globalErrorHandler = (
@@ -23,14 +23,14 @@ const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
-  let httpStatus = StatusCodes.INTERNAL_SERVER_ERROR;
   let message = 'Server error';
+  let httpStatus = StatusCodes.INTERNAL_SERVER_ERROR;
   let validationErrors;
 
   // Http error values
   if (err instanceof HttpError) {
-    httpStatus = err.httpStatus;
     message = err.message;
+    httpStatus = err.httpStatus;
     validationErrors = err.validationErrors;
   }
 
@@ -38,13 +38,15 @@ const globalErrorHandler = (
   if (err instanceof DrizzleQueryError && err.cause && 'code' in err.cause) {
     switch (err.cause.code) {
       case '23503':
+        message = 'Foreign key constraint error';
         httpStatus = StatusCodes.CONFLICT;
-        message = 'Conflict error: Foreign key constraint.';
         break;
       case '23505':
+        message = 'Unique key constraint error';
         httpStatus = StatusCodes.CONFLICT;
-        message = 'Conflict error: Unique key constraint.';
         break;
+      default:
+        message = 'Database error';
     }
   }
 
@@ -66,16 +68,14 @@ router.use(ROUTES.PERMISSIONS, permissionsRoute);
 
 router.get(ROUTES.API, (_, res) =>
   res.json({
-    message: 'Identity service.',
+    message: 'Identity service',
     version: '1.0',
     docs: `${BASE_URL}${ROUTES.API_DOCS}`,
   }),
 );
 
 // Root routes
-router.get('/', (_, res) =>
-  res.json({ message: 'Service is up and running.' }),
-);
+router.get('/', (_, res) => res.json({ message: 'Service is up and running' }));
 
 // Middlewares
 router.use(notFoundHandler); // Must be placed after all routes
