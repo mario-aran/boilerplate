@@ -37,11 +37,11 @@ export const globalErrorHandler = (
   if (err instanceof DrizzleQueryError && err.cause && 'code' in err.cause) {
     switch (err.cause.code) {
       case '23503':
-        message = 'Foreign key constraint error';
+        message = 'Data relationship constraints';
         httpStatus = StatusCodes.CONFLICT;
         break;
       case '23505':
-        message = 'Unique key constraint error';
+        message = 'Data already exists';
         httpStatus = StatusCodes.CONFLICT;
         break;
       default:
