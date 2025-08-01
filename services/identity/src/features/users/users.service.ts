@@ -10,7 +10,7 @@ import { hashPassword } from './utils/hash-password';
 
 class UsersService {
   private userNotFoundError = new HttpError({
-    message: 'User not found.',
+    message: 'User not found',
     httpStatus: StatusCodes.NOT_FOUND,
   });
 
