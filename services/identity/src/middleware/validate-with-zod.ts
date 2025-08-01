@@ -30,7 +30,7 @@ export const validateWithZod =
         }));
         return next(
           new HttpError({
-            message: 'Unprocessable.',
+            message: 'Unprocessable',
             httpStatus: StatusCodes.UNPROCESSABLE_ENTITY,
             validationErrors,
           }),
