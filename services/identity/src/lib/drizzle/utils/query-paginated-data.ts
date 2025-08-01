@@ -50,12 +50,13 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     return isDesc ? desc(column) : asc(column);
   });
 
+  const offset = (currentPage - 1) * positiveLimit;
   const data = await db
     .select()
     .from(schema)
     .where(filters)
     .orderBy(...orderBy) // Spread orderBy as individual arguments
     .limit(positiveLimit)
-    .offset((currentPage - 1) * positiveLimit);
+    .offset(offset);
   return { data, ...results };
 };
