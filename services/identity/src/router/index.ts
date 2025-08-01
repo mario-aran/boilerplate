@@ -58,10 +58,7 @@ const globalErrorHandler = (
 // Router
 export const router = Router();
 
-// "swagger-ui-express" routes
-router.use(ROUTES.API_DOCS, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// Api routes
+// API routes
 router.use(ROUTES.AUTH, authRoute);
 router.use(ROUTES.ROLES, rolesRoute);
 router.use(ROUTES.PERMISSIONS, permissionsRoute);
@@ -73,6 +70,10 @@ router.get(ROUTES.API, (_, res) =>
     docs: `${BASE_URL}${ROUTES.API_DOCS}`,
   }),
 );
+
+// "swagger-ui-express" routes
+router.use(ROUTES.API_DOCS, swaggerUi.serve);
+router.get(ROUTES.API_DOCS, swaggerUi.setup(swaggerDocument));
 
 // Root routes
 router.get('/', (_, res) => res.json({ message: 'Service is up and running' }));
