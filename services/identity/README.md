@@ -8,8 +8,8 @@ This template was created manually.
 
 Prepare code
 
-- `pnpm run delete:ignored`: Delete ignored files
-- `pnpm run files:to-lf`: Convert files to LF
+- `pnpm run delete:ignored`: Delete git ignored files
+- `pnpm run files:to-lf`: Convert all files to LF
 - `cp .env.dev .env`: Create .env file
 
 Manage dependencies
@@ -20,24 +20,23 @@ Manage dependencies
 Format and lint code
 
 - `pnpm run format`: Formatter
-- `pnpm run lint`: Linter and typechecking
+- `pnpm run lint`: Linter and typechecker
 - `pnpm run build`: Build app and check compiler types
 
 Prepare database
 
-- `pnpm run db:generate`: Update migrations
+- `pnpm run db:generate`: Update migration files
 - `pnpm run db:migrate`: Run migrations
-- `pnpm run db:seed:dev`: Seed dev data
+- `pnpm run db:seed:dev`: Seed development data
 
 Testing
 
 - `pnpm run test`: Run tests
-- `pnpm run test:coverage`: Run coverage
+- `pnpm run test:coverage`: Run test coverage
 
 Launch app
 
 - `pnpm run dev`: Run app in development mode
-- "http://localhost:3000": Entrypoint
 
 ## Dependencies
 
@@ -52,20 +51,20 @@ Launch app
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
       @faker-js/faker
 - [x] express | @types/express
-      swagger-ui-express | @types/swagger-ui-express
+- [x] swagger-ui-express | @types/swagger-ui-express
 - [x] http-status-codes
 - [x] dotenv
 - [x] cors | @types/cors
 - [x] zod
+- [x] nodemailer | @types/nodemailer
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
       jsonwebtoken | @types/jsonwebtoken
       bcryptjs
-- [x] nodemailer | @types/nodemailer
 
 ## Configs
 
-- [x] resources/auth.postman_collection.json
+- [x] resources/identity.postman_collection.json
 - [x] .env.dev
 - [x] .gitignore
 - [x] .prettierignore | .prettierrc.json
