@@ -18,20 +18,20 @@ class RolesController {
 
   public create = async (req: Request, res: Response) => {
     const { id } = await rolesService.create(req.body);
-    res.json({ message: `Role ${id} created successfully.` });
+    res.json({ message: `Role ${id} created successfully` });
   };
 
   public update = controllerCatchAsync(
     async (req: Request<RoleId>, res: Response) => {
       const { id } = await rolesService.update(req.params.id, req.body);
-      res.json({ message: `Role ${id} updated successfully.` });
+      res.json({ message: `Role ${id} updated successfully` });
     },
   );
 
   public delete = controllerCatchAsync(
     async (req: Request<RoleId>, res: Response) => {
       const { id } = await rolesService.delete(req.params.id);
-      res.json({ message: `Role ${id} deleted successfully.` });
+      res.json({ message: `Role ${id} deleted successfully` });
     },
   );
 }
