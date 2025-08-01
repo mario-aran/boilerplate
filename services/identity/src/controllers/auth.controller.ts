@@ -11,7 +11,7 @@ class AuthController {
       res: Response,
     ) => {
       const { email } = await authService.verifyEmail(req.query);
-      res.json({ message: `Email ${email} verified successfully.` });
+      res.json({ message: `Email ${email} verified successfully` });
     },
   );
 
@@ -20,7 +20,7 @@ class AuthController {
       const { email } = await authService.register(req.body);
 
       res.status(StatusCodes.CREATED).json({
-        message: `Registration successful. Verification email sent to ${email}.`,
+        message: `Registration successful. Verification email sent to ${email}`,
       });
     },
   );
@@ -28,8 +28,7 @@ class AuthController {
   public resendEmailVerification = controllerCatchAsync(
     async (req: Request, res: Response) => {
       const { email } = await authService.resendEmailVerification(req.body);
-
-      res.json({ message: `Verification email sent to ${email}.` });
+      res.json({ message: `Verification email sent to ${email}` });
     },
   );
 
