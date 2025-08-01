@@ -15,7 +15,7 @@ export const USERS_TABLE_NAME = 'users';
 // Schema
 export const usersTable = pgTable(USERS_TABLE_NAME, {
   id,
-  roleId: varchar('user_role_id', { length: 255 })
+  roleId: varchar('role_id', { length: 255 })
     .default(SYSTEM_ROLES.USER)
     .notNull()
     .references(() => rolesTable.id),
