@@ -10,13 +10,13 @@ export const generateSortField = <T extends [string, ...string[]]>(
     .min(1)
     .max(100)
     .refine(
-      (values) => {
-        const colArray = values.map((val) =>
+      (vals) => {
+        const colArray = vals.map((val) =>
           val.startsWith('-') ? val.slice(1) : val,
         );
         return new Set(colArray).size === colArray.length;
       },
-      { message: 'Array must not contain duplicate values.' },
+      { message: 'Array must not contain duplicate values' },
     );
 
   return z
