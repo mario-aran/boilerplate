@@ -24,12 +24,3 @@ Check
 Installers
 
 - `kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.31/deploy/local-path-storage.yaml`: Allow persistent volumes
-
-## To-do
-
-- [ ] finish swagger paths | swagger sort props class
-- [ ] add db connection error handler with retry? investigate retry
-- [ ] super_admin permissions in api
-- [ ] winston + morgan logger
-- [ ] tests with supertest
-- [ ] google auth
