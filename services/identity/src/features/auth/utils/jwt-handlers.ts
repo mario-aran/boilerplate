@@ -17,12 +17,12 @@ export const signAccessToken = (payload: JwtPayload) =>
 export const signRefreshToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' });
 
-export const verifyEmailVerificationToken = (token: string) => {
+export const validateEmailVerificationToken = (token: string) => {
   try {
     return jwt.verify(token, JWT_EMAIL_VERIFICATION_SECRET) as JwtPayload;
   } catch {
     throw new HttpError({
-      message: 'Invalid token.',
+      message: 'Invalid token',
       httpStatus: StatusCodes.UNAUTHORIZED,
     });
   }
