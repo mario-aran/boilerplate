@@ -38,7 +38,7 @@ class AuthService {
       emailVerifiedAt: new Date(),
       pendingEmail: null,
       emailVerified: !user.emailVerified ? true : undefined,
-      email: user.pendingEmail ?? undefined,
+      email: user.pendingEmail || undefined,
     });
     return { email };
   };
