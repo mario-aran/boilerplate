@@ -34,6 +34,8 @@ class UsersSeedService {
       {
         roleId: SYSTEM_ROLES.SUPER_ADMIN,
         email: 'superadmin@superadmin.com',
+        emailVerified: true,
+        emailVerifiedAt: new Date(),
         password: SYSTEM_ROLES.SUPER_ADMIN,
       },
     ]);
