@@ -13,7 +13,7 @@ import { StatusCodes } from 'http-status-codes';
 
 class RolesService {
   private roleNotFoundError = new HttpError({
-    message: 'Role not found.',
+    message: 'Role not found',
     httpStatus: StatusCodes.NOT_FOUND,
   });
 
