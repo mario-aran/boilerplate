@@ -12,7 +12,7 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
   filters?: SQL<unknown>;
   limit?: number;
   page?: number;
-  sort?: string[];
+  sort?: string | string[];
 }
 
 export const queryPaginatedData = async <T extends AnyPgTable>({
@@ -43,7 +43,8 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   if (!total) return { data: [], ...results };
 
   // Query data
-  const orderBy = sort.map((el) => {
+  const sortArr = Array.isArray(sort) ? sort : [sort];
+  const orderBy = sortArr.map((el) => {
     const isDesc = el.startsWith('-');
     const field = (isDesc ? el.slice(1) : el) as keyof typeof schema;
     const column = schema[field] as AnyPgColumn;
