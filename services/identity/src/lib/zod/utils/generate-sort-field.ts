@@ -19,7 +19,5 @@ export const generateSortField = <T extends [string, ...string[]]>(
       { message: 'Array must not contain duplicate values' },
     );
 
-  return z
-    .union([field, fields])
-    .transform((el) => (Array.isArray(el) ? el : [el]));
+  return z.union([field, fields]);
 };
