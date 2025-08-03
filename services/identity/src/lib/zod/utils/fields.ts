@@ -9,7 +9,7 @@ export const stringToPositiveInt = z
   .pipe(positiveInt);
 
 export const text = z.string().trim().min(1).max(60);
-export const textId = noSpaces(lowerAlphanumUnder(z.string().min(4).max(12)));
+export const textId = noSpaces(lowerAlphanumUnder(z.string().min(4).max(40)));
 export const uuid = z.uuid();
 export const token = noSpaces(z.string().min(1));
 export const email = z.email().min(5).max(60);
