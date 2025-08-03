@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "bullmq": "^5.56.9",
     "cors": "^2.8.5",
     "drizzle-orm": "^0.44.4",
     "express": "^5.1.0",

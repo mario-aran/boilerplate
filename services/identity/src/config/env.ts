@@ -23,6 +23,7 @@ export const JWT_EMAIL_VERIFICATION_SECRET = getEnv(
 );
 
 export const DATABASE_URL = getEnv('DATABASE_URL');
+export const REDIS_URL = getEnv('REDIS_URL');
 export const SMTP_HOST = getEnv('SMTP_HOST');
 export const SMTP_PORT = Number(getEnv('SMTP_PORT'));
 export const SMTP_USER = getEnv('SMTP_USER');
