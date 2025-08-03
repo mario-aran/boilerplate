@@ -13,6 +13,9 @@ export type UpdateRole = z.infer<typeof updateRoleSchema>;
 
 // Fields
 const id = textId;
+const permissionIds = noDuplicateStrs(
+  z.enum(PERMISSION_VALUES).array().max(PERMISSION_VALUES.length),
+);
 
 // Schemas
 export const roleIdSchema = z.strictObject({ id });
@@ -27,11 +30,4 @@ export const getAllRolesSchema = z
   .partial();
 
 export const createRoleSchema = z.strictObject({ id });
-
-export const updateRoleSchema = z
-  .strictObject({
-    permissionIds: noDuplicateStrs(
-      textId.array().max(PERMISSION_VALUES.length),
-    ),
-  })
-  .partial();
+export const updateRoleSchema = z.strictObject({ permissionIds }).partial();
