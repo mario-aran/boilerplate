@@ -1,234 +1,412 @@
 {
-  "info": {
-    "_postman_id": "ac5a8c6a-b699-4cc7-8757-71a9674f4380",
-    "name": "auth",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "29984797"
-  },
-  "item": [
-    {
-      "name": "root",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000"
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "authLogin",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\": \"superadmin@superadmin.com\",\r\n    \"password\": \"12345678\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/api/v1/auth/login",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["api", "v1", "auth", "login"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "permissionsGetAll",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/api/v1/permissions",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["api", "v1", "permissions"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "usersGetAll",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/api/users",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["api", "users"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "usersGet",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/api/users/{id}",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["api", "users", "{id}"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "usersCreate",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"firstName\": \"Mario\",\r\n    \"lastName\": \"Arancibia\",\r\n    \"email\": \"mario.arancibia.jimenez@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/api/users",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["api", "users"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "usersUpdate",
-      "request": {
-        "method": "PATCH",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"firstName\": \"Victoria\",\r\n    \"lastName\": \"Steuber-Schowalter\",\r\n    \"email\": \"Nikko_Schneider72@yahoo.com\",\r\n    \"userRoleId\": \"DEFAULT\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/api/users/0d7ee3a1-5328-45dc-a45f-4f8315b53bb4",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["api", "users", "0d7ee3a1-5328-45dc-a45f-4f8315b53bb4"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "usersUpdatePassword",
-      "request": {
-        "method": "PATCH",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"password\": \"12345678\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/api/users/0d7ee3a1-5328-45dc-a45f-4f8315b53bb4/password",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": [
-            "api",
-            "users",
-            "0d7ee3a1-5328-45dc-a45f-4f8315b53bb4",
-            "password"
-          ]
-        }
-      },
-      "response": []
-    }
-  ],
-  "auth": {
-    "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{bearerToken}}",
-        "type": "string"
-      }
-    ]
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [""]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [""]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "bearerToken",
-      "value": "",
-      "type": "default"
-    },
-    {
-      "key": "userRoleId",
-      "value": "superadmin",
-      "type": "string"
-    }
-  ]
+	"info": {
+		"_postman_id": "226a108b-7d2a-40c6-b6d7-9fa543a50fbb",
+		"name": "identity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29984797"
+	},
+	"item": [
+		{
+			"name": "/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api-docs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api-docs",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api-docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/auth/verify-email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/verify-email?token={{emailVerificationToken}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"verify-email"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{emailVerificationToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/auth/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"Test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/auth/resend-email-verification",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currentEmail\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/resend-email-verification",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"resend-email-verification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/roles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/roles?limit=1&page=1&search=user&sort=-createdAt&sort=-updatedAt&sort=id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"roles"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "search",
+							"value": "user"
+						},
+						{
+							"key": "sort",
+							"value": "-createdAt"
+						},
+						{
+							"key": "sort",
+							"value": "-updatedAt"
+						},
+						{
+							"key": "sort",
+							"value": "id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/roles/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/roles/{{roleId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"roles",
+						"{{roleId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/roles",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{roleId}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/roles",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/roles/{id}",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"permissionIds\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/roles/{{roleId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"roles",
+						"{{roleId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/roles/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/roles/{{roleId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"roles",
+						"{{roleId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/permissions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/permissions?limit=1&page=1&search=read&sort=-createdAt&sort=-updatedAt&sort=id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"permissions"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "search",
+							"value": "read"
+						},
+						{
+							"key": "sort",
+							"value": "-createdAt"
+						},
+						{
+							"key": "sort",
+							"value": "-updatedAt"
+						},
+						{
+							"key": "sort",
+							"value": "id"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "emailVerificationToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwZGQ5MjdjYS0xZjE1LTQ5NzItYjRkZi01NDVjYzczNTE2MDAiLCJpYXQiOjE3NTQwNzcwODgsImV4cCI6MTc1NDE2MzQ4OH0.J3rzN1UyMUgE1RCLrmdwkQC7NQQMHMKnZoGgcwu19ZU",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJiYzk4Y2JjLWVmZWItNGNhYS05YTY1LTY1Njk3Nzg3N2IzMiIsImlhdCI6MTc0ODM3NDIzNSwiZXhwIjoxNzQ4Mzc3ODM1fQ.hP_GqlN3NerL58pN32OGCqNPCXjpZBIQJ80XHCU3K8s",
+			"type": "default"
+		},
+		{
+			"key": "email",
+			"value": "test@test.com",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "12345678",
+			"type": "string"
+		},
+		{
+			"key": "roleId",
+			"value": "test",
+			"type": "string"
+		}
+	]
 }
