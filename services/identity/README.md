@@ -56,11 +56,12 @@ Launch app
 - [x] dotenv
 - [x] cors | @types/cors
 - [x] zod
-- [x] nodemailer | @types/nodemailer
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
       jsonwebtoken | @types/jsonwebtoken
       bcryptjs
+- [x] bullmq | ioredis
+- [x] nodemailer | @types/nodemailer
 
 ## Configs
 
