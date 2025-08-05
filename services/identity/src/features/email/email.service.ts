@@ -21,13 +21,13 @@ class EmailService {
     email,
     token,
   }: EmailVerificationProps) => {
-    const tokenUrl = `${BASE_URL}${ROUTES.AUTH_VERIFY_EMAIL}?token=${token}`;
+    const tokenUrl = `${BASE_URL}${ROUTES.API_AUTH_VERIFY_EMAIL}?token=${token}`;
 
     await this.transporter.sendMail({
       from: VERIFY_EMAIL_FROM,
       to: email,
-      subject: 'Verify your email address',
-      text: `Please verify your email by visiting this URL: ${tokenUrl}`,
+      subject: 'Verify your email',
+      text: `Please verify your email address by visiting: ${tokenUrl}`,
     });
   };
 }
