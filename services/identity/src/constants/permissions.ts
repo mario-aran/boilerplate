@@ -1,5 +1,5 @@
 // Types
-type Permissions = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
+export type Permissions = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
 
 // Constants
 export const PERMISSIONS = {
