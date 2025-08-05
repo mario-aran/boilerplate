@@ -8,9 +8,8 @@ class EmailQueueService {
     connection,
   });
 
-  public enqueueEmailVerification = async (props: EmailVerificationProps) => {
-    await this.emailVerificationQueue.add(QUEUES.EMAIL_VERIFICATION, props);
-  };
+  public enqueueEmailVerification = async (props: EmailVerificationProps) =>
+    this.emailVerificationQueue.add(QUEUES.EMAIL_VERIFICATION, props);
 }
 
 export const emailQueueService = new EmailQueueService();
