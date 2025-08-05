@@ -1,4 +1,4 @@
-import { emailService } from '@/features/email/email.service';
+import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
 import {
   LoginAuth,
@@ -46,7 +46,7 @@ class AuthService {
   public register = async (props: RegisterAuth) => {
     const { id, email } = await usersService.create(props);
 
-    await this.signAndEnqueueEmail(id, email);
+    await this.signAndEnqueueEmailVerification(id, email);
 
     return { email };
   };
@@ -59,7 +59,7 @@ class AuthService {
       throw this.emailAlreadyVerifiedError;
 
     const email = user.pendingEmail ?? user.email;
-    await this.signAndEnqueueEmail(user.id, email);
+    await this.signAndEnqueueEmailVerification(user.id, email);
 
     return { email };
   };
@@ -76,9 +76,12 @@ class AuthService {
     return { accessToken, refreshToken };
   };
 
-  private signAndEnqueueEmail = async (userId: string, email: string) => {
+  private signAndEnqueueEmailVerification = async (
+    userId: string,
+    email: string,
+  ) => {
     const token = signEmailVerificationToken({ userId });
-    await emailService.enqueueEmailVerification({ email, token });
+    await emailQueueService.enqueueEmailVerification({ email, token });
   };
 }
 
