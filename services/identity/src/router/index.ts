@@ -11,24 +11,26 @@ import { rolesRoute } from './roles.route';
 export const router = Router();
 
 // Root routes
-router.get('/', (_, res) => res.json({ message: 'Service is up and running' }));
+router.get('/', (_, res) => {
+  res.json({ message: 'Service is up and running' });
+});
 
 // "swagger-ui-express" routes
 router.use(ROUTES.API_DOCS, swaggerUi.serve);
 router.get(ROUTES.API_DOCS, swaggerUi.setup(swaggerDocument));
 
 // API routes
-router.get(ROUTES.API, (_, res) =>
+router.get(ROUTES.API, (_, res) => {
   res.json({
     message: 'Identity service',
     version: '1.0',
     docs: `${BASE_URL}${ROUTES.API_DOCS}`,
-  }),
-);
+  });
+});
 
-router.use(ROUTES.AUTH, authRoute);
-router.use(ROUTES.ROLES, rolesRoute);
-router.use(ROUTES.PERMISSIONS, permissionsRoute);
+router.use(ROUTES.API_AUTH, authRoute);
+router.use(ROUTES.API_ROLES, rolesRoute);
+router.use(ROUTES.API_PERMISSIONS, permissionsRoute);
 
-// Middlewares: Must be placed after all routes
-router.use(notFound);
+// Middlewares
+router.use(notFound); // Must be placed after all routes
