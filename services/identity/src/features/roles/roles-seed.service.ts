@@ -2,18 +2,16 @@ import { PERMISSION_VALUES } from '@/constants/permissions';
 import { SYSTEM_ROLE_VALUES, SYSTEM_ROLES } from '@/constants/system-roles';
 import { db } from '@/lib/drizzle/db';
 import {
-  ROLES_TABLE_NAME,
-  ROLES_TO_PERMISSIONS_TABLE_NAME,
   rolesTable,
   rolesToPermissionsTable,
   RoleToPermissionInsert,
 } from '@/lib/drizzle/schemas';
-import { getSeedMessage } from '@/utils/get-seed-message';
 
 class RolesSeedService {
   public seedSystemData = async () => {
-    await this.seed();
-    await this.seedPermissions();
+    const createdIds = await this.seed();
+    const createdPermissionIds = await this.seedPermissions();
+    return { createdIds, createdPermissionIds };
   };
 
   private seed = async () => {
@@ -23,9 +21,7 @@ class RolesSeedService {
       .onConflictDoNothing()
       .returning({ id: rolesTable.id });
 
-    const createdKeys = createdRecords.map(({ id }) => id);
-    const seedMessage = getSeedMessage(ROLES_TABLE_NAME, createdKeys);
-    console.log(seedMessage);
+    return createdRecords.map(({ id }) => id);
   };
 
   private seedPermissions = async () => {
@@ -42,14 +38,9 @@ class RolesSeedService {
       .onConflictDoNothing()
       .returning();
 
-    const createdKeys = createdRecords.map(
+    return createdRecords.map(
       ({ roleId, permissionId }) => `${roleId}.${permissionId}`,
     );
-    const seedMessage = getSeedMessage(
-      ROLES_TO_PERMISSIONS_TABLE_NAME,
-      createdKeys,
-    );
-    console.log(seedMessage);
   };
 }
 
