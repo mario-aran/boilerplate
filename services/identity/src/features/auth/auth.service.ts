@@ -16,6 +16,12 @@ import {
   validateEmailVerificationToken,
 } from './utils/jwt-handlers';
 
+// Types
+interface SignAndEnqueueEmailVerificationProps {
+  userId: string;
+  email: string;
+}
+
 class AuthService {
   private emailAlreadyVerifiedError = new HttpError({
     message: 'Email already verified',
@@ -46,7 +52,7 @@ class AuthService {
   public register = async (props: RegisterAuth) => {
     const { id, email } = await usersService.create(props);
 
-    await this.signAndEnqueueEmailVerification(id, email);
+    await this.signAndEnqueueEmailVerification({ userId: id, email });
 
     return { email };
   };
@@ -59,7 +65,7 @@ class AuthService {
       throw this.emailAlreadyVerifiedError;
 
     const email = user.pendingEmail ?? user.email;
-    await this.signAndEnqueueEmailVerification(user.id, email);
+    await this.signAndEnqueueEmailVerification({ userId: user.id, email });
 
     return { email };
   };
@@ -76,10 +82,10 @@ class AuthService {
     return { accessToken, refreshToken };
   };
 
-  private signAndEnqueueEmailVerification = async (
-    userId: string,
-    email: string,
-  ) => {
+  private signAndEnqueueEmailVerification = async ({
+    userId,
+    email,
+  }: SignAndEnqueueEmailVerificationProps) => {
     const token = signEmailVerificationToken({ userId });
     await emailQueueService.enqueueEmailVerification({ email, token });
   };
