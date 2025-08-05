@@ -46,7 +46,9 @@ class AuthService {
   public register = async (props: RegisterAuth) => {
     const { id, email } = await usersService.create(props);
 
-    return this.signTokenAndSendEmail(id, email);
+    await this.signAndEnqueueEmail(id, email);
+
+    return { email };
   };
 
   public resendEmailVerification = async ({
@@ -57,7 +59,9 @@ class AuthService {
       throw this.emailAlreadyVerifiedError;
 
     const email = user.pendingEmail ?? user.email;
-    return this.signTokenAndSendEmail(user.id, email);
+    await this.signAndEnqueueEmail(user.id, email);
+
+    return { email };
   };
 
   public login = async ({ email, password }: LoginAuth) => {
@@ -72,11 +76,9 @@ class AuthService {
     return { accessToken, refreshToken };
   };
 
-  private signTokenAndSendEmail = async (userId: string, email: string) => {
+  private signAndEnqueueEmail = async (userId: string, email: string) => {
     const token = signEmailVerificationToken({ userId });
-    await emailService.sendEmailVerification(email, token);
-
-    return { email };
+    await emailService.enqueueEmailVerification({ email, token });
   };
 }
 
