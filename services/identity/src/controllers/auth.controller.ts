@@ -18,6 +18,7 @@ class AuthController {
   public register = controllerCatchAsync(
     async (req: Request, res: Response) => {
       const { email } = await authService.register(req.body);
+
       res.status(StatusCodes.CREATED).json({
         message: `Registration successful. Verification will be sent to ${email} shortly`,
       });
