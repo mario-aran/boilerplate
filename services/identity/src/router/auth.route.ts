@@ -6,31 +6,31 @@ import {
   resendEmailVerificationAuthSchema,
   verifyEmailAuthSchema,
 } from '@/lib/zod/schemas/auth.schema';
-import { validateWithZod } from '@/middleware/validate-with-zod';
+import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
 export const authRoute = Router();
 
 authRoute.get(
   SEGMENTS.VERIFY_EMAIL,
-  validateWithZod({ query: verifyEmailAuthSchema }),
+  zodValidator({ query: verifyEmailAuthSchema }),
   authController.verifyEmail,
 );
 
 authRoute.post(
   SEGMENTS.REGISTER,
-  validateWithZod({ body: registerAuthSchema }),
+  zodValidator({ body: registerAuthSchema }),
   authController.register,
 );
 
 authRoute.post(
   SEGMENTS.RESEND_EMAIL_VERIFICATION,
-  validateWithZod({ body: resendEmailVerificationAuthSchema }),
+  zodValidator({ body: resendEmailVerificationAuthSchema }),
   authController.resendEmailVerification,
 );
 
 authRoute.post(
   SEGMENTS.LOGIN,
-  validateWithZod({ body: loginAuthSchema }),
+  zodValidator({ body: loginAuthSchema }),
   authController.login,
 );

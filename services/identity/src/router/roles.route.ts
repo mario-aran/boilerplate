@@ -6,37 +6,37 @@ import {
   roleIdSchema,
   updateRoleSchema,
 } from '@/lib/zod/schemas/roles.schema';
-import { validateWithZod } from '@/middleware/validate-with-zod';
+import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
 export const rolesRoute = Router();
 
 rolesRoute.get(
   '/',
-  validateWithZod({ query: getAllRolesSchema }),
+  zodValidator({ query: getAllRolesSchema }),
   rolesController.getAll,
 );
 
 rolesRoute.get(
   SEGMENTS.ID,
-  validateWithZod({ params: roleIdSchema }),
+  zodValidator({ params: roleIdSchema }),
   rolesController.get,
 );
 
 rolesRoute.post(
   '/',
-  validateWithZod({ body: createRoleSchema }),
+  zodValidator({ body: createRoleSchema }),
   rolesController.create,
 );
 
 rolesRoute.patch(
   SEGMENTS.ID,
-  validateWithZod({ params: roleIdSchema, body: updateRoleSchema }),
+  zodValidator({ params: roleIdSchema, body: updateRoleSchema }),
   rolesController.update,
 );
 
 rolesRoute.delete(
   SEGMENTS.ID,
-  validateWithZod({ params: roleIdSchema }),
+  zodValidator({ params: roleIdSchema }),
   rolesController.delete,
 );
