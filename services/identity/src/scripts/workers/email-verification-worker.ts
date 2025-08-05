@@ -8,8 +8,8 @@ export const startEmailVerificationWorker = () => {
   // Start worker
   const worker = new Worker(
     QUEUES.EMAIL_VERIFICATION,
-    async ({ data }) => {
-      await emailService.processEmailVerification(data);
+    async (job) => {
+      await emailService.sendEmailVerification(job.data);
     },
     { connection },
   );
