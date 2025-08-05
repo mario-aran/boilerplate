@@ -18,7 +18,9 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed:dev": "tsx src/scripts/seeds/seed-dev.ts",
-    "db:seed:prod": "node dist/scripts/seeds/seed-prod.js"
+    "db:seed:prod": "node dist/scripts/seeds/seed-prod.js",
+    "workers:dev": "tsx src/scripts/workers/index.ts",
+    "workers:prod": "node dist/scripts/workers/index.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -29,11 +31,13 @@
     "http-status-codes": "^2.3.0",
     "ioredis": "^5.7.0",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
     "nodemailer": "^7.0.5",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.16.3",
     "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0",
     "zod": "^4.0.14"
   },
   "devDependencies": {
@@ -42,6 +46,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^24.2.0",
     "@types/nodemailer": "^6.4.17",
     "@types/passport": "^1.0.17",

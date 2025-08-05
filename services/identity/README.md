@@ -62,6 +62,7 @@ Launch app
       bcryptjs
 - [x] bullmq | ioredis
 - [x] nodemailer | @types/nodemailer
+- [x] winston | morgan | @types/morgan
 
 ## Configs
 
