@@ -13,7 +13,7 @@ export const startEmailVerificationWorker = () => {
     },
     { connection },
   );
-  logger.info('Email verification worker started');
+  logger.info(`${QUEUES.EMAIL_VERIFICATION} worker started`);
 
   // Events
   worker.on('completed', (job) => {
