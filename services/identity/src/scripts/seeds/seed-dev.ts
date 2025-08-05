@@ -5,6 +5,7 @@ import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert } from '@/lib/drizzle/schemas';
+import { logger } from '@/lib/winston/logger';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { faker } from '@faker-js/faker';
 import { seedSystemData } from './utils/seed-system-data';
@@ -25,7 +26,7 @@ const truncateTables = async () => {
     selectTableNamesQuery,
   );
   if (!rows.length) {
-    console.log('No tables to truncate');
+    logger.info('No tables to truncate');
     return;
   }
 
@@ -36,7 +37,7 @@ const truncateTables = async () => {
     CASCADE;
   `;
   await db.execute(truncateTablesQuery);
-  console.log(`${joinedTableNames} tables truncated successfully`);
+  logger.info(`${joinedTableNames} tables truncated successfully`);
 };
 
 const seedDev = async () => {
