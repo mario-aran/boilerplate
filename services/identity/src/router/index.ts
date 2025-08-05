@@ -1,9 +1,8 @@
 import { BASE_URL } from '@/config/env';
 import { ROUTES } from '@/constants/routes';
 import { swaggerDocument } from '@/lib/swagger/swagger-document';
-import { HttpError } from '@/utils/http-error';
+import { notFound } from '@/middleware/not-found';
 import { Router } from 'express';
-import { StatusCodes } from 'http-status-codes';
 import swaggerUi from 'swagger-ui-express';
 import { authRoute } from './auth.route';
 import { permissionsRoute } from './permissions.route';
@@ -31,9 +30,5 @@ router.use(ROUTES.AUTH, authRoute);
 router.use(ROUTES.ROLES, rolesRoute);
 router.use(ROUTES.PERMISSIONS, permissionsRoute);
 
-// Not found middleware: must be placed after all routes
-router.use((_, _res, next) =>
-  next(
-    new HttpError({ message: 'Not found', httpStatus: StatusCodes.NOT_FOUND }),
-  ),
-);
+// Middlewares: must be placed after all routes
+router.use(notFound);
