@@ -52,9 +52,10 @@ Launch app
       @faker-js/faker
 - [x] express | @types/express
 - [x] swagger-ui-express | @types/swagger-ui-express
-- [x] http-status-codes
+- [x] winston | morgan | @types/morgan
 - [x] dotenv
 - [x] cors | @types/cors
+- [x] http-status-codes
 - [x] zod
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
@@ -62,7 +63,6 @@ Launch app
       bcryptjs
 - [x] bullmq | ioredis
 - [x] nodemailer | @types/nodemailer
-- [x] winston | morgan | @types/morgan
 
 ## Configs
 
