@@ -11,7 +11,7 @@ export default tseslint.config([
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022, // Should match target version in "tsconfig.json"
-      globals: globals.node, // Environment: browser or node
+      globals: globals.node, // Environment: "browser" or "node"
     },
     extends: [
       eslint.configs.recommended,

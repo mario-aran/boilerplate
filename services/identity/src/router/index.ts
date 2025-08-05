@@ -30,5 +30,5 @@ router.use(ROUTES.AUTH, authRoute);
 router.use(ROUTES.ROLES, rolesRoute);
 router.use(ROUTES.PERMISSIONS, permissionsRoute);
 
-// Middlewares: must be placed after all routes
+// Middlewares: Must be placed after all routes
 router.use(notFound);
