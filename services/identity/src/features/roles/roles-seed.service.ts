@@ -8,13 +8,7 @@ import {
 } from '@/lib/drizzle/schemas';
 
 class RolesSeedService {
-  public seedSystemData = async () => {
-    const createdIds = await this.seed();
-    const createdPermissionIds = await this.seedPermissions();
-    return { createdIds, createdPermissionIds };
-  };
-
-  private seed = async () => {
+  public seed = async () => {
     const createdRecords = await db
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
@@ -24,7 +18,7 @@ class RolesSeedService {
     return createdRecords.map(({ id }) => id);
   };
 
-  private seedPermissions = async () => {
+  public seedPermissions = async () => {
     const createdRecords = await db
       .insert(rolesToPermissionsTable)
       .values(

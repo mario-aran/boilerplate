@@ -4,7 +4,7 @@ import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { hashPassword } from './utils/hash-password';
 
 class UsersSeedService {
-  public seed = async (users: UserInsert[]) => {
+  public seedUsers = async (users: UserInsert[]) => {
     const hashedUserPromises = users.map(({ password, ...restOfUser }) =>
       hashPassword(password).then((hashedPassword) => ({
         ...restOfUser,
@@ -22,8 +22,8 @@ class UsersSeedService {
     return createdRecords.map(({ email }) => email);
   };
 
-  public seedSystemData = async () =>
-    this.seed([
+  public seed = async () =>
+    this.seedUsers([
       {
         roleId: SYSTEM_ROLES.SUPER_ADMIN,
         email: 'superadmin@superadmin.com',
