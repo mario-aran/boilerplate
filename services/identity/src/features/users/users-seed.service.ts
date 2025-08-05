@@ -1,11 +1,6 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { db } from '@/lib/drizzle/db';
-import {
-  UserInsert,
-  USERS_TABLE_NAME,
-  usersTable,
-} from '@/lib/drizzle/schemas';
-import { getSeedMessage } from '@/utils/get-seed-message';
+import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { hashPassword } from './utils/hash-password';
 
 class UsersSeedService {
@@ -24,9 +19,7 @@ class UsersSeedService {
       .onConflictDoNothing()
       .returning({ email: usersTable.email });
 
-    const createdKeys = createdRecords.map(({ email }) => email);
-    const seedMessage = getSeedMessage(USERS_TABLE_NAME, createdKeys);
-    console.log(seedMessage);
+    return createdRecords.map(({ email }) => email);
   };
 
   public seedSystemData = async () =>
