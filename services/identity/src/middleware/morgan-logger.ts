@@ -1,6 +1,7 @@
 import { logger } from '@/lib/winston/logger';
 import morgan from 'morgan';
 
-export const morganLogger = morgan('combined', {
-  stream: { write: (message) => logger.info(message.trim()) },
-});
+export const morganLogger = morgan(
+  ':method :url :status :res[content-length] - :response-time ms',
+  { stream: { write: (message) => logger.http(message) } },
+);
