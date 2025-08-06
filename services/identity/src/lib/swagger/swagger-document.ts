@@ -1,10 +1,11 @@
 import { BASE_URL } from '@/config/env';
 import { BEARER_AUTH } from '@/lib/swagger/constants';
 import { StatusCodes } from 'http-status-codes';
+import { authPaths } from './paths/auth-paths';
 import {
   getMessageResponse,
   getUnprocessableResponse,
-} from './utils/get-responses';
+} from './utils/responses';
 
 export const swaggerDocument = {
   openapi: '3.0.0',
@@ -27,5 +28,7 @@ export const swaggerDocument = {
       [StatusCodes.UNPROCESSABLE_ENTITY]: getUnprocessableResponse(),
     },
   },
-  paths: {},
+  paths: {
+    ...authPaths,
+  },
 };
