@@ -4,11 +4,11 @@ import { NODE_ENV } from '@/config/env';
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
 import { db } from '@/lib/drizzle/db';
-import { UserInsert } from '@/lib/drizzle/schemas';
+import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
 import { logger } from '@/lib/winston/logger';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { faker } from '@faker-js/faker';
-import { seedSystemData } from './utils/seed-system-data';
+import { logSeedMessage, seedSystemData } from './utils';
 
 // Guards
 if (NODE_ENV === 'production')
@@ -40,10 +40,7 @@ const truncateTables = async () => {
   logger.info(`${joinedTableNames} tables truncated successfully`);
 };
 
-const seedDev = async () => {
-  await truncateTables();
-  await seedSystemData();
-
+const seedFakeUsers = async () => {
   const mockedUsers = faker.helpers.uniqueArray(faker.internet.email, 20).map(
     (email): UserInsert => ({
       email,
@@ -53,7 +50,14 @@ const seedDev = async () => {
       roleId: SYSTEM_ROLES.USER,
     }),
   );
-  await usersSeedService.seed(mockedUsers);
+  const { createdKeys } = await usersSeedService.seedUsers(mockedUsers);
+  logSeedMessage(USERS_TABLE_NAME, createdKeys);
+};
+
+const seedDev = async () => {
+  await truncateTables();
+  await seedSystemData();
+  await seedFakeUsers();
 };
 
 // Run script
