@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1753815161372,
-      "tag": "0000_curly_chamber",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1754071359015,
-      "tag": "0001_nasty_smasher",
+      "when": 1754453070572,
+      "tag": "0000_bouncy_black_bird",
       "breakpoints": true
     }
   ]

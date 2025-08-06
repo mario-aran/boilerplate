@@ -1,5 +1,5 @@
 {
-  "id": "18a27c95-b81f-4551-a8e4-a50e8312053a",
+  "id": "3b323d83-732e-4715-8e0c-3b89cf13bd94",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -74,8 +74,12 @@
           "name": "roles_to_permissions_role_id_roles_id_fk",
           "tableFrom": "roles_to_permissions",
           "tableTo": "roles",
-          "columnsFrom": ["role_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "role_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -83,8 +87,12 @@
           "name": "roles_to_permissions_permission_id_permissions_id_fk",
           "tableFrom": "roles_to_permissions",
           "tableTo": "permissions",
-          "columnsFrom": ["permission_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "permission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -92,7 +100,10 @@
       "compositePrimaryKeys": {
         "roles_to_permissions_role_id_permission_id_pk": {
           "name": "roles_to_permissions_role_id_permission_id_pk",
-          "columns": ["role_id", "permission_id"]
+          "columns": [
+            "role_id",
+            "permission_id"
+          ]
         }
       },
       "uniqueConstraints": {},
@@ -144,8 +155,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "user_role_id": {
-          "name": "user_role_id",
+        "role_id": {
+          "name": "role_id",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
@@ -211,12 +222,16 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "users_user_role_id_roles_id_fk": {
-          "name": "users_user_role_id_roles_id_fk",
+        "users_role_id_roles_id_fk": {
+          "name": "users_role_id_roles_id_fk",
           "tableFrom": "users",
           "tableTo": "roles",
-          "columnsFrom": ["user_role_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "role_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -226,7 +241,9 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": ["email"]
+          "columns": [
+            "email"
+          ]
         }
       },
       "policies": {},
