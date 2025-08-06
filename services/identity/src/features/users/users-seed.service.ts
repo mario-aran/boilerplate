@@ -1,10 +1,10 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
-import { hashPassword } from './utils/bcrypt-handlers';
+import { hashPassword } from './utils/hash-password';
 
 class UsersSeedService {
-  public seedUsers = async (props: UserInsert[]) => {
+  async seedUsers(props: UserInsert[]) {
     const hashedUserPromises = props.map(({ password, ...restOfUser }) =>
       hashPassword(password).then((hashedPassword) => ({
         ...restOfUser,
@@ -21,10 +21,10 @@ class UsersSeedService {
 
     const createdKeys = createdRecords.map(({ email }) => email);
     return { createdKeys };
-  };
+  }
 
-  public seed = async () =>
-    this.seedUsers([
+  async seed() {
+    return this.seedUsers([
       {
         roleId: SYSTEM_ROLES.SUPER_ADMIN,
         email: 'superadmin@superadmin.com',
@@ -33,6 +33,7 @@ class UsersSeedService {
         password: SYSTEM_ROLES.SUPER_ADMIN,
       },
     ]);
+  }
 }
 
 export const usersSeedService = new UsersSeedService();
