@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { controllerCatchAsync } from './utils/controller-catch-async';
 
 class AuthController {
-  public verifyEmail = controllerCatchAsync(
+  verifyEmail = controllerCatchAsync(
     async (
       req: Request<unknown, unknown, unknown, VerifyEmailAuth>,
       res: Response,
@@ -15,24 +15,22 @@ class AuthController {
     },
   );
 
-  public register = controllerCatchAsync(
-    async (req: Request, res: Response) => {
-      const { email } = await authService.register(req.body);
+  register = controllerCatchAsync(async (req: Request, res: Response) => {
+    const { email } = await authService.register(req.body);
 
-      res.status(StatusCodes.CREATED).json({
-        message: `Registration successful. Verification will be sent to ${email} shortly`,
-      });
-    },
-  );
+    res.status(StatusCodes.CREATED).json({
+      message: `Registration successful. Verification will be sent to ${email} shortly`,
+    });
+  });
 
-  public resendEmailVerification = controllerCatchAsync(
+  resendEmailVerification = controllerCatchAsync(
     async (req: Request, res: Response) => {
       const { email } = await authService.resendEmailVerification(req.body);
       res.json({ message: `Verification will be sent to ${email} shortly` });
     },
   );
 
-  public login = controllerCatchAsync(async (req: Request, res: Response) => {
+  login = controllerCatchAsync(async (req: Request, res: Response) => {
     const result = await authService.login(req.body);
     res.json(result);
   });
