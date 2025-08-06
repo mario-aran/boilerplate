@@ -19,7 +19,8 @@ class UsersSeedService {
       .onConflictDoNothing()
       .returning({ email: usersTable.email });
 
-    return createdRecords.map(({ email }) => email);
+    const createdKeys = createdRecords.map(({ email }) => email);
+    return { createdKeys };
   };
 
   public seed = async () =>
