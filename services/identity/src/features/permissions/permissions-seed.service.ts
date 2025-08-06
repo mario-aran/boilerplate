@@ -10,7 +10,8 @@ class PermissionsSeedService {
       .onConflictDoNothing()
       .returning({ id: permissionsTable.id });
 
-    return createdRecords.map(({ id }) => id);
+    const ids = createdRecords.map(({ id }) => id);
+    return { ids };
   };
 }
 
