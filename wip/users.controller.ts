@@ -5,33 +5,29 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 class UsersController {
-  public getAll = controllerCatchAsync(async (req: Request, res: Response) => {
+  getAll = controllerCatchAsync(async (req: Request, res: Response) => {
     const results = await usersService.getAll(req.query);
     res.json(results);
   });
 
-  public get = controllerCatchAsync(
-    async (req: Request<UserId>, res: Response) => {
-      const result = await usersService.get(req.params);
-      res.json(result);
-    }
-  );
+  get = controllerCatchAsync(async (req: Request<UserId>, res: Response) => {
+    const result = await usersService.get(req.params);
+    res.json(result);
+  });
 
-  public create = controllerCatchAsync(async (req: Request, res: Response) => {
+  create = controllerCatchAsync(async (req: Request, res: Response) => {
     const result = await usersService.create(req.body);
     res
       .status(StatusCodes.CREATED)
       .json({ message: `User ${result.email} created successfully` });
   });
 
-  public update = controllerCatchAsync(
-    async (req: Request<UserId>, res: Response) => {
-      const result = await usersService.update(req.params, req.body);
-      res.json({ message: `User ${result.email} updated successfully` });
-    }
-  );
+  update = controllerCatchAsync(async (req: Request<UserId>, res: Response) => {
+    const result = await usersService.update(req.params, req.body);
+    res.json({ message: `User ${result.email} updated successfully` });
+  });
 
-  public updatePassword = controllerCatchAsync(
+  updatePassword = controllerCatchAsync(
     async (req: Request<UserId>, res: Response) => {
       const result = await usersService.updatePassword(req.params, req.body);
       res.json({
