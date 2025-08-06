@@ -68,7 +68,7 @@ class RolesService {
     const [deletedRecord] = await db
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
-      .returning();
+      .returning({ id: rolesTable.id });
     if (!deletedRecord) throw this.roleNotFoundError;
 
     return deletedRecord;
