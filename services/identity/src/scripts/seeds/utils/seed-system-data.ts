@@ -7,17 +7,7 @@ import {
   ROLES_TO_PERMISSIONS_TABLE_NAME,
   USERS_TABLE_NAME,
 } from '@/lib/drizzle/schemas';
-import { logger } from '@/lib/winston/logger';
-
-export const logSeedMessage = (tableName: string, createdKeys: string[]) => {
-  if (!createdKeys.length) {
-    logger.info(`Skipping seeding ${tableName}: no new records`);
-    return;
-  }
-
-  const joinedUniqueKeys = createdKeys.map((key) => key).join(', ');
-  logger.info(`${tableName} seeded: ${joinedUniqueKeys}`);
-};
+import { logSeedMessage } from './log-seed-message';
 
 export const seedSystemData = async () => {
   const { createdKeys: permissionKeys } = await permissionsSeedService.seed();

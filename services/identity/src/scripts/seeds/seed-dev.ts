@@ -8,7 +8,8 @@ import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
 import { logger } from '@/lib/winston/logger';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { faker } from '@faker-js/faker';
-import { logSeedMessage, seedSystemData } from './utils';
+import { logSeedMessage } from './utils/log-seed-message';
+import { seedSystemData } from './utils/seed-system-data';
 
 // Guards
 if (NODE_ENV === 'production')
