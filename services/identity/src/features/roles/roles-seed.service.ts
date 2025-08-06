@@ -15,8 +15,8 @@ class RolesSeedService {
       .onConflictDoNothing()
       .returning({ id: rolesTable.id });
 
-    const ids = createdRecords.map(({ id }) => id);
-    return { ids };
+    const createdKeys = createdRecords.map(({ id }) => id);
+    return { createdKeys };
   };
 
   public seedPermissions = async () => {
@@ -36,10 +36,10 @@ class RolesSeedService {
         permissionId: rolesToPermissionsTable.permissionId,
       });
 
-    const ids = createdRecords.map(
+    const createdKeys = createdRecords.map(
       ({ roleId, permissionId }) => `${roleId}.${permissionId}`,
     );
-    return { ids };
+    return { createdKeys };
   };
 }
 
