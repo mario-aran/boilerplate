@@ -6,7 +6,7 @@ import { GetAllUsers, UserId } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
-import { hashPassword } from './utils/hash-password';
+import { hashPassword } from './utils/bcrypt-handlers';
 
 class UsersService {
   private userNotFoundError = new HttpError({
