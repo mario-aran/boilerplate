@@ -3,7 +3,7 @@ import { db } from '@/lib/drizzle/db';
 import { permissionsTable } from '@/lib/drizzle/schemas';
 
 class PermissionsSeedService {
-  public seed = async () => {
+  async seed() {
     const createdRecords = await db
       .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
@@ -12,7 +12,7 @@ class PermissionsSeedService {
 
     const createdKeys = createdRecords.map(({ id }) => id);
     return { createdKeys };
-  };
+  }
 }
 
 export const permissionsSeedService = new PermissionsSeedService();
