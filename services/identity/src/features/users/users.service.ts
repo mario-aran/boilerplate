@@ -6,7 +6,7 @@ import { GetAllUsers, UserId } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
-import { hashPassword } from './utils/bcrypt-handlers';
+import { hashPassword } from './utils/hash-password';
 
 class UsersService {
   private userNotFoundError = new HttpError({
@@ -14,13 +14,7 @@ class UsersService {
     httpStatus: StatusCodes.NOT_FOUND,
   });
 
-  public getAll = async ({
-    limit,
-    page,
-    sort,
-    roleId = '',
-    search = '',
-  }: GetAllUsers) => {
+  async getAll({ limit, page, sort, roleId = '', search = '' }: GetAllUsers) {
     const filters = and(
       ilike(usersTable.roleId, `%${roleId}%`),
       or(
@@ -39,9 +33,9 @@ class UsersService {
 
     const usersWithoutPassword = data.map(this.omitUserPassword);
     return { data: usersWithoutPassword, ...restOfRecords };
-  };
+  }
 
-  public get = async (id: UserId['id']) => {
+  async get(id: UserId['id']) {
     const user = await db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
@@ -60,18 +54,18 @@ class UsersService {
       ({ permissionId }) => permissionId,
     );
     return { ...restOfUser, permissionIds };
-  };
+  }
 
-  public getByEmailWithPassword = async (email: string) => {
+  async getByEmailWithPassword(email: string) {
     const user = await db.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
     if (!user) throw this.userNotFoundError;
 
     return user;
-  };
+  }
 
-  public create = async ({ password, ...restOfProps }: RegisterAuth) => {
+  async create({ password, ...restOfProps }: RegisterAuth) {
     const hashedPassword = await hashPassword(password);
 
     const [createdUser] = await db
@@ -80,12 +74,12 @@ class UsersService {
       .returning();
 
     return this.omitUserPassword(createdUser);
-  };
+  }
 
-  public update = async (
+  async update(
     id: UserId['id'],
     { password, ...restOfProps }: Partial<UserInsert>,
-  ) => {
+  ) {
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
     const [updatedUser] = await db
@@ -96,7 +90,7 @@ class UsersService {
     if (!updatedUser) throw this.userNotFoundError;
 
     return this.omitUserPassword(updatedUser);
-  };
+  }
 
   private omitUserPassword = <T extends UserSelect>({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
