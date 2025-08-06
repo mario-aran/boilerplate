@@ -1,8 +1,8 @@
 import { QUEUES } from '@/constants/queues';
 import { emailService } from '@/features/email/email.service';
 import { connection } from '@/lib/bullmq/connection';
-import { logger } from '@/lib/winston/logger';
 import { Worker } from 'bullmq';
+import { registerWorkerEvents } from './utils';
 
 export const startEmailVerificationWorker = () => {
   // Start worker
@@ -13,14 +13,7 @@ export const startEmailVerificationWorker = () => {
     },
     { connection },
   );
-  logger.info(`${QUEUES.EMAIL_VERIFICATION} worker started`);
 
   // Events
-  worker.on('completed', (job) => {
-    logger.info(`${job.id} has completed`);
-  });
-
-  worker.on('failed', (job, err) => {
-    logger.error(`${job?.id} has failed with ${err.message}`);
-  });
+  registerWorkerEvents(QUEUES.EMAIL_VERIFICATION, worker);
 };
