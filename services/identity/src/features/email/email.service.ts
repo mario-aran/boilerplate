@@ -17,10 +17,7 @@ class EmailService {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  public sendEmailVerification = async ({
-    email,
-    token,
-  }: EmailVerificationProps) => {
+  async sendEmailVerification({ email, token }: EmailVerificationProps) {
     const tokenUrl = `${BASE_URL}${ROUTES.API_AUTH_VERIFY_EMAIL}?token=${token}`;
 
     await this.transporter.sendMail({
@@ -29,7 +26,7 @@ class EmailService {
       subject: 'Verify your email',
       text: `Please verify your email address by visiting: ${tokenUrl}`,
     });
-  };
+  }
 }
 
 export const emailService = new EmailService();
