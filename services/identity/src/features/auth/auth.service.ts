@@ -33,7 +33,7 @@ class AuthService {
     httpStatus: StatusCodes.FORBIDDEN,
   });
 
-  public verifyEmail = async ({ token }: VerifyEmailAuth) => {
+  async verifyEmail({ token }: VerifyEmailAuth) {
     const { userId } = validateEmailVerificationToken(token);
 
     const user = await usersService.get(userId);
@@ -47,19 +47,17 @@ class AuthService {
       email: user.pendingEmail || undefined,
     });
     return { email };
-  };
+  }
 
-  public register = async (props: RegisterAuth) => {
+  async register(props: RegisterAuth) {
     const { id, email } = await usersService.create(props);
 
     await this.signAndEnqueueEmailVerification({ userId: id, email });
 
     return { email };
-  };
+  }
 
-  public resendEmailVerification = async ({
-    currentEmail,
-  }: ResendEmailVerificationAuth) => {
+  async resendEmailVerification({ currentEmail }: ResendEmailVerificationAuth) {
     const user = await usersService.getByEmailWithPassword(currentEmail);
     if (user.emailVerified && !user.pendingEmail)
       throw this.emailAlreadyVerifiedError;
@@ -68,9 +66,9 @@ class AuthService {
     await this.signAndEnqueueEmailVerification({ userId: user.id, email });
 
     return { email };
-  };
+  }
 
-  public login = async ({ email, password }: LoginAuth) => {
+  async login({ email, password }: LoginAuth) {
     const user = await usersService.getByEmailWithPassword(email);
 
     const isValidPassword = await bcrypt.compare(password, user.password);
@@ -80,15 +78,15 @@ class AuthService {
     const accessToken = signAccessToken(payload);
     const refreshToken = signRefreshToken(payload);
     return { accessToken, refreshToken };
-  };
+  }
 
-  private signAndEnqueueEmailVerification = async ({
+  private async signAndEnqueueEmailVerification({
     userId,
     email,
-  }: SignAndEnqueueEmailVerificationProps) => {
+  }: SignAndEnqueueEmailVerificationProps) {
     const token = signEmailVerificationToken({ userId });
     await emailQueueService.enqueueEmailVerification({ email, token });
-  };
+  }
 }
 
 export const authService = new AuthService();
