@@ -4,8 +4,8 @@ import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { hashPassword } from './utils/hash-password';
 
 class UsersSeedService {
-  public seedUsers = async (users: UserInsert[]) => {
-    const hashedUserPromises = users.map(({ password, ...restOfUser }) =>
+  public seedUsers = async (props: UserInsert[]) => {
+    const hashedUserPromises = props.map(({ password, ...restOfUser }) =>
       hashPassword(password).then((hashedPassword) => ({
         ...restOfUser,
         password: hashedPassword,
