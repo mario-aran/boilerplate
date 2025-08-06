@@ -3,6 +3,7 @@ import { ROUTES } from '@/constants/routes';
 import { swaggerDocument } from '@/lib/swagger/swagger-document';
 import { notFound } from '@/middleware/not-found';
 import { Router } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import swaggerUi from 'swagger-ui-express';
 import { authRoute } from './auth.route';
 import { permissionsRoute } from './permissions.route';
@@ -10,9 +11,14 @@ import { rolesRoute } from './roles.route';
 
 export const router = Router();
 
-// Root routes
+// Root route
 router.get('/', (_, res) => {
   res.json({ message: 'Service is up and running' });
+});
+
+// Favicon handler
+router.get('/favicon.ico', (_, res) => {
+  res.status(StatusCodes.NO_CONTENT).end();
 });
 
 // "swagger-ui-express" routes
