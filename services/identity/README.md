@@ -6,7 +6,7 @@ This template was created manually.
 
 ## Development instructions
 
-Prepare code
+Prepare project
 
 - `pnpm run delete:ignored`: Delete git ignored files
 - `pnpm run files:to-lf`: Convert all files to LF
@@ -15,9 +15,9 @@ Prepare code
 Manage dependencies
 
 - `pnpm install`: Install dependencies
-- `pnpm up --latest`: Update dependencies
+- `pnpm up --latest`: Update dependencies to the last version
 
-Format and lint code
+Prepare code
 
 - `pnpm run format`: Formatter
 - `pnpm run lint`: Linter and typechecker
@@ -27,16 +27,21 @@ Prepare database
 
 - `pnpm run db:generate`: Update migration files
 - `pnpm run db:migrate`: Run migrations
-- `pnpm run db:seed:dev`: Seed development data
+- `pnpm run seed:dev`: Seed development data
 
 Testing
 
 - `pnpm run test`: Run tests
 - `pnpm run test:coverage`: Run test coverage
 
+Debugging
+
+- `pnpm run dev:repl`: Run REPL
+
 Launch app
 
-- `pnpm run dev`: Run app in development mode
+- `pnpm run dev`: Run application in development mode
+- `pnpm run dev:workers`: Run workers in development mode
 
 ## Dependencies
 
