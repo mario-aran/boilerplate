@@ -6,11 +6,7 @@ import { Pool } from 'pg';
 import * as schemas from './schemas';
 
 const pool = new Pool({ connectionString: DATABASE_URL });
-
-// Log idle client errors
-pool.on('error', (err) => {
-  logger.error(err);
-});
+pool.on('error', (err) => logger.error(`Database connection error: ${err}`)); // Log idle errors
 
 // Guard: Check connection at startup
 (async () => {
