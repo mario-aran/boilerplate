@@ -8,8 +8,8 @@ interface HttpErrorProps {
 }
 
 export class HttpError extends Error {
-  public httpStatus: number;
-  public validationErrors?: ValidationErrors;
+  httpStatus: number;
+  validationErrors?: ValidationErrors;
 
   constructor({ message, httpStatus, validationErrors }: HttpErrorProps) {
     super(message);
