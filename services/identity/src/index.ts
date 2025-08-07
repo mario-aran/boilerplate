@@ -9,7 +9,7 @@ import { logger } from './lib/logger/winston-logger';
 import { errorHandler } from './middleware/error-handler';
 import { router } from './router';
 
-const app = express();
+export const app = express();
 
 // Middlewares setup
 app.use(morganInit);
@@ -20,12 +20,12 @@ app.use(router); // Must be placed after all but before error handler
 app.use(errorHandler); // Must be placed last
 
 // Start the app
-app.listen(PORT, () => {
+export const server = app.listen(PORT, () => {
   logger.info(`Application started successfully: ${BASE_URL}`);
 });
 
 // Guard: Check app at startup
-app.on('error', (err) => {
+server.on('error', (err) => {
   logger.error(`Application failed at startup: ${err}`);
   process.exit(1); // Exit on failure
 });

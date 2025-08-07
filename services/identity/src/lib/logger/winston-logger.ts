@@ -8,6 +8,6 @@ const consoleFormat = winston.format.combine(
 );
 
 export const logger = winston.createLogger({
-  level: NODE_ENV === 'production' ? 'info' : 'debug',
+  level: NODE_ENV !== 'production' ? 'debug' : 'info',
   transports: [new winston.transports.Console({ format: consoleFormat })],
 });

@@ -2,7 +2,6 @@ import { REDIS_URL } from '@/config/env';
 import { logger } from '@/lib/logger/winston-logger';
 import IORedis from 'ioredis';
 
-// Exported options for blocked connections
 const redisUrl = new URL(REDIS_URL);
 export const connectionOptions = {
   host: redisUrl.hostname,

@@ -8,8 +8,8 @@ import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
 import { logger } from '@/lib/logger/winston-logger';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { faker } from '@faker-js/faker';
-import { logSeedMessage } from './utils/log-seed-message';
-import { seedSystemData } from './utils/seed-system-data';
+import { logSeedMessage } from './utils/seeds/log-seed-message';
+import { seedSystemData } from './utils/seeds/seed-system-data';
 
 // Guards
 if (NODE_ENV === 'production')
@@ -54,7 +54,7 @@ const seedFakeUsers = async () => {
   logSeedMessage(USERS_TABLE_NAME, createdKeys);
 };
 
-const seedDev = async () => {
+const seedDevelopmentData = async () => {
   await truncateTables();
   await seedSystemData();
   await seedFakeUsers();
@@ -62,5 +62,5 @@ const seedDev = async () => {
 
 // Run the script
 (async () => {
-  await scriptCatchAsync(seedDev);
+  await scriptCatchAsync(seedDevelopmentData);
 })();
