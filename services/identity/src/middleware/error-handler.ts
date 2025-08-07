@@ -1,4 +1,4 @@
-import { NODE_ENV } from '@/config/env';
+import { logger } from '@/lib/winston/logger';
 import { HttpError } from '@/utils/http-error';
 import { DrizzleQueryError } from 'drizzle-orm';
 import { NextFunction, Request, Response } from 'express';
@@ -49,7 +49,7 @@ export const errorHandler = (
     }
   }
 
-  // Prepare response
-  const stack = NODE_ENV !== 'production' ? err.stack?.split('\n') : undefined;
-  res.status(httpStatus).json({ message, validationErrors, stack });
+  // Response
+  logger.error(err.stack || message);
+  res.status(httpStatus).json({ message, validationErrors });
 };
