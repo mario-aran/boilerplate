@@ -3,7 +3,7 @@
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { seedSystemData } from './utils/seed-system-data';
 
-// Run script
+// Run the script
 (async () => {
   await scriptCatchAsync(seedSystemData);
 })();

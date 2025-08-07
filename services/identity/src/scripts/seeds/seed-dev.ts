@@ -3,7 +3,7 @@
 import { NODE_ENV } from '@/config/env';
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
-import { db } from '@/lib/drizzle/db';
+import { db } from '@/lib/drizzle/connection';
 import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
 import { logger } from '@/lib/logger/winston-logger';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
@@ -13,7 +13,7 @@ import { seedSystemData } from './utils/seed-system-data';
 
 // Guards
 if (NODE_ENV === 'production')
-  throw new Error('Seeding not allowed in production');
+  throw new Error('Seeding development data is not allowed in production');
 
 // Utils
 const truncateTables = async () => {
@@ -22,7 +22,6 @@ const truncateTables = async () => {
   FROM information_schema.tables
   WHERE table_schema = 'public';
 `;
-
   const { rows } = await db.execute<{ table_name: string }>(
     selectTableNamesQuery,
   );
@@ -61,7 +60,7 @@ const seedDev = async () => {
   await seedFakeUsers();
 };
 
-// Run script
+// Run the script
 (async () => {
   await scriptCatchAsync(seedDev);
 })();

@@ -2,7 +2,7 @@ import { logger } from '@/lib/logger/winston-logger';
 
 export const logSeedMessage = (tableName: string, createdKeys: string[]) => {
   if (!createdKeys.length) {
-    logger.info(`Skipping seeding ${tableName}: no new records`);
+    logger.info(`No new records, skipping seeding of ${tableName}`);
     return;
   }
 
