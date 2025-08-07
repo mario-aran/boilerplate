@@ -27,5 +27,5 @@ app.listen(PORT, () => {
 // Guard: Check app at startup
 app.on('error', (err) => {
   logger.error(`Application failed at startup: ${err}`);
-  process.exit(1);
+  process.exit(1); // Exit on failure
 });

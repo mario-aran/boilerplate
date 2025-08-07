@@ -26,6 +26,6 @@ connection.on('error', (err) => logger.error(`Redis connection error: ${err}`));
     logger.info('Redis connected successfully at startup');
   } catch (err) {
     logger.error(`Redis connection failed at startup: ${err}`);
-    process.exit(1);
+    process.exit(1); // Exit on failure
   }
 })();

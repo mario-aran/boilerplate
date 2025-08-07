@@ -15,7 +15,7 @@ pool.on('error', (err) => logger.error(`Database connection error: ${err}`)); //
     logger.info('Database connected successfully at startup');
   } catch (err) {
     logger.error(`Database connection failed at startup: ${err}`);
-    process.exit(1);
+    process.exit(1); // Exit on failure
   }
 })();
 
