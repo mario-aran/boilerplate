@@ -4,15 +4,15 @@ import cors from 'cors';
 import express from 'express';
 import { BASE_URL, PORT } from './config/env';
 import { passportInit } from './features/auth/passport/passport-init';
-import { logger } from './lib/winston/logger';
+import { morganInit } from './lib/logger/morgan-init';
+import { logger } from './lib/logger/winston-logger';
 import { errorHandler } from './middleware/error-handler';
-import { morganLogger } from './middleware/morgan-logger';
 import { router } from './router';
 
 const app = express();
 
 // Middleware setup
-app.use(morganLogger);
+app.use(morganInit);
 app.use(cors());
 app.use(express.json()); // Body parser
 app.use(passportInit); // Must be placed after express.json

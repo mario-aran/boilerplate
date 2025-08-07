@@ -1,4 +1,4 @@
-import { logger } from '@/lib/winston/logger';
+import { logger } from '@/lib/logger/winston-logger';
 
 export const logSeedMessage = (tableName: string, createdKeys: string[]) => {
   if (!createdKeys.length) {

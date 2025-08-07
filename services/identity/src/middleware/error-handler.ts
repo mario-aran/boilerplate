@@ -1,4 +1,4 @@
-import { logger } from '@/lib/winston/logger';
+import { logger } from '@/lib/logger/winston-logger';
 import { HttpError } from '@/utils/http-error';
 import { DrizzleQueryError } from 'drizzle-orm';
 import { NextFunction, Request, Response } from 'express';

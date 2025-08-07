@@ -1,4 +1,4 @@
-import { logger } from '@/lib/winston/logger';
+import { logger } from '@/lib/logger/winston-logger';
 import { Worker } from 'bullmq';
 
 export const registerWorkerEvents = (workerName: string, worker: Worker) => {

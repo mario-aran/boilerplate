@@ -5,7 +5,7 @@ import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
-import { logger } from '@/lib/winston/logger';
+import { logger } from '@/lib/logger/winston-logger';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { faker } from '@faker-js/faker';
 import { logSeedMessage } from './utils/log-seed-message';

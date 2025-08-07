@@ -1,4 +1,4 @@
-import { logger } from '@/lib/winston/logger';
+import { logger } from '@/lib/logger/winston-logger';
 
 export const scriptCatchAsync = async (asyncFn: () => Promise<void>) => {
   try {
