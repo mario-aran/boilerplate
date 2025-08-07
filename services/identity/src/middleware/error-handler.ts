@@ -49,7 +49,6 @@ export const errorHandler = (
     }
   }
 
-  // Response
   logger.error(err.stack || message);
   res.status(httpStatus).json({ message, validationErrors });
 };

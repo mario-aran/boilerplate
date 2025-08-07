@@ -14,7 +14,7 @@ export const router = Router();
 // Root route
 router.get('/', (_, res) => res.json({ message: 'Service is up and running' }));
 
-// Favicon route handler
+// Favicon handler route
 router.get('/favicon.ico', (_, res) =>
   res.status(StatusCodes.NO_CONTENT).end(),
 );

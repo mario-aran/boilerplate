@@ -4,15 +4,15 @@ import { StatusCodes } from 'http-status-codes';
 import { ZodError, ZodObject } from 'zod';
 
 // Types
-interface ZodValidatorProps {
+type ZodValidator = (props: {
   params?: ZodObject;
   query?: ZodObject;
   body?: ZodObject;
-}
+}) => (req: Request, res: Response, next: NextFunction) => void;
 
-export const zodValidator =
-  ({ params, query, body }: ZodValidatorProps) =>
-  (req: Request, _: Response, next: NextFunction) => {
+export const zodValidator: ZodValidator =
+  ({ params, query, body }) =>
+  (req, _, next) => {
     try {
       // Validate request data
       params?.parse(req.params);
