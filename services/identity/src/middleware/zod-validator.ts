@@ -22,7 +22,7 @@ export const zodValidator =
       // Succeeded
       return next();
     } catch (err) {
-      // Failed: zod error
+      // Failed: Zod error
       if (err instanceof ZodError) {
         const validationErrors = err.issues.map((issue) => ({
           field: `${issue.path.join('.')}`,
@@ -37,7 +37,7 @@ export const zodValidator =
         );
       }
 
-      // Failed: internal error
+      // Failed: Internal error
       return next(err);
     }
   };

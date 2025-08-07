@@ -5,7 +5,7 @@ import { Worker } from 'bullmq';
 import { registerEvents } from './utils/register-events';
 
 export const startEmailVerificationWorker = () => {
-  // Start worker
+  // Run worker
   const worker = new Worker(
     QUEUES.EMAIL_VERIFICATION,
     async (job) => {

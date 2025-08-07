@@ -28,7 +28,5 @@ export const swaggerDocument = {
       [StatusCodes.UNPROCESSABLE_ENTITY]: getUnprocessableResponse(),
     },
   },
-  paths: {
-    ...authPaths,
-  },
+  paths: { ...authPaths },
 };

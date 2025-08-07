@@ -3,7 +3,7 @@ import IORedis from 'ioredis';
 
 const url = new URL(REDIS_URL);
 
-// Export options for blocked connections ("QueueScheduler" and "QueueEvents")
+// Exported options for blocked connections ("QueueScheduler" and "QueueEvents")
 export const connectionOptions = {
   host: url.hostname,
   port: Number(url.port),
