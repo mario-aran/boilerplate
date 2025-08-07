@@ -11,11 +11,11 @@ import { router } from './router';
 
 const app = express();
 
-// Middleware setup
+// Middlewares setup
 app.use(morganInit);
 app.use(cors());
 app.use(express.json()); // Body parser
-app.use(passportInit); // Must be placed after express.json
+app.use(passportInit); // Must be placed after "express.json"
 app.use(router); // Must be placed after all but before error handler
 app.use(errorHandler); // Must be placed last
 
