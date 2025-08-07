@@ -2,8 +2,8 @@ import { NODE_ENV } from '@/config/env';
 import winston from 'winston';
 
 const consoleFormat = winston.format.combine(
-  winston.format.colorize(),
   winston.format.timestamp(),
+  winston.format.colorize(),
   winston.format.printf((el) => `${el.timestamp} [${el.level}]: ${el.message}`),
 );
 
