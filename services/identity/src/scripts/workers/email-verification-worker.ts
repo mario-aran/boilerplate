@@ -2,7 +2,7 @@ import { QUEUES } from '@/constants/queues';
 import { emailService } from '@/features/email/email.service';
 import { connection } from '@/lib/bullmq/connection';
 import { Worker } from 'bullmq';
-import { registerWorkerEvents } from './utils/register-worker-events';
+import { registerEvents } from './utils/register-events';
 
 export const startEmailVerificationWorker = () => {
   // Start worker
@@ -15,5 +15,5 @@ export const startEmailVerificationWorker = () => {
   );
 
   // Events
-  registerWorkerEvents(QUEUES.EMAIL_VERIFICATION, worker);
+  registerEvents(QUEUES.EMAIL_VERIFICATION, worker);
 };

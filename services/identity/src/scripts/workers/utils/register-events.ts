@@ -1,7 +1,7 @@
 import { logger } from '@/lib/logger/winston-logger';
 import { Worker } from 'bullmq';
 
-export const registerWorkerEvents = (workerName: string, worker: Worker) => {
+export const registerEvents = (workerName: string, worker: Worker) => {
   // Log startup
   logger.info(`${workerName} worker started`);
 
