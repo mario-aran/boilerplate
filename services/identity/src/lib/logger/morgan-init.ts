@@ -1,7 +1,7 @@
-import { logger } from '@/lib/winston/logger';
 import morgan from 'morgan';
+import { logger } from './winston-logger';
 
-export const morganLogger = morgan(
+export const morganInit = morgan(
   'combined', // Apache common log format
   {
     stream: {
