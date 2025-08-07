@@ -2,10 +2,10 @@ import { QUEUES } from '@/constants/queues';
 import { emailService } from '@/features/email/email.service';
 import { connection } from '@/lib/redis/connection';
 import { Worker } from 'bullmq';
-import { registerEvents } from './utils/register-events';
+import { registerWorkerEvents } from './utils/register-worker-events';
 
 export const startEmailVerificationWorker = () => {
-  // Run worker
+  // Start the worker
   const worker = new Worker(
     QUEUES.EMAIL_VERIFICATION,
     async (job) => {
@@ -14,6 +14,6 @@ export const startEmailVerificationWorker = () => {
     { connection },
   );
 
-  // Events
-  registerEvents(QUEUES.EMAIL_VERIFICATION, worker);
+  // Register events
+  registerWorkerEvents(QUEUES.EMAIL_VERIFICATION, worker);
 };

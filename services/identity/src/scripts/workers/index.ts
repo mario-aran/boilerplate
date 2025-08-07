@@ -2,4 +2,5 @@
 
 import { startEmailVerificationWorker } from './email-verification-worker';
 
+// Start the workers here
 startEmailVerificationWorker();
