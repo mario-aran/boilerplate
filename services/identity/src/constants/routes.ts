@@ -17,7 +17,6 @@ const replaceDotIdPaths = <T extends Paths>(paths: T) => {
 const generateRoutes = <T extends Paths>(paths: T) => {
   const keyPrefix = 'API_';
   const valuePrefix = '/api';
-
   const entries = Object.entries(paths).map(([key, value]) => [
     `${keyPrefix}${key}`,
     `${valuePrefix}${value}`,
