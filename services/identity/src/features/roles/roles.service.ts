@@ -61,7 +61,7 @@ class RolesService {
     // Update roles to permissions
     if (permissionIds) await this.updatePermissions(id, { permissionIds });
 
-    // Get updated role with permissions
+    // Return updated role with permissions
     return this.get(id);
   }
 

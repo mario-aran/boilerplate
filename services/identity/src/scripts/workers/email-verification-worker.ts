@@ -1,6 +1,6 @@
 import { QUEUES } from '@/constants/queues';
 import { emailService } from '@/features/email/email.service';
-import { connection } from '@/lib/bullmq/connection';
+import { connection } from '@/lib/redis/connection';
 import { Worker } from 'bullmq';
 import { registerEvents } from './utils/register-events';
 

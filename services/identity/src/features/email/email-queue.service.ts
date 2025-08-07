@@ -1,5 +1,5 @@
 import { QUEUES } from '@/constants/queues';
-import { connection } from '@/lib/bullmq/connection';
+import { connection } from '@/lib/redis/connection';
 import { Queue } from 'bullmq';
 import { EmailVerificationProps } from './types';
 

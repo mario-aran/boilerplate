@@ -3,7 +3,7 @@ import IORedis from 'ioredis';
 
 const url = new URL(REDIS_URL);
 
-// Exported options for QueueScheduler and QueueEvents
+// Export options for blocked connections ("QueueScheduler" and "QueueEvents")
 export const connectionOptions = {
   host: url.hostname,
   port: Number(url.port),
@@ -12,7 +12,7 @@ export const connectionOptions = {
   tls: url.protocol === 'rediss:' ? {} : undefined,
 };
 
-// Reusable connection for Queues and Workers
+// Reusable connection for ("Queues" and "Workers")
 export const connection = new IORedis({
   maxRetriesPerRequest: null, // Required for "bullmq"
   ...connectionOptions,
