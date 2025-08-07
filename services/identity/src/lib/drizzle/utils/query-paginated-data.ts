@@ -1,4 +1,4 @@
-import { db } from '@/lib/drizzle/db';
+import { db } from '@/lib/drizzle/connection';
 import { asc, count, desc, SQL } from 'drizzle-orm';
 import {
   AnyPgColumn,
@@ -31,7 +31,6 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   const positiveLimit = Math.max(limit, 1);
   const totalPages = Math.ceil(total / positiveLimit) || 1;
   const currentPage = Math.max(1, Math.min(page, totalPages));
-
   const results = {
     total,
     limit: positiveLimit,
