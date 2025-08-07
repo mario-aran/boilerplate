@@ -1,5 +1,5 @@
 import { DATABASE_URL } from '@/config/env';
-import { logger } from '@/lib/winston/logger';
+import { logger } from '@/lib/logger/winston-logger';
 import { Logger } from 'drizzle-orm/logger';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
