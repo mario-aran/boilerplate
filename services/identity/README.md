@@ -51,18 +51,18 @@ Launch app
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
       @faker-js/faker
 - [x] express | @types/express
-- [x] swagger-ui-express | @types/swagger-ui-express
-- [x] winston | morgan | @types/morgan
-- [x] dotenv
-- [x] cors | @types/cors
-- [x] http-status-codes
+      swagger-ui-express | @types/swagger-ui-express
+      http-status-codes
+      dotenv
+      cors | @types/cors
+      winston | morgan | @types/morgan
 - [x] zod
 - [x] passport | @types/passport
       passport-jwt | @types/passport-jwt
       jsonwebtoken | @types/jsonwebtoken
       bcryptjs
 - [x] bullmq | ioredis
-- [x] nodemailer | @types/nodemailer
+      nodemailer | @types/nodemailer
 
 ## Configs
 

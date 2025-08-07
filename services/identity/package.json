@@ -15,12 +15,12 @@
     "lint": "tsc --noEmit && eslint . --fix",
     "test": "vitest --watch",
     "test:coverage": "vitest run --coverage",
+    "workers:dev": "tsx src/scripts/workers/index.ts",
+    "workers:prod": "node dist/scripts/workers/index.js",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed:dev": "tsx src/scripts/seeds/seed-dev.ts",
-    "db:seed:prod": "node dist/scripts/seeds/seed-prod.js",
-    "workers:dev": "tsx src/scripts/workers/index.ts",
-    "workers:prod": "node dist/scripts/workers/index.js"
+    "db:seed:prod": "node dist/scripts/seeds/seed-prod.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
