@@ -4,7 +4,6 @@ export const generateSortField = <T extends [string, ...string[]]>(
   columns: T,
 ) => {
   const field = z.enum(columns);
-
   const fields = field
     .array()
     .min(1)
