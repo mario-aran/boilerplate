@@ -6,6 +6,41 @@ import { StatusCodes } from 'http-status-codes';
 const tags = ['auth'];
 
 export const authPaths = {
+  [SWAGGER_PATHS.AUTH_VERIFY_EMAIL]: {
+    get: {
+      tags,
+      summary: 'Verify email',
+      parameters: [
+        {
+          in: 'query',
+          name: 'token',
+          required: true,
+          schema: { type: 'string' },
+          description: 'Email verification token',
+        },
+      ],
+      responses: {},
+    },
+  },
+
+  [SWAGGER_PATHS.AUTH_REGISTER]: {
+    post: {
+      tags,
+      summary: 'Register user',
+      requestBody: {},
+      responses: {},
+    },
+  },
+
+  [SWAGGER_PATHS.AUTH_RESEND_EMAIL_VERIFICATION]: {
+    post: {
+      tags,
+      summary: 'Resend email verification',
+      requestBody: {},
+      responses: {},
+    },
+  },
+
   [SWAGGER_PATHS.AUTH_LOGIN]: {
     post: {
       tags,

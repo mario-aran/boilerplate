@@ -2,5 +2,5 @@
 
 import { startEmailVerificationWorker } from './utils/workers/email-verification-worker';
 
-// Add workers startups here
+// Call worker startup functions here
 startEmailVerificationWorker();
