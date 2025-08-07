@@ -19,12 +19,13 @@ app.use(passportInit); // Must be placed after express.json
 app.use(router); // Must be placed after all but before error handler
 app.use(errorHandler); // Must be placed last
 
-// Start the server
-app
-  .listen(PORT, () => {
-    logger.info(`Server running on ${BASE_URL}`);
-  })
-  .on('error', (error) => {
-    logger.error(`Server failed to start: ${error}`);
-    process.exit(1);
-  });
+// Start the app
+app.listen(PORT, () => {
+  logger.info(`Application started successfully: ${BASE_URL}`);
+});
+
+// Guard: Check app at startup
+app.on('error', (err) => {
+  logger.error(`Application failed at startup: ${err}`);
+  process.exit(1);
+});
