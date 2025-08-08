@@ -5,19 +5,9 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 import * as schemas from './schemas';
 
-const pool = new Pool({ connectionString: DATABASE_URL });
+// Pool
+export const pool = new Pool({ connectionString: DATABASE_URL });
 pool.on('error', (err) => logger.error(`Database connection error: ${err}`)); // Log idle errors
-
-// Guard: Check connection at startup
-(async () => {
-  try {
-    await pool.query('SELECT 1');
-    logger.info('Database connected successfully at startup');
-  } catch (err) {
-    logger.error(`Database connection failed at startup: ${err}`);
-    process.exit(1); // Exit on failure
-  }
-})();
 
 // Drizzle
 class QueryLogger implements Logger {
