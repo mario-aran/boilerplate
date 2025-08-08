@@ -6,6 +6,7 @@ export const registerWorkerEvents = (workerName: string, worker: Worker) => {
 
   // Register events
   worker.on('completed', (job) => logger.info(`${job.id} has completed`));
+
   worker.on('failed', (job, err) =>
     logger.error(`${job?.id} has failed: ${err.message}`),
   );
