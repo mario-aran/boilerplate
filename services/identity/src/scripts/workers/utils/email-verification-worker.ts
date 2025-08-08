@@ -16,4 +16,6 @@ export const startEmailVerificationWorker = () => {
 
   // Register events
   registerWorkerEvents(QUEUES.EMAIL_VERIFICATION, worker);
+
+  return worker;
 };
