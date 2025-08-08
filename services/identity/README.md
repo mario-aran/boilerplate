@@ -9,13 +9,13 @@ This template was created manually.
 Prepare project
 
 - `pnpm run delete:ignored`: Delete git ignored files
+- `pnpm run files:to-lf`: (Optional) Convert all files to LF
 - `cp .env.dev .env`: Create .env file
 - `pnpm install`: Install dependencies
 - `pnpm up --latest`: (Optional) Update dependencies to the last version
 
 Prepare code
 
-- `pnpm run files:to-lf`: (Optional) Convert all files to LF
 - `pnpm run format`: Formatter
 - `pnpm run lint`: Linter and typechecker
 - `pnpm run build`: Build app and check compiler types

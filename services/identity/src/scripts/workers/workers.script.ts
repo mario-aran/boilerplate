@@ -1,4 +1,4 @@
-// DO NOT RENAME OR MOVE THIS FILE — used by a script in "package.json"
+// DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
 import { startEmailVerificationWorker } from './utils/email-verification-worker';
 
