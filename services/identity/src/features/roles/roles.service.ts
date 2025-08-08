@@ -1,4 +1,4 @@
-import { db } from '@/lib/drizzle/connection';
+import { db } from '@/lib/drizzle/db';
 import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {

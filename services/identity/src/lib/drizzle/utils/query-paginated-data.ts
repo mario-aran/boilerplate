@@ -1,4 +1,4 @@
-import { db } from '@/lib/drizzle/connection';
+import { db } from '@/lib/drizzle/db';
 import { asc, count, desc, SQL } from 'drizzle-orm';
 import {
   AnyPgColumn,
