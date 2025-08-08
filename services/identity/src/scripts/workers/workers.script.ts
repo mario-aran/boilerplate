@@ -5,14 +5,13 @@ import { startEmailVerificationWorker } from './utils/email-verification-worker'
 // Register startup functions
 const emailVerificationWorker = startEmailVerificationWorker();
 
-// Graceful shutdown
-const shutdown = async () => {
+// Shutdown
+const gracefulShutdown = async () => {
   // Close workers
   await emailVerificationWorker.close();
 
-  // Explicitly exit on success
-  process.exit(0);
+  process.exit(0); // Explicitly exit on success
 };
 
-process.on('SIGINT', shutdown); // User interrupt signal
-process.on('SIGTERM', shutdown); // System termination signal
+process.on('SIGINT', gracefulShutdown); // User interrupt signal
+process.on('SIGTERM', gracefulShutdown); // System termination signal
