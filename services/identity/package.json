@@ -17,11 +17,11 @@
     "test:coverage": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "seed:dev": "tsx src/scripts/seed-dev.ts",
-    "seed:prod": "node dist/scripts/seed-prod.js",
-    "dev:repl": "tsx src/scripts/repl.ts",
-    "dev:workers": "tsx src/scripts/workers.ts",
-    "start:workers": "node dist/scripts/workers.js"
+    "seed:dev": "tsx src/scripts/seed-dev.script.ts",
+    "seed:prod": "node dist/scripts/seed-prod.script.js",
+    "repl": "tsx src/scripts/repl.script.ts",
+    "workers:dev": "tsx src/scripts/workers.script.ts",
+    "workers:prod": "node dist/scripts/workers.script.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

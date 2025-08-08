@@ -9,16 +9,13 @@ This template was created manually.
 Prepare project
 
 - `pnpm run delete:ignored`: Delete git ignored files
-- `pnpm run files:to-lf`: Convert all files to LF
 - `cp .env.dev .env`: Create .env file
-
-Manage dependencies
-
 - `pnpm install`: Install dependencies
-- `pnpm up --latest`: Update dependencies to the last version
+- `pnpm up --latest`: (Optional) Update dependencies to the last version
 
 Prepare code
 
+- `pnpm run files:to-lf`: (Optional) Convert all files to LF
 - `pnpm run format`: Formatter
 - `pnpm run lint`: Linter and typechecker
 - `pnpm run build`: Build app and check compiler types
@@ -36,12 +33,12 @@ Testing
 
 Debugging
 
-- `pnpm run dev:repl`: Run REPL
+- `pnpm run repl`: Run REPL
 
 Launch app
 
 - `pnpm run dev`: Run application in development mode
-- `pnpm run dev:workers`: Run workers in development mode
+- `pnpm run workers:dev`: Run workers in development mode
 
 ## Dependencies
 
