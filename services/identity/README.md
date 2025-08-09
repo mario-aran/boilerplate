@@ -8,37 +8,37 @@ This template was created manually.
 
 Prepare project
 
-- `pnpm run delete:ignored`: Delete git ignored files
-- `pnpm run files:to-lf`: (Optional) Convert all files to LF
+- `pnpm run clean:ignored`: Delete git ignored files
 - `cp .env.dev .env`: Create .env file
 - `pnpm install`: Install dependencies
 - `pnpm up --latest`: (Optional) Update dependencies to the last version
-
-Prepare code
-
-- `pnpm run format`: Formatter
-- `pnpm run lint`: Linter and typechecker
-- `pnpm run build`: Build app and check compiler types
 
 Prepare database
 
 - `pnpm run db:generate`: Update migration files
 - `pnpm run db:migrate`: Run migrations
-- `pnpm run seed:dev`: Seed development data
+- `pnpm run db:seed:dev`: Seed database with development data
+
+Start app
+
+- `pnpm run dev`: Run application in development mode
+- `pnpm run workers:dev`: Run workers in development mode
+
+Debugging
+
+- `pnpm run db:repl`: Run drizzle REPL
+
+Formatting
+
+- `pnpm run format:lf`: (Optional) Convert all files to LF
+- `pnpm run format:code`: Prettier
+- `pnpm run format:lint`: Linter and typechecker
+- `pnpm run build`: Build app and check compiler types
 
 Testing
 
 - `pnpm run test`: Run tests
 - `pnpm run test:coverage`: Run test coverage
-
-Debugging
-
-- `pnpm run repl`: Run REPL
-
-Launch app
-
-- `pnpm run dev`: Run application in development mode
-- `pnpm run workers:dev`: Run workers in development mode
 
 ## Dependencies
 

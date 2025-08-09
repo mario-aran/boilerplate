@@ -6,22 +6,22 @@
     "pnpm": ">=10"
   },
   "scripts": {
-    "delete:ignored": "find . -type d \\( -name 'node_modules' -o -name 'dist' -o -name 'coverage' \\) -prune -exec rm -rf {} + && rm -f *tsbuildinfo* .env",
-    "files:to-lf": "find . -type f -exec dos2unix {} +",
     "dev": "tsx watch src/index.ts",
     "build": "rm -rf dist && tsc && tsc-alias",
     "start": "node dist/index.js",
-    "format": "prettier --write .",
-    "lint": "tsc --noEmit && eslint . --fix",
-    "test": "vitest --watch",
-    "test:coverage": "vitest run --coverage",
+    "workers:dev": "tsx src/scripts/workers/workers.script.ts",
+    "workers:prod": "node dist/scripts/workers/workers.script.js",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "seed:dev": "tsx src/scripts/seeds/seed-dev.script.ts",
-    "seed:prod": "node dist/scripts/seeds/seed-prod.script.js",
-    "repl": "tsx src/scripts/repl/repl.script.ts",
-    "workers:dev": "tsx src/scripts/workers/workers.script.ts",
-    "workers:prod": "node dist/scripts/workers/workers.script.js"
+    "db:seed:dev": "tsx src/scripts/seeds/seed-dev.script.ts",
+    "db:seed:prod": "node dist/scripts/seeds/seed-prod.script.js",
+    "db:repl": "tsx src/scripts/repl/drizzle-repl.script.ts",
+    "clean:ignored": "find . -type d \\( -name 'node_modules' -o -name 'dist' -o -name 'coverage' \\) -prune -exec rm -rf {} + && rm -f *tsbuildinfo* .env",
+    "format:lf": "find . -type f -exec dos2unix {} +",
+    "format:code": "prettier --write .",
+    "format:lint": "tsc --noEmit && eslint . --fix",
+    "test": "vitest --watch",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
