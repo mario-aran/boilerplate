@@ -13,7 +13,7 @@ import { seedSystemData } from './utils/seed-system-data';
 
 // Guards
 if (NODE_ENV === 'production')
-  throw new Error('Seeding development data is not allowed in production');
+  throw new Error('Script not allowed in production');
 
 // Utils
 const truncateTables = async () => {
