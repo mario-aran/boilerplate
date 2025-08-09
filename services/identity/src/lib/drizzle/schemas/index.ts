@@ -1,6 +1,5 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "drizzle.config"
 
-// Register schemas
 export * from './permissions.schema';
 export * from './roles-to-permissions.schema';
 export * from './roles.schema';
