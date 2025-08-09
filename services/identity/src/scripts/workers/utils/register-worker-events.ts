@@ -4,7 +4,7 @@ import { Worker } from 'bullmq';
 export const registerWorkerEvents = (workerName: string, worker: Worker) => {
   logger.info(`${workerName} worker started`);
 
-  // Register events
+  // Events
   worker.on('completed', (job) => logger.info(`${job.id} has completed`));
 
   worker.on('failed', (job, err) =>
