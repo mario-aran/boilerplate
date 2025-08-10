@@ -1,6 +1,6 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { SYSTEM_ROLE_VALUES, SYSTEM_ROLES } from '@/constants/system-roles';
-import { db } from '@/lib/drizzle/db';
+import { db } from '@/lib/drizzle/db-connection';
 import {
   rolesTable,
   rolesToPermissionsTable,
