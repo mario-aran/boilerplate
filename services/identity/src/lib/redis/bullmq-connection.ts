@@ -3,12 +3,12 @@ import { logger } from '@/lib/logger/winston-logger';
 import IORedis, { RedisOptions } from 'ioredis';
 
 class BullMQConnection {
-  private _urlOptions: RedisOptions;
-  private _connection: IORedis;
+  readonly urlOptions: RedisOptions; // Public for connections that can't be shared
+  readonly connection: IORedis;
 
   constructor() {
     const url = new URL(REDIS_URL);
-    this._urlOptions = {
+    this.urlOptions = {
       host: url.hostname,
       port: Number(url.port),
       username: url.username || undefined,
@@ -16,29 +16,20 @@ class BullMQConnection {
       tls: url.protocol === 'rediss:' ? {} : undefined,
     };
 
-    this._connection = new IORedis({
+    this.connection = new IORedis({
       maxRetriesPerRequest: null, // Required for "bullmq"
       ...this.urlOptions,
     });
 
     // Log idle errors
-    this._connection.on('error', (err) =>
+    this.connection.on('error', (err) =>
       logger.error(`Redis connection error: ${err}`),
     );
   }
 
-  // To create connections that can't be shared
-  get urlOptions() {
-    return this._urlOptions;
-  }
-
-  get connection() {
-    return this._connection;
-  }
-
   async verifyConnection() {
     try {
-      await this._connection.ping();
+      await this.connection.ping();
       logger.info('Redis connected successfully');
     } catch (err) {
       logger.error(`Error connecting redis: ${err}. Exiting application now`);
@@ -48,7 +39,7 @@ class BullMQConnection {
 
   async closeConnection() {
     try {
-      await this._connection.quit();
+      await this.connection.quit();
       logger.info('Redis connection closed successfully');
     } catch (err) {
       logger.error(`Error closing redis connection: ${err}`);

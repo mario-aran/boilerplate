@@ -7,24 +7,20 @@ import * as schemas from './schemas';
 
 // Utils
 class DBConnection {
-  private _connection: Pool;
+  readonly connection: Pool;
 
   constructor() {
-    this._connection = new Pool({ connectionString: DATABASE_URL });
+    this.connection = new Pool({ connectionString: DATABASE_URL });
 
     // Log idle errors
-    this._connection.on('error', (err) =>
+    this.connection.on('error', (err) =>
       logger.error(`Database connection error: ${err}`),
     );
   }
 
-  get connection() {
-    return this._connection;
-  }
-
   async verifyConnection() {
     try {
-      await this._connection.query('SELECT 1');
+      await this.connection.query('SELECT 1');
       logger.info('Database connected successfully');
     } catch (err) {
       logger.error(
@@ -36,7 +32,7 @@ class DBConnection {
 
   async closeConnection() {
     try {
-      await this._connection.end();
+      await this.connection.end();
       logger.info('Database connection closed successfully');
     } catch (err) {
       logger.error(`Error closing database connection: ${err}`);
