@@ -3,12 +3,12 @@ import { logger } from '@/lib/logger/winston-logger';
 import IORedis, { RedisOptions } from 'ioredis';
 
 class BullMQConnection {
-  private urlOptions: RedisOptions;
-  private connection: IORedis;
+  private _urlOptions: RedisOptions;
+  private _connection: IORedis;
 
   constructor() {
     const url = new URL(REDIS_URL);
-    this.urlOptions = {
+    this._urlOptions = {
       host: url.hostname,
       port: Number(url.port),
       username: url.username || undefined,
@@ -16,42 +16,42 @@ class BullMQConnection {
       tls: url.protocol === 'rediss:' ? {} : undefined,
     };
 
-    this.connection = new IORedis({
+    this._connection = new IORedis({
       maxRetriesPerRequest: null, // Required for "bullmq"
       ...this.urlOptions,
     });
 
-    // Log connection idle errors
-    this.connection.on('error', (err) =>
+    // Log idle errors
+    this._connection.on('error', (err) =>
       logger.error(`Redis connection error: ${err}`),
     );
   }
 
-  // To create connections that can't be shared, e.g., "QueueScheduler" and "QueueEvents"
-  getURLOptions() {
-    return this.urlOptions;
+  // To create connections that can't be shared
+  get urlOptions() {
+    return this._urlOptions;
   }
 
-  getConnection() {
-    return this.connection;
+  get connection() {
+    return this._connection;
   }
 
   async verifyConnection() {
     try {
-      await this.connection.ping();
+      await this._connection.ping();
       logger.info('Redis connected successfully');
     } catch (err) {
-      logger.error(`Error connecting Redis: ${err}. Exiting process now`);
+      logger.error(`Error connecting redis: ${err}. Exiting application now`);
       process.exit(1); // Exit on failure
     }
   }
 
   async closeConnection() {
     try {
-      await this.connection.quit();
-      logger.info('Redis connection closed gracefully');
+      await this._connection.quit();
+      logger.info('Redis connection closed successfully');
     } catch (err) {
-      logger.error(`Error closing Redis connection: ${err}`);
+      logger.error(`Error closing redis connection: ${err}`);
     }
   }
 }
