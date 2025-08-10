@@ -1,7 +1,7 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
 import { NODE_ENV } from '@/config/env';
-import { db } from '@/lib/drizzle/db';
+import { db } from '@/lib/drizzle/db-connection';
 import * as schemas from '@/lib/drizzle/schemas';
 import * as orm from 'drizzle-orm';
 import repl from 'node:repl';
