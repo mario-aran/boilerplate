@@ -1,17 +1,42 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
-import { startEmailVerificationWorker } from './utils/email-verification-worker';
+import { dbConnection } from '@/lib/drizzle/db-connection';
+import { logger } from '@/lib/logger/winston-logger';
+import { bullMQConnection } from '@/lib/redis/bullmq-connection';
+import { EmailVerificationWorker } from './email-verification.worker';
 
-// Register startup functions
-const emailVerificationWorker = startEmailVerificationWorker();
+(async () => {
+  // Verify connections
+  await dbConnection.verifyConnection();
+  await bullMQConnection.verifyConnection();
 
-// Shutdown
-const gracefulShutdown = async () => {
-  // Close workers
-  await emailVerificationWorker.close();
+  // Workers
+  const emailVerificationWorker = new EmailVerificationWorker();
 
-  process.exit(0); // Explicitly exit on success
-};
+  // Graceful shutdown
+  let isShuttingDown = false;
 
-process.on('SIGINT', gracefulShutdown); // User interrupt signal
-process.on('SIGTERM', gracefulShutdown); // System termination signal
+  const shutdown = async () => {
+    if (isShuttingDown) return;
+    isShuttingDown = true;
+
+    const shutdownTimeout = setTimeout(() => {
+      logger.error('Shutdown timeout, forcing exit');
+      process.exit(1);
+    }, 10000);
+
+    // Close workers
+    await emailVerificationWorker.close();
+
+    // Close connections
+    await bullMQConnection.closeConnection();
+    await dbConnection.closeConnection();
+
+    // Close server
+    clearTimeout(shutdownTimeout);
+    process.exit(0);
+  };
+
+  process.on('SIGINT', shutdown); // User interrupt signal
+  process.on('SIGTERM', shutdown); // System termination signal
+})();
