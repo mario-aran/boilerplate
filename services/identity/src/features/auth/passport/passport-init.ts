@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { jwtStrategy } from './jwt-strategy';
+import { jwtStrategy } from './jwt.strategy';
 
 // Strategies
 passport.use(jwtStrategy);
