@@ -8,5 +8,20 @@ export const rolesPaths = {
     get: {
       tags,
     },
+    post: {
+      tags,
+    },
+  },
+
+  [SWAGGER_PATHS.ROLES_ID]: {
+    get: {
+      tags,
+    },
+    patch: {
+      tags,
+    },
+    delete: {
+      tags,
+    },
   },
 };
