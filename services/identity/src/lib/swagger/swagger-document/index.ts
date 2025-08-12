@@ -1,49 +1,10 @@
 import { BASE_URL } from '@/config/env';
 import { ROUTES } from '@/constants/routes';
 import { BEARER_AUTH } from '@/lib/swagger/constants';
-import { StatusCodes } from 'http-status-codes';
 import { authPaths } from './auth-paths';
 import { permissionsPaths } from './permissions-paths';
 import { rolesPaths } from './roles-paths';
 
-// Responses
-const unprocessableResponse = {
-  description: 'Object with message and validation errors',
-  content: {
-    'application/json': {
-      schema: {
-        type: 'object',
-        properties: {
-          message: { type: 'string', example: 'Invalid inputs' },
-          validationErrors: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: {
-                field: { type: 'string', example: 'id' },
-                message: { type: 'string', example: 'Invalid format' },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-const getMessageResponse = (example: string) => ({
-  description: 'Object with message',
-  content: {
-    'application/json': {
-      schema: {
-        type: 'object',
-        properties: { message: { type: 'string', example } },
-      },
-    },
-  },
-});
-
-// Document
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
@@ -58,11 +19,6 @@ export const swaggerDocument = {
         scheme: 'bearer',
         bearerFormat: 'JWT',
       },
-    },
-    responses: {
-      [StatusCodes.NOT_FOUND]: getMessageResponse('Data not found'),
-      [StatusCodes.UNAUTHORIZED]: getMessageResponse('Invalid credentials'),
-      [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableResponse,
     },
   },
   paths: {
