@@ -51,5 +51,5 @@ const PATHS = {
   PERMISSIONS: SEGMENTS.PERMISSIONS,
 } as const;
 
-export const SWAGGER_PATHS = replaceDotIdPaths(PATHS);
+export const DOC_PATHS = replaceDotIdPaths(PATHS);
 export const ROUTES = generateRoutes(PATHS);

@@ -1,10 +1,10 @@
-import { SWAGGER_PATHS } from '@/constants/routes';
+import { DOC_PATHS } from '@/constants/routes';
 
 // Values
 const tags = ['roles'];
 
 export const rolesPaths = {
-  [SWAGGER_PATHS.ROLES]: {
+  [DOC_PATHS.ROLES]: {
     get: {
       tags,
     },
@@ -13,7 +13,7 @@ export const rolesPaths = {
     },
   },
 
-  [SWAGGER_PATHS.ROLES_ID]: {
+  [DOC_PATHS.ROLES_ID]: {
     get: {
       tags,
     },

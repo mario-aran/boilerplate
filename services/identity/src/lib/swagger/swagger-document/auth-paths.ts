@@ -1,4 +1,4 @@
-import { SWAGGER_PATHS } from '@/constants/routes';
+import { DOC_PATHS } from '@/constants/routes';
 import { RESPONSES } from '@/lib/swagger/constants';
 import { StatusCodes } from 'http-status-codes';
 
@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 const tags = ['auth'];
 
 export const authPaths = {
-  [SWAGGER_PATHS.AUTH_VERIFY_EMAIL]: {
+  [DOC_PATHS.AUTH_VERIFY_EMAIL]: {
     get: {
       tags,
       summary: 'Verify email',
@@ -23,7 +23,7 @@ export const authPaths = {
     },
   },
 
-  [SWAGGER_PATHS.AUTH_REGISTER]: {
+  [DOC_PATHS.AUTH_REGISTER]: {
     post: {
       tags,
       summary: 'Register user',
@@ -32,7 +32,7 @@ export const authPaths = {
     },
   },
 
-  [SWAGGER_PATHS.AUTH_RESEND_EMAIL_VERIFICATION]: {
+  [DOC_PATHS.AUTH_RESEND_EMAIL_VERIFICATION]: {
     post: {
       tags,
       summary: 'Resend email verification',
@@ -41,7 +41,7 @@ export const authPaths = {
     },
   },
 
-  [SWAGGER_PATHS.AUTH_LOGIN]: {
+  [DOC_PATHS.AUTH_LOGIN]: {
     post: {
       tags,
       summary: 'Authenticate user',
