@@ -1,6 +1,9 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
+import {
+  getExampleColumns,
+  getSortColumns,
+} from '@/lib/drizzle/utils/column-handlers';
 import { createdAt, id, updatedAt } from '@/lib/drizzle/utils/columns';
-import { getSortColumns } from '@/lib/drizzle/utils/get-sort-columns';
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { rolesTable } from './roles.schema';
@@ -37,8 +40,15 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
   }),
 }));
 
-// Constants
-export const USERS_SORT_COLUMNS_NO_PASSWORD = getSortColumns({
-  table: usersTable,
-  excludedColumns: ['password'],
-});
+// Columns
+const excludedColumns = ['password'] as const;
+
+export const USERS_SORT_COLUMNS_NO_PASSWORD = getSortColumns(
+  usersTable,
+  excludedColumns,
+);
+
+export const USERS_EXAMPLE_COLUMNS_NO_PASSWORD = getExampleColumns(
+  usersTable,
+  excludedColumns,
+);
