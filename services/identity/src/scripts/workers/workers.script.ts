@@ -7,20 +7,20 @@ import { EmailVerificationWorker } from './email-verification.worker';
 
 (async () => {
   // Verify connections
-  await dbConnection.verifyConnection();
-  await bullMQConnection.verifyConnection();
+  await dbConnection.verify();
+  await bullMQConnection.verify();
 
-  // Workers
+  // Start the workers
   const emailVerificationWorker = new EmailVerificationWorker();
 
   // Graceful shutdown
   let isShuttingDown = false;
-
   const shutdown = async () => {
     if (isShuttingDown) return;
     isShuttingDown = true;
 
-    const shutdownTimeout = setTimeout(() => {
+    // Force shutdown after 10 seconds
+    setTimeout(() => {
       logger.error('Shutdown timeout, forcing exit');
       process.exit(1);
     }, 10000);
@@ -29,14 +29,12 @@ import { EmailVerificationWorker } from './email-verification.worker';
     await emailVerificationWorker.close();
 
     // Close connections
-    await bullMQConnection.closeConnection();
-    await dbConnection.closeConnection();
+    await bullMQConnection.close();
+    await dbConnection.close();
 
-    // Close server
-    clearTimeout(shutdownTimeout);
+    logger.info('Shutdown successful');
     process.exit(0);
   };
-
   process.on('SIGINT', shutdown); // User interrupt signal
   process.on('SIGTERM', shutdown); // System termination signal
 })();
