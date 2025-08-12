@@ -1,9 +1,12 @@
-export const idPathParam = {
-  in: 'path',
-  name: 'id',
-  schema: { type: 'string' },
-  description: 'Resource ID',
-};
+export const idPathParam = [
+  {
+    in: 'path',
+    name: 'id',
+    required: true,
+    schema: { type: 'string' },
+    description: 'Resource ID',
+  },
+];
 
 export const paginatedQueryParams = [
   {
