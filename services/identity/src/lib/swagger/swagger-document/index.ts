@@ -1,15 +1,49 @@
 import { BASE_URL } from '@/config/env';
 import { ROUTES } from '@/constants/routes';
 import { BEARER_AUTH } from '@/lib/swagger/constants';
-import {
-  getMessageResponse,
-  unprocessableResponse,
-} from '@/lib/swagger/utils/responses';
 import { StatusCodes } from 'http-status-codes';
 import { authPaths } from './auth-paths';
 import { permissionsPaths } from './permissions-paths';
 import { rolesPaths } from './roles-paths';
 
+// Responses
+const unprocessableResponse = {
+  description: 'Object with message and validation errors',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          message: { type: 'string', example: 'Invalid inputs' },
+          validationErrors: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                field: { type: 'string', example: 'id' },
+                message: { type: 'string', example: 'Invalid id format' },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
+const getMessageResponse = (example: string) => ({
+  description: 'Object with message',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: { message: { type: 'string', example } },
+      },
+    },
+  },
+});
+
+// Document
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
