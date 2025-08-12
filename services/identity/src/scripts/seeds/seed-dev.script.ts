@@ -54,13 +54,11 @@ const seedFakeUsers = async () => {
   logSeedMessage(USERS_TABLE_NAME, createdKeys);
 };
 
-const seedDevelopmentData = async () => {
-  await truncateTables();
-  await seedSystemData();
-  await seedFakeUsers();
-};
-
 // Run the script
 (async () => {
-  await scriptCatchAsync(seedDevelopmentData);
+  await scriptCatchAsync(async () => {
+    await truncateTables();
+    await seedSystemData();
+    await seedFakeUsers();
+  });
 })();
