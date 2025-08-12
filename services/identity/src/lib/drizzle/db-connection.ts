@@ -23,7 +23,7 @@ class DBConnection {
       await this.pool.query('SELECT 1');
       logger.info('Database connected successfully');
     } catch (err) {
-      logger.error(`Error connecting database: ${err}. Exiting application`);
+      logger.error(`Error connecting database: ${err}. Exiting now`);
       process.exit(1);
     }
   }

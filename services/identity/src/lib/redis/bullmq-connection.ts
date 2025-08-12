@@ -27,17 +27,17 @@ class BullMQConnection {
     );
   }
 
-  async verifyConnection() {
+  async verify() {
     try {
       await this.connection.ping();
       logger.info('Redis connected successfully');
     } catch (err) {
-      logger.error(`Error connecting redis: ${err}. Exiting application now`);
-      process.exit(1); // Exit on failure
+      logger.error(`Error connecting redis: ${err}. Exiting now`);
+      process.exit(1);
     }
   }
 
-  async closeConnection() {
+  async close() {
     try {
       await this.connection.quit();
       logger.info('Redis connection closed successfully');
