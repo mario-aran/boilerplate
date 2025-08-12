@@ -24,5 +24,5 @@ export const rolesRelations = relations(rolesTable, ({ many }) => ({
 }));
 
 // Columns
-export const ROLES_SORT_COLUMNS = getSortColumns(rolesTable);
 export const ROLES_EXAMPLE_COLUMNS = getExampleColumns(rolesTable);
+export const ROLES_SORT_COLUMNS = getSortColumns(rolesTable);

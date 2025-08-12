@@ -24,6 +24,7 @@ import { bullMQConnection } from './lib/redis/bullmq-connection';
 
   // Graceful shutdown
   let isShuttingDown = false;
+
   const shutdown = async () => {
     if (isShuttingDown) return;
     isShuttingDown = true;
@@ -39,10 +40,11 @@ import { bullMQConnection } from './lib/redis/bullmq-connection';
     await dbConnection.close();
 
     server.close(() => {
-      logger.info('Shutdown successful');
+      logger.info('Server closed successfully');
       process.exit(0);
     });
   };
+
   process.on('SIGINT', shutdown); // User interrupt signal
   process.on('SIGTERM', shutdown); // System termination signal
 })();

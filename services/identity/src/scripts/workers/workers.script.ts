@@ -32,7 +32,6 @@ import { EmailVerificationWorker } from './email-verification.worker';
     await bullMQConnection.close();
     await dbConnection.close();
 
-    logger.info('Shutdown successful');
     process.exit(0);
   };
   process.on('SIGINT', shutdown); // User interrupt signal

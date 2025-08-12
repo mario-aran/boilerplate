@@ -43,12 +43,12 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
 // Columns
 const excludedColumns = ['password'] as const;
 
-export const USERS_SORT_COLUMNS_NO_PASSWORD = getSortColumns(
+export const USERS_EXAMPLE_COLUMNS_NO_PASSWORD = getExampleColumns(
   usersTable,
   excludedColumns,
 );
 
-export const USERS_EXAMPLE_COLUMNS_NO_PASSWORD = getExampleColumns(
+export const USERS_SORT_COLUMNS_NO_PASSWORD = getSortColumns(
   usersTable,
   excludedColumns,
 );
