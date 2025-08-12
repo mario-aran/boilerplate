@@ -12,7 +12,7 @@ export const messageResponse = {
   },
 };
 
-export const unprocessableResponse = {
+export const unprocessableEntityResponse = {
   description: 'Object with message and validation errors',
   content: {
     'application/json': {
@@ -35,3 +35,29 @@ export const unprocessableResponse = {
     },
   },
 };
+
+export const getPaginatedResponse = (dataExample: Record<string, string>) => ({
+  description: 'Object with paginated results',
+  content: {
+    'application/json': {
+      schema: {
+        type: 'object',
+        properties: {
+          total: { type: 'number', example: 50 },
+          limit: { type: 'number', example: 10 },
+          page: { type: 'number', example: 1 },
+          prevPage: { type: 'number', nullable: true, example: null },
+          nextPage: { type: 'number', nullable: true, example: 2 },
+          totalPages: { type: 'number', example: 5 },
+          data: {
+            type: 'array',
+            items: {
+              type: 'object',
+              example: dataExample,
+            },
+          },
+        },
+      },
+    },
+  },
+});
