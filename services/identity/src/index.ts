@@ -1,47 +1,48 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
-import cors from 'cors';
-import express from 'express';
+import { app } from './app';
 import { BASE_URL, PORT } from './config/env';
-import { passportInit } from './features/auth/passport/passport-init';
-import { verifyDBConnection } from './lib/drizzle/utils/verify-db-connection';
-import { morganInit } from './lib/logger/morgan-init';
+import { dbConnection } from './lib/drizzle/db-connection';
 import { logger } from './lib/logger/winston-logger';
-import { verifyRedisConnection } from './lib/redis/utils/verify-redis-connection';
-import { errorHandler } from './middleware/error-handler';
-import { router } from './router';
+import { bullMQConnection } from './lib/redis/bullmq-connection';
 
-// App
-const app = express();
-
-// App middlewares
-app.use(morganInit);
-app.use(cors());
-app.use(express.json()); // Body parser
-app.use(passportInit); // Must be placed after "express.json"
-app.use(router); // Must be placed after all but before error handler
-app.use(errorHandler); // Must be placed last
-
-// Server
-const startServer = async () => {
+(async () => {
   // Verify connections
-  await verifyDBConnection();
-  await verifyRedisConnection();
+  await dbConnection.verify();
+  await bullMQConnection.verify();
 
   // Start the app
-  const server = app.listen(PORT, () => {
-    logger.info(`Application started successfully: ${BASE_URL}`);
-    process.exit(0); // Explicitly exit on success
-  });
+  const server = app.listen(PORT, () =>
+    logger.info(`Application started successfully: ${BASE_URL}`),
+  );
 
   // Verify the app
   server.on('error', (err) => {
-    logger.error(`Application failed at startup: ${err}`);
-    process.exit(1); // Exit on failure
+    logger.error(`Error at startup: ${err}. Exiting now`);
+    process.exit(1);
   });
-};
 
-// Run the script
-(async () => {
-  await startServer();
+  // Graceful shutdown
+  let isShuttingDown = false;
+  const shutdown = async () => {
+    if (isShuttingDown) return;
+    isShuttingDown = true;
+
+    // Force shutdown after 10 seconds
+    setTimeout(() => {
+      logger.error('Shutdown timeout, forcing exit');
+      process.exit(1);
+    }, 10000);
+
+    // Close connections
+    await bullMQConnection.close();
+    await dbConnection.close();
+
+    server.close(() => {
+      logger.info('Shutdown successful');
+      process.exit(0);
+    });
+  };
+  process.on('SIGINT', shutdown); // User interrupt signal
+  process.on('SIGTERM', shutdown); // System termination signal
 })();
