@@ -21,7 +21,7 @@ const unprocessableResponse = {
               type: 'object',
               properties: {
                 field: { type: 'string', example: 'id' },
-                message: { type: 'string', example: 'Invalid id format' },
+                message: { type: 'string', example: 'Invalid format' },
               },
             },
           },
