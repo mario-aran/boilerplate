@@ -4,7 +4,9 @@ export const messageResponse = {
     'application/json': {
       schema: {
         type: 'object',
-        properties: { message: { type: 'string' } },
+        properties: {
+          message: { type: 'string' },
+        },
       },
     },
   },
@@ -23,8 +25,8 @@ export const unprocessableResponse = {
             items: {
               type: 'object',
               properties: {
-                field: { type: 'string', example: 'name' },
-                message: { type: 'string', example: 'Invalid input' },
+                field: { type: 'string' },
+                message: { type: 'string' },
               },
             },
           },
