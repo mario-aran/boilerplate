@@ -7,32 +7,30 @@ import * as schemas from './schemas';
 
 // Utils
 class DBConnection {
-  readonly connection: Pool;
+  readonly pool: Pool;
 
   constructor() {
-    this.connection = new Pool({ connectionString: DATABASE_URL });
+    this.pool = new Pool({ connectionString: DATABASE_URL });
 
     // Log idle errors
-    this.connection.on('error', (err) =>
+    this.pool.on('error', (err) =>
       logger.error(`Database connection error: ${err}`),
     );
   }
 
-  async verifyConnection() {
+  async verify() {
     try {
-      await this.connection.query('SELECT 1');
+      await this.pool.query('SELECT 1');
       logger.info('Database connected successfully');
     } catch (err) {
-      logger.error(
-        `Error connecting database: ${err}. Exiting application now`,
-      );
-      process.exit(1); // Exit on failure
+      logger.error(`Error connecting database: ${err}. Exiting application`);
+      process.exit(1);
     }
   }
 
-  async closeConnection() {
+  async close() {
     try {
-      await this.connection.end();
+      await this.pool.end();
       logger.info('Database connection closed successfully');
     } catch (err) {
       logger.error(`Error closing database connection: ${err}`);
@@ -40,7 +38,7 @@ class DBConnection {
   }
 }
 
-class QueryLogger implements Logger {
+class DrizzleLogger implements Logger {
   logQuery(query: string, params: unknown[]) {
     logger.debug(`${query} -- params: ${JSON.stringify(params)}`);
   }
@@ -49,7 +47,7 @@ class QueryLogger implements Logger {
 export const dbConnection = new DBConnection();
 
 export const db = drizzle({
-  client: dbConnection.connection,
-  logger: new QueryLogger(),
+  client: dbConnection.pool,
+  logger: new DrizzleLogger(),
   schema: schemas, // Enable "db.query" for all schemas
 });
