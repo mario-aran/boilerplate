@@ -4,6 +4,7 @@ export const idPathParam = [
     name: 'id',
     required: true,
     schema: { type: 'string' },
+    description: 'Resource ID',
   },
 ];
 
