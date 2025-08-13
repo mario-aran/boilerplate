@@ -4,7 +4,6 @@ export const idPathParam = [
     name: 'id',
     required: true,
     schema: { type: 'string' },
-    description: 'Resource ID',
   },
 ];
 
@@ -12,13 +11,13 @@ export const paginatedQueryParams = [
   {
     in: 'query',
     name: 'limit',
-    schema: { type: 'integer', example: 1 },
+    schema: { type: 'integer' },
     description: 'Results per page',
   },
   {
     in: 'query',
     name: 'page',
-    schema: { type: 'integer', example: 1 },
+    schema: { type: 'integer' },
     description: 'Page number',
   },
   {

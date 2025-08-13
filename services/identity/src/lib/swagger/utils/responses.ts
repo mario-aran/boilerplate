@@ -1,5 +1,4 @@
 export const messageResponse = {
-  description: 'Object with message',
   content: {
     'application/json': {
       schema: {
@@ -13,7 +12,6 @@ export const messageResponse = {
 };
 
 export const unprocessableEntityResponse = {
-  description: 'Object with message and validation errors',
   content: {
     'application/json': {
       schema: {
@@ -37,7 +35,6 @@ export const unprocessableEntityResponse = {
 };
 
 export const getPaginatedResponse = (dataExample: Record<string, string>) => ({
-  description: 'Object with paginated results',
   content: {
     'application/json': {
       schema: {
