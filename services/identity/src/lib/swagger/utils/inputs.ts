@@ -1,0 +1,37 @@
+export const idPathParam = [
+  {
+    in: 'path',
+    name: 'id',
+    required: true,
+    schema: { type: 'string' },
+    description: 'Resource ID',
+  },
+];
+
+export const paginatedQueryParams = [
+  {
+    in: 'query',
+    name: 'limit',
+    schema: { type: 'integer' },
+    description: 'Results per page',
+  },
+  {
+    in: 'query',
+    name: 'page',
+    schema: { type: 'integer' },
+    description: 'Page number',
+  },
+  {
+    in: 'query',
+    name: 'sort',
+    schema: { type: 'array', items: { type: 'string', example: '-id' } },
+    explode: true,
+    description: 'Sort by columns. Use "-" prefix for descending',
+  },
+  {
+    in: 'query',
+    name: 'search',
+    schema: { type: 'string' },
+    description: 'Search by words',
+  },
+];

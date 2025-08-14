@@ -8,8 +8,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# node_modules
-# dist
+node_modules
+dist
 dist-ssr
 *.local
 
@@ -25,14 +25,8 @@ dist-ssr
 *.sw?
 
 ## Added manually
-# Folders
-node_modules
-dist
-coverage
-
-# Files
-**/package-lock.json
-**/yarn.lock
+/coverage
 package-lock.json
 yarn.lock
 *tsbuildinfo*
+.env
