@@ -12,6 +12,16 @@ import { StatusCodes } from 'http-status-codes';
 // Values
 const tags = ['roles'];
 
+const commonResponses = {
+  [StatusCodes.UNAUTHORIZED]: messageResponse,
+  [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableEntityResponse,
+};
+
+const idCommonResponses = {
+  ...commonResponses,
+  [StatusCodes.NOT_FOUND]: messageResponse,
+};
+
 export const rolesPaths = {
   [DOC_PATHS.ROLES]: {
     get: {
@@ -19,9 +29,8 @@ export const rolesPaths = {
       security: SECURITY,
       parameters: paginatedQueryParams,
       responses: {
+        ...commonResponses,
         [StatusCodes.OK]: getPaginatedResponse(ROLES_EXAMPLE_COLUMNS),
-        [StatusCodes.UNAUTHORIZED]: messageResponse,
-        [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableEntityResponse,
       },
     },
     post: {
@@ -40,9 +49,8 @@ export const rolesPaths = {
         },
       },
       responses: {
+        ...commonResponses,
         [StatusCodes.OK]: messageResponse,
-        [StatusCodes.UNAUTHORIZED]: messageResponse,
-        [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableEntityResponse,
       },
     },
   },
@@ -53,6 +61,7 @@ export const rolesPaths = {
       security: SECURITY,
       parameters: idPathParam,
       responses: {
+        ...idCommonResponses,
         [StatusCodes.OK]: {
           content: {
             'application/json': {
@@ -63,9 +72,6 @@ export const rolesPaths = {
             },
           },
         },
-        [StatusCodes.UNAUTHORIZED]: messageResponse,
-        [StatusCodes.NOT_FOUND]: messageResponse,
-        [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableEntityResponse,
       },
     },
     patch: {
@@ -86,10 +92,8 @@ export const rolesPaths = {
         },
       },
       responses: {
+        ...idCommonResponses,
         [StatusCodes.OK]: messageResponse,
-        [StatusCodes.UNAUTHORIZED]: messageResponse,
-        [StatusCodes.NOT_FOUND]: messageResponse,
-        [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableEntityResponse,
       },
     },
     delete: {
@@ -97,10 +101,8 @@ export const rolesPaths = {
       security: SECURITY,
       parameters: idPathParam,
       responses: {
+        ...idCommonResponses,
         [StatusCodes.OK]: messageResponse,
-        [StatusCodes.UNAUTHORIZED]: messageResponse,
-        [StatusCodes.NOT_FOUND]: messageResponse,
-        [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableEntityResponse,
       },
     },
   },
