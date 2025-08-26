@@ -38,4 +38,4 @@ export const ROUTES = {
   PERMISSIONS: SEGMENTS.PERMISSIONS,
 } as const;
 
-export const SWAGGER_ROUTES = replaceDotIds(ROUTES);
+export const SWAGGER_PATHS = replaceDotIds(ROUTES);
