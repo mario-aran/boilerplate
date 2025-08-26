@@ -8,5 +8,5 @@ export const permissionsRoute = Router();
 permissionsRoute.get(
   '/',
   zodValidator({ query: getAllPermissionsSchema }),
-  permissionsController.getAll,
+  permissionsController.getAll.bind(permissionsController),
 );

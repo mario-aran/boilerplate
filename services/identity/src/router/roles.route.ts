@@ -14,29 +14,29 @@ export const rolesRoute = Router();
 rolesRoute.get(
   '/',
   zodValidator({ query: getAllRolesSchema }),
-  rolesController.getAll,
+  rolesController.getAll.bind(rolesController),
 );
 
 rolesRoute.get(
   SEGMENTS.ID,
   zodValidator({ params: roleIdSchema }),
-  rolesController.get,
+  rolesController.get.bind(rolesController),
 );
 
 rolesRoute.post(
   '/',
   zodValidator({ body: createRoleSchema }),
-  rolesController.create,
+  rolesController.create.bind(rolesController),
 );
 
 rolesRoute.patch(
   SEGMENTS.ID,
   zodValidator({ params: roleIdSchema, body: updateRoleSchema }),
-  rolesController.update,
+  rolesController.update.bind(rolesController),
 );
 
 rolesRoute.delete(
   SEGMENTS.ID,
   zodValidator({ params: roleIdSchema }),
-  rolesController.delete,
+  rolesController.delete.bind(rolesController),
 );

@@ -14,23 +14,23 @@ export const authRoute = Router();
 authRoute.get(
   SEGMENTS.VERIFY_EMAIL,
   zodValidator({ query: verifyEmailAuthSchema }),
-  authController.verifyEmail,
+  authController.verifyEmail.bind(authController),
 );
 
 authRoute.post(
   SEGMENTS.REGISTER,
   zodValidator({ body: registerAuthSchema }),
-  authController.register,
+  authController.register.bind(authController),
 );
 
 authRoute.post(
   SEGMENTS.RESEND_EMAIL_VERIFICATION,
   zodValidator({ body: resendEmailVerificationAuthSchema }),
-  authController.resendEmailVerification,
+  authController.resendEmailVerification.bind(authController),
 );
 
 authRoute.post(
   SEGMENTS.LOGIN,
   zodValidator({ body: loginAuthSchema }),
-  authController.login,
+  authController.login.bind(authController),
 );
