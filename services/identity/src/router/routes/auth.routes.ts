@@ -9,27 +9,27 @@ import {
 import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
-export const authRoute = Router();
+export const authRoutes = Router();
 
-authRoute.get(
+authRoutes.get(
   SEGMENTS.VERIFY_EMAIL,
   zodValidator({ query: verifyEmailAuthSchema }),
   authController.verifyEmail.bind(authController),
 );
 
-authRoute.post(
+authRoutes.post(
   SEGMENTS.REGISTER,
   zodValidator({ body: registerAuthSchema }),
   authController.register.bind(authController),
 );
 
-authRoute.post(
+authRoutes.post(
   SEGMENTS.RESEND_EMAIL_VERIFICATION,
   zodValidator({ body: resendEmailVerificationAuthSchema }),
   authController.resendEmailVerification.bind(authController),
 );
 
-authRoute.post(
+authRoutes.post(
   SEGMENTS.LOGIN,
   zodValidator({ body: loginAuthSchema }),
   authController.login.bind(authController),

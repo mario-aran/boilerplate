@@ -9,33 +9,33 @@ import {
 import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
-export const rolesRoute = Router();
+export const rolesRoutes = Router();
 
-rolesRoute.get(
+rolesRoutes.get(
   '/',
   zodValidator({ query: getAllRolesSchema }),
   rolesController.getAll.bind(rolesController),
 );
 
-rolesRoute.get(
+rolesRoutes.get(
   SEGMENTS.ID,
   zodValidator({ params: roleIdSchema }),
   rolesController.get.bind(rolesController),
 );
 
-rolesRoute.post(
+rolesRoutes.post(
   '/',
   zodValidator({ body: createRoleSchema }),
   rolesController.create.bind(rolesController),
 );
 
-rolesRoute.patch(
+rolesRoutes.patch(
   SEGMENTS.ID,
   zodValidator({ params: roleIdSchema, body: updateRoleSchema }),
   rolesController.update.bind(rolesController),
 );
 
-rolesRoute.delete(
+rolesRoutes.delete(
   SEGMENTS.ID,
   zodValidator({ params: roleIdSchema }),
   rolesController.delete.bind(rolesController),

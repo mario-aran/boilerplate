@@ -3,9 +3,9 @@ import { getAllPermissionsSchema } from '@/lib/zod/schemas/permissions.schema';
 import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
-export const permissionsRoute = Router();
+export const permissionsRoutes = Router();
 
-permissionsRoute.get(
+permissionsRoutes.get(
   '/',
   zodValidator({ query: getAllPermissionsSchema }),
   permissionsController.getAll.bind(permissionsController),
