@@ -18,33 +18,7 @@ import { bullMQConnection } from './lib/redis/bullmq-connection';
 
   // Verify the app
   server.on('error', (err) => {
-    logger.error(`Error at startup: ${err}. Exiting now`);
+    logger.error(`Error at startup: ${err}. Forced exit`);
     process.exit(1);
   });
-
-  // Graceful shutdown
-  let isShuttingDown = false;
-
-  const shutdown = async () => {
-    if (isShuttingDown) return;
-    isShuttingDown = true;
-
-    // Force shutdown after 10 seconds
-    setTimeout(() => {
-      logger.error('Shutdown timeout, forcing exit');
-      process.exit(1);
-    }, 10000);
-
-    // Close connections
-    await bullMQConnection.close();
-    await dbConnection.close();
-
-    server.close(() => {
-      logger.info('Server closed successfully');
-      process.exit(0);
-    });
-  };
-
-  process.on('SIGINT', shutdown); // User interrupt signal
-  process.on('SIGTERM', shutdown); // System termination signal
 })();
