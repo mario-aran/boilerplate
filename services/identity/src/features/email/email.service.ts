@@ -18,7 +18,7 @@ class EmailService {
   });
 
   async sendEmailVerification({ email, token }: EmailVerificationProps) {
-    const tokenUrl = `${BASE_URL}${ROUTES.API_AUTH_VERIFY_EMAIL}?token=${token}`;
+    const tokenUrl = `${BASE_URL}${ROUTES.AUTH_VERIFY_EMAIL}?token=${token}`;
 
     await this.transporter.sendMail({
       from: VERIFY_EMAIL_FROM,
