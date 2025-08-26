@@ -6,7 +6,7 @@ This template was created manually.
 
 ## Development instructions
 
-Prepare project
+Prepare code
 
 - `pnpm run clean:ignored`: Delete git ignored files
 - `cp .env.dev .env`: Create .env file
@@ -19,26 +19,26 @@ Prepare database
 - `pnpm run db:migrate`: Run migrations
 - `pnpm run db:seed:dev`: Seed database with development data
 
-Start app
+Start
 
 - `pnpm run dev`: Run application in development mode
 - `pnpm run workers:dev`: Run workers in development mode
 
-Debugging
+Test
+
+- `pnpm run test`: Run tests
+- `pnpm run test:coverage`: Run test coverage
+
+Debug
 
 - `pnpm run db:repl`: Run drizzle REPL
 
-Formatting
+Format
 
 - `pnpm run format:lf`: (Optional) Convert all files to LF
 - `pnpm run format:code`: Prettier
 - `pnpm run format:lint`: Linter and typechecker
 - `pnpm run build`: Build app and check compiler types
-
-Testing
-
-- `pnpm run test`: Run tests
-- `pnpm run test:coverage`: Run test coverage
 
 ## Dependencies
 
