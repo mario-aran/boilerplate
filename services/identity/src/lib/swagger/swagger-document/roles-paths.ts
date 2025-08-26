@@ -1,4 +1,4 @@
-import { DOC_PATHS } from '@/constants/routes';
+import { SWAGGER_PATHS } from '@/constants/routes';
 import { ROLES_EXAMPLE_COLUMNS } from '@/lib/drizzle/schemas';
 import { SECURITY } from '@/lib/swagger/constants';
 import { idPathParam, paginatedQueryParams } from '@/lib/swagger/utils/inputs';
@@ -23,7 +23,7 @@ const idCommonResponses = {
 };
 
 export const rolesPaths = {
-  [DOC_PATHS.ROLES]: {
+  [SWAGGER_PATHS.ROLES]: {
     get: {
       tags,
       security: SECURITY,
@@ -55,7 +55,7 @@ export const rolesPaths = {
     },
   },
 
-  [DOC_PATHS.ROLES_ID]: {
+  [SWAGGER_PATHS.ROLES_ID]: {
     get: {
       tags,
       security: SECURITY,

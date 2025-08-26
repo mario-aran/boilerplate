@@ -1,10 +1,10 @@
-import { DOC_PATHS } from '@/constants/routes';
+import { SWAGGER_PATHS } from '@/constants/routes';
 
 // Values
 const tags = ['auth'];
 
 export const authPaths = {
-  [DOC_PATHS.AUTH_VERIFY_EMAIL]: {
+  [SWAGGER_PATHS.AUTH_VERIFY_EMAIL]: {
     get: {
       tags,
       parameters: [
@@ -20,7 +20,7 @@ export const authPaths = {
     },
   },
 
-  [DOC_PATHS.AUTH_REGISTER]: {
+  [SWAGGER_PATHS.AUTH_REGISTER]: {
     post: {
       tags,
       requestBody: {
@@ -38,7 +38,7 @@ export const authPaths = {
     },
   },
 
-  [DOC_PATHS.AUTH_RESEND_EMAIL_VERIFICATION]: {
+  [SWAGGER_PATHS.AUTH_RESEND_EMAIL_VERIFICATION]: {
     post: {
       tags,
       requestBody: {
@@ -56,7 +56,7 @@ export const authPaths = {
     },
   },
 
-  [DOC_PATHS.AUTH_LOGIN]: {
+  [SWAGGER_PATHS.AUTH_LOGIN]: {
     post: {
       tags,
       requestBody: {
