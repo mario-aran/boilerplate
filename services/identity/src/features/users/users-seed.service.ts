@@ -1,5 +1,5 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
-import { db } from '@/lib/drizzle/db-connection';
+import { db } from '@/lib/drizzle';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { hashPassword } from './utils/hash-password';
 
