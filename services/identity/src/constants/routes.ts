@@ -17,6 +17,7 @@ const replaceDotIds = <T extends Paths>(paths: T) => {
 // Constants
 export const SEGMENTS = {
   ID: '/:id',
+  FAVICON: '/favicon.ico',
   DOCS: '/docs',
   AUTH: '/auth',
   REGISTER: '/register',
@@ -28,7 +29,6 @@ export const SEGMENTS = {
 } as const;
 
 export const ROUTES = {
-  DOCS: SEGMENTS.DOCS,
   AUTH_REGISTER: `${SEGMENTS.AUTH}${SEGMENTS.REGISTER}`,
   AUTH_RESEND_EMAIL_VERIFICATION: `${SEGMENTS.AUTH}${SEGMENTS.RESEND_EMAIL_VERIFICATION}`,
   AUTH_VERIFY_EMAIL: `${SEGMENTS.AUTH}${SEGMENTS.VERIFY_EMAIL}`,
