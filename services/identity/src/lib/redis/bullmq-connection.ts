@@ -36,15 +36,6 @@ class BullMQConnection {
       process.exit(1);
     }
   }
-
-  async close() {
-    try {
-      await this.connection.quit();
-      logger.info('Redis connection closed successfully');
-    } catch (err) {
-      logger.error(`Error closing redis connection: ${err}`);
-    }
-  }
 }
 
 export const bullMQConnection = new BullMQConnection();

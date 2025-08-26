@@ -2,7 +2,7 @@ import { QUEUES } from '@/constants/queues';
 import { emailService } from '@/features/email/email.service';
 import { bullMQConnection } from '@/lib/redis/bullmq-connection';
 import { Worker } from 'bullmq';
-import { closeWorker, registerWorkerEvents } from './utils/worker-handlers';
+import { registerWorkerEvents } from './utils/worker-handlers';
 
 export class EmailVerificationWorker {
   readonly worker: Worker;
@@ -18,9 +18,5 @@ export class EmailVerificationWorker {
 
     // Events
     registerWorkerEvents(QUEUES.EMAIL_VERIFICATION, this.worker);
-  }
-
-  async close() {
-    return closeWorker(QUEUES.EMAIL_VERIFICATION, this.worker);
   }
 }
