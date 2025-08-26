@@ -14,7 +14,10 @@ export default tseslint.config([
       globals: globals.node, // Environment: "browser" or "node"
     },
     extends: [
+      // "eslint"
       eslint.configs.recommended,
+
+      // "typescript-eslint"
       tseslint.configs.strict,
       tseslint.configs.stylistic,
     ],
@@ -48,5 +51,7 @@ export default tseslint.config([
       ],
     },
   },
-  eslintConfigPrettier, // Must be placed last
+
+  // "eslint-config-prettier": Must be placed last
+  eslintConfigPrettier,
 ]);
