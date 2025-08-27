@@ -5,15 +5,6 @@ type ReplaceDotId<TK extends string> = TK extends `${infer P}:id${infer S}`
   ? `${P}{id}${ReplaceDotId<S>}`
   : TK;
 
-// Utils
-const replaceDotIds = <T extends Paths>(paths: T) => {
-  const entries = Object.entries(paths).map(([key, value]) => [
-    key,
-    value.replace(':id', '{id}'),
-  ]);
-  return Object.fromEntries(entries) as { [K in keyof T]: ReplaceDotId<T[K]> };
-};
-
 // Constants
 export const SEGMENTS = {
   ID: '/:id',
@@ -38,4 +29,14 @@ export const ROUTES = {
   PERMISSIONS: SEGMENTS.PERMISSIONS,
 } as const;
 
+// Utils
+export const replaceDotIds = <T extends Paths>(paths: T) => {
+  const entries = Object.entries(paths).map(([key, value]) => [
+    key,
+    value.replace(':id', '{id}'),
+  ]);
+  return Object.fromEntries(entries) as { [K in keyof T]: ReplaceDotId<T[K]> };
+};
+
+// Derived constants
 export const SWAGGER_PATHS = replaceDotIds(ROUTES);
