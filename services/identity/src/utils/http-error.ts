@@ -3,19 +3,20 @@ type ValidationErrors = Record<string, string>[];
 
 interface HttpErrorProps {
   message: string;
-  httpStatus: number;
+  status: number;
   validationErrors?: ValidationErrors;
 }
 
 export class HttpError extends Error {
-  readonly httpStatus: number;
+  readonly status: number;
   readonly validationErrors?: ValidationErrors;
 
-  constructor({ message, httpStatus, validationErrors }: HttpErrorProps) {
+  constructor({ message, status, validationErrors }: HttpErrorProps) {
     super(message);
-    this.name = new.target.name;
-    this.httpStatus = httpStatus;
+    this.status = status;
     this.validationErrors = validationErrors;
+
+    this.name = new.target.name;
     Error.captureStackTrace(this, new.target);
   }
 }
