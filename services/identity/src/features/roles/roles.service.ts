@@ -14,7 +14,7 @@ import { StatusCodes } from 'http-status-codes';
 class RolesService {
   private roleNotFoundError = new HttpError({
     message: 'Role not found',
-    httpStatus: StatusCodes.NOT_FOUND,
+    status: StatusCodes.NOT_FOUND,
   });
 
   async getAll({ limit, page, sort, search = '' }: GetAllRoles) {

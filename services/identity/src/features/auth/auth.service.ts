@@ -25,12 +25,12 @@ interface SignAndEnqueueEmailVerificationProps {
 class AuthService {
   private emailAlreadyVerifiedError = new HttpError({
     message: 'Email already verified',
-    httpStatus: StatusCodes.CONFLICT,
+    status: StatusCodes.CONFLICT,
   });
 
   private invalidCredentialsError = new HttpError({
     message: 'Invalid credentials',
-    httpStatus: StatusCodes.FORBIDDEN,
+    status: StatusCodes.FORBIDDEN,
   });
 
   async verifyEmail({ token }: VerifyEmailAuth) {

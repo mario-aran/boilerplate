@@ -23,7 +23,7 @@ export const validateEmailVerificationToken = (token: string) => {
   } catch {
     throw new HttpError({
       message: 'Invalid token',
-      httpStatus: StatusCodes.UNAUTHORIZED,
+      status: StatusCodes.UNAUTHORIZED,
     });
   }
 };

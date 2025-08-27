@@ -11,7 +11,7 @@ import { hashPassword } from './utils/hash-password';
 class UsersService {
   private userNotFoundError = new HttpError({
     message: 'User not found',
-    httpStatus: StatusCodes.NOT_FOUND,
+    status: StatusCodes.NOT_FOUND,
   });
 
   async getAll({ limit, page, sort, roleId = '', search = '' }: GetAllUsers) {

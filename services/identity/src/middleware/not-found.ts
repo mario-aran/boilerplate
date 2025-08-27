@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 // Values
 const notFoundError = new HttpError({
   message: 'Not found',
-  httpStatus: StatusCodes.NOT_FOUND,
+  status: StatusCodes.NOT_FOUND,
 });
 
 export const notFound = (_: Request, _res: Response, next: NextFunction) =>

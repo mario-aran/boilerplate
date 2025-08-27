@@ -12,13 +12,13 @@ export const errorHandler = (
   _next: NextFunction,
 ) => {
   let message = 'Server error';
-  let httpStatus = StatusCodes.INTERNAL_SERVER_ERROR;
+  let status = StatusCodes.INTERNAL_SERVER_ERROR;
   let validationErrors;
 
   // Custom errors
   if (err instanceof HttpError) {
     message = err.message;
-    httpStatus = err.httpStatus;
+    status = err.status;
     validationErrors = err.validationErrors;
   }
 
@@ -30,7 +30,7 @@ export const errorHandler = (
     err.status === StatusCodes.BAD_REQUEST
   ) {
     message = 'Malformed JSON body';
-    httpStatus = err.status;
+    status = err.status;
   }
 
   // DB errors
@@ -38,11 +38,11 @@ export const errorHandler = (
     switch (err.cause.code) {
       case '23503':
         message = 'Data relationship constraints';
-        httpStatus = StatusCodes.CONFLICT;
+        status = StatusCodes.CONFLICT;
         break;
       case '23505':
         message = 'Data already exists';
-        httpStatus = StatusCodes.CONFLICT;
+        status = StatusCodes.CONFLICT;
         break;
       default:
         message = 'Database error';
@@ -50,5 +50,5 @@ export const errorHandler = (
   }
 
   logger.error(err.stack || message);
-  res.status(httpStatus).json({ message, validationErrors });
+  res.status(status).json({ message, validationErrors });
 };
