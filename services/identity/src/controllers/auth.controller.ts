@@ -2,7 +2,7 @@ import { authService } from '@/features/auth/auth.service';
 import { VerifyEmailAuth } from '@/lib/zod/schemas/auth.schema';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { controllerCatchAsync } from './utils/controller-catch-async';
+import { controllerCatchAsync } from './utils';
 
 class AuthController {
   verifyEmail = controllerCatchAsync(
