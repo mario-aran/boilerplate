@@ -13,6 +13,6 @@ app.use(morganInit);
 app.use(cors());
 app.use(express.json());
 app.use(passportInit); // Must be placed after "express.json"
-app.use(routes); // Must be placed after all but before not found and error handler
-app.use(notFound); // Must be placed after router
+app.use(routes); // Must be placed after all but before error handler
+app.use(notFound); // Must be placed after routes
 app.use(errorHandler); // Must be the placed last

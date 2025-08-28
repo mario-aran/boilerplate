@@ -11,12 +11,12 @@ import { bullMQConnection } from './lib/redis/bullmq-connection';
   await dbConnection.verify();
   await bullMQConnection.verify();
 
-  // Start the app
+  // Start app
   const server = app.listen(PORT, () =>
     logger.info(`Application started successfully: ${BASE_URL}`),
   );
 
-  // Verify the app
+  // Verify app
   server.on('error', (err) => {
     logger.error(`Error at startup: ${err}. Forced exit`);
     process.exit(1);
