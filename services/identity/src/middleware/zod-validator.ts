@@ -12,7 +12,7 @@ type ZodValidator = (props: {
 
 export const zodValidator: ZodValidator =
   ({ params, query, body }) =>
-  (req, _, next) => {
+  (req, _res, next) => {
     try {
       // Validate request data
       params?.parse(req.params);
@@ -28,6 +28,7 @@ export const zodValidator: ZodValidator =
           field: `${issue.path.join('.')}`,
           message: issue.message,
         }));
+
         return next(
           new HttpError({
             message: 'Unprocessable',
@@ -37,7 +38,7 @@ export const zodValidator: ZodValidator =
         );
       }
 
-      // Failed: Internal error
+      // Failed: Regular error
       return next(err);
     }
   };
