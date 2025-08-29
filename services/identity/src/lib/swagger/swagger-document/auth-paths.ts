@@ -1,4 +1,4 @@
-import { SWAGGER_PATHS } from '@/constants/routes';
+import { SWAGGER_PATHS } from '@/constants/paths';
 
 // Values
 const tags = ['auth'];

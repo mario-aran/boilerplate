@@ -1,4 +1,4 @@
-import { SWAGGER_PATHS } from '@/constants/routes';
+import { SWAGGER_PATHS } from '@/constants/paths';
 import { PERMISSIONS_EXAMPLE_COLUMNS } from '@/lib/drizzle/schemas';
 import { SECURITY } from '@/lib/swagger/constants';
 import { paginatedQueryParams } from '@/lib/swagger/utils/inputs';
