@@ -9,6 +9,7 @@ This template was created manually.
 Prepare code
 
 - `pnpm run clean:ignored`: Delete git ignored files
+- `pnpm run format:lf`: (Optional) Convert all files to LF
 - `cp .env.dev .env`: Create .env file
 - `pnpm install`: Install dependencies
 - `pnpm up --latest`: (Optional) Update dependencies to the last version
@@ -28,17 +29,16 @@ Debug
 
 - `pnpm run repl`: Run REPL
 
-Format
-
-- `pnpm run format:lf`: (Optional) Convert all files to LF
-- `pnpm run format:code`: Prettier
-- `pnpm run format:lint`: Linter and typechecker
-- `pnpm run build`: Build app and check compiler types
-
 Test
 
 - `pnpm run test`: Run tests
 - `pnpm run test:coverage`: Run test coverage
+
+Format
+
+- `pnpm run format:code`: Prettier
+- `pnpm run format:lint`: Linter and typechecker
+- `pnpm run build`: Build app and check compiler types
 
 ## Dependencies
 
