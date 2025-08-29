@@ -36,8 +36,8 @@ Test
 
 Format
 
-- `pnpm run format:code`: Prettier
-- `pnpm run format:lint`: Linter and typechecker
+- `pnpm run format:prettier`: Prettier
+- `pnpm run format:eslint`: Linter and typechecker
 - `pnpm run build`: Build app and check compiler types
 
 ## Dependencies
