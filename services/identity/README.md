@@ -24,14 +24,9 @@ Start
 - `pnpm run dev`: Run application in development mode
 - `pnpm run workers:dev`: Run workers in development mode
 
-Test
-
-- `pnpm run test`: Run tests
-- `pnpm run test:coverage`: Run test coverage
-
 Debug
 
-- `pnpm run db:repl`: Run drizzle REPL
+- `pnpm run repl`: Run REPL
 
 Format
 
@@ -39,6 +34,11 @@ Format
 - `pnpm run format:code`: Prettier
 - `pnpm run format:lint`: Linter and typechecker
 - `pnpm run build`: Build app and check compiler types
+
+Test
+
+- `pnpm run test`: Run tests
+- `pnpm run test:coverage`: Run test coverage
 
 ## Dependencies
 
