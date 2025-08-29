@@ -18,8 +18,8 @@ describe('zodValidator', () => {
 
   it('calls next without error when request data is valid', () => {
     req.body = { field: 'string' };
-    const schema = z.object({ field: z.string() });
 
+    const schema = z.object({ field: z.string() });
     const middleware = zodValidator({ body: schema });
     middleware(req, res, next);
 
@@ -28,7 +28,6 @@ describe('zodValidator', () => {
 
   it('calls next with Zod error when request data is invalid', () => {
     const schema = z.object({ field: z.string() });
-
     const middleware = zodValidator({ body: schema });
     middleware(req, res, next);
 
