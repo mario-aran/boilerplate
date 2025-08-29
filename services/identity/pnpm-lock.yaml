@@ -12,8 +12,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       bullmq:
-        specifier: ^5.58.2
-        version: 5.58.2
+        specifier: ^5.58.3
+        version: 5.58.3
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -655,8 +655,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@ioredis/commands@1.3.0':
-    resolution: {integrity: sha512-M/T6Zewn7sDaBQEqIZ8Rb+i9y8qfGmq+5SDFSf9sA2lUZTmdDLVdOiQaeDp+Q4wElZ9HG1GAX5KhDaidp6LQsQ==}
+  '@ioredis/commands@1.3.1':
+    resolution: {integrity: sha512-bYtU8avhGIcje3IhvF9aSjsa5URMZBHnwKtOvXsT4sfYy9gppW11gLPT/9oNqlJZD47yPKveQFTAFWpHjKvUoQ==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -1244,8 +1244,8 @@ packages:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
     engines: {node: '>=12'}
 
-  ast-v8-to-istanbul@0.3.4:
-    resolution: {integrity: sha512-cxrAnZNLBnQwBPByK4CeDaw5sWZtMilJE/Q3iDA0aamgaIVNDF9T6K2/8DfYDZEejZ2jNnDrG9m8MY72HFd0KA==}
+  ast-v8-to-istanbul@0.3.5:
+    resolution: {integrity: sha512-9SdXjNheSiE8bALAQCQQuT6fgQaoxJh7IRYrRGZ8/9nv8WhJeC1aXAwN8TbaOssGOukUvyvnkgD9+Yuykvl1aA==}
 
   async@3.2.6:
     resolution: {integrity: sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==}
@@ -1291,8 +1291,8 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
-  bullmq@5.58.2:
-    resolution: {integrity: sha512-HSGtNFM8Ttzml4OHO5cy6ju0ObnDmSedXJwpSUCFSDXR6l9MQe5CQCs/FzAb6Ac9EXYIvvF20UMV+C1OVDW39w==}
+  bullmq@5.58.3:
+    resolution: {integrity: sha512-G3mBj7lKzbCXl73UTA33+XZvOuSpktWgHFtgMu+fz22af0TQidKIPMZpQ2usHtvtVHYlcCPFQ66I54ZocKQUtw==}
 
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
@@ -3357,7 +3357,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@ioredis/commands@1.3.0': {}
+  '@ioredis/commands@1.3.1': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -3976,7 +3976,7 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2
-      ast-v8-to-istanbul: 0.3.4
+      ast-v8-to-istanbul: 0.3.5
       debug: 4.4.1
       istanbul-lib-coverage: 3.2.2
       istanbul-lib-report: 3.0.1
@@ -4074,7 +4074,7 @@ snapshots:
 
   assertion-error@2.0.1: {}
 
-  ast-v8-to-istanbul@0.3.4:
+  ast-v8-to-istanbul@0.3.5:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.30
       estree-walker: 3.0.3
@@ -4127,7 +4127,7 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
-  bullmq@5.58.2:
+  bullmq@5.58.3:
     dependencies:
       cron-parser: 4.9.0
       ioredis: 5.7.0
@@ -4705,7 +4705,7 @@ snapshots:
 
   ioredis@5.7.0:
     dependencies:
-      '@ioredis/commands': 1.3.0
+      '@ioredis/commands': 1.3.1
       cluster-key-slot: 1.1.2
       debug: 4.4.1
       denque: 2.1.0
