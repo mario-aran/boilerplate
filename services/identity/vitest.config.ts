@@ -7,6 +7,8 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
   test: {
+    include: ['tests/**/*.{ts,tsx}'],
+
     // "@vitest/coverage-v8"
     coverage: {
       reporter: ['text', 'html'], // Report outputs
