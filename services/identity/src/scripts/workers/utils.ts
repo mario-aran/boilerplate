@@ -1,10 +1,10 @@
 import { logger } from '@/lib/logger/winston-logger';
 import { bullMQConnection } from '@/lib/redis/bullmq-connection';
-import { Processor, Worker } from 'bullmq';
+import { Job, Worker } from 'bullmq';
 
 interface CreateWorkerProps {
   name: string;
-  processor: Processor;
+  processor: (job: Job) => Promise<unknown>;
 }
 
 export const createWorker = ({ name, processor }: CreateWorkerProps) => {
