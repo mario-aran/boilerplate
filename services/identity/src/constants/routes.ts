@@ -1,42 +1,46 @@
 // Types
-type Paths = Record<string, string>;
-
-type ReplaceDotId<TK extends string> = TK extends `${infer P}:id${infer S}`
-  ? `${P}{id}${ReplaceDotId<S>}`
-  : TK;
+type ReplaceColons<T extends string> =
+  T extends `${infer Prefix}:${infer Param}`
+    ? `${Prefix}{${ReplaceColons<Param>}}`
+    : T;
 
 // Constants
-export const SEGMENTS = {
+export const PARTS = {
   ID: '/:id',
-  FAVICON: '/favicon.ico',
-  DOCS: '/docs',
   AUTH: '/auth',
+  VERIFY_EMAIL: '/verify-email',
   REGISTER: '/register',
   RESEND_EMAIL_VERIFICATION: '/resend-email-verification',
-  VERIFY_EMAIL: '/verify-email',
   LOGIN: '/login',
+  USERS: '/users',
   ROLES: '/roles',
   PERMISSIONS: '/permissions',
 } as const;
 
 export const ROUTES = {
-  AUTH_REGISTER: `${SEGMENTS.AUTH}${SEGMENTS.REGISTER}`,
-  AUTH_RESEND_EMAIL_VERIFICATION: `${SEGMENTS.AUTH}${SEGMENTS.RESEND_EMAIL_VERIFICATION}`,
-  AUTH_VERIFY_EMAIL: `${SEGMENTS.AUTH}${SEGMENTS.VERIFY_EMAIL}`,
-  AUTH_LOGIN: `${SEGMENTS.AUTH}${SEGMENTS.LOGIN}`,
-  ROLES: SEGMENTS.ROLES,
-  ROLES_ID: `${SEGMENTS.ROLES}${SEGMENTS.ID}`,
-  PERMISSIONS: SEGMENTS.PERMISSIONS,
+  AUTH_VERIFY_EMAIL: `${PARTS.AUTH}${PARTS.VERIFY_EMAIL}`,
+  AUTH_REGISTER: `${PARTS.AUTH}${PARTS.REGISTER}`,
+  AUTH_RESEND_EMAIL_VERIFICATION: `${PARTS.AUTH}${PARTS.RESEND_EMAIL_VERIFICATION}`,
+  AUTH_LOGIN: `${PARTS.AUTH}${PARTS.LOGIN}`,
+  ROLES: PARTS.ROLES,
+  ROLES_ID: `${PARTS.ROLES}${PARTS.ID}`,
+  PERMISSIONS: PARTS.PERMISSIONS,
 } as const;
 
 // Utils
-export const replaceDotIds = <T extends Paths>(paths: T) => {
+export const replaceColonsInPaths = <T extends Record<string, string>>(
+  paths: T,
+) => {
   const entries = Object.entries(paths).map(([key, value]) => [
     key,
-    value.replace(':id', '{id}'),
+    value
+      .split('/')
+      .map((part) => (part.startsWith(':') ? `{${part.slice(1)}}` : part))
+      .join('/'),
   ]);
-  return Object.fromEntries(entries) as { [K in keyof T]: ReplaceDotId<T[K]> };
+
+  return Object.fromEntries(entries) as { [K in keyof T]: ReplaceColons<T[K]> };
 };
 
 // Derived constants
-export const SWAGGER_PATHS = replaceDotIds(ROUTES);
+export const SWAGGER_PATHS = replaceColonsInPaths(ROUTES);
