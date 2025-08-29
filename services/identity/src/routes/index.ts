@@ -1,5 +1,5 @@
 import { BASE_URL } from '@/config/env';
-import { PARTS } from '@/constants/routes';
+import { PATH_SEGMENTS } from '@/constants/paths';
 import { swaggerDocument } from '@/lib/swagger/swagger-document';
 import { Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
@@ -9,8 +9,8 @@ import { permissionsRoutes } from './permissions.routes';
 import { rolesRoutes } from './roles.routes';
 
 // Constants
-const DOCS_PATH = '/docs';
 const FAVICON_PATH = '/favicon.ico';
+const DOCS_PATH = '/docs';
 
 export const routes = Router();
 
@@ -31,6 +31,6 @@ routes.get('/', (_, res) =>
 );
 
 // API endpoints
-routes.use(PARTS.AUTH, authRoutes);
-routes.use(PARTS.ROLES, rolesRoutes);
-routes.use(PARTS.PERMISSIONS, permissionsRoutes);
+routes.use(PATH_SEGMENTS.AUTH, authRoutes);
+routes.use(PATH_SEGMENTS.ROLES, rolesRoutes);
+routes.use(PATH_SEGMENTS.PERMISSIONS, permissionsRoutes);

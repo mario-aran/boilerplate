@@ -1,4 +1,4 @@
-import { PARTS } from '@/constants/routes';
+import { PATH_SEGMENTS } from '@/constants/paths';
 import { rolesController } from '@/controllers/roles.controller';
 import {
   createRoleSchema,
@@ -18,7 +18,7 @@ rolesRoutes.get(
 );
 
 rolesRoutes.get(
-  PARTS.ID,
+  PATH_SEGMENTS.ID,
   zodValidator({ params: roleIdSchema }),
   rolesController.get.bind(rolesController),
 );
@@ -30,13 +30,13 @@ rolesRoutes.post(
 );
 
 rolesRoutes.patch(
-  PARTS.ID,
+  PATH_SEGMENTS.ID,
   zodValidator({ params: roleIdSchema, body: updateRoleSchema }),
   rolesController.update.bind(rolesController),
 );
 
 rolesRoutes.delete(
-  PARTS.ID,
+  PATH_SEGMENTS.ID,
   zodValidator({ params: roleIdSchema }),
   rolesController.delete.bind(rolesController),
 );

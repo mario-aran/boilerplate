@@ -1,4 +1,4 @@
-import { PARTS } from '@/constants/routes';
+import { PATH_SEGMENTS } from '@/constants/paths';
 import { authController } from '@/controllers/auth.controller';
 import {
   loginAuthSchema,
@@ -12,25 +12,25 @@ import { Router } from 'express';
 export const authRoutes = Router();
 
 authRoutes.get(
-  PARTS.VERIFY_EMAIL,
+  PATH_SEGMENTS.VERIFY_EMAIL,
   zodValidator({ query: verifyEmailAuthSchema }),
   authController.verifyEmail.bind(authController),
 );
 
 authRoutes.post(
-  PARTS.REGISTER,
+  PATH_SEGMENTS.REGISTER,
   zodValidator({ body: registerAuthSchema }),
   authController.register.bind(authController),
 );
 
 authRoutes.post(
-  PARTS.RESEND_EMAIL_VERIFICATION,
+  PATH_SEGMENTS.RESEND_EMAIL_VERIFICATION,
   zodValidator({ body: resendEmailVerificationAuthSchema }),
   authController.resendEmailVerification.bind(authController),
 );
 
 authRoutes.post(
-  PARTS.LOGIN,
+  PATH_SEGMENTS.LOGIN,
   zodValidator({ body: loginAuthSchema }),
   authController.login.bind(authController),
 );
