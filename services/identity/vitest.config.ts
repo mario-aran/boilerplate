@@ -7,7 +7,7 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
   test: {
-    include: ['tests/**/*.{ts,tsx}'],
+    setupFiles: ['tests/vitest.setup.ts'],
 
     // "@vitest/coverage-v8"
     coverage: {

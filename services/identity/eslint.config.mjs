@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config([
   globalIgnores(['dist', 'coverage']),
   {
-    files: ['**/*.{ts,tsx}', 'tests/**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022, // Should match target version in "tsconfig.json"
       globals: globals.node, // Environment: "browser" or "node"
