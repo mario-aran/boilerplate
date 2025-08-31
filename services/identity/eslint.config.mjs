@@ -6,9 +6,9 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config([
-  globalIgnores(['dist', 'coverage']),
+  globalIgnores(['coverage', 'dist', 'migrations', 'resources']),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.ts'],
     languageOptions: {
       ecmaVersion: 2022, // Should match target version in "tsconfig.json"
       globals: globals.node, // Environment: "browser" or "node"
@@ -42,12 +42,13 @@ export default tseslint.config([
       // "eslint-plugin-check-file"
       'check-file/filename-naming-convention': [
         'error',
-        { '**/*.{ts,tsx}': 'KEBAB_CASE' },
+        { '**/*.ts': 'KEBAB_CASE' },
         { ignoreMiddleExtensions: true },
       ],
       'check-file/folder-naming-convention': [
         'error',
-        { 'src/**/!(__tests__)': 'KEBAB_CASE' },
+        { 'src/**': 'KEBAB_CASE' },
+        { 'tests/**': 'KEBAB_CASE' },
       ],
     },
   },

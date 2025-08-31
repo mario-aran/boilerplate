@@ -21,6 +21,17 @@ Prepare database
 - `pnpm run db:migrate`: Run migrations
 - `pnpm run db:seed:dev`: Seed database with development data
 
+Format
+
+- `pnpm run format:prettier`: Prettier
+- `pnpm run format:eslint`: Linter and typechecker
+- `pnpm run build`: Build app and check compiler types
+
+Test
+
+- `pnpm run test`: Run tests
+- `pnpm run test:coverage`: Run test coverage
+
 Start
 
 - `pnpm run dev`: Run application in development mode
@@ -29,17 +40,6 @@ Start
 Debug
 
 - `pnpm run repl`: Run REPL
-
-Test
-
-- `pnpm run test`: Run tests
-- `pnpm run test:coverage`: Run test coverage
-
-Format
-
-- `pnpm run format:prettier`: Prettier
-- `pnpm run format:eslint`: Linter and typechecker
-- `pnpm run build`: Build app and check compiler types
 
 ## Dependencies
 
