@@ -1,8 +1,7 @@
-// This file won't be compiled, so path aliases cannot be used
-
+import { DATABASE_URL } from '@/config/env';
 import { defineConfig } from 'drizzle-kit';
-import { DATABASE_URL } from './src/config/env';
 
+// Must use a relative paths
 export default defineConfig({
   out: './migrations',
   schema: './src/lib/drizzle/schemas/index.ts',
