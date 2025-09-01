@@ -1,16 +1,4 @@
 services:
-  mongo:
-    image: mongo:8.0-noble
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-config:/data/configdb
-      - mongo-data:/data/db
-    environment:
-      - MONGO_INITDB_DATABASE=db
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
   postgres:
     image: postgres:17.5-alpine
     restart: unless-stopped
@@ -32,7 +20,5 @@ services:
     command: redis-server --requirepass password
 
 volumes:
-  mongo-config:
-  mongo-data:
   postgresdata:
   redisdata:
