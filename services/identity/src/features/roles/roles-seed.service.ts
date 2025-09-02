@@ -1,6 +1,6 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { SYSTEM_ROLE_VALUES, SYSTEM_ROLES } from '@/constants/system-roles';
-import { db } from '@/lib/drizzle';
+import { drizzleDb } from '@/lib/drizzle';
 import {
   rolesTable,
   rolesToPermissionsTable,
@@ -9,7 +9,7 @@ import {
 
 class RolesSeedService {
   async seed() {
-    const createdRecords = await db
+    const createdRecords = await drizzleDb
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
@@ -20,7 +20,7 @@ class RolesSeedService {
   }
 
   async seedPermissions() {
-    const createdRecords = await db
+    const createdRecords = await drizzleDb
       .insert(rolesToPermissionsTable)
       .values(
         PERMISSION_VALUES.map(

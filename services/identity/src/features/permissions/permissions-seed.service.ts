@@ -1,10 +1,10 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
-import { db } from '@/lib/drizzle';
+import { drizzleDb } from '@/lib/drizzle';
 import { permissionsTable } from '@/lib/drizzle/schemas';
 
 class PermissionsSeedService {
   async seed() {
-    const createdRecords = await db
+    const createdRecords = await drizzleDb
       .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()

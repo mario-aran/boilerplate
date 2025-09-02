@@ -1,5 +1,5 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
-import { db } from '@/lib/drizzle';
+import { drizzleDb } from '@/lib/drizzle';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { hashPassword } from './utils/hash-password';
 
@@ -13,7 +13,7 @@ class UsersSeedService {
     );
     const usersWithHashedPassword = await Promise.all(hashedUserPromises);
 
-    const createdRecords = await db
+    const createdRecords = await drizzleDb
       .insert(usersTable)
       .values(usersWithHashedPassword)
       .onConflictDoNothing()

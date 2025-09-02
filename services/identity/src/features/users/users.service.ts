@@ -1,4 +1,4 @@
-import { db } from '@/lib/drizzle';
+import { drizzleDb } from '@/lib/drizzle';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { RegisterAuth } from '@/lib/zod/schemas/auth.schema';
@@ -23,7 +23,7 @@ class UsersService {
         ilike(usersTable.lastName, `%${search}%`),
       ),
     );
-    const { data, ...restOfRecords } = await queryPaginatedData({
+    const { data, ...restOfRecords } = await queryPaginatedData(drizzleDb, {
       schema: usersTable,
       filters,
       limit,
@@ -36,7 +36,7 @@ class UsersService {
   }
 
   async get(id: UserId['id']) {
-    const user = await db.query.usersTable.findFirst({
+    const user = await drizzleDb.query.usersTable.findFirst({
       columns: { password: false },
       with: {
         role: {
@@ -57,7 +57,7 @@ class UsersService {
   }
 
   async getByEmailWithPassword(email: string) {
-    const user = await db.query.usersTable.findFirst({
+    const user = await drizzleDb.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
     if (!user) throw this.userNotFoundError;
@@ -68,7 +68,7 @@ class UsersService {
   async create({ password, ...restOfProps }: RegisterAuth) {
     const hashedPassword = await hashPassword(password);
 
-    const [createdUser] = await db
+    const [createdUser] = await drizzleDb
       .insert(usersTable)
       .values({ ...restOfProps, password: hashedPassword })
       .returning();
@@ -82,7 +82,7 @@ class UsersService {
   ) {
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
-    const [updatedUser] = await db
+    const [updatedUser] = await drizzleDb
       .update(usersTable)
       .set({ ...restOfProps, password: hashedPassword })
       .where(eq(usersTable.id, id))

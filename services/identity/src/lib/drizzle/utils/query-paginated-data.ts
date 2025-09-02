@@ -1,4 +1,4 @@
-import { db } from '@/lib/drizzle';
+import { DrizzleDb } from '@/lib/drizzle';
 import { asc, count, desc, SQL } from 'drizzle-orm';
 import {
   AnyPgColumn,
@@ -15,13 +15,16 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
   sort?: string | string[];
 }
 
-export const queryPaginatedData = async <T extends AnyPgTable>({
-  schema,
-  filters,
-  limit = 10,
-  page = 1,
-  sort = [],
-}: QueryPaginatedDataProps<T>) => {
+export const queryPaginatedData = async <T extends AnyPgTable>(
+  db: DrizzleDb,
+  {
+    schema,
+    filters,
+    limit = 10,
+    page = 1,
+    sort = [],
+  }: QueryPaginatedDataProps<T>,
+) => {
   // Query count
   const [{ count: total }] = await db
     .select({ count: count() })

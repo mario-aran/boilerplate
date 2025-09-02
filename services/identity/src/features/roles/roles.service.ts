@@ -1,4 +1,4 @@
-import { db } from '@/lib/drizzle';
+import { drizzleDb } from '@/lib/drizzle';
 import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
@@ -18,7 +18,7 @@ class RolesService {
   });
 
   async getAll({ limit, page, sort, search = '' }: GetAllRoles) {
-    return queryPaginatedData({
+    return queryPaginatedData(drizzleDb, {
       schema: rolesTable,
       filters: ilike(rolesTable.id, `%${search}%`),
       limit,
@@ -28,7 +28,7 @@ class RolesService {
   }
 
   async get(id: RoleId['id']) {
-    const records = await db.query.rolesTable.findFirst({
+    const records = await drizzleDb.query.rolesTable.findFirst({
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
     });
@@ -43,7 +43,7 @@ class RolesService {
   }
 
   async create(props: CreateRole) {
-    const [createdRecord] = await db
+    const [createdRecord] = await drizzleDb
       .insert(rolesTable)
       .values(props)
       .returning();
@@ -56,7 +56,10 @@ class RolesService {
   ) {
     // Update roles
     if (Object.keys(restOfProps).length)
-      await db.update(rolesTable).set(restOfProps).where(eq(rolesTable.id, id));
+      await drizzleDb
+        .update(rolesTable)
+        .set(restOfProps)
+        .where(eq(rolesTable.id, id));
 
     // Update roles to permissions
     if (permissionIds) await this.updatePermissions(id, { permissionIds });
@@ -66,7 +69,7 @@ class RolesService {
   }
 
   async delete(id: RoleId['id']) {
-    const [deletedRecord] = await db
+    const [deletedRecord] = await drizzleDb
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
       .returning({ id: rolesTable.id });
@@ -79,7 +82,7 @@ class RolesService {
     id: RoleId['id'],
     { permissionIds }: Required<Pick<UpdateRole, 'permissionIds'>>,
   ) {
-    return db.transaction(async (tx) => {
+    return drizzleDb.transaction(async (tx) => {
       // Delete all existing permissions for this role
       await tx
         .delete(rolesToPermissionsTable)
