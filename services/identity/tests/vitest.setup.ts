@@ -15,7 +15,7 @@ const POSTGRES_IMAGE = 'postgres:17.5-alpine';
 
 // Values
 let pgContainer: StartedPostgreSqlContainer;
-export let db: ReturnType<typeof drizzle>;
+let db: ReturnType<typeof drizzle>;
 
 beforeAll(async () => {
   pgContainer = await new PostgreSqlContainer(POSTGRES_IMAGE).start();
