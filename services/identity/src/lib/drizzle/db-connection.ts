@@ -23,5 +23,4 @@ class DBConnection {
   }
 }
 
-// Singleton
 export const dbConnection = new DBConnection();
