@@ -1,11 +1,11 @@
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginCheckFile from 'eslint-plugin-check-file';
-import { globalIgnores } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config([
+export default defineConfig([
   globalIgnores(['coverage', 'dist', 'migrations', 'resources']),
   {
     files: ['**/*.ts'],
@@ -50,8 +50,7 @@ export default tseslint.config([
       ],
       'check-file/folder-naming-convention': [
         'error',
-        { 'src/**': 'KEBAB_CASE' },
-        { 'tests/**': 'KEBAB_CASE' },
+        { '{src,tests}/**': 'KEBAB_CASE' },
       ],
     },
   },
