@@ -9,7 +9,7 @@ import {
 import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
-export const createAuthRoutes = (authController: AuthController) => {
+export const authRoutes = (authController: AuthController) => {
   const router = Router();
 
   router.get(

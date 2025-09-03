@@ -9,7 +9,7 @@ import {
 import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
-export const createRolesRoutes = (rolesController: RolesController) => {
+export const rolesRoutes = (rolesController: RolesController) => {
   const router = Router();
 
   router.get(
