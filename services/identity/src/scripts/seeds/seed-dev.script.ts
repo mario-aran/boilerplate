@@ -3,7 +3,7 @@
 import { NODE_ENV } from '@/config/env';
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
-import { drizzleDb } from '@/lib/drizzle';
+import { db } from '@/lib/drizzle';
 import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
 import { logger } from '@/lib/logger/winston-logger';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
@@ -22,7 +22,7 @@ const truncateTables = async () => {
   FROM information_schema.tables
   WHERE table_schema = 'public';
 `;
-  const { rows } = await drizzleDb.execute<{ table_name: string }>(
+  const { rows } = await db.execute<{ table_name: string }>(
     selectTableNamesQuery,
   );
   if (!rows.length) {
@@ -36,7 +36,7 @@ const truncateTables = async () => {
     RESTART IDENTITY
     CASCADE;
   `;
-  await drizzleDb.execute(truncateTablesQuery);
+  await db.execute(truncateTablesQuery);
   logger.info(`${joinedTableNames} tables truncated successfully`);
 };
 
