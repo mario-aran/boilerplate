@@ -1,5 +1,5 @@
 import { PATH_SEGMENTS } from '@/constants/paths';
-import { authController } from '@/controllers/auth.controller';
+import { AuthController } from '@/controllers/auth.controller';
 import {
   loginAuthSchema,
   registerAuthSchema,
@@ -9,28 +9,32 @@ import {
 import { zodValidator } from '@/middleware/zod-validator';
 import { Router } from 'express';
 
-export const authRoutes = Router();
+export const createAuthRoutes = (authController: AuthController) => {
+  const router = Router();
 
-authRoutes.get(
-  PATH_SEGMENTS.VERIFY_EMAIL,
-  zodValidator({ query: verifyEmailAuthSchema }),
-  authController.verifyEmail.bind(authController),
-);
+  router.get(
+    PATH_SEGMENTS.VERIFY_EMAIL,
+    zodValidator({ query: verifyEmailAuthSchema }),
+    authController.verifyEmail.bind(authController),
+  );
 
-authRoutes.post(
-  PATH_SEGMENTS.REGISTER,
-  zodValidator({ body: registerAuthSchema }),
-  authController.register.bind(authController),
-);
+  router.post(
+    PATH_SEGMENTS.REGISTER,
+    zodValidator({ body: registerAuthSchema }),
+    authController.register.bind(authController),
+  );
 
-authRoutes.post(
-  PATH_SEGMENTS.RESEND_EMAIL_VERIFICATION,
-  zodValidator({ body: resendEmailVerificationAuthSchema }),
-  authController.resendEmailVerification.bind(authController),
-);
+  router.post(
+    PATH_SEGMENTS.RESEND_EMAIL_VERIFICATION,
+    zodValidator({ body: resendEmailVerificationAuthSchema }),
+    authController.resendEmailVerification.bind(authController),
+  );
 
-authRoutes.post(
-  PATH_SEGMENTS.LOGIN,
-  zodValidator({ body: loginAuthSchema }),
-  authController.login.bind(authController),
-);
+  router.post(
+    PATH_SEGMENTS.LOGIN,
+    zodValidator({ body: loginAuthSchema }),
+    authController.login.bind(authController),
+  );
+
+  return router;
+};
