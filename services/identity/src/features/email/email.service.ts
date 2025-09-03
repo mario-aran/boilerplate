@@ -1,32 +1,33 @@
-import {
-  BASE_URL,
-  SMTP_HOST,
-  SMTP_PASS,
-  SMTP_PORT,
-  SMTP_USER,
-  VERIFY_EMAIL_FROM,
-} from '@/config/env';
 import { PATHS } from '@/constants/paths';
-import nodemailer from 'nodemailer';
+import { Transporter } from 'nodemailer';
 import { EmailVerificationProps } from './types';
 
-class EmailService {
-  private transporter = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-  });
+// Types
+interface EmailServiceProps {
+  transporter: Transporter;
+  baseUrl: string;
+  from: string;
+}
 
-  async sendEmailVerification({ email, token }: EmailVerificationProps) {
-    const tokenUrl = `${BASE_URL}${PATHS.AUTH_VERIFY_EMAIL}?token=${token}`;
+export class EmailService {
+  private readonly transporter: Transporter;
+  private readonly baseUrl: string;
+  private readonly from: string;
+
+  constructor({ transporter, baseUrl, from }: EmailServiceProps) {
+    this.transporter = transporter;
+    this.baseUrl = baseUrl;
+    this.from = from;
+  }
+
+  async sendEmailVerification({ token, email }: EmailVerificationProps) {
+    const tokenUrl = `${this.baseUrl}${PATHS.AUTH_VERIFY_EMAIL}?token=${token}`;
 
     await this.transporter.sendMail({
-      from: VERIFY_EMAIL_FROM,
+      from: this.from,
       to: email,
       subject: 'Verify your email',
       text: `Please verify your email address by visiting: ${tokenUrl}`,
     });
   }
 }
-
-export const emailService = new EmailService();
