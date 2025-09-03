@@ -21,7 +21,6 @@
     "format:prettier": "prettier --write .",
     "format:eslint": "tsc --noEmit && eslint . --fix",
     "test": "vitest",
-    "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
