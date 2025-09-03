@@ -1,4 +1,4 @@
-import { drizzleDb } from '@/lib/drizzle';
+import { DrizzleDb } from '@/lib/drizzle';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { RegisterAuth } from '@/lib/zod/schemas/auth.schema';
@@ -8,11 +8,22 @@ import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from './utils/hash-password';
 
-class UsersService {
-  private userNotFoundError = new HttpError({
+// Types
+interface UsersServiceProps {
+  db: DrizzleDb;
+}
+
+export class UsersService {
+  private static readonly notFoundError = new HttpError({
     message: 'User not found',
     status: StatusCodes.NOT_FOUND,
   });
+
+  private readonly db: DrizzleDb;
+
+  constructor({ db }: UsersServiceProps) {
+    this.db = db;
+  }
 
   async getAll({ limit, page, sort, roleId = '', search = '' }: GetAllUsers) {
     const filters = and(
@@ -23,7 +34,7 @@ class UsersService {
         ilike(usersTable.lastName, `%${search}%`),
       ),
     );
-    const { data, ...restOfRecords } = await queryPaginatedData(drizzleDb, {
+    const { data, ...restOfRecords } = await queryPaginatedData(this.db, {
       schema: usersTable,
       filters,
       limit,
@@ -36,7 +47,7 @@ class UsersService {
   }
 
   async get(id: UserId['id']) {
-    const user = await drizzleDb.query.usersTable.findFirst({
+    const user = await this.db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
         role: {
@@ -46,7 +57,7 @@ class UsersService {
       },
       where: eq(usersTable.id, id),
     });
-    if (!user) throw this.userNotFoundError;
+    if (!user) throw UsersService.notFoundError;
 
     // Flatten results
     const { role, ...restOfUser } = user;
@@ -57,10 +68,10 @@ class UsersService {
   }
 
   async getByEmailWithPassword(email: string) {
-    const user = await drizzleDb.query.usersTable.findFirst({
+    const user = await this.db.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
-    if (!user) throw this.userNotFoundError;
+    if (!user) throw UsersService.notFoundError;
 
     return user;
   }
@@ -68,7 +79,7 @@ class UsersService {
   async create({ password, ...restOfProps }: RegisterAuth) {
     const hashedPassword = await hashPassword(password);
 
-    const [createdUser] = await drizzleDb
+    const [createdUser] = await this.db
       .insert(usersTable)
       .values({ ...restOfProps, password: hashedPassword })
       .returning();
@@ -82,12 +93,12 @@ class UsersService {
   ) {
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
-    const [updatedUser] = await drizzleDb
+    const [updatedUser] = await this.db
       .update(usersTable)
       .set({ ...restOfProps, password: hashedPassword })
       .where(eq(usersTable.id, id))
       .returning();
-    if (!updatedUser) throw this.userNotFoundError;
+    if (!updatedUser) throw UsersService.notFoundError;
 
     return this.omitUserPassword(updatedUser);
   }
@@ -98,5 +109,3 @@ class UsersService {
     ...restOfProps
   }: T) => restOfProps;
 }
-
-export const usersService = new UsersService();
