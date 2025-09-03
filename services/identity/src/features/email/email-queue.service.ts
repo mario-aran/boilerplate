@@ -1,20 +1,20 @@
 import { QUEUES } from '@/constants/queues';
+import { bullMQConnection } from '@/lib/redis/bullmq-connection';
 import { Queue } from 'bullmq';
 import { EmailVerificationProps } from './types';
 
-// Types
-interface EmailQueueServiceProps {
-  emailVerificationQueue: Queue;
-}
+class EmailQueueService {
+  private static readonly verificationQueue = new Queue(
+    QUEUES.EMAIL_VERIFICATION,
+    { connection: bullMQConnection.connection },
+  );
 
-export class EmailQueueService {
-  private readonly emailVerificationQueue: Queue;
-
-  constructor({ emailVerificationQueue }: EmailQueueServiceProps) {
-    this.emailVerificationQueue = emailVerificationQueue;
-  }
-
-  async queueEmailVerification(props: EmailVerificationProps) {
-    await this.emailVerificationQueue.add(QUEUES.EMAIL_VERIFICATION, props);
+  async queueVerification(props: EmailVerificationProps) {
+    await EmailQueueService.verificationQueue.add(
+      QUEUES.EMAIL_VERIFICATION,
+      props,
+    );
   }
 }
+
+export const emailQueueService = new EmailQueueService();

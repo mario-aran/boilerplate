@@ -17,7 +17,7 @@ class EmailService {
     auth: { user: SMTP_USER, pass: SMTP_PASS },
   });
 
-  async sendEmailVerification({ email, token }: EmailVerificationProps) {
+  async sendVerification({ email, token }: EmailVerificationProps) {
     const tokenUrl = `${BASE_URL}${PATHS.AUTH_VERIFY_EMAIL}?token=${token}`;
 
     await EmailService.transporter.sendMail({

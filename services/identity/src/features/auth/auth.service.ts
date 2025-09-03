@@ -90,7 +90,7 @@ class AuthService {
     email,
   }: SignAndQueueEmailVerificationProps) {
     const token = signEmailVerificationToken({ userId });
-    await emailQueueService.queueEmailVerification({ email, token });
+    await emailQueueService.queueVerification({ email, token });
   }
 
   private throwIfEmailVerified({
