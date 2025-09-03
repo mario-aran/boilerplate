@@ -1,4 +1,4 @@
-import { DrizzleDb } from '@/lib/drizzle';
+import { db } from '@/lib/drizzle';
 import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
@@ -11,25 +11,14 @@ import { HttpError } from '@/utils/http-error';
 import { eq, ilike } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 
-// Types
-interface RolesServiceProps {
-  db: DrizzleDb;
-}
-
-export class RolesService {
+class RolesService {
   private static readonly notFoundError = new HttpError({
     status: StatusCodes.NOT_FOUND,
     message: 'Role not found',
   });
 
-  private readonly db: DrizzleDb;
-
-  constructor({ db }: RolesServiceProps) {
-    this.db = db;
-  }
-
   async getAll({ limit, page, sort, search = '' }: GetAllRoles) {
-    return queryPaginatedData(this.db, {
+    return queryPaginatedData({
       schema: rolesTable,
       filters: ilike(rolesTable.id, `%${search}%`),
       limit,
@@ -39,7 +28,7 @@ export class RolesService {
   }
 
   async get(id: RoleId['id']) {
-    const records = await this.db.query.rolesTable.findFirst({
+    const records = await db.query.rolesTable.findFirst({
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
     });
@@ -54,7 +43,7 @@ export class RolesService {
   }
 
   async create(props: CreateRole) {
-    const [createdRecord] = await this.db
+    const [createdRecord] = await db
       .insert(rolesTable)
       .values(props)
       .returning();
@@ -67,10 +56,7 @@ export class RolesService {
   ) {
     // Update roles
     if (Object.keys(restOfProps).length)
-      await this.db
-        .update(rolesTable)
-        .set(restOfProps)
-        .where(eq(rolesTable.id, id));
+      await db.update(rolesTable).set(restOfProps).where(eq(rolesTable.id, id));
 
     // Update roles to permissions
     if (permissionIds) await this.updatePermissions(id, { permissionIds });
@@ -80,7 +66,7 @@ export class RolesService {
   }
 
   async delete(id: RoleId['id']) {
-    const [deletedRecord] = await this.db
+    const [deletedRecord] = await db
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
       .returning({ id: rolesTable.id });
@@ -93,7 +79,7 @@ export class RolesService {
     id: RoleId['id'],
     { permissionIds }: Required<Pick<UpdateRole, 'permissionIds'>>,
   ) {
-    return this.db.transaction(async (tx) => {
+    return db.transaction(async (tx) => {
       // Delete all existing permissions for this role
       await tx
         .delete(rolesToPermissionsTable)
@@ -112,3 +98,5 @@ export class RolesService {
     });
   }
 }
+
+export const rolesService = new RolesService();
