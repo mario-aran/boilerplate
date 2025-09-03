@@ -10,7 +10,6 @@ Prepare code
 
 - `pnpm run clean:ignored`: Delete git ignored files
 - `pnpm run format:lf`: (Optional) Convert all files to LF
-- `cp .env.dev .env`: Create .env file
 - `pnpm install`: Install dependencies
 - `pnpm approve-builds`: (Optional) Approve post-install scripts
 - `pnpm up --latest`: (Optional) Update dependencies to the last version
