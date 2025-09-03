@@ -17,9 +17,9 @@ interface RolesServiceProps {
 }
 
 export class RolesService {
-  private roleNotFoundError = new HttpError({
-    message: 'Role not found',
+  private static readonly notFoundError = new HttpError({
     status: StatusCodes.NOT_FOUND,
+    message: 'Role not found',
   });
 
   private readonly db: DrizzleDb;
@@ -43,7 +43,7 @@ export class RolesService {
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
     });
-    if (!records) throw this.roleNotFoundError;
+    if (!records) throw RolesService.notFoundError;
 
     // Flatten results
     const { rolesToPermissions, ...restOfRecords } = records;
@@ -84,7 +84,7 @@ export class RolesService {
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
       .returning({ id: rolesTable.id });
-    if (!deletedRecord) throw this.roleNotFoundError;
+    if (!deletedRecord) throw RolesService.notFoundError;
 
     return deletedRecord;
   }
