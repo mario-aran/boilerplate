@@ -1,20 +1,9 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
-import { DrizzleDb } from '@/lib/drizzle';
+import { db } from '@/lib/drizzle';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { hashPassword } from './utils/hash-password';
 
-// Types
-interface UsersSeedServiceProps {
-  db: DrizzleDb;
-}
-
-export class UsersSeedService {
-  private readonly db: DrizzleDb;
-
-  constructor({ db }: UsersSeedServiceProps) {
-    this.db = db;
-  }
-
+class UsersSeedService {
   async seedUsers(props: UserInsert[]) {
     const hashedUserPromises = props.map(({ password, ...restOfUser }) =>
       hashPassword(password).then((hashedPassword) => ({
@@ -24,7 +13,7 @@ export class UsersSeedService {
     );
     const usersWithHashedPassword = await Promise.all(hashedUserPromises);
 
-    const createdRecords = await this.db
+    const createdRecords = await db
       .insert(usersTable)
       .values(usersWithHashedPassword)
       .onConflictDoNothing()
@@ -46,3 +35,5 @@ export class UsersSeedService {
     ]);
   }
 }
+
+export const usersSeedService = new UsersSeedService();

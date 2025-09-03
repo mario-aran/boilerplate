@@ -1,4 +1,4 @@
-import { DrizzleDb } from '@/lib/drizzle';
+import { db } from '@/lib/drizzle';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { RegisterAuth } from '@/lib/zod/schemas/auth.schema';
@@ -8,22 +8,11 @@ import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from './utils/hash-password';
 
-// Types
-interface UsersServiceProps {
-  db: DrizzleDb;
-}
-
-export class UsersService {
+class UsersService {
   private static readonly notFoundError = new HttpError({
     status: StatusCodes.NOT_FOUND,
     message: 'User not found',
   });
-
-  private readonly db: DrizzleDb;
-
-  constructor({ db }: UsersServiceProps) {
-    this.db = db;
-  }
 
   async getAll({ limit, page, sort, roleId = '', search = '' }: GetAllUsers) {
     const filters = and(
@@ -34,7 +23,7 @@ export class UsersService {
         ilike(usersTable.lastName, `%${search}%`),
       ),
     );
-    const { data, ...restOfRecords } = await queryPaginatedData(this.db, {
+    const { data, ...restOfRecords } = await queryPaginatedData({
       schema: usersTable,
       filters,
       limit,
@@ -47,7 +36,7 @@ export class UsersService {
   }
 
   async get(id: UserId['id']) {
-    const user = await this.db.query.usersTable.findFirst({
+    const user = await db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
         role: {
@@ -68,7 +57,7 @@ export class UsersService {
   }
 
   async getByEmailWithPassword(email: string) {
-    const user = await this.db.query.usersTable.findFirst({
+    const user = await db.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
     if (!user) throw UsersService.notFoundError;
@@ -79,7 +68,7 @@ export class UsersService {
   async create({ password, ...restOfProps }: RegisterAuth) {
     const hashedPassword = await hashPassword(password);
 
-    const [createdUser] = await this.db
+    const [createdUser] = await db
       .insert(usersTable)
       .values({ ...restOfProps, password: hashedPassword })
       .returning();
@@ -93,7 +82,7 @@ export class UsersService {
   ) {
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
-    const [updatedUser] = await this.db
+    const [updatedUser] = await db
       .update(usersTable)
       .set({ ...restOfProps, password: hashedPassword })
       .where(eq(usersTable.id, id))
@@ -109,3 +98,5 @@ export class UsersService {
     ...restOfProps
   }: T) => restOfProps;
 }
+
+export const usersService = new UsersService();
