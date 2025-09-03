@@ -30,7 +30,10 @@ export default tseslint.config([
         'error',
         {
           patterns: [
-            { group: ['../**', 'src/*'], message: 'Use "@/" instead' },
+            {
+              group: ['..', '../**', 'src/*', 'tests/*'],
+              message: 'Use "@/" or "@tests/" instead',
+            },
             {
               group: ['@/lib/drizzle/schemas/*'],
               message: 'Use "@/lib/drizzle/schemas" instead',
