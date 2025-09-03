@@ -15,8 +15,8 @@ interface UsersServiceProps {
 
 export class UsersService {
   private static readonly notFoundError = new HttpError({
-    message: 'User not found',
     status: StatusCodes.NOT_FOUND,
+    message: 'User not found',
   });
 
   private readonly db: DrizzleDb;
