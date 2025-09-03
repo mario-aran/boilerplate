@@ -1,15 +1,26 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { SYSTEM_ROLE_VALUES, SYSTEM_ROLES } from '@/constants/system-roles';
-import { drizzleDb } from '@/lib/drizzle';
+import { DrizzleDb } from '@/lib/drizzle';
 import {
   rolesTable,
   rolesToPermissionsTable,
   RoleToPermissionInsert,
 } from '@/lib/drizzle/schemas';
 
-class RolesSeedService {
+// Types
+interface RolesSeedServiceProps {
+  db: DrizzleDb;
+}
+
+export class RolesSeedService {
+  private readonly db: DrizzleDb;
+
+  constructor({ db }: RolesSeedServiceProps) {
+    this.db = db;
+  }
+
   async seed() {
-    const createdRecords = await drizzleDb
+    const createdRecords = await this.db
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
@@ -20,7 +31,7 @@ class RolesSeedService {
   }
 
   async seedPermissions() {
-    const createdRecords = await drizzleDb
+    const createdRecords = await this.db
       .insert(rolesToPermissionsTable)
       .values(
         PERMISSION_VALUES.map(
@@ -42,5 +53,3 @@ class RolesSeedService {
     return { createdKeys };
   }
 }
-
-export const rolesSeedService = new RolesSeedService();
