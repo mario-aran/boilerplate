@@ -28,7 +28,7 @@ Format
 
 Test
 
-- `pnpm run test`: Run tests
+- `pnpm run test:watch`: Run tests in watch mode
 - `pnpm run test:coverage`: Run test coverage
 
 Start
