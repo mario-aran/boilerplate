@@ -1,5 +1,5 @@
-import { EmailQueueService } from '@/features/email/email-queue.service';
-import { UsersService } from '@/features/users/users.service';
+import { emailQueueService } from '@/features/email/email-queue.service';
+import { usersService } from '@/features/users/users.service';
 import {
   LoginAuth,
   RegisterAuth,
@@ -18,11 +18,6 @@ import {
 } from './utils/jwt-handlers';
 
 // Types
-interface AuthServiceProps {
-  usersService: UsersService;
-  emailQueueService: EmailQueueService;
-}
-
 interface SignAndQueueEmailVerificationProps {
   userId: string;
   email: string;
@@ -33,25 +28,17 @@ interface ThrowIfEmailVerifiedProps {
   pendingEmail: string | null;
 }
 
-export class AuthService {
-  private readonly usersService: UsersService;
-  private readonly emailQueueService: EmailQueueService;
-
-  constructor({ usersService, emailQueueService }: AuthServiceProps) {
-    this.usersService = usersService;
-    this.emailQueueService = emailQueueService;
-  }
-
+class AuthService {
   async verifyEmail({ token }: VerifyEmailAuth) {
     const { userId } = validateEmailVerificationToken(token);
 
-    const user = await this.usersService.get(userId);
+    const user = await usersService.get(userId);
     this.throwIfEmailVerified({
       emailVerified: user.emailVerified,
       pendingEmail: user.pendingEmail,
     });
 
-    const { email } = await this.usersService.update(user.id, {
+    const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
       emailVerified: !user.emailVerified ? true : undefined,
       email: user.pendingEmail || undefined,
@@ -61,7 +48,7 @@ export class AuthService {
   }
 
   async register(props: RegisterAuth) {
-    const { id, email } = await this.usersService.create(props);
+    const { id, email } = await usersService.create(props);
 
     await this.signAndQueueEmailVerification({ userId: id, email });
 
@@ -69,7 +56,7 @@ export class AuthService {
   }
 
   async resendEmailVerification({ currentEmail }: ResendEmailVerificationAuth) {
-    const user = await this.usersService.getByEmailWithPassword(currentEmail);
+    const user = await usersService.getByEmailWithPassword(currentEmail);
     this.throwIfEmailVerified({
       emailVerified: user.emailVerified,
       pendingEmail: user.pendingEmail,
@@ -82,7 +69,7 @@ export class AuthService {
   }
 
   async login({ email, password }: LoginAuth) {
-    const user = await this.usersService.getByEmailWithPassword(email);
+    const user = await usersService.getByEmailWithPassword(email);
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword)
@@ -103,7 +90,7 @@ export class AuthService {
     email,
   }: SignAndQueueEmailVerificationProps) {
     const token = signEmailVerificationToken({ userId });
-    await this.emailQueueService.queueEmailVerification({ email, token });
+    await emailQueueService.queueEmailVerification({ email, token });
   }
 
   private throwIfEmailVerified({
@@ -117,3 +104,5 @@ export class AuthService {
       });
   }
 }
+
+export const authService = new AuthService();
