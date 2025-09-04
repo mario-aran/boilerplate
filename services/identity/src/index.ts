@@ -2,13 +2,13 @@
 
 import { app } from './app';
 import { BASE_URL, PORT } from './config/env';
-import { dbConnection } from './lib/drizzle/db-connection';
+import { verifyPool } from './lib/drizzle';
 import { logger } from './lib/logger/winston-logger';
 import { bullMQConnection } from './lib/redis/bullmq-connection';
 
 (async () => {
   // Verify connections
-  await dbConnection.verify();
+  await verifyPool();
   await bullMQConnection.verify();
 
   // Start app
