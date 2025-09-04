@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   test: {
-    setupFiles: ['tests/vitest.setup.ts'],
+    globalSetup: 'tests/global.setup.ts', // Setup skips restarts in watch mode
 
     // "@vitest/coverage-v8"
     coverage: {
