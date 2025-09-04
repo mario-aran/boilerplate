@@ -32,7 +32,7 @@ class BullMQConnection {
       await this.connection.ping();
       logger.info('Redis connected successfully');
     } catch (err) {
-      logger.error(`Error connecting redis: ${err}. Exiting now`);
+      logger.error(`Error connecting redis: ${err}. Forced exit`);
       process.exit(1);
     }
   }

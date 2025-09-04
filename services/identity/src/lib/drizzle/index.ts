@@ -14,7 +14,7 @@ export const verifyPool = async () => {
     await pool.query('SELECT 1');
     logger.info('Database connected successfully');
   } catch (err) {
-    logger.error(`Error connecting to database: ${err}. Exiting.`);
+    logger.error(`Error connecting to database: ${err}. Forced exit`);
     process.exit(1);
   }
 };

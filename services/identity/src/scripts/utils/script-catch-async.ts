@@ -4,7 +4,6 @@ export const scriptCatchAsync = async (asyncFn: () => Promise<void>) => {
   try {
     await asyncFn();
     logger.info('Script completed successfully');
-    process.exit(0);
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'unknown error';
     logger.error(`Script failed: ${errorMessage}`);
