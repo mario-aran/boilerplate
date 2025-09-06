@@ -28,7 +28,8 @@ Format
 
 Test
 
-- `pnpm run test`: Run tests in watch mode
+- `pnpm run test`: Run tests
+- `pnpm run test:watch`: Run tests in watch mode
 - `pnpm run test:coverage`: Run test coverage
 
 Start
@@ -47,10 +48,11 @@ Debug
 - [x] prettier
 - [x] typescript-eslint | eslint | @eslint/js | globals
       eslint-config-prettier
+      eslint-plugin-jest
       eslint-plugin-check-file
-- [x] vitest | vitest/coverage-v8
+- [x] ts-jest | jest | @types/jest
       supertest | @types/supertest
-      @testcontainers/postgresql | @testcontainers/redis
+      @testcontainers/postgresql
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
       @faker-js/faker
 - [x] express | @types/express
@@ -75,8 +77,8 @@ Debug
 - [x] .prettierignore | .prettierrc.json
 - [x] drizzle.config.ts
 - [x] eslint.config.mjs
+- [x] jest.config.ts
 - [x] package.json
 - [x] pnpm-lock.yaml | pnpm-workspace.yaml
 - [x] README.md
-- [x] tsconfig.json
-- [x] vitest.config.ts
+- [x] tsconfig.build.json | tsconfig.json

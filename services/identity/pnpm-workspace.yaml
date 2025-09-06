@@ -5,3 +5,4 @@ onlyBuiltDependencies:
   - msgpackr-extract
   - protobufjs
   - ssh2
+  - unrs-resolver
