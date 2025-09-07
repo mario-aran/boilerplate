@@ -1,19 +1,18 @@
 import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import z from 'zod';
 import { zodValidator } from './zod-validator';
 
 describe('zodValidator', () => {
   let req: Request;
   let res: Response;
-  let next: ReturnType<typeof vi.fn>;
+  let next: jest.Mock;
 
   beforeEach(() => {
     req = { params: {}, query: {}, body: {} } as Request;
     res = {} as Response;
-    next = vi.fn();
+    next = jest.fn();
   });
 
   it('calls next without error when request data is valid', () => {
