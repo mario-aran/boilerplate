@@ -1,3 +1,5 @@
+// DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
+
 {
   "extends": "./tsconfig.json",
   "include": ["src"],
