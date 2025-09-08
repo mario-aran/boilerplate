@@ -50,7 +50,7 @@ Debug
       eslint-config-prettier
       eslint-plugin-jest
       eslint-plugin-check-file
-- [x] ts-jest | jest | @types/jest
+- [x] ts-jest | jest | @jest/types | @types/jest
       supertest | @types/supertest
       @testcontainers/postgresql
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
