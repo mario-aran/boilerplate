@@ -7,12 +7,12 @@ import { zodValidator } from './zod-validator';
 describe('zodValidator', () => {
   let req: Request;
   let res: Response;
-  let next: jest.Mock;
+  let next: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     req = { params: {}, query: {}, body: {} } as Request;
     res = {} as Response;
-    next = jest.fn();
+    next = vi.fn();
   });
 
   it('calls next without error when request data is valid', () => {
