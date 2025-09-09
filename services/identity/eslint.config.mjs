@@ -1,7 +1,6 @@
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginCheckFile from 'eslint-plugin-check-file';
-import eslintPluginJest from 'eslint-plugin-jest';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -11,11 +10,8 @@ export default defineConfig([
   {
     files: ['**/*.ts'],
     languageOptions: {
-      ecmaVersion: 2022, // Should match target version in "tsconfig.json"
-      globals: {
-        ...eslintPluginJest.environments.globals.globals,
-        ...globals.node,
-      },
+      ecmaVersion: 2022, // Should match target version in tsconfig
+      globals: globals.node,
     },
     extends: [
       // "eslint"
@@ -26,7 +22,6 @@ export default defineConfig([
       tseslint.configs.stylistic,
     ],
     plugins: {
-      jest: eslintPluginJest,
       'check-file': eslintPluginCheckFile,
     },
     rules: {

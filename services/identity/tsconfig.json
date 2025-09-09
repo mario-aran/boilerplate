@@ -3,7 +3,6 @@
     "target": "ES2022",
     "module": "commonjs",
     "outDir": "./dist",
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
@@ -12,6 +11,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    "types": [
+      "vitest/globals" // "vitest": Enables test globals types
+    ],
 
     // Path aliases
     "baseUrl": ".",

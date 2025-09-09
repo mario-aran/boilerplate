@@ -11,6 +11,7 @@ export default defineConfig({
   },
 
   test: {
+    globals: true, // Enables test globals (no import required)
     globalSetup: 'tests/config/global-setup.ts', // File skips restarts in watch mode
 
     // "@vitest/coverage-v8"

@@ -21,7 +21,7 @@
     "format:prettier": "prettier --write .",
     "format:eslint": "tsc --noEmit && eslint . --fix",
     "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
