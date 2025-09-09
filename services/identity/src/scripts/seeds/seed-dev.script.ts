@@ -1,6 +1,6 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
-import { NODE_ENV } from '@/config/env';
+import { isProduction } from '@/config/env';
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
 import { db } from '@/lib/drizzle';
@@ -12,8 +12,7 @@ import { logSeedMessage } from './utils/log-seed-message';
 import { seedSystemData } from './utils/seed-system-data';
 
 // Guards
-if (NODE_ENV === 'production')
-  throw new Error('Script not allowed in production');
+if (isProduction) throw new Error('Script not allowed in production');
 
 // Utils
 const truncateTables = async () => {

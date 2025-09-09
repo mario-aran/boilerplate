@@ -73,10 +73,10 @@ Debug
 - [x] .env.dev
 - [x] .gitignore
 - [x] .prettierignore | .prettierrc.json
-- [x] drizzle.config
-- [x] eslint.config
+- [x] drizzle.config.ts
+- [x] eslint.config.mjs
 - [x] package.json
 - [x] pnpm-lock.yaml | pnpm-workspace.yaml
 - [x] README.md
 - [x] tsconfig.build.json | tsconfig.json
-- [x] vitest.config
+- [x] vitest.config.ts

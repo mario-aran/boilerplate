@@ -1,4 +1,4 @@
-import { NODE_ENV } from '@/config/env';
+import { isProduction, isTest } from '@/config/env';
 import winston from 'winston';
 
 const consoleFormat = winston.format.combine(
@@ -8,6 +8,7 @@ const consoleFormat = winston.format.combine(
 );
 
 export const logger = winston.createLogger({
-  level: NODE_ENV !== 'production' ? 'debug' : 'info',
+  silent: isTest, // Prevent logging during testing
+  level: isProduction ? 'info' : 'debug', // Non-verbose logs in production
   transports: [new winston.transports.Console({ format: consoleFormat })],
 });

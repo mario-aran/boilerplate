@@ -1,6 +1,5 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "jest.config"
 
-import { pool } from '@/lib/drizzle';
 import { PostgreSqlContainer } from '@testcontainers/postgresql';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
@@ -21,7 +20,7 @@ export default async function globalSetup() {
 
   return async function globalTeardown() {
     // Close connections
-    await pool.end();
+    await db.$client.end();
 
     // Stop containers
     await pgContainer.stop();

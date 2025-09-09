@@ -1,14 +1,13 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
-import { NODE_ENV } from '@/config/env';
+import { isProduction } from '@/config/env';
 import { db } from '@/lib/drizzle';
 import * as schemas from '@/lib/drizzle/schemas';
 import * as orm from 'drizzle-orm';
 import repl from 'node:repl';
 
 // Guards
-if (NODE_ENV === 'production')
-  throw new Error('Script not allowed in production');
+if (isProduction) throw new Error('Script not allowed in production');
 
 // Start REPL
 const replServer = repl.start();
