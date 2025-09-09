@@ -50,7 +50,7 @@ Debug
       eslint-config-prettier
       eslint-plugin-jest
       eslint-plugin-check-file
-- [x] ts-jest | jest | @jest/types | @types/jest
+- [x] ts-jest | jest | tsconfig-paths | @types/jest
       supertest | @types/supertest
       @testcontainers/postgresql
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
@@ -75,9 +75,9 @@ Debug
 - [x] .env.dev
 - [x] .gitignore
 - [x] .prettierignore | .prettierrc.json
-- [x] drizzle.config.ts
-- [x] eslint.config.mjs
-- [x] jest.config.ts
+- [x] drizzle.config
+- [x] eslint.config
+- [x] jest.config
 - [x] package.json
 - [x] pnpm-lock.yaml | pnpm-workspace.yaml
 - [x] README.md
