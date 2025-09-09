@@ -1,7 +1,7 @@
-import { ENVIRONMENTS } from '@/constants/environments';
+import { NODE_ENVIRONMENTS } from '@/constants/node-environments';
 
 // Guards
-if (process.env.NODE_ENV !== ENVIRONMENTS.PRODUCTION) {
+if (process.env.NODE_ENV !== NODE_ENVIRONMENTS.PRODUCTION) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   require('dotenv').config({ path: '.env.dev' }); // Load dotenv synchronously
 }
@@ -32,6 +32,6 @@ export const SMTP_PASS = getRequiredEnv('SMTP_PASS');
 export const VERIFY_EMAIL_FROM = getRequiredEnv('VERIFY_EMAIL_FROM');
 
 // Custom env values
-export const isProduction = NODE_ENV === ENVIRONMENTS.PRODUCTION;
-export const isDevelopment = NODE_ENV === ENVIRONMENTS.DEVELOPMENT;
-export const isTest = NODE_ENV === ENVIRONMENTS.TEST;
+export const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
+export const isDevelopment = NODE_ENV === NODE_ENVIRONMENTS.DEVELOPMENT;
+export const isTest = NODE_ENV === NODE_ENVIRONMENTS.TEST;

@@ -1,5 +1,6 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "jest.config"
 
+import { NODE_ENVIRONMENTS } from '@/constants/node-environments';
 import { PostgreSqlContainer } from '@testcontainers/postgresql';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
@@ -11,6 +12,7 @@ export default async function globalSetup() {
   const pgContainer = await new PostgreSqlContainer(POSTGRES_IMAGE).start();
 
   // Replace envs
+  process.env.NODE_ENV = NODE_ENVIRONMENTS.TEST;
   process.env.DATABASE_URL = pgContainer.getConnectionUri();
 
   // Prepare database
