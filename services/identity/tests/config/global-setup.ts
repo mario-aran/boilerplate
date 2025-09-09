@@ -1,13 +1,13 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "jest.config"
 
+import { pool } from '@/lib/drizzle';
 import { PostgreSqlContainer } from '@testcontainers/postgresql';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { SetupGlobalThis } from './types';
 
 // Constants
 const POSTGRES_IMAGE = 'postgres:17.5-alpine';
 
-export default async () => {
+export default async function globalSetup() {
   // Start containers
   const pgContainer = await new PostgreSqlContainer(POSTGRES_IMAGE).start();
 
@@ -19,7 +19,11 @@ export default async () => {
   await migrate(db, { migrationsFolder: 'migrations' }); // Paths must be relative to project root
   await import('@/scripts/seeds/seed-dev.script'); // Seed database
 
-  // Assign values to globalThis
-  const setupGlobalThis = globalThis as SetupGlobalThis;
-  setupGlobalThis.pgContainer = pgContainer;
-};
+  return async function globalTeardown() {
+    // Close connections
+    await pool.end();
+
+    // Stop containers
+    await pgContainer.stop();
+  };
+}
