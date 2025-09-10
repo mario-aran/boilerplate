@@ -28,7 +28,10 @@ Format
 
 Test
 
-- `pnpm run test`: Run tests in watch mode
+- `pnpm run test:unit`: Run unit tests in watch mode
+- `pnpm run test:integration`: Run integration tests in watch mode
+- `pnpm run test:e2e`: Run e2e tests in watch mode
+- `pnpm run test`: Run all tests in watch mode
 - `pnpm run test:coverage`: Run test coverage
 
 Start

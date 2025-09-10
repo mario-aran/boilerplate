@@ -20,6 +20,9 @@
     "format:lf": "find . -type f -exec dos2unix {} +",
     "format:prettier": "prettier --write .",
     "format:eslint": "tsc --noEmit && eslint . --fix",
+    "test:unit": "vitest --project unit",
+    "test:integration": "vitest --project integration",
+    "test:e2e": "vitest --project e2e",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
   },
