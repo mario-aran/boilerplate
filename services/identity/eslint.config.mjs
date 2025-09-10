@@ -10,7 +10,7 @@ export default defineConfig([
   {
     files: ['**/*.ts'],
     languageOptions: {
-      ecmaVersion: 2022, // Should match target version in tsconfig
+      ecmaVersion: 2022, // Should match target version in "tsconfig.json"
       globals: globals.node,
     },
     extends: [
@@ -54,7 +54,5 @@ export default defineConfig([
       ],
     },
   },
-
-  // "eslint-config-prettier": Must be placed last
-  eslintConfigPrettier,
+  eslintConfigPrettier, // "eslint-config-prettier": Must be placed last
 ]);
