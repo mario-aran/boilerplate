@@ -21,9 +21,7 @@ export default defineConfig([
       tseslint.configs.strict,
       tseslint.configs.stylistic,
     ],
-    plugins: {
-      'check-file': eslintPluginCheckFile,
-    },
+    plugins: { 'check-file': eslintPluginCheckFile },
     rules: {
       // "eslint"
       'no-restricted-imports': [
