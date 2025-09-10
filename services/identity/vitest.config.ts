@@ -15,6 +15,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           include: ['src/**/*.test.ts'],
+          globalSetup: 'tests/config/global-setup.unit.ts',
         },
       },
       {
@@ -22,7 +23,7 @@ export default defineConfig({
         test: {
           name: 'e2e',
           include: ['tests/**/*.{e2e,integration}.test.ts'],
-          globalSetup: 'tests/config/global-setup.ts',
+          globalSetup: 'tests/config/global-setup.e2e.ts',
         },
       },
     ],
