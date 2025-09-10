@@ -21,7 +21,7 @@ export default defineConfig({
         extends: true,
         test: {
           name: 'e2e',
-          include: ['tests/**/*.test.ts'],
+          include: ['tests/**/*.{e2e,integration}.test.ts'],
           globalSetup: 'tests/config/global-setup.ts',
         },
       },
