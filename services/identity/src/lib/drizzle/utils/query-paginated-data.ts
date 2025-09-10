@@ -8,7 +8,7 @@ import {
 
 // Types
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
-  schema: TableLikeHasEmptySelection<T> extends true ? never : T;
+  table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
   limit?: number;
   page?: number;
@@ -16,7 +16,7 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
 }
 
 export const queryPaginatedData = async <T extends AnyPgTable>({
-  schema,
+  table,
   filters,
   limit = 10,
   page = 1,
@@ -25,7 +25,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   // Query count
   const [{ count: total }] = await db
     .select({ count: count() })
-    .from(schema)
+    .from(table)
     .where(filters);
 
   const positiveLimit = Math.max(limit, 1);
@@ -45,15 +45,15 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   const sortArr = Array.isArray(sort) ? sort : [sort];
   const orderBy = sortArr.map((el) => {
     const isDesc = el.startsWith('-');
-    const field = (isDesc ? el.slice(1) : el) as keyof typeof schema;
-    const column = schema[field] as AnyPgColumn;
+    const field = (isDesc ? el.slice(1) : el) as keyof typeof table;
+    const column = table[field] as AnyPgColumn;
     return isDesc ? desc(column) : asc(column);
   });
 
   const offset = (currentPage - 1) * positiveLimit;
   const data = await db
     .select()
-    .from(schema)
+    .from(table)
     .where(filters)
     .orderBy(...orderBy) // Spread orderBy as individual arguments
     .limit(positiveLimit)

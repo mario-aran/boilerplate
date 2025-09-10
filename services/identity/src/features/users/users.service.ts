@@ -24,7 +24,7 @@ class UsersService {
       ),
     );
     const { data, ...restOfRecords } = await queryPaginatedData({
-      schema: usersTable,
+      table: usersTable,
       filters,
       limit,
       page,

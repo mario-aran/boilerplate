@@ -19,7 +19,7 @@ class RolesService {
 
   async getAll({ limit, page, sort, search = '' }: GetAllRoles) {
     return queryPaginatedData({
-      schema: rolesTable,
+      table: rolesTable,
       filters: ilike(rolesTable.id, `%${search}%`),
       limit,
       page,

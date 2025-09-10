@@ -6,7 +6,7 @@ import { ilike } from 'drizzle-orm';
 class PermissionsService {
   async getAll({ limit, page, sort, search = '' }: GetAllPermissions) {
     return queryPaginatedData({
-      schema: permissionsTable,
+      table: permissionsTable,
       filters: ilike(permissionsTable.id, `%${search}%`),
       limit,
       page,
