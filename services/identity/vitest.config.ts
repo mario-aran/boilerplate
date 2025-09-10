@@ -15,7 +15,6 @@ export default defineConfig({
         test: {
           name: 'unit',
           include: ['src/**/*.test.ts'],
-          globalSetup: 'tests/config/global-setup.unit.ts',
         },
       },
       {

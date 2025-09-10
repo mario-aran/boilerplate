@@ -1,6 +1,5 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "vitest.config.ts"
 
-import { NODE_ENVIRONMENTS } from '@/constants/node-environments';
 import { PostgreSqlContainer } from '@testcontainers/postgresql';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
@@ -8,9 +7,6 @@ import { migrate } from 'drizzle-orm/node-postgres/migrator';
 const POSTGRES_IMAGE = 'postgres:17.5-alpine';
 
 export default async function globalSetup() {
-  // Set NODE_ENV to test
-  process.env.NODE_ENV = NODE_ENVIRONMENTS.TEST;
-
   // Start containers
   const pgContainer = await new PostgreSqlContainer(POSTGRES_IMAGE).start();
 
