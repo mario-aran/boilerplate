@@ -1,3 +1,5 @@
+// NOTE: Vitest automatically sets NODE_ENV='test' when running
+
 import path from 'path';
 import { defineConfig } from 'vitest/config';
 
