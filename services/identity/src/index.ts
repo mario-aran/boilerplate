@@ -2,7 +2,7 @@
 
 import { app } from './app';
 import { BASE_URL, PORT } from './config/env';
-import { verifyPool } from './lib/drizzle';
+import { verifyPool } from './lib/drizzle/pool';
 import { logger } from './lib/logger/winston-logger';
 import { bullMQConnection } from './lib/redis/bullmq-connection';
 

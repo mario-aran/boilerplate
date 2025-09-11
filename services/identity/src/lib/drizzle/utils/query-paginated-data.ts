@@ -1,4 +1,4 @@
-import { db } from '@/lib/drizzle';
+import { db, DbOrTx } from '@/lib/drizzle';
 import { asc, count, desc, SQL } from 'drizzle-orm';
 import {
   AnyPgColumn,
@@ -8,6 +8,7 @@ import {
 
 // Types
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
+  dbOrTx?: DbOrTx;
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
   limit?: number;
@@ -16,6 +17,7 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
 }
 
 export const queryPaginatedData = async <T extends AnyPgTable>({
+  dbOrTx = db,
   table,
   filters,
   limit = 10,
@@ -23,7 +25,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   sort = [],
 }: QueryPaginatedDataProps<T>) => {
   // Query count
-  const [{ count: total }] = await db
+  const [{ count: total }] = await dbOrTx
     .select({ count: count() })
     .from(table)
     .where(filters);
@@ -51,7 +53,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   });
 
   const offset = (currentPage - 1) * positiveLimit;
-  const data = await db
+  const data = await dbOrTx
     .select()
     .from(table)
     .where(filters)
