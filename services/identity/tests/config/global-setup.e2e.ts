@@ -10,7 +10,7 @@ export default async function globalSetup() {
   // Start containers
   const pgContainer = await new PostgreSqlContainer(POSTGRES_IMAGE).start();
 
-  // Replace application envs
+  // Replace envs
   process.env.DATABASE_URL = pgContainer.getConnectionUri();
 
   // Prepare database
