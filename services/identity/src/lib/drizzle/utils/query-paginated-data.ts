@@ -1,4 +1,4 @@
-import { db, DbOrTx } from '@/lib/drizzle';
+import { db, Tx } from '@/lib/drizzle';
 import { asc, count, desc, SQL } from 'drizzle-orm';
 import {
   AnyPgColumn,
@@ -8,7 +8,7 @@ import {
 
 // Types
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
-  dbOrTx?: DbOrTx;
+  dbOrTx?: typeof db | Tx;
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
   limit?: number;
