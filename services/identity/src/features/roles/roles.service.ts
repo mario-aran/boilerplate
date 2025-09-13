@@ -18,12 +18,13 @@ class RolesService {
   });
 
   async getAll({ limit, page, sort, search = '' }: GetAllRoles) {
+    const sortArr = sort ? (Array.isArray(sort) ? sort : [sort]) : undefined;
     return queryPaginatedData({
       table: rolesTable,
       filters: ilike(rolesTable.id, `%${search}%`),
       limit,
       page,
-      sort,
+      sortArr,
     });
   }
 

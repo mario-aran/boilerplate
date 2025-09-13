@@ -5,12 +5,13 @@ import { ilike } from 'drizzle-orm';
 
 class PermissionsService {
   async getAll({ limit, page, sort, search = '' }: GetAllPermissions) {
+    const sortArr = sort ? (Array.isArray(sort) ? sort : [sort]) : undefined;
     return queryPaginatedData({
       table: permissionsTable,
       filters: ilike(permissionsTable.id, `%${search}%`),
       limit,
       page,
-      sort,
+      sortArr,
     });
   }
 }
