@@ -1,4 +1,4 @@
-import { db, Tx } from '@/lib/drizzle';
+import { db, DbOrTx } from '@/lib/drizzle';
 import { asc, count, desc, SQL } from 'drizzle-orm';
 import {
   AnyPgColumn,
@@ -8,12 +8,12 @@ import {
 
 // Types
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
-  dbOrTx?: typeof db | Tx;
+  dbOrTx?: DbOrTx;
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
   limit?: number;
   page?: number;
-  sort?: string | string[];
+  sortArr?: string[];
 }
 
 export const queryPaginatedData = async <T extends AnyPgTable>({
@@ -22,7 +22,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   filters,
   limit = 10,
   page = 1,
-  sort = [],
+  sortArr = [],
 }: QueryPaginatedDataProps<T>) => {
   // Query count
   const [{ count: total }] = await dbOrTx
@@ -32,8 +32,10 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
 
   const positiveLimit = Math.max(limit, 1);
   const totalPages = Math.ceil(total / positiveLimit) || 1;
-  const currentPage = Math.max(1, Math.min(page, totalPages));
+  const currentPage = Math.min(Math.max(page, 1), totalPages);
+
   const results = {
+    data: [],
     total,
     limit: positiveLimit,
     page: currentPage,
@@ -41,24 +43,23 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     nextPage: currentPage < totalPages ? currentPage + 1 : null,
     totalPages,
   };
-  if (!total) return { data: [], ...results };
+  if (!total) return results;
 
   // Query data
-  const sortArr = Array.isArray(sort) ? sort : [sort];
-  const orderBy = sortArr.map((el) => {
-    const isDesc = el.startsWith('-');
-    const field = (isDesc ? el.slice(1) : el) as keyof typeof table;
-    const column = table[field] as AnyPgColumn;
-    return isDesc ? desc(column) : asc(column);
-  });
-
-  const offset = (currentPage - 1) * positiveLimit;
   const data = await dbOrTx
     .select()
     .from(table)
     .where(filters)
-    .orderBy(...orderBy) // Spread orderBy as individual arguments
+    .orderBy(
+      // Spread orderBy as individual arguments
+      ...sortArr.map((el) => {
+        const isDesc = el.startsWith('-');
+        const field = (isDesc ? el.slice(1) : el) as keyof typeof table;
+        const column = table[field] as AnyPgColumn;
+        return isDesc ? desc(column) : asc(column);
+      }),
+    )
     .limit(positiveLimit)
-    .offset(offset);
-  return { data, ...results };
+    .offset((currentPage - 1) * positiveLimit);
+  return { ...results, data };
 };
