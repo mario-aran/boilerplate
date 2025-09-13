@@ -30,36 +30,39 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .from(table)
     .where(filters);
 
-  const positiveLimit = Math.max(limit, 1);
-  const totalPages = Math.ceil(total / positiveLimit) || 1;
-  const currentPage = Math.min(Math.max(page, 1), totalPages);
+  // Return empty results
+  const resultLimit = Math.max(limit, 1);
+  const totalPages = Math.ceil(total / resultLimit) || 1;
+  const resultPage = Math.min(Math.max(page, 1), totalPages);
+  const prevPage = resultPage > 1 ? resultPage - 1 : null;
+  const nextPage = resultPage < totalPages ? resultPage + 1 : null;
 
   const results = {
-    data: [],
     total,
-    limit: positiveLimit,
-    page: currentPage,
-    prevPage: currentPage > 1 ? currentPage - 1 : null,
-    nextPage: currentPage < totalPages ? currentPage + 1 : null,
+    limit: resultLimit,
+    page: resultPage,
+    prevPage,
+    nextPage,
     totalPages,
+    data: [],
   };
   if (!total) return results;
 
-  // Query data
+  // Query data and return results
+  const orderBy = sortArr.map((el) => {
+    const isDesc = el.startsWith('-');
+    const field = (isDesc ? el.slice(1) : el) as keyof typeof table;
+    const column = table[field] as AnyPgColumn;
+    return isDesc ? desc(column) : asc(column);
+  });
+  const offset = (resultPage - 1) * resultLimit;
+
   const data = await dbOrTx
     .select()
     .from(table)
     .where(filters)
-    .orderBy(
-      // Spread orderBy as individual arguments
-      ...sortArr.map((el) => {
-        const isDesc = el.startsWith('-');
-        const field = (isDesc ? el.slice(1) : el) as keyof typeof table;
-        const column = table[field] as AnyPgColumn;
-        return isDesc ? desc(column) : asc(column);
-      }),
-    )
-    .limit(positiveLimit)
-    .offset((currentPage - 1) * positiveLimit);
+    .orderBy(...orderBy) // Spread as individual arguments
+    .limit(resultLimit)
+    .offset(offset);
   return { ...results, data };
 };
