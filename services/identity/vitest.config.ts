@@ -16,14 +16,17 @@ export default defineConfig({
         extends: true,
         test: {
           name: 'unit',
-          include: ['src/**/*.test.ts'],
+          include: ['tests/unit/**/*.test.ts'],
         },
       },
       {
         extends: true,
         test: {
           name: 'e2e',
-          include: ['tests/**/*.{e2e,integration}.test.ts'],
+          include: [
+            'tests/e2e/**/*.e2e.test.ts',
+            'tests/integration/**/*.integration.test.ts',
+          ],
           globalSetup: 'tests/config/global-setup.e2e.ts',
         },
       },
