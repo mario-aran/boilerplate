@@ -12,7 +12,7 @@ export const transactionWithRollback = async (
       throw new TransactionRollbackError();
     })
     .catch((err) => {
-      // Catch the forced error so it doesn't fail the test
+      // Catch the forced transaction error so it doesn't fail the test
       if (!(err instanceof TransactionRollbackError)) throw err;
     });
 };
