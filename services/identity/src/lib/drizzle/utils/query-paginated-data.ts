@@ -31,38 +31,36 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .where(filters);
 
   // Return empty results
-  const resultLimit = Math.max(limit, 1);
-  const totalPages = Math.ceil(total / resultLimit) || 1;
-  const resultPage = Math.min(Math.max(page, 1), totalPages);
-  const prevPage = resultPage > 1 ? resultPage - 1 : null;
-  const nextPage = resultPage < totalPages ? resultPage + 1 : null;
+  const safeLimit = Math.max(1, limit);
+  const totalPages = Math.max(1, Math.ceil(total / safeLimit));
+  const safePage = Math.min(Math.max(1, page), totalPages);
 
   const results = {
     total,
-    limit: resultLimit,
-    page: resultPage,
-    prevPage,
-    nextPage,
+    limit: safeLimit,
+    page: safePage,
+    prevPage: safePage > 1 ? safePage - 1 : null,
+    nextPage: safePage < totalPages ? safePage + 1 : null,
     totalPages,
     data: [],
   };
   if (!total) return results;
 
-  // Query data and return results
+  // Query data and include it in the returned results
   const orderBy = sortArr.map((el) => {
     const isDesc = el.startsWith('-');
     const field = (isDesc ? el.slice(1) : el) as keyof typeof table;
     const column = table[field] as AnyPgColumn;
     return isDesc ? desc(column) : asc(column);
   });
-  const offset = (resultPage - 1) * resultLimit;
+  const offset = (safePage - 1) * safeLimit;
 
   const data = await dbOrTx
     .select()
     .from(table)
     .where(filters)
     .orderBy(...orderBy) // Spread as individual arguments
-    .limit(resultLimit)
+    .limit(safeLimit)
     .offset(offset);
   return { ...results, data };
 };
