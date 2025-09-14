@@ -87,9 +87,9 @@ describe('queryPaginatedData', () => {
 
   it('sorts data by multiple fields correctly', async () => {
     const mockedUsers: UserInsert[] = [
-      { email: 'a@test.com', password: 'a.test' },
-      { email: 'b@test.com', password: 'a.test' },
       { email: 'a@test.com', password: 'b.test' },
+      { email: 'b@test.com', password: 'a.test' },
+      { email: 'c@test.com', password: 'a.test' },
     ];
 
     await transactionWithRollback(async (tx) => {
@@ -101,13 +101,13 @@ describe('queryPaginatedData', () => {
       const sortedUsers = await queryPaginatedData({
         dbOrTx: tx,
         table: usersTable,
-        sortArr: ['email', '-password'],
+        sortArr: ['password', '-email'],
       });
 
       expect(sortedUsers.data.map((u) => [u.email, u.password])).toEqual([
-        ['a@test.com', 'b.test'],
-        ['a@test.com', 'a.test'],
+        ['c@test.com', 'a.test'],
         ['b@test.com', 'a.test'],
+        ['a@test.com', 'b.test'],
       ]);
     });
   });
