@@ -41,33 +41,36 @@ Start
 Debug
 
 - `pnpm run repl`: Run REPL
+- Use debugger:
+  - "Open Workspace from File" -> "multi-root.code-workspace"
+  - Open a file -> Select "Run and Debug" -> Choose debugger in dropdown menu
 
 ## Dependencies
 
 - [x] typescript | @types/node
-      tsx | tsc-alias
+  - tsx | tsc-alias
 - [x] prettier
 - [x] typescript-eslint | eslint | @eslint/js | globals
-      eslint-config-prettier
-      eslint-plugin-check-file
+  - eslint-config-prettier
+  - eslint-plugin-check-file
 - [x] vitest | vitest/coverage-v8
-      supertest | @types/supertest
-      @testcontainers/postgresql
+  - supertest | @types/supertest
+  - @testcontainers/postgresql
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
-      @faker-js/faker
+  - @faker-js/faker
 - [x] express | @types/express
-      swagger-ui-express | @types/swagger-ui-express
-      http-status-codes
-      dotenv
-      cors | @types/cors
-      winston | morgan | @types/morgan
+  - swagger-ui-express | @types/swagger-ui-express
+  - http-status-codes
+  - dotenv
+  - cors | @types/cors
+  - winston | morgan | @types/morgan
 - [x] zod
 - [x] passport | @types/passport
-      passport-jwt | @types/passport-jwt
-      jsonwebtoken | @types/jsonwebtoken
-      bcryptjs
+  - passport-jwt | @types/passport-jwt
+  - jsonwebtoken | @types/jsonwebtoken
+  - bcryptjs
 - [x] bullmq | ioredis
-      nodemailer | @types/nodemailer
+  - nodemailer | @types/nodemailer
 
 ## Configs
 
