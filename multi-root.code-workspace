@@ -1,0 +1,11 @@
+// Multi-root Workspaces to run debuggers per app
+{
+  "folders": [
+    {
+      "path": "frontend/web"
+    },
+    {
+      "path": "services/identity"
+    }
+  ]
+}
