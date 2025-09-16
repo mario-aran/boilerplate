@@ -38,10 +38,10 @@ Start
 - `pnpm run dev`: Run application in development mode
 - `pnpm run workers:dev`: Run workers in development mode
 
-Debug
+Tools
 
 - `pnpm run repl`: Run REPL
-- Use debuggers: In "multi-root.code-workspace" mode, Open a file -> Select "Run and Debug" -> Choose debugger in dropdown menu
+- Debuggers: In "multi-root.code-workspace" mode, Open a file -> Select "Run and Debug" -> Choose debugger in dropdown menu
 
 ## Dependencies
 
