@@ -6,10 +6,10 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // Config link: https://tsx.is/vscode
       "name": "tsx: debug current file",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
       "program": "${file}",
-      // Common setup
       "type": "node",
       "request": "launch",
       "console": "integratedTerminal",
@@ -17,12 +17,12 @@
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     },
     {
+      // Config link: https://vitest.dev/guide/debugging
       "name": "vitest: debug current file",
       "program": "${workspaceFolder}/node_modules/vitest/vitest.mjs",
       "args": ["run", "${relativeFile}"],
       "autoAttachChildProcesses": true,
       "smartStep": true,
-      // Common setup
       "type": "node",
       "request": "launch",
       "console": "integratedTerminal",

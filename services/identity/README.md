@@ -41,9 +41,7 @@ Start
 Debug
 
 - `pnpm run repl`: Run REPL
-- Use debugger:
-  - "Open Workspace from File" -> "multi-root.code-workspace"
-  - Open a file -> Select "Run and Debug" -> Choose debugger in dropdown menu
+- Use debuggers: In "multi-root.code-workspace" mode, Open a file -> Select "Run and Debug" -> Choose debugger in dropdown menu
 
 ## Dependencies
 

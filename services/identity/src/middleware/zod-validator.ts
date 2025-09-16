@@ -31,8 +31,8 @@ export const zodValidator: ZodValidator =
 
         return next(
           new HttpError({
-            message: 'Unprocessable',
             status: StatusCodes.UNPROCESSABLE_ENTITY,
+            message: 'Unprocessable',
             validationErrors,
           }),
         );
