@@ -25,7 +25,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>(
   }: QueryPaginatedDataProps<T>,
   tx?: Tx,
 ) => {
-  // Use transaction if provided, else default to "db"
+  // Use transaction or default to "db"
   const dbOrTx = tx ?? db;
 
   // Query count
