@@ -43,10 +43,7 @@ describe('queryPaginatedData', () => {
       await tx.delete(usersTable);
 
       // Test data
-      const actual = await queryPaginatedData({
-        dbOrTx: tx,
-        table: usersTable,
-      });
+      const actual = await queryPaginatedData({ table: usersTable }, tx);
 
       expect(actual.data).toEqual([]);
       expect(actual.total).toBe(0);
@@ -66,12 +63,10 @@ describe('queryPaginatedData', () => {
 
       // Test data
       for (const page of [1, 2, 3]) {
-        const actual = await queryPaginatedData({
-          dbOrTx: tx,
-          table: usersTable,
-          limit,
-          page,
-        });
+        const actual = await queryPaginatedData(
+          { table: usersTable, limit, page },
+          tx,
+        );
         const expected = getExpectedMetadata({ total, limit, page });
 
         expect(actual.data).toHaveLength(expected.dataLength);
@@ -98,11 +93,10 @@ describe('queryPaginatedData', () => {
       await tx.insert(usersTable).values(mockedUsers);
 
       // Test data
-      const sortedUsers = await queryPaginatedData({
-        dbOrTx: tx,
-        table: usersTable,
-        sortArr: ['password', '-email'],
-      });
+      const sortedUsers = await queryPaginatedData(
+        { table: usersTable, sortArr: ['password', '-email'] },
+        tx,
+      );
 
       expect(sortedUsers.data.map((u) => [u.email, u.password])).toEqual([
         ['c@test.com', 'a.test'],
@@ -130,12 +124,10 @@ describe('queryPaginatedData', () => {
 
       // Test data
       for (const page of [0, 999]) {
-        const actual = await queryPaginatedData({
-          dbOrTx: tx,
-          table: usersTable,
-          limit,
-          page,
-        });
+        const actual = await queryPaginatedData(
+          { table: usersTable, limit, page },
+          tx,
+        );
         const expected = getExpectedMetadata({ total, limit, page });
 
         expect(actual.page).toBe(expected.page);
