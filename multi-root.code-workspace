@@ -1,11 +1,15 @@
-// Multi-root Workspaces to run debuggers per app
+// Multi-root workspace configuration for running specific debuggers per project
 {
   "folders": [
-    {
-      "path": "frontend/web"
-    },
-    {
-      "path": "services/identity"
+    { "path": ".", "name": "/" }, // To see root folder
+    { "path": "frontend/web" },
+    { "path": "services/identity" }
+  ],
+  "settings": {
+    // Hide project files in the root folder
+    "files.exclude": {
+      "frontend/web/*": true,
+      "services/identity/*": true
     }
-  ]
+  }
 }
