@@ -5,9 +5,7 @@ import { pool } from './pool';
 import * as schemas from './schemas';
 
 // Types
-type Db = typeof db;
-export type Tx = Parameters<Parameters<Db['transaction']>[0]>[0];
-export type DbOrTx = Db | Tx;
+export type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 // Utils
 class DrizzleLogger implements Logger {
