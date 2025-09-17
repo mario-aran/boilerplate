@@ -8,11 +8,10 @@ export const transactionWithRollback = async (
     .transaction(async (tx) => {
       await fn(tx);
 
-      // Force rollback by throwing a transaction error
-      throw new TransactionRollbackError();
+      tx.rollback();
     })
     .catch((err) => {
-      // Catch the forced transaction error so it doesn't fail the test
+      // Catch the rollback to not fail the test
       if (!(err instanceof TransactionRollbackError)) throw err;
     });
 };
