@@ -1,9 +1,16 @@
 import { NODE_ENVIRONMENTS } from '@/constants/node-environments';
 
+// Node environment values
+const NODE_ENV = process.env.NODE_ENV || NODE_ENVIRONMENTS.DEVELOPMENT;
+export const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
+export const isDevelopment = NODE_ENV === NODE_ENVIRONMENTS.DEVELOPMENT;
+export const isTest = NODE_ENV === NODE_ENVIRONMENTS.TEST;
+
 // Guards
-if (process.env.NODE_ENV !== NODE_ENVIRONMENTS.PRODUCTION) {
+if (!isProduction) {
+  // Load dotenv synchronously
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require('dotenv').config({ path: '.env.dev' }); // Load dotenv synchronously
+  require('dotenv').config({ path: '.env.dev', quiet: isTest });
 }
 
 // Utils
@@ -15,7 +22,6 @@ const getRequiredEnv = (key: string) => {
 };
 
 // "process.env" values
-const NODE_ENV = getRequiredEnv('NODE_ENV');
 export const BASE_URL = getRequiredEnv('BASE_URL');
 export const PORT = Number(getRequiredEnv('PORT'));
 export const JWT_ACCESS_SECRET = getRequiredEnv('JWT_ACCESS_SECRET');
@@ -30,8 +36,3 @@ export const SMTP_PORT = Number(getRequiredEnv('SMTP_PORT'));
 export const SMTP_USER = getRequiredEnv('SMTP_USER');
 export const SMTP_PASS = getRequiredEnv('SMTP_PASS');
 export const VERIFY_EMAIL_FROM = getRequiredEnv('VERIFY_EMAIL_FROM');
-
-// Custom env values
-export const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
-export const isDevelopment = NODE_ENV === NODE_ENVIRONMENTS.DEVELOPMENT;
-export const isTest = NODE_ENV === NODE_ENVIRONMENTS.TEST;
