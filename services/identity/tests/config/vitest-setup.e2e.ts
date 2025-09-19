@@ -10,10 +10,11 @@ import { afterEach, beforeEach } from 'vitest';
 let client: PoolClient;
 
 beforeEach(async () => {
+  // Start transaction
   client = await pool.connect();
-  await client.query('BEGIN;'); // Start transaction
+  await client.query('BEGIN;');
 
-  // Replace drizzle app connection with a transaction
+  // Replace drizzle connection with a transaction
   const txDb = drizzle({ client, schema: schemas });
   vi.spyOn(drizzleModule, 'db', 'get').mockReturnValue(
     txDb as unknown as drizzleModule.Db,
@@ -21,8 +22,9 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await client.query('ROLLBACK;'); // Rollback transaction
-  client.release(); // Free connection
+  // Rollback transaction
+  await client.query('ROLLBACK;');
+  client.release();
 
   // Remove all mocks
   vi.restoreAllMocks();
