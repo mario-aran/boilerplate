@@ -15,7 +15,6 @@ class UsersService {
   });
 
   async getAll({ limit, page, sort, roleId = '', search = '' }: GetAllUsers) {
-    const sortArr = sort ? (Array.isArray(sort) ? sort : [sort]) : undefined;
     const filters = and(
       ilike(usersTable.roleId, `%${roleId}%`),
       or(
@@ -29,7 +28,7 @@ class UsersService {
       filters,
       limit,
       page,
-      sortArr,
+      sortArr: sort ? (Array.isArray(sort) ? sort : [sort]) : undefined,
     });
 
     const usersWithoutPassword = data.map(this.omitUserPassword);
