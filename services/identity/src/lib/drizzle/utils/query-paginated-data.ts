@@ -6,6 +6,7 @@ import {
   TableLikeHasEmptySelection,
 } from 'drizzle-orm/pg-core';
 
+// Types
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
@@ -14,6 +15,7 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
   sortArr?: string[];
 }
 
+// Utils
 const calculatePagination = (limit: number, page: number, total: number) => {
   const safeLimit = Math.max(1, limit);
   const totalPages = Math.max(1, Math.ceil(total / safeLimit));

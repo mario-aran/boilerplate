@@ -44,8 +44,5 @@ const convertPathsToSwagger = <T extends Record<string, string>>(paths: T) => {
   };
 };
 
-// Derived constants
 export const SWAGGER_PATHS = convertPathsToSwagger(PATHS);
-
-// Test-only
 export const _testable = { convertPathsToSwagger };
