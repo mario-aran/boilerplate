@@ -6,7 +6,6 @@ import {
   TableLikeHasEmptySelection,
 } from 'drizzle-orm/pg-core';
 
-// Types
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
@@ -15,6 +14,36 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
   sortArr?: string[];
 }
 
+const calculatePagination = (limit: number, page: number, total: number) => {
+  const safeLimit = Math.max(1, limit);
+  const totalPages = Math.max(1, Math.ceil(total / safeLimit));
+  const safePage = Math.min(Math.max(1, page), totalPages);
+
+  return {
+    limit: safeLimit,
+    page: safePage,
+    prevPage: safePage > 1 ? safePage - 1 : null,
+    nextPage: safePage < totalPages ? safePage + 1 : null,
+    totalPages,
+    offset: (safePage - 1) * safeLimit,
+  };
+};
+
+const buildOrderBy = (table: AnyPgTable, sortArr: string[]) => {
+  const orderBy = [];
+
+  for (const el of sortArr) {
+    const isDesc = el.startsWith('-');
+    const columnName = (isDesc ? el.slice(1) : el) as keyof AnyPgTable;
+    if (!(columnName in table)) continue; // Skip invalid fields
+
+    const column = table[columnName] as AnyPgColumn;
+    orderBy.push(isDesc ? desc(column) : asc(column));
+  }
+
+  return orderBy;
+};
+
 export const queryPaginatedData = async <T extends AnyPgTable>({
   table,
   filters,
@@ -22,43 +51,26 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   page = 1,
   sortArr = [],
 }: QueryPaginatedDataProps<T>) => {
-  // Query count
+  // Query total count
   const [{ count: total }] = await db
     .select({ count: count() })
     .from(table)
     .where(filters);
 
-  // Return empty results
-  const safeLimit = Math.max(1, limit);
-  const totalPages = Math.max(1, Math.ceil(total / safeLimit));
-  const safePage = Math.min(Math.max(1, page), totalPages);
+  // Return results with empty data if none found
+  const { offset, ...pagination } = calculatePagination(limit, page, total);
+  if (!total) return { total, ...pagination, data: [] };
 
-  const results = {
-    total,
-    limit: safeLimit,
-    page: safePage,
-    prevPage: safePage > 1 ? safePage - 1 : null,
-    nextPage: safePage < totalPages ? safePage + 1 : null,
-    totalPages,
-    data: [],
-  };
-  if (!total) return results;
-
-  // Query data and include it in the returned results
-  const orderBy = sortArr.map((el) => {
-    const isDesc = el.startsWith('-');
-    const field = (isDesc ? el.slice(1) : el) as keyof typeof table;
-    const column = table[field] as AnyPgColumn;
-    return isDesc ? desc(column) : asc(column);
-  });
-  const offset = (safePage - 1) * safeLimit;
-
+  // Query data and return results
+  const orderBy = buildOrderBy(table, sortArr);
   const data = await db
     .select()
     .from(table)
     .where(filters)
     .orderBy(...orderBy) // Spread as individual arguments
-    .limit(safeLimit)
+    .limit(pagination.limit)
     .offset(offset);
-  return { ...results, data };
+  return { total, ...pagination, data };
 };
+
+export const _testables = { calculatePagination, buildOrderBy };
