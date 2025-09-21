@@ -1,5 +1,6 @@
 import { _testable } from '@/constants/paths';
 
+// Values
 const { convertPathsToSwagger } = _testable;
 
 describe('convertPathsToSwagger', () => {
