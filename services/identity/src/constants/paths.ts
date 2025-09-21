@@ -28,9 +28,7 @@ export const PATHS = {
 } as const;
 
 // Utils
-export const convertPathsToSwagger = <T extends Record<string, string>>(
-  paths: T,
-) => {
+const convertPathsToSwagger = <T extends Record<string, string>>(paths: T) => {
   const entries = Object.entries(paths).map(([key, value]) => [
     key,
     value
@@ -48,3 +46,6 @@ export const convertPathsToSwagger = <T extends Record<string, string>>(
 
 // Derived constants
 export const SWAGGER_PATHS = convertPathsToSwagger(PATHS);
+
+// Test-only
+export const _testable = { convertPathsToSwagger };

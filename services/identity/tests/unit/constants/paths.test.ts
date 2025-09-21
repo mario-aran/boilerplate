@@ -1,4 +1,6 @@
-import { convertPathsToSwagger } from '@/constants/paths';
+import { _testable } from '@/constants/paths';
+
+const { convertPathsToSwagger } = _testable;
 
 describe('convertPathsToSwagger', () => {
   it('replaces a single :param with {param}', () => {
