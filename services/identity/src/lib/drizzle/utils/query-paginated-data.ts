@@ -1,6 +1,10 @@
 import { db } from '@/lib/drizzle';
 import { asc, count, desc, getTableColumns, SQL } from 'drizzle-orm';
-import { AnyPgTable, TableLikeHasEmptySelection } from 'drizzle-orm/pg-core';
+import {
+  AnyPgColumn,
+  AnyPgTable,
+  TableLikeHasEmptySelection,
+} from 'drizzle-orm/pg-core';
 
 // Types
 interface CalculatePaginationProps {
@@ -37,20 +41,18 @@ const calculatePagination = ({
   };
 };
 
-const buildOrderBy = (table: AnyPgTable, sortArr: string[]) => {
-  const columns = getTableColumns(table);
-  const sortSet = new Set();
+const buildOrderBy = (
+  tableColumns: Record<string, AnyPgColumn>,
+  sortArr: string[],
+) => {
   const orderBy = [];
 
   for (const el of sortArr) {
     const isDesc = el.startsWith('-');
-    const field = isDesc ? el.slice(1) : el;
+    const col = isDesc ? el.slice(1) : el;
+    if (!(col in tableColumns)) continue; // Skips non-existent columns
 
-    if (!(field in columns)) continue; // Skip invalid columns
-    if (sortSet.has(field)) continue; // Skip duplicated columns
-
-    sortSet.add(field);
-    orderBy.push(isDesc ? desc(columns[field]) : asc(columns[field]));
+    orderBy.push(isDesc ? desc(tableColumns[col]) : asc(tableColumns[col]));
   }
 
   return orderBy;
@@ -74,7 +76,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   if (!total) return { total, ...pagination, data: [] };
 
   // Query data and return results
-  const orderBy = buildOrderBy(table, sortArr);
+  const orderBy = buildOrderBy(getTableColumns(table), sortArr);
   const data = await db
     .select()
     .from(table)
