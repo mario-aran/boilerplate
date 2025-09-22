@@ -21,9 +21,9 @@ describe('calculatePagination', () => {
     ];
 
     for (const { page, prevPage, nextPage, offset } of cases) {
-      const actual = calculatePagination({ total: 5, limit, page });
+      const result = calculatePagination({ total: 5, limit, page });
 
-      expect(actual).toEqual({
+      expect(result).toEqual({
         limit,
         page,
         prevPage,
@@ -36,32 +36,32 @@ describe('calculatePagination', () => {
 
   it('handles non-positive limit', () => {
     for (const limit of [-2, 0]) {
-      const actual = calculatePagination({ total: 1, page: 1, limit });
+      const result = calculatePagination({ total: 1, page: 1, limit });
 
-      expect(actual.limit).toBe(1);
+      expect(result.limit).toBe(1);
     }
   });
 
   it('handles total = 0', () => {
-    const actual = calculatePagination({ limit: 1, page: 1, total: 0 });
+    const result = calculatePagination({ limit: 1, page: 1, total: 0 });
 
-    expect(actual.totalPages).toBe(1);
+    expect(result.totalPages).toBe(1);
   });
 
   it('handles page boundaries', () => {
     for (const page of [0, 999]) {
-      const actual = calculatePagination({ total: 1, limit: 1, page });
+      const result = calculatePagination({ total: 1, limit: 1, page });
 
-      expect(actual.page).toBe(1);
+      expect(result.page).toBe(1);
     }
   });
 });
 
 describe('buildOrderBy', () => {
   it('builds correct order for ascending and descending fields', () => {
-    const actual = buildOrderBy(mockedColumns, ['-id', '-name', 'age']);
+    const result = buildOrderBy(mockedColumns, ['-id', '-name', 'age']);
 
-    expect(actual).toEqual([
+    expect(result).toEqual([
       desc(mockedColumns.id),
       desc(mockedColumns.name),
       asc(mockedColumns.age),
@@ -69,8 +69,8 @@ describe('buildOrderBy', () => {
   });
 
   it('skips invalid columns', () => {
-    const actual = buildOrderBy(mockedColumns, ['invalid']);
+    const result = buildOrderBy(mockedColumns, ['invalid']);
 
-    expect(actual).toEqual([]);
+    expect(result).toEqual([]);
   });
 });
