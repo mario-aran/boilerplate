@@ -1,10 +1,6 @@
 import { db } from '@/lib/drizzle';
-import { asc, count, desc, SQL } from 'drizzle-orm';
-import {
-  AnyPgColumn,
-  AnyPgTable,
-  TableLikeHasEmptySelection,
-} from 'drizzle-orm/pg-core';
+import { asc, count, desc, getTableColumns, SQL } from 'drizzle-orm';
+import { AnyPgTable, TableLikeHasEmptySelection } from 'drizzle-orm/pg-core';
 
 // Types
 interface CalculatePaginationProps {
@@ -42,15 +38,19 @@ const calculatePagination = ({
 };
 
 const buildOrderBy = (table: AnyPgTable, sortArr: string[]) => {
+  const columns = getTableColumns(table);
+  const sortSet = new Set();
   const orderBy = [];
 
   for (const el of sortArr) {
     const isDesc = el.startsWith('-');
-    const columnName = (isDesc ? el.slice(1) : el) as keyof AnyPgTable;
-    if (!(columnName in table)) continue; // Skip invalid fields
+    const field = isDesc ? el.slice(1) : el;
 
-    const column = table[columnName] as AnyPgColumn;
-    orderBy.push(isDesc ? desc(column) : asc(column));
+    if (!(field in columns)) continue; // Skip invalid columns
+    if (sortSet.has(field)) continue; // Skip duplicated columns
+
+    sortSet.add(field);
+    orderBy.push(isDesc ? desc(columns[field]) : asc(columns[field]));
   }
 
   return orderBy;
