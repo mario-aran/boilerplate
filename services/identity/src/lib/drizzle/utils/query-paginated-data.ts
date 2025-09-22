@@ -7,6 +7,12 @@ import {
 } from 'drizzle-orm/pg-core';
 
 // Types
+interface CalculatePaginationProps {
+  total: number;
+  limit: number;
+  page: number;
+}
+
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
@@ -16,7 +22,11 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
 }
 
 // Utils
-const calculatePagination = (limit: number, page: number, total: number) => {
+const calculatePagination = ({
+  total,
+  limit,
+  page,
+}: CalculatePaginationProps) => {
   const safeLimit = Math.max(1, limit);
   const totalPages = Math.max(1, Math.ceil(total / safeLimit));
   const safePage = Math.min(Math.max(1, page), totalPages);
@@ -60,7 +70,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .where(filters);
 
   // Return results with empty data if none found
-  const { offset, ...pagination } = calculatePagination(limit, page, total);
+  const { offset, ...pagination } = calculatePagination({ limit, page, total });
   if (!total) return { total, ...pagination, data: [] };
 
   // Query data and return results
