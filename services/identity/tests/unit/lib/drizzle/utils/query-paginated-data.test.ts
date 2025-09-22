@@ -12,7 +12,7 @@ const mockedColumns = {
 };
 
 describe('calculatePagination', () => {
-  it('handles normal pagination', () => {
+  it('calculates correct pagination for first, middle, and last page', () => {
     const limit = 2;
     const cases = [
       { page: 1, prevPage: null, nextPage: 2, offset: 0 },
@@ -34,7 +34,7 @@ describe('calculatePagination', () => {
     }
   });
 
-  it('handles non-positive limit', () => {
+  it('sets non-positive limit to 1', () => {
     for (const limit of [-2, 0]) {
       const result = calculatePagination({ total: 1, page: 1, limit });
 
@@ -42,13 +42,13 @@ describe('calculatePagination', () => {
     }
   });
 
-  it('handles total = 0', () => {
+  it('sets totalPages to 1 when total is 0', () => {
     const result = calculatePagination({ limit: 1, page: 1, total: 0 });
 
     expect(result.totalPages).toBe(1);
   });
 
-  it('handles page boundaries', () => {
+  it('clamps out-of-range page to nearest valid page', () => {
     for (const page of [0, 999]) {
       const result = calculatePagination({ total: 1, limit: 1, page });
 
@@ -58,7 +58,7 @@ describe('calculatePagination', () => {
 });
 
 describe('buildOrderBy', () => {
-  it('builds correct order for ascending and descending fields', () => {
+  it('builds correct order for ascending and descending columns', () => {
     const result = buildOrderBy(mockedColumns, ['-id', '-name', 'age']);
 
     expect(result).toEqual([
