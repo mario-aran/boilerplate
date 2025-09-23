@@ -5,4 +5,9 @@
 
 ## To-do
 
+- [] add header comment sections to all code files and review comments
 - [] implement refresh-token flow
+- [] finish swagger docs
+- [] add authenticate-with-permission or s (check this) middleware and update all tests with permissions
+- [] add users controller
+- [] put status before message in httpError always

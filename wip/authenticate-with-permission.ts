@@ -7,13 +7,13 @@
 
 // // Values
 // const unauthorizedError = new HttpError({
-//   message: "Unauthorized",
 //   httpStatus: StatusCodes.UNAUTHORIZED,
+//   message: "Unauthorized",
 // });
 
 // const forbiddenError = new HttpError({
-//   message: "Forbidden",
 //   httpStatus: StatusCodes.FORBIDDEN,
+//   message: "Forbidden",
 // });
 
 // export const authenticateWithPermission =
