@@ -53,7 +53,7 @@ Tools
   - eslint-plugin-check-file
 - [x] vitest | vitest/coverage-v8
   - supertest | @types/supertest
-  - @testcontainers/postgresql
+  - @testcontainers/postgresql | @testcontainers/redis
 - [x] drizzle-orm | drizzle-kit | pg | @types/pg
   - @faker-js/faker
 - [x] express | @types/express
