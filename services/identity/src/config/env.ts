@@ -4,7 +4,7 @@ import { NODE_ENVIRONMENTS } from '@/constants/node-environments';
 // VALUES
 // ===========================
 
-// Node environment
+// Node
 const NODE_ENV = process.env.NODE_ENV || NODE_ENVIRONMENTS.DEVELOPMENT;
 export const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
 export const isDevelopment = NODE_ENV === NODE_ENVIRONMENTS.DEVELOPMENT;
@@ -37,8 +37,8 @@ const getOptionalEnv = (key: string) => process.env[key] || undefined;
 // ===========================
 
 // Server
-export const BASE_URL = getRequiredEnv('BASE_URL');
 export const PORT = Number(getRequiredEnv('PORT'));
+export const BASE_URL = getRequiredEnv('BASE_URL');
 
 // JWT
 export const JWT_ACCESS_SECRET = getRequiredEnv('JWT_ACCESS_SECRET');
@@ -58,4 +58,4 @@ export const SMTP_HOST = getRequiredEnv('SMTP_HOST');
 export const SMTP_PORT = Number(getRequiredEnv('SMTP_PORT'));
 export const SMTP_USER = getOptionalEnv('SMTP_USER');
 export const SMTP_PASS = getOptionalEnv('SMTP_PASS');
-export const VERIFY_EMAIL_FROM = getRequiredEnv('VERIFY_EMAIL_FROM');
+export const EMAIL_FROM = getRequiredEnv('EMAIL_FROM');
