@@ -1,5 +1,9 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "vitest.config.ts"
 
+// Ignore "~/.docker/config.json" to prevent "credsStore" error
+process.env.DOCKER_AUTH_CONFIG = '{}';
+
+// Imports
 import { PostgreSqlContainer } from '@testcontainers/postgresql';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
@@ -7,10 +11,10 @@ import { migrate } from 'drizzle-orm/node-postgres/migrator';
 const POSTGRES_IMAGE = 'postgres:17.5-alpine';
 
 export default async function globalSetup() {
-  // Start containers
+  // Start Testcontainers
   const pgContainer = await new PostgreSqlContainer(POSTGRES_IMAGE).start();
 
-  // Replace envs
+  // Override connections to use Testcontainers
   process.env.DATABASE_URL = pgContainer.getConnectionUri();
 
   // Prepare database
@@ -22,7 +26,7 @@ export default async function globalSetup() {
     // Close connections
     await db.$client.end();
 
-    // Stop containers
+    // Stop Testcontainers
     await pgContainer.stop();
   };
 }
