@@ -10,6 +10,7 @@ services:
       - POSTGRES_DB=db
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
+
   redis:
     image: redis:8.0-alpine
     restart: unless-stopped
@@ -17,7 +18,13 @@ services:
       - "6379:6379"
     volumes:
       - redisdata:/data
-    command: redis-server --requirepass password
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    restart: unless-stopped
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
 
 volumes:
   postgresdata:
