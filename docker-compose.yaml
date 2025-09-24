@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
     ports:
       - "1025:1025" # SMTP
-      - "8025:8025" # Web UI
+      - "8025:8025" # UI
 
 volumes:
   postgresdata:
