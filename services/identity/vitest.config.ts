@@ -25,7 +25,6 @@ export default defineConfig({
             'tests/integration/**/*.integration.test.ts',
           ],
           globalSetup: 'tests/config/global-setup.e2e.ts',
-          setupFiles: ['tests/config/vitest-setup.e2e.ts'],
         },
       },
     ],

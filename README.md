@@ -8,6 +8,9 @@
 - [] add header comment sections to all code files and review comments
 - [] implement refresh-token flow
 - [] finish swagger docs
-- [] add authenticate-with-permission or s (check this) middleware and update all tests with permissions
+- [] add authenticate-with-permission/s middleware and update all tests with permissions
 - [] add users controller
-- [] put status before message in httpError always
+- [] always put status before message in httpError
+- [] test containers not pulling images
+- [] remove multiroot workspace and use javascript debug terminal
+- [] redo bullMq Connection (no more classes) and check verify functions on the app for both postgres and redis
