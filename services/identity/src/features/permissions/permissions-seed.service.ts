@@ -1,5 +1,5 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
-import { db } from '@/lib/drizzle';
+import { db } from '@/lib/drizzle/db';
 import { permissionsTable } from '@/lib/drizzle/schemas';
 
 export class PermissionsSeedService {

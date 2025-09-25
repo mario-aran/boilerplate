@@ -1,7 +1,7 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "vitest.config.ts"
 
-import * as drizzleModule from '@/lib/drizzle';
-import { pool } from '@/lib/drizzle/pool';
+import * as drizzleModule from '@/lib/drizzle/db';
+import { pool } from '@/lib/drizzle/db';
 import * as schemas from '@/lib/drizzle/schemas';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { PoolClient } from 'pg';

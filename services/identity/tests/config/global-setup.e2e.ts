@@ -56,7 +56,7 @@ export default async function globalSetup() {
   process.env.SMTP_PASS = '';
 
   // Migrate and seed db after env vars point to Testcontainers
-  const { db } = await import('@/lib/drizzle');
+  const { db } = await import('@/lib/drizzle/db');
   await migrate(db, { migrationsFolder: 'migrations' }); // Paths must be relative to project root
   await import('@/scripts/seeds/seed-dev.script');
 
