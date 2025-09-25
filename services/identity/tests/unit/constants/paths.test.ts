@@ -1,11 +1,11 @@
 import { _testable } from '@/constants/paths';
 
-// Values
 const { convertPathsToSwagger } = _testable;
 
 describe('convertPathsToSwagger', () => {
   it('replaces a single :param with {param}', () => {
     const input = { path: 'path/:id' };
+
     const result = convertPathsToSwagger(input);
 
     expect(result).toEqual({ path: 'path/{id}' });
@@ -13,6 +13,7 @@ describe('convertPathsToSwagger', () => {
 
   it('replaces multiple :param with {param} on the same path', () => {
     const input = { path: '/path/:id/:nestedId' };
+
     const result = convertPathsToSwagger(input);
 
     expect(result).toEqual({ path: '/path/{id}/{nestedId}' });
@@ -20,6 +21,7 @@ describe('convertPathsToSwagger', () => {
 
   it('leaves paths without : unchanged', () => {
     const input = { path: '/path' };
+
     const result = convertPathsToSwagger(input);
 
     expect(result).toEqual(input);

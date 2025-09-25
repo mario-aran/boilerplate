@@ -30,8 +30,8 @@ describe('zodValidator', () => {
     const body = z.object({ field: z.string() });
 
     zodValidator({ body })(req, res, next);
-    const err = next.mock.calls[0][0] as HttpError;
 
+    const err = next.mock.calls[0][0] as HttpError;
     expect(next).toHaveBeenCalledOnce();
     expect(err).toBeInstanceOf(HttpError);
     expect(err.status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
@@ -49,8 +49,8 @@ describe('zodValidator', () => {
     };
 
     zodValidator({ body })(req, res, next);
-    const err = next.mock.calls[0][0] as Error;
 
+    const err = next.mock.calls[0][0] as Error;
     expect(next).toHaveBeenCalledOnce();
     expect(err).toBeInstanceOf(Error);
   });
