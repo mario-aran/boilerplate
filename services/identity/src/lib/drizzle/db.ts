@@ -22,7 +22,7 @@ pool.on('error', (err) => logger.error(`Database connection error: ${err}`)); //
 // UTILS
 // ===========================
 
-export const verifyPool = async () => {
+export const testDbConnection = async () => {
   try {
     await pool.query('SELECT 1');
     logger.info('Database connected successfully');
