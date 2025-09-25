@@ -5,7 +5,7 @@
 
 ## To-do
 
-- [] add header comment sections to all code files and review comments
+- [] add header comment sections to all code files and review comments. Also, replace = for -
 - [] implement refresh-token flow
 - [] finish swagger docs
 - [] add authenticate-with-permission/s middleware and update all tests with permissions
