@@ -2,14 +2,7 @@ import { _testable } from '@/lib/drizzle/utils/query-paginated-data';
 import { asc, desc } from 'drizzle-orm';
 import { AnyPgColumn } from 'drizzle-orm/pg-core';
 
-// Values
 const { calculatePagination, buildOrderBy } = _testable;
-
-const mockedColumns = {
-  id: {} as AnyPgColumn,
-  name: {} as AnyPgColumn,
-  age: {} as AnyPgColumn,
-};
 
 describe('calculatePagination', () => {
   it('calculates correct pagination for first, middle, and last page', () => {
@@ -34,7 +27,7 @@ describe('calculatePagination', () => {
     }
   });
 
-  it('sets non-positive limit to 1', () => {
+  it('sets limit to 1 for non-positive values', () => {
     for (const limit of [-2, 0]) {
       const result = calculatePagination({ total: 1, page: 1, limit });
 
@@ -48,7 +41,7 @@ describe('calculatePagination', () => {
     expect(result.totalPages).toBe(1);
   });
 
-  it('clamps out-of-range page to nearest valid page', () => {
+  it('clamps out-of-range page to the nearest valid page', () => {
     for (const page of [0, 999]) {
       const result = calculatePagination({ total: 1, limit: 1, page });
 
@@ -58,7 +51,13 @@ describe('calculatePagination', () => {
 });
 
 describe('buildOrderBy', () => {
-  it('builds correct order for ascending and descending columns', () => {
+  const mockedColumns = {
+    id: {} as AnyPgColumn,
+    name: {} as AnyPgColumn,
+    age: {} as AnyPgColumn,
+  };
+
+  it('returns array with correct order for ascending and descending columns', () => {
     const result = buildOrderBy(mockedColumns, ['-id', '-name', 'age']);
 
     expect(result).toEqual([
@@ -68,9 +67,15 @@ describe('buildOrderBy', () => {
     ]);
   });
 
-  it('skips invalid columns', () => {
-    const result = buildOrderBy(mockedColumns, ['invalid']);
+  it('returns empty array when sortArr is empty', () => {
+    const result = buildOrderBy(mockedColumns, []);
 
     expect(result).toEqual([]);
+  });
+
+  it('returns array skipping invalid columns', () => {
+    const result = buildOrderBy(mockedColumns, ['-id', 'invalid', 'invalid2']);
+
+    expect(result).toEqual([desc(mockedColumns.id)]);
   });
 });
