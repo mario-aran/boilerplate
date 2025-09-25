@@ -6,7 +6,10 @@ import {
   TableLikeHasEmptySelection,
 } from 'drizzle-orm/pg-core';
 
-// Types
+// ---------------------------
+// TYPES
+// ---------------------------
+
 interface CalculatePaginationProps {
   total: number;
   limit: number;
@@ -21,7 +24,10 @@ interface QueryPaginatedDataProps<T extends AnyPgTable> {
   sortArr?: string[];
 }
 
-// Utils
+// ---------------------------
+// UTILS
+// ---------------------------
+
 const calculatePagination = ({
   total,
   limit,
@@ -58,6 +64,8 @@ const buildOrderBy = (
   return orderBy;
 };
 
+export const _testable = { calculatePagination, buildOrderBy };
+
 export const queryPaginatedData = async <T extends AnyPgTable>({
   table,
   filters,
@@ -86,5 +94,3 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .offset(offset);
   return { total, ...pagination, data };
 };
-
-export const _testable = { calculatePagination, buildOrderBy };
