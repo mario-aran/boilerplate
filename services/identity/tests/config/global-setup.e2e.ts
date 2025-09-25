@@ -1,6 +1,7 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "vitest.config.ts"
 
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import { TestProject } from 'vitest/node';
 
 // ===========================
 // CONSTANTS
@@ -20,12 +21,12 @@ const startTestContainers = async () => {
   // Docker config
   process.env.DOCKER_AUTH_CONFIG = '{}'; // Ignore "~/.docker/config.json" to prevent "credsStore" error
 
-  // Import Testcontainers after Docker config
+  // Import containers after docker config
   const { PostgreSqlContainer } = await import('@testcontainers/postgresql');
   const { RedisContainer } = await import('@testcontainers/redis');
   const { GenericContainer } = await import('testcontainers');
 
-  // Start Testcontainers
+  // Start containers
   const postgresContainer = await new PostgreSqlContainer(
     POSTGRES_IMAGE,
   ).start();
@@ -41,7 +42,7 @@ const startTestContainers = async () => {
 // GLOBAL SETUP
 // ===========================
 
-export default async function globalSetup() {
+export default async function globalSetup(project: TestProject) {
   const { postgresContainer, redisContainer, mailhogContainer } =
     await startTestContainers();
 
@@ -60,11 +61,14 @@ export default async function globalSetup() {
   await migrate(db, { migrationsFolder: 'migrations' }); // Paths must be relative to project root
   await import('@/scripts/seeds/seed-dev.script');
 
-  // Store global values in globalThis
-  globalThis.mailhogUIPort = mailhogContainer.getMappedPort(MAILHOG_UI_PORT);
+  // Expose variables to vitest ProvideContext
+  project.provide(
+    'mailhogUIPort',
+    mailhogContainer.getMappedPort(MAILHOG_UI_PORT),
+  );
 
   return async function globalTeardown() {
-    // Stop Testcontainers in reverse order
+    // Stop containers in reverse order
     await mailhogContainer.stop();
     await redisContainer.stop();
     await postgresContainer.stop();

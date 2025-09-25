@@ -14,3 +14,4 @@
 - [] test containers not pulling images
 - [] remove multiroot workspace and use javascript debug terminal
 - [] redo bullMq Connection (no more classes) and check verify functions on the app for both postgres and redis
+- [] fix import autocomplete
