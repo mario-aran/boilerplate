@@ -64,8 +64,6 @@ const buildOrderBy = (
   return orderBy;
 };
 
-export const _testable = { calculatePagination, buildOrderBy };
-
 export const queryPaginatedData = async <T extends AnyPgTable>({
   table,
   filters,
@@ -94,3 +92,5 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .offset(offset);
   return { total, ...pagination, data };
 };
+
+export const _testable = { calculatePagination, buildOrderBy };
