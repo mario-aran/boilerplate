@@ -14,7 +14,11 @@ export default defineConfig({
     projects: [
       {
         extends: true,
-        test: { name: 'unit', include: ['tests/unit/**/*.test.ts'] },
+        test: {
+          name: 'unit',
+          include: ['tests/src/**/*.test.ts'],
+          exclude: ['**/*.integration.test.ts', '**/*.e2e.test.ts'],
+        },
       },
       {
         extends: true,
@@ -22,7 +26,7 @@ export default defineConfig({
           name: 'e2e',
           include: [
             'tests/e2e/**/*.e2e.test.ts',
-            'tests/integration/**/*.integration.test.ts',
+            'tests/src/**/*.integration.test.ts',
           ],
           globalSetup: 'tests/config/global-setup.e2e.ts',
         },
