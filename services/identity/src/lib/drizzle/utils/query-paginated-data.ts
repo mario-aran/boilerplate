@@ -19,9 +19,9 @@ interface CalculatePaginationProps {
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
+  sortArr?: string[];
   limit?: number;
   page?: number;
-  sortArr?: string[];
 }
 
 // ---------------------------
@@ -39,10 +39,10 @@ const calculatePagination = ({
 
   return {
     limit: safeLimit,
+    totalPages,
     page: safePage,
     prevPage: safePage > 1 ? safePage - 1 : null,
     nextPage: safePage < totalPages ? safePage + 1 : null,
-    totalPages,
     offset: (safePage - 1) * safeLimit,
   };
 };
@@ -67,9 +67,9 @@ const buildOrderBy = (
 export const queryPaginatedData = async <T extends AnyPgTable>({
   table,
   filters,
+  sortArr = [],
   limit = 10,
   page = 1,
-  sortArr = [],
 }: QueryPaginatedDataProps<T>) => {
   // Query total count
   const [{ count: total }] = await db
@@ -78,7 +78,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .where(filters);
 
   // Return results with empty data if none found
-  const { offset, ...pagination } = calculatePagination({ limit, page, total });
+  const pagination = calculatePagination({ limit, page, total });
   if (!total) return { total, ...pagination, data: [] };
 
   // Query data and return results
@@ -89,7 +89,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .where(filters)
     .orderBy(...orderBy) // Spread as individual arguments
     .limit(pagination.limit)
-    .offset(offset);
+    .offset(pagination.offset);
   return { total, ...pagination, data };
 };
 
