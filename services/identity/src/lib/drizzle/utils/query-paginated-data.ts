@@ -92,5 +92,3 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
     .offset(pagination.offset);
   return { total, ...pagination, data };
 };
-
-export const _testable = { calculatePagination };

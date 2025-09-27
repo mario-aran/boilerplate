@@ -18,7 +18,6 @@ describe('queryPaginatedData', () => {
   withTransactionalDb();
 
   it('returns empty data when no rows match', async () => {
-    // Prepare db
     await db.delete(usersTable);
 
     const result = await queryPaginatedData({ table: usersTable });
@@ -35,20 +34,19 @@ describe('queryPaginatedData', () => {
     });
   });
 
-  it('paginates correctly across pages', async () => {
+  it('paginates correctly', async () => {
     const total = 13;
     const limit = 5;
-    const testCases = [
-      { page: 1, prevPage: null, nextPage: 2, offset: 0 },
-      { page: 2, prevPage: 1, nextPage: 3, offset: 5 },
-      { page: 3, prevPage: 2, nextPage: null, offset: 10 },
+    const expectations = [
+      { page: 1, prevPage: null, nextPage: 2, offset: 0, length: 5 },
+      { page: 2, prevPage: 1, nextPage: 3, offset: 5, length: 5 },
+      { page: 3, prevPage: 2, nextPage: null, offset: 10, length: 3 },
     ];
 
-    // Prepare db
     await db.delete(usersTable);
     await db.insert(usersTable).values(createMockUsers(total));
 
-    for (const { page, prevPage, nextPage, offset } of testCases) {
+    for (const { page, prevPage, nextPage, offset, length } of expectations) {
       const result = await queryPaginatedData({
         table: usersTable,
         limit,
@@ -63,14 +61,13 @@ describe('queryPaginatedData', () => {
         prevPage,
         nextPage,
         offset,
-        data: expect.arrayContaining(expect.any(Object)),
+        data: expect.any(Array),
       });
-      expect(result.data).toHaveLength(total - offset);
+      expect(result.data).toHaveLength(length);
     }
   });
 
   it('filters total and data', async () => {
-    // Prepare db
     await db.delete(usersTable);
     await db.insert(usersTable).values([
       { email: 'other@test.com', password: 'x' },
@@ -86,8 +83,7 @@ describe('queryPaginatedData', () => {
     expect(result.data).toHaveLength(1);
   });
 
-  it('sorts data in correct order and skips nonexistent columns', async () => {
-    // Prepare db
+  it('sorts data and skips nonexistent columns', async () => {
     await db.delete(usersTable);
     await db.insert(usersTable).values([
       { email: 'c@test.com', password: 'a' },
@@ -105,5 +101,27 @@ describe('queryPaginatedData', () => {
       ['b@test.com', 'a'],
       ['c@test.com', 'a'],
     ]);
+  });
+
+  it('enforces minimum limit of 1', async () => {
+    const result = await queryPaginatedData({ table: usersTable, limit: 0 });
+
+    expect(result.limit).toBe(1);
+  });
+
+  it('clamps page to valid range', async () => {
+    const cases = [
+      { page: 0, expectedPage: 1 },
+      { page: 999, expectedPage: 2 },
+    ];
+
+    await db.delete(usersTable);
+    await db.insert(usersTable).values(createMockUsers(11));
+
+    for (const { page, expectedPage } of cases) {
+      const result = await queryPaginatedData({ table: usersTable, page });
+
+      expect(result.page).toBe(expectedPage);
+    }
   });
 });
