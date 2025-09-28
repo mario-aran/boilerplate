@@ -8,8 +8,8 @@ This template was created manually.
 
 Prepare code
 
-- `pnpm run clean:ignored`: Delete git ignored files
-- `pnpm run format:lf`: (Optional) Convert all files to LF
+- `pnpm run clean`: Delete git ignored files
+- `pnpm run format:eol`: (Optional) Convert all files to LF
 - `pnpm install`: Install dependencies
 - `pnpm approve-builds`: (Optional) Approve post-install scripts
 - `pnpm up --latest`: (Optional) Update dependencies to the last version
@@ -22,8 +22,8 @@ Prepare database
 
 Format
 
-- `pnpm run format:prettier`: Prettier
-- `pnpm run format:eslint`: Linter and typechecker
+- `pnpm run format`: Prettier
+- `pnpm run lint`: Linter and typechecker
 - `pnpm run build`: Build app and check compiler types
 
 Test
