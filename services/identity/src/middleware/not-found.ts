@@ -4,8 +4,8 @@ import { StatusCodes } from 'http-status-codes';
 
 // Values
 const notFoundError = new HttpError({
-  message: 'Not found',
   status: StatusCodes.NOT_FOUND,
+  message: 'Not found',
 });
 
 export const notFound = (_: Request, _res: Response, next: NextFunction) =>

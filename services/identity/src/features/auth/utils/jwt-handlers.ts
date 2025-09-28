@@ -22,8 +22,8 @@ export const validateEmailVerificationToken = (token: string) => {
     return jwt.verify(token, JWT_EMAIL_VERIFICATION_SECRET) as JwtPayload;
   } catch {
     throw new HttpError({
-      message: 'Invalid token',
       status: StatusCodes.UNAUTHORIZED,
+      message: 'Invalid token',
     });
   }
 };
