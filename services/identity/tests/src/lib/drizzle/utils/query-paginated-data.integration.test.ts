@@ -17,9 +17,11 @@ const createMockUsers = (count: number) =>
 describe('queryPaginatedData', () => {
   withTransactionalDb();
 
-  it('returns empty data when no rows match', async () => {
+  beforeEach(async () => {
     await db.delete(usersTable);
+  });
 
+  it('returns empty data when no rows match', async () => {
     const result = await queryPaginatedData({ table: usersTable });
 
     expect(result).toEqual({
@@ -43,7 +45,6 @@ describe('queryPaginatedData', () => {
       { page: 3, prevPage: 2, nextPage: null, offset: 10, length: 3 },
     ];
 
-    await db.delete(usersTable);
     await db.insert(usersTable).values(createMockUsers(total));
 
     for (const { page, prevPage, nextPage, offset, length } of expectations) {
@@ -68,7 +69,6 @@ describe('queryPaginatedData', () => {
   });
 
   it('filters total and data', async () => {
-    await db.delete(usersTable);
     await db.insert(usersTable).values([
       { email: 'other@test.com', password: 'x' },
       { email: 'match@test.com', password: 'x' },
@@ -84,7 +84,6 @@ describe('queryPaginatedData', () => {
   });
 
   it('sorts data and skips nonexistent columns', async () => {
-    await db.delete(usersTable);
     await db.insert(usersTable).values([
       { email: 'c@test.com', password: 'a' },
       { email: 'b@test.com', password: 'a' },
@@ -115,7 +114,6 @@ describe('queryPaginatedData', () => {
       { page: 999, expectedPage: 2 },
     ];
 
-    await db.delete(usersTable);
     await db.insert(usersTable).values(createMockUsers(11));
 
     for (const { page, expectedPage } of cases) {
