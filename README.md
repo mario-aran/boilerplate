@@ -10,7 +10,6 @@
 - [] finish swagger docs
 - [] add authenticate-with-permission/s middleware and update all tests with permissions
 - [] add users controller
-- [] always put status before message in httpError
 - [] test containers not pulling images
 - [] remove multiroot workspace and use javascript debug terminal
 - [] redo bullMq Connection (no more classes) and check verify functions on the app for both postgres and redis
