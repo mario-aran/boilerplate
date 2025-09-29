@@ -1,4 +1,4 @@
-export const setupSpy = <T extends object>(module: T, method: keyof T) => {
+export const setupRealSpy = <T extends object>(module: T, method: keyof T) => {
   let spy: ReturnType<typeof vi.spyOn>;
 
   beforeAll(() => {
