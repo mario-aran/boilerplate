@@ -1,7 +1,13 @@
-// Types
+// ---------------------------
+// TYPES
+// ---------------------------
+
 type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
 
-// Constants
+// ---------------------------
+// CONSTANTS
+// ---------------------------
+
 export const PERMISSIONS = {
   READ_PERMISSIONS: 'read_permissions',
 } as const;
