@@ -1,10 +1,16 @@
-// Types
+// ===========================
+// TYPES
+// ===========================
+
 type ReplaceColonParams<T extends string> =
   T extends `${infer Prefix}:${infer Param}`
     ? `${Prefix}{${ReplaceColonParams<Param>}}`
     : T;
 
-// Constants
+// ===========================
+// CONSTANTS
+// ===========================
+
 export const PATH_SEGMENTS = {
   ID: '/:id',
   AUTH: '/auth',
@@ -27,15 +33,16 @@ export const PATHS = {
   PERMISSIONS: PATH_SEGMENTS.PERMISSIONS,
 } as const;
 
-// Utils
+// ===========================
+// UTILS
+// ===========================
+
 const convertPathsToSwagger = <T extends Record<string, string>>(paths: T) => {
   const entries = Object.entries(paths).map(([key, value]) => [
     key,
     value
       .split('/')
-      .map((segment) =>
-        segment.startsWith(':') ? `{${segment.slice(1)}}` : segment,
-      )
+      .map((el) => (el.startsWith(':') ? `{${el.slice(1)}}` : el))
       .join('/'),
   ]);
 
