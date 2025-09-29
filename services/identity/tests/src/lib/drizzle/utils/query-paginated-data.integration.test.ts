@@ -2,7 +2,7 @@ import { db } from '@/lib/drizzle/db';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { faker } from '@faker-js/faker';
-import { withTransactionalDb } from '@tests/utils/with-transactional-db';
+import { setupTransactionalDb } from '@tests/utils/setup-transactional-db';
 import { ilike } from 'drizzle-orm';
 
 // ===========================
@@ -15,7 +15,7 @@ const createMockUsers = (count: number) =>
     .map((email): UserInsert => ({ email, password: 'x' }));
 
 describe('queryPaginatedData', () => {
-  withTransactionalDb();
+  setupTransactionalDb();
 
   beforeEach(async () => {
     await db.delete(usersTable);
