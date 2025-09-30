@@ -4,7 +4,6 @@ import { NODE_ENVIRONMENTS } from '@/constants/node-environments';
 // VALUES
 // ---------------------------
 
-// Node
 const NODE_ENV = process.env.NODE_ENV || NODE_ENVIRONMENTS.DEVELOPMENT;
 export const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
 export const isDevelopment = NODE_ENV === NODE_ENVIRONMENTS.DEVELOPMENT;
