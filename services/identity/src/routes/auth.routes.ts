@@ -1,5 +1,10 @@
 import { PATH_SEGMENTS } from '@/constants/paths';
-import { authController } from '@/controllers/auth.controller';
+import {
+  login,
+  register,
+  resendEmailVerification,
+  verifyEmail,
+} from '@/controllers/auth.controller';
 import {
   loginAuthSchema,
   registerAuthSchema,
@@ -14,23 +19,23 @@ export const authRoutes = Router();
 authRoutes.get(
   PATH_SEGMENTS.VERIFY_EMAIL,
   zodValidator({ query: verifyEmailAuthSchema }),
-  authController.verifyEmail.bind(authController),
+  verifyEmail,
 );
 
 authRoutes.post(
   PATH_SEGMENTS.REGISTER,
   zodValidator({ body: registerAuthSchema }),
-  authController.register.bind(authController),
+  register,
 );
 
 authRoutes.post(
   PATH_SEGMENTS.RESEND_EMAIL_VERIFICATION,
   zodValidator({ body: resendEmailVerificationAuthSchema }),
-  authController.resendEmailVerification.bind(authController),
+  resendEmailVerification,
 );
 
 authRoutes.post(
   PATH_SEGMENTS.LOGIN,
   zodValidator({ body: loginAuthSchema }),
-  authController.login.bind(authController),
+  login,
 );

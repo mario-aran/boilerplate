@@ -1,40 +1,44 @@
-// import { UserId } from "@/lib/zod/schemas/users.schema";
-// import { usersService } from "@/services/users.service";
-// import { controllerCatchAsync } from "@/utils/controller-catch-async";
-// import { Request, Response } from "express";
-// import { StatusCodes } from "http-status-codes";
+// import { usersService } from '@/features/users/users.service';
+// import { UserId } from '@/lib/zod/schemas/users.schema';
+// import { Request, Response } from 'express';
+// import { StatusCodes } from 'http-status-codes';
+// import { controllerCatchAsync } from './utils';
 
-// class UsersController {
-//   getAll = controllerCatchAsync(async (req: Request, res: Response) => {
+// export const getUsers = controllerCatchAsync(
+//   async (req: Request, res: Response) => {
 //     const results = await usersService.getAll(req.query);
 //     res.json(results);
-//   });
+//   },
+// );
 
-//   get = controllerCatchAsync(async (req: Request<UserId>, res: Response) => {
-//     const result = await usersService.get(req.params);
+// export const getUser = controllerCatchAsync(
+//   async (req: Request<UserId>, res: Response) => {
+//     const result = await usersService.get(req.params.id);
 //     res.json(result);
-//   });
+//   },
+// );
 
-//   create = controllerCatchAsync(async (req: Request, res: Response) => {
+// export const createUser = controllerCatchAsync(
+//   async (req: Request, res: Response) => {
 //     const result = await usersService.create(req.body);
 //     res
 //       .status(StatusCodes.CREATED)
 //       .json({ message: `User ${result.email} created successfully` });
-//   });
+//   },
+// );
 
-//   update = controllerCatchAsync(async (req: Request<UserId>, res: Response) => {
-//     const result = await usersService.update(req.params, req.body);
+// export const updateUser = controllerCatchAsync(
+//   async (req: Request<UserId>, res: Response) => {
+//     const result = await usersService.update(req.params.id, req.body);
 //     res.json({ message: `User ${result.email} updated successfully` });
-//   });
+//   },
+// );
 
-//   updatePassword = controllerCatchAsync(
-//     async (req: Request<UserId>, res: Response) => {
-//       const result = await usersService.updatePassword(req.params, req.body);
-//       res.json({
-//         message: `Password for user ${result.email} updated successfully`,
-//       });
-//     }
-//   );
-// }
-
-// export const usersController = new UsersController();
+// export const updateUserPassword = controllerCatchAsync(
+//   async (req: Request<UserId>, res: Response) => {
+//     const result = await usersService.updatePassword(req.params, req.body);
+//     res.json({
+//       message: `Password for user ${result.email} updated successfully`,
+//     });
+//   },
+// );

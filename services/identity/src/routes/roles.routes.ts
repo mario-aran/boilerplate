@@ -1,6 +1,12 @@
 import { PATH_SEGMENTS } from '@/constants/paths';
 import { PERMISSIONS } from '@/constants/permissions';
-import { rolesController } from '@/controllers/roles.controller';
+import {
+  createRole,
+  deleteRole,
+  getRole,
+  getRoles,
+  updateRole,
+} from '@/controllers/roles.controller';
 import {
   createRoleSchema,
   getAllRolesSchema,
@@ -17,33 +23,33 @@ rolesRoutes.get(
   '/',
   authenticateAndAuthorize(PERMISSIONS.READ_ROLES),
   zodValidator({ query: getAllRolesSchema }),
-  rolesController.getAll.bind(rolesController),
+  getRoles,
 );
 
 rolesRoutes.get(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.READ_ROLE),
   zodValidator({ params: roleIdSchema }),
-  rolesController.get.bind(rolesController),
+  getRole,
 );
 
 rolesRoutes.post(
   '/',
   authenticateAndAuthorize(PERMISSIONS.CREATE_ROLE),
   zodValidator({ body: createRoleSchema }),
-  rolesController.create.bind(rolesController),
+  createRole,
 );
 
 rolesRoutes.patch(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.UPDATE_ROLE),
   zodValidator({ params: roleIdSchema, body: updateRoleSchema }),
-  rolesController.update.bind(rolesController),
+  updateRole,
 );
 
 rolesRoutes.delete(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.DELETE_ROLE),
   zodValidator({ params: roleIdSchema }),
-  rolesController.delete.bind(rolesController),
+  deleteRole,
 );
