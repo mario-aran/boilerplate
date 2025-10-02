@@ -1,6 +1,9 @@
 import { JWT_ACCESS_SECRET } from '@/config/env';
 import { JwtPayload } from '@/features/auth/types';
-import { usersService } from '@/features/users/users.service';
+import {
+  usersService,
+  UsersServiceGetResult,
+} from '@/features/users/users.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export const jwtStrategy = new Strategy(
@@ -10,11 +13,13 @@ export const jwtStrategy = new Strategy(
   },
   async (payload: JwtPayload, done) => {
     try {
-      const { id } = await usersService.get(payload.userId);
-
-      // Succeeded: Attached values to "req.user"
-      return done(null, { id });
+      // Ensure user exists and type it to match "passport.authenticate" param
+      const user: UsersServiceGetResult = await usersService.get(
+        payload.userId,
+      );
+      return done(null, user);
     } catch (err) {
+      // If user not found or another error, pass it to "passport.authenticate"
       return done(err, false);
     }
   },
