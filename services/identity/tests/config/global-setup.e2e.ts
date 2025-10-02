@@ -3,9 +3,9 @@
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { TestProject } from 'vitest/node';
 
-// ===========================
+// ---------------------------
 // CONSTANTS
-// ===========================
+// ---------------------------
 
 const POSTGRES_IMAGE = 'postgres:17.5-alpine';
 const REDIS_IMAGE = 'redis:8.0-alpine';
@@ -13,9 +13,9 @@ const MAILHOG_IMAGE = 'mailhog/mailhog:v1.0.1';
 const MAILHOG_SMTP_PORT = 1025;
 const MAILHOG_UI_PORT = 8025;
 
-// ===========================
+// ---------------------------
 // UTILS
-// ===========================
+// ---------------------------
 
 const startTestContainers = async () => {
   // Docker config
@@ -38,15 +38,15 @@ const startTestContainers = async () => {
   return { postgresContainer, redisContainer, mailhogContainer };
 };
 
-// ===========================
+// ---------------------------
 // GLOBAL SETUP
-// ===========================
+// ---------------------------
 
 export default async function globalSetup(project: TestProject) {
   const { postgresContainer, redisContainer, mailhogContainer } =
     await startTestContainers();
 
-  // Set env vars to point to Testcontainers
+  // Set envs to point to testcontainers
   process.env.DATABASE_URL = postgresContainer.getConnectionUri();
   process.env.REDIS_URL = redisContainer.getConnectionUrl();
   process.env.SMTP_PORT = mailhogContainer
@@ -56,12 +56,12 @@ export default async function globalSetup(project: TestProject) {
   process.env.SMTP_USER = '';
   process.env.SMTP_PASS = '';
 
-  // Migrate and seed db after env vars point to Testcontainers
+  // Migrate and seed db after envs point to testcontainers
   const { db } = await import('@/lib/drizzle/db');
   await migrate(db, { migrationsFolder: 'migrations' }); // Paths must be relative to project root
   await import('@/scripts/seeds/seed-dev.script');
 
-  // Expose variables to vitest ProvideContext
+  // Expose variables to vitest "ProvideContext"
   project.provide(
     'mailhogUIPort',
     mailhogContainer.getMappedPort(MAILHOG_UI_PORT),
