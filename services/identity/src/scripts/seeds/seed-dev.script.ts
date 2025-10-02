@@ -1,7 +1,6 @@
 // DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
 import { isProduction } from '@/config/env';
-import { SYSTEM_ROLES } from '@/constants/system-roles';
 import { usersSeedService } from '@/features/users/users-seed.service';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
@@ -46,7 +45,6 @@ const seedFakeUsers = async () => {
       password: '12345678',
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
-      roleId: SYSTEM_ROLES.USER,
     }),
   );
   const { createdKeys } = await usersSeedService.seedUsers(mockedUsers);
