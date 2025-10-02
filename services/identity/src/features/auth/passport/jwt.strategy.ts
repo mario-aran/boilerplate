@@ -13,13 +13,15 @@ export const jwtStrategy = new Strategy(
   },
   async (payload: JwtPayload, done) => {
     try {
-      // Ensure user exists and type it to match "passport.authenticate" param
+      // Check if user exists and type it to match "passport.authenticate" param
       const user: UsersServiceGetResult = await usersService.get(
         payload.userId,
       );
+
+      // Pass user to "passport.authenticate"
       return done(null, user);
     } catch (err) {
-      // If user not found or another error, pass it to "passport.authenticate"
+      // Pass error it to "passport.authenticate"
       return done(err, false);
     }
   },
