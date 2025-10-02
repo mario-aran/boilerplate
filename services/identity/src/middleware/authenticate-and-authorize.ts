@@ -1,3 +1,4 @@
+import { Permission } from '@/constants/permissions';
 import { UsersServiceGetResult } from '@/features/users/users.service';
 import { HttpError } from '@/utils/http-error';
 import { NextFunction, Request, Response } from 'express';
@@ -5,7 +6,8 @@ import { StatusCodes } from 'http-status-codes';
 import passport from 'passport';
 
 export const authenticateAndAuthorize =
-  (permission?: string) => (req: Request, res: Response, next: NextFunction) =>
+  (permission?: Permission) =>
+  (req: Request, res: Response, next: NextFunction) =>
     passport.authenticate(
       'jwt',
       { session: false },
