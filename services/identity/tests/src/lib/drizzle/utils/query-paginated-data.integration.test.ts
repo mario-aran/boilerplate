@@ -5,9 +5,9 @@ import { faker } from '@faker-js/faker';
 import { setupTransactionalDb } from '@tests/utils/setup-transactional-db';
 import { ilike } from 'drizzle-orm';
 
-// ===========================
+// ---------------------------
 // UTILS
-// ===========================
+// ---------------------------
 
 const createMockUsers = (count: number) =>
   faker.helpers

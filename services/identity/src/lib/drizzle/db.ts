@@ -5,22 +5,22 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 import * as schemas from './schemas';
 
-// ===========================
+// ---------------------------
 // TYPES
-// ===========================
+// ---------------------------
 
 export type Db = typeof db;
 
-// ===========================
+// ---------------------------
 // POOL
-// ===========================
+// ---------------------------
 
 export const pool = new Pool({ connectionString: DATABASE_URL });
 pool.on('error', (err) => logger.error(`Database connection error: ${err}`)); // Log idle errors
 
-// ===========================
+// ---------------------------
 // UTILS
-// ===========================
+// ---------------------------
 
 export const testDbConnection = async () => {
   try {
@@ -38,9 +38,9 @@ class DrizzleLogger implements Logger {
   }
 }
 
-// ===========================
+// ---------------------------
 // DRIZZLE CLIENT
-// ===========================
+// ---------------------------
 
 export const db = drizzle({
   client: pool,
