@@ -1,12 +1,4 @@
-// ---------------------------
-// TYPES
-// ---------------------------
-
 type SystemRole = (typeof SYSTEM_ROLES)[keyof typeof SYSTEM_ROLES];
-
-// ---------------------------
-// CONSTANTS
-// ---------------------------
 
 export const SYSTEM_ROLES = {
   SUPER_ADMIN: 'super_admin',
