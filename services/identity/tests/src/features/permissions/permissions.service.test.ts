@@ -38,16 +38,16 @@ describe('permissionsService', () => {
       expect(result).toEqual(MOCK_PAGINATED_RESULT);
     });
 
-    it('maps limit, page and search params', async () => {
-      const params = { limit: 5, page: 2, search: 'read' };
+    it('maps limit, page and search query params', async () => {
+      const queryParams = { limit: 5, page: 2, search: 'read' };
 
-      await permissionsService.getAll(params);
+      await permissionsService.getAll(queryParams);
 
       expect(queryPaginatedDataMock).toHaveBeenCalledWith(
         expect.objectContaining({
-          filters: ilike(permissionsTable.id, `%${params.search}%`),
-          limit: params.limit,
-          page: params.page,
+          filters: ilike(permissionsTable.id, `%${queryParams.search}%`),
+          limit: queryParams.limit,
+          page: queryParams.page,
         }),
       );
     });

@@ -32,8 +32,8 @@ class UsersSeedService {
     );
   }
 
-  private async seedUsers(params: UserInsert[]) {
-    const hashedUserPromises = params.map(async ({ password, ...rest }) => ({
+  private async seedUsers(props: UserInsert[]) {
+    const hashedUserPromises = props.map(async ({ password, ...rest }) => ({
       ...rest,
       password: await hashPassword(password),
     }));
