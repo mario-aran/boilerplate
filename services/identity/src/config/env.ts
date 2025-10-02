@@ -14,8 +14,9 @@ export const isTest = NODE_ENV === NODE_ENVIRONMENTS.TEST;
 // ---------------------------
 
 if (!isProduction) {
+  // Disabled eslint rule: use "require()" to load dotenv synchronously
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require('dotenv').config({ path: '.env.dev', quiet: isTest }); // Load dotenv synchronously
+  require('dotenv').config({ path: '.env.dev', quiet: isTest });
 }
 
 // ---------------------------

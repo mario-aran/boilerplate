@@ -8,6 +8,10 @@ import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword } from './utils/hash-password';
 
+export type UsersServiceGetResult = Awaited<
+  ReturnType<typeof usersService.get>
+>;
+
 class UsersService {
   private static readonly notFoundError = new HttpError({
     status: StatusCodes.NOT_FOUND,
@@ -93,6 +97,7 @@ class UsersService {
   }
 
   private omitUserPassword = <T extends UserSelect>({
+    // Disabled eslint rule: to not be forced to use "_"
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     password: _,
     ...restOfProps
