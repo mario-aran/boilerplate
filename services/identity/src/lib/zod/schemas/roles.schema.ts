@@ -1,5 +1,5 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
-import { ROLES_SORT_COLUMNS } from '@/lib/drizzle/schemas';
+import { ROLES_SORTABLE_COLUMNS } from '@/lib/drizzle/schemas';
 import { stringToPositiveInt, text, textId } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { noDuplicateStrs } from '@/lib/zod/utils/refines';
@@ -24,7 +24,7 @@ export const getAllRolesSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,
-    sort: generateSortField(ROLES_SORT_COLUMNS),
+    sort: generateSortField(ROLES_SORTABLE_COLUMNS),
     search: text,
   })
   .partial();

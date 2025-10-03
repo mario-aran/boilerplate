@@ -1,4 +1,4 @@
-import { USERS_SORT_COLUMNS_NO_PASSWORD } from '@/lib/drizzle/schemas';
+import { USERS_SORTABLE_COLUMNS } from '@/lib/drizzle/schemas';
 import { stringToPositiveInt, text, textId } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
@@ -14,7 +14,7 @@ export const getAllUsersSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,
-    sort: generateSortField(USERS_SORT_COLUMNS_NO_PASSWORD),
+    sort: generateSortField(USERS_SORTABLE_COLUMNS),
     roleId: textId,
     search: text,
   })
