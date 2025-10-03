@@ -1,7 +1,7 @@
 import { getTableColumns } from 'drizzle-orm';
 import { AnyPgTable } from 'drizzle-orm/pg-core';
 
-export const getExampleColumns = <
+export const getSwaggerColumns = <
   Table extends AnyPgTable,
   Col extends keyof Table['$inferSelect'],
   ExCol extends Col = never,
@@ -22,7 +22,7 @@ export const getExampleColumns = <
   return fromEntries as Record<Exclude<Col, ExCol>, string>;
 };
 
-export const getSortColumns = <
+export const getSortableColumns = <
   Table extends AnyPgTable,
   Col extends keyof Table['$inferSelect'],
   ExCol extends Col = never,
