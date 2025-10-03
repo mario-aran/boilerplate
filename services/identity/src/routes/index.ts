@@ -15,7 +15,7 @@ const DOCS_PATH = '/docs';
 export const routes = Router();
 
 // Favicon handler
-routes.get(FAVICON_PATH, (_, res) => res.status(StatusCodes.NO_CONTENT).end());
+routes.get(FAVICON_PATH, (_, res) => res.sendStatus(StatusCodes.NO_CONTENT));
 
 // Swagger UI
 routes.use(DOCS_PATH, swaggerUi.serve);
