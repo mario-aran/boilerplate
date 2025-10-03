@@ -36,3 +36,10 @@ export const login = controllerCatchAsync(
     res.json(result);
   },
 );
+
+export const refreshToken = controllerCatchAsync(
+  async (req: Request, res: Response) => {
+    const result = await authService.refreshToken(req.body);
+    res.json(result);
+  },
+);
