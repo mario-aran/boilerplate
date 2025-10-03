@@ -8,6 +8,25 @@ import { HttpError } from '@/utils/http-error';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 
+// ---------------------------
+// UTILS
+// ---------------------------
+
+const verifyToken = (token: string, secret: string) => {
+  try {
+    return jwt.verify(token, secret) as JwtPayload;
+  } catch {
+    throw new HttpError({
+      status: StatusCodes.UNAUTHORIZED,
+      message: 'Invalid token',
+    });
+  }
+};
+
+// ---------------------------
+// EXPORTED FUNCTIONS
+// ---------------------------
+
 export const signEmailVerificationToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_EMAIL_VERIFICATION_SECRET, { expiresIn: '1d' });
 
@@ -17,13 +36,8 @@ export const signAccessToken = (payload: JwtPayload) =>
 export const signRefreshToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' });
 
-export const validateEmailVerificationToken = (token: string) => {
-  try {
-    return jwt.verify(token, JWT_EMAIL_VERIFICATION_SECRET) as JwtPayload;
-  } catch {
-    throw new HttpError({
-      status: StatusCodes.UNAUTHORIZED,
-      message: 'Invalid token',
-    });
-  }
-};
+export const verifyEmailVerificationToken = (token: string) =>
+  verifyToken(token, JWT_EMAIL_VERIFICATION_SECRET);
+
+export const verifyRefreshToken = (token: string) =>
+  verifyToken(token, JWT_REFRESH_SECRET);
