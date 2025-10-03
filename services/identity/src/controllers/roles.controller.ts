@@ -36,7 +36,7 @@ export const updateRole = controllerCatchAsync(
 
 export const deleteRole = controllerCatchAsync(
   async (req: Request<RoleId>, res: Response) => {
-    const { id } = await rolesService.delete(req.params.id);
-    res.json({ message: `Role ${id} deleted successfully` });
+    await rolesService.delete(req.params.id);
+    res.sendStatus(StatusCodes.NO_CONTENT);
   },
 );
