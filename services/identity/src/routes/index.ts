@@ -7,6 +7,7 @@ import swaggerUi from 'swagger-ui-express';
 import { authRoutes } from './auth.routes';
 import { permissionsRoutes } from './permissions.routes';
 import { rolesRoutes } from './roles.routes';
+import { usersRoutes } from './users.route';
 
 // Constants
 const FAVICON_PATH = '/favicon.ico';
@@ -32,5 +33,6 @@ routes.get('/', (_, res) =>
 
 // API endpoints
 routes.use(PATH_SEGMENTS.AUTH, authRoutes);
+routes.use(PATH_SEGMENTS.USERS, usersRoutes);
 routes.use(PATH_SEGMENTS.ROLES, rolesRoutes);
 routes.use(PATH_SEGMENTS.PERMISSIONS, permissionsRoutes);
