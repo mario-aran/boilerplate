@@ -5,12 +5,10 @@
 
 ## To-do
 
-- [] add header comment sections to all code files and review comments. Also, replace = for -
-- [] implement refresh-token flow
+- [] add header comment sections to all files
+- [] redo bullMq Connection (no more classes)
 - [] finish swagger docs
-- [] add authenticate-with-permission/s middleware and update all tests with permissions
-- [] add users controller
-- [] test containers not pulling images
 - [] remove multiroot workspace and use javascript debug terminal
-- [] redo bullMq Connection (no more classes) and check verify functions on the app for both postgres and redis
-- [] fix import autocomplete
+- [] test containers not pulling images
+- [] implement refresh-token flow
+- [] check verify emails flow (it should show an html page, not json)
