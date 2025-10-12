@@ -1,10 +1,11 @@
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
 import {
-  LoginAuth,
-  RegisterAuth,
-  ResendEmailVerificationAuth,
-  VerifyEmailAuth,
+  Login,
+  RefreshToken,
+  Register,
+  ResendEmailVerification,
+  VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
 import { HttpError } from '@/utils/http-error';
 import bcrypt from 'bcryptjs';
@@ -14,69 +15,60 @@ import {
   signAccessToken,
   signEmailVerificationToken,
   signRefreshToken,
-  validateEmailVerificationToken,
+  verifyEmailVerificationToken,
 } from './utils/jwt-handlers';
 
-// Types
-interface SignAndQueueEmailVerificationProps {
-  userId: string;
-  email: string;
-}
-
-interface ThrowIfEmailVerifiedProps {
-  emailVerified: boolean;
-  pendingEmail: string | null;
-}
-
 class AuthService {
-  async verifyEmail({ token }: VerifyEmailAuth) {
-    const { userId } = validateEmailVerificationToken(token);
+  private static readonly emailVerifiedError = new HttpError({
+    status: StatusCodes.CONFLICT,
+    message: 'Email already verified',
+  });
+
+  private static readonly credentialsError = new HttpError({
+    status: StatusCodes.FORBIDDEN,
+    message: 'Invalid credentials',
+  });
+
+  async verifyEmail({ token }: VerifyEmail) {
+    const { userId } = verifyEmailVerificationToken(token);
 
     const user = await usersService.get(userId);
-    this.throwIfEmailVerified({
-      emailVerified: user.emailVerified,
-      pendingEmail: user.pendingEmail,
-    });
+    if (user.emailVerified && !user.pendingEmail)
+      throw AuthService.emailVerifiedError;
 
     const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
-      emailVerified: !user.emailVerified ? true : undefined,
-      email: user.pendingEmail || undefined,
+      emailVerified: !user.emailVerified ? true : undefined, // Don't update if already true
+      email: user.pendingEmail || undefined, // Prevent empty string
       pendingEmail: null,
     });
     return { email };
   }
 
-  async register(props: RegisterAuth) {
+  async register(props: Register) {
     const { id, email } = await usersService.create(props);
 
-    await this.signAndQueueEmailVerification({ userId: id, email });
+    await this.signAndQueueEmailVerification(id, email);
 
     return { email };
   }
 
-  async resendEmailVerification({ currentEmail }: ResendEmailVerificationAuth) {
+  async resendEmailVerification({ currentEmail }: ResendEmailVerification) {
     const user = await usersService.getByEmailWithPassword(currentEmail);
-    this.throwIfEmailVerified({
-      emailVerified: user.emailVerified,
-      pendingEmail: user.pendingEmail,
-    });
+    if (user.emailVerified && !user.pendingEmail)
+      throw AuthService.emailVerifiedError;
 
     const email = user.pendingEmail || user.email;
-    await this.signAndQueueEmailVerification({ userId: user.id, email });
+    await this.signAndQueueEmailVerification(user.id, email);
 
     return { email };
   }
 
-  async login({ email, password }: LoginAuth) {
+  async login({ email, password }: Login) {
     const user = await usersService.getByEmailWithPassword(email);
 
     const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword)
-      throw new HttpError({
-        status: StatusCodes.FORBIDDEN,
-        message: 'Invalid credentials',
-      });
+    if (!isValidPassword) throw AuthService.credentialsError;
 
     const payload: JwtPayload = { userId: user.id };
     return {
@@ -85,23 +77,15 @@ class AuthService {
     };
   }
 
-  private async signAndQueueEmailVerification({
-    userId,
-    email,
-  }: SignAndQueueEmailVerificationProps) {
-    const token = signEmailVerificationToken({ userId });
-    await emailQueueService.queueVerification({ email, token });
+  async refreshToken({ token }: RefreshToken) {
+    const { userId } = verifyEmailVerificationToken(token);
+
+    return { accessToken: signAccessToken({ userId }) };
   }
 
-  private throwIfEmailVerified({
-    emailVerified,
-    pendingEmail,
-  }: ThrowIfEmailVerifiedProps) {
-    if (emailVerified && !pendingEmail)
-      throw new HttpError({
-        status: StatusCodes.CONFLICT,
-        message: 'Email already verified',
-      });
+  private async signAndQueueEmailVerification(userId: string, email: string) {
+    const token = signEmailVerificationToken({ userId });
+    await emailQueueService.queueVerification({ email, token });
   }
 }
 
