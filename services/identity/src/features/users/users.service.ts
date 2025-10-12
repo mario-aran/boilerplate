@@ -1,7 +1,7 @@
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import { RegisterAuth } from '@/lib/zod/schemas/auth.schema';
+import { Register } from '@/lib/zod/schemas/auth.schema';
 import { GetAllUsers, UserId } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
@@ -69,7 +69,7 @@ class UsersService {
     return user;
   }
 
-  async create({ password, ...restOfProps }: RegisterAuth) {
+  async create({ password, ...restOfProps }: Register) {
     const hashedPassword = await hashPassword(password);
 
     const [createdUser] = await db
@@ -94,6 +94,11 @@ class UsersService {
     if (!updatedUser) throw UsersService.notFoundError;
 
     return this.omitUserPassword(updatedUser);
+  }
+
+  async delete(id: UserId['id']) {
+    // TO-DO!!!
+    return { id };
   }
 
   private omitUserPassword = <T extends UserSelect>({
