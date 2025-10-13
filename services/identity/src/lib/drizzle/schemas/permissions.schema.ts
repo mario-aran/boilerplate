@@ -1,6 +1,6 @@
 import {
   getSortableColumns,
-  getSwaggerColumns,
+  getSwaggerColumnsObject,
 } from '@/lib/drizzle/utils/column-handlers';
 import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { relations } from 'drizzle-orm';
@@ -37,7 +37,8 @@ export const permissionsRelations = relations(permissionsTable, ({ many }) => ({
 // DERIVED CONSTANTS
 // ---------------------------
 
-export const PERMISSIONS_SWAGGER_COLUMNS = getSwaggerColumns(permissionsTable);
+export const PERMISSIONS_SWAGGER_COLUMNS_OBJECT =
+  getSwaggerColumnsObject(permissionsTable);
 
 export const PERMISSIONS_SORTABLE_COLUMNS =
   getSortableColumns(permissionsTable);

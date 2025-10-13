@@ -1,7 +1,7 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
 import {
   getSortableColumns,
-  getSwaggerColumns,
+  getSwaggerColumnsObject,
 } from '@/lib/drizzle/utils/column-handlers';
 import { createdAt, id, updatedAt } from '@/lib/drizzle/utils/columns';
 import { relations } from 'drizzle-orm';
@@ -55,7 +55,7 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
 
 const excludedColumns = ['password'] as const;
 
-export const USERS_SWAGGER_COLUMNS = getSwaggerColumns(
+export const USERS_SWAGGER_COLUMNS_OBJECT = getSwaggerColumnsObject(
   usersTable,
   excludedColumns,
 );

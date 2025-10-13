@@ -1,6 +1,6 @@
 import {
   getSortableColumns,
-  getSwaggerColumns,
+  getSwaggerColumnsObject,
 } from '@/lib/drizzle/utils/column-handlers';
 import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { relations } from 'drizzle-orm';
@@ -33,5 +33,5 @@ export const rolesRelations = relations(rolesTable, ({ many }) => ({
 // DERIVED CONSTANTS
 // ---------------------------
 
-export const ROLES_SWAGGER_COLUMNS = getSwaggerColumns(rolesTable);
+export const ROLES_SWAGGER_COLUMNS_OBJECT = getSwaggerColumnsObject(rolesTable);
 export const ROLES_SORTABLE_COLUMNS = getSortableColumns(rolesTable);
