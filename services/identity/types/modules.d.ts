@@ -1,4 +1,4 @@
-// Empty export ensures this file is treated as a module
+// Empty export ensures this file is a module
 export {};
 
 declare module 'vitest' {
