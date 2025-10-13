@@ -3,10 +3,16 @@ import { stringToPositiveInt, text } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
-// Types
+// ---------------------------
+// TYPES
+// ---------------------------
+
 export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
 
-// Schemas
+// ---------------------------
+// SCHEMAS
+// ---------------------------
+
 export const getAllPermissionsSchema = z
   .strictObject({
     limit: stringToPositiveInt,

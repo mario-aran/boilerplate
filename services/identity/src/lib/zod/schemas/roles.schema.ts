@@ -5,20 +5,28 @@ import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { noDuplicateStrs } from '@/lib/zod/utils/refines';
 import { z } from 'zod';
 
-// Types
+// ---------------------------
+// TYPES
+// ---------------------------
+
 export type RoleId = z.infer<typeof roleIdSchema>;
 export type GetAllRoles = z.infer<typeof getAllRolesSchema>;
 export type CreateRole = z.infer<typeof createRoleSchema>;
 export type UpdateRole = z.infer<typeof updateRoleSchema>;
 
-// Fields
-const id = textId;
+// ---------------------------
+// FIELDS
+// ---------------------------
+
 const permissionIds = noDuplicateStrs(
   z.enum(PERMISSION_VALUES).array().max(PERMISSION_VALUES.length),
 );
 
-// Schemas
-export const roleIdSchema = z.strictObject({ id });
+// ---------------------------
+// SCHEMAS
+// ---------------------------
+
+export const roleIdSchema = z.strictObject({ id: textId });
 
 export const getAllRolesSchema = z
   .strictObject({
@@ -29,5 +37,5 @@ export const getAllRolesSchema = z
   })
   .partial();
 
-export const createRoleSchema = z.strictObject({ id });
+export const createRoleSchema = z.strictObject({ id: textId });
 export const updateRoleSchema = z.strictObject({ permissionIds }).partial();

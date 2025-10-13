@@ -3,11 +3,17 @@ import { stringToPositiveInt, text, textId } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
-// Types
+// ---------------------------
+// TYPES
+// ---------------------------
+
 export type UserId = z.infer<typeof userIdSchema>;
 export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
 
-// Schemas
+// ---------------------------
+// SCHEMAS
+// ---------------------------
+
 export const userIdSchema = z.strictObject({ id: textId });
 
 export const getAllUsersSchema = z
