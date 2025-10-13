@@ -8,10 +8,6 @@ import { HttpError } from '@/utils/http-error';
 import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 
-// ---------------------------
-// UTILS
-// ---------------------------
-
 const verifyToken = (token: string, secret: string) => {
   try {
     return jwt.verify(token, secret) as JwtPayload;
@@ -22,10 +18,6 @@ const verifyToken = (token: string, secret: string) => {
     });
   }
 };
-
-// ---------------------------
-// EXPORTED FUNCTIONS
-// ---------------------------
 
 export const signEmailVerificationToken = (payload: JwtPayload) =>
   jwt.sign(payload, JWT_EMAIL_VERIFICATION_SECRET, { expiresIn: '1d' });

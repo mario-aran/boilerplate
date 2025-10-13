@@ -14,6 +14,10 @@ const createMockUsers = (count: number) =>
     .uniqueArray(faker.internet.email, count)
     .map((email): UserInsert => ({ email, password: 'x' }));
 
+// ---------------------------
+// TESTS
+// ---------------------------
+
 describe('queryPaginatedData', () => {
   setupTransactionalDb();
 

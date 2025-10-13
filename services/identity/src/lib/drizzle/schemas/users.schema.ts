@@ -53,14 +53,11 @@ export const usersRelations = relations(usersTable, ({ one }) => ({
 // DERIVED CONSTANTS
 // ---------------------------
 
-const excludedColumns = ['password'] as const;
+const excluded = ['password'] as const;
 
 export const USERS_SWAGGER_COLUMNS_OBJECT = getSwaggerColumnsObject(
   usersTable,
-  excludedColumns,
+  excluded,
 );
 
-export const USERS_SORTABLE_COLUMNS = getSortableColumns(
-  usersTable,
-  excludedColumns,
-);
+export const USERS_SORTABLE_COLUMNS = getSortableColumns(usersTable, excluded);
