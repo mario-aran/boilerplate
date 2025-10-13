@@ -1,25 +1,22 @@
 import { getTableColumns } from 'drizzle-orm';
 import { AnyPgTable } from 'drizzle-orm/pg-core';
 
-export const getSwaggerColumns = <
-  Table extends AnyPgTable,
-  Col extends keyof Table['$inferSelect'],
-  ExCol extends Col = never,
+export const getSwaggerColumnsObject = <
+  T extends AnyPgTable,
+  ExCols extends readonly (keyof T['$inferSelect'])[],
 >(
-  table: Table,
-  excludedColumns: readonly ExCol[] = [],
+  table: T,
+  excludedColumns?: ExCols,
 ) => {
-  // Format data
-  const tableColumns = getTableColumns(table);
-  const entries = Object.entries(tableColumns);
-  const filtered = entries.filter(
-    ([key]) => !excludedColumns.includes(key as ExCol),
+  const columns = getTableColumns(table);
+  const entries = Object.entries(columns).flatMap(([key, value]) =>
+    excludedColumns?.includes(key) ? [] : [[key, value.dataType]],
   );
-  const mapped = filtered.map(([key, value]) => [key, value.dataType]);
-  const fromEntries = Object.fromEntries(mapped);
 
-  // Assert results
-  return fromEntries as Record<Exclude<Col, ExCol>, string>;
+  return Object.fromEntries(entries) as Record<
+    Exclude<keyof T['$inferSelect'], ExCols>,
+    string
+  >;
 };
 
 export const getSortableColumns = <
@@ -28,18 +25,14 @@ export const getSortableColumns = <
   ExCol extends Col = never,
 >(
   table: Table,
-  excludedColumns: readonly ExCol[] = [],
+  excludedColumns?: readonly ExCol[],
 ) => {
-  // Format data
   const columns = getTableColumns(table);
-  const keys = Object.keys(columns);
-  const filtered = keys.filter(
-    (col) => !excludedColumns.includes(col as ExCol),
+  const result = Object.keys(columns).flatMap((col) =>
+    excludedColumns?.includes(col as ExCol) ? [] : [`${col}`, `-${col}`],
   );
-  const flatMapped = filtered.flatMap((col) => [`${col}`, `-${col}`]);
 
-  // Assert results
-  return flatMapped as [
+  return result as [
     Exclude<Col, ExCol> | `-${string & Exclude<Col, ExCol>}`,
     ...(Exclude<Col, ExCol> | `-${string & Exclude<Col, ExCol>}`)[],
   ];
