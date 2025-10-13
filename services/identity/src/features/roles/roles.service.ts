@@ -34,7 +34,7 @@ class RolesService {
     });
     if (!records) throw RolesService.notFoundError;
 
-    // Flatten results
+    // Flat results
     const { rolesToPermissions, ...restOfRecords } = records;
     const permissionIds = rolesToPermissions.map(
       ({ permissionId }) => permissionId,

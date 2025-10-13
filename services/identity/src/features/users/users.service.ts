@@ -52,7 +52,7 @@ class UsersService {
     });
     if (!user) throw UsersService.notFoundError;
 
-    // Flatten results
+    // Flat results
     const { role, ...restOfUser } = user;
     const permissionIds = role.rolesToPermissions.map(
       ({ permissionId }) => permissionId,
