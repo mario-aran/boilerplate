@@ -2,7 +2,7 @@
 
 import { testDbConnection } from '@/lib/drizzle/db';
 import { bullMQConnection } from '@/lib/redis/bullmq-connection';
-import { emailVerificationWorker } from './email-verification.worker';
+import { verificationEmailWorker } from './verification-email.worker';
 
 (async () => {
   // Verify connections
@@ -10,5 +10,5 @@ import { emailVerificationWorker } from './email-verification.worker';
   await bullMQConnection.verify();
 
   // Start workers
-  emailVerificationWorker();
+  verificationEmailWorker();
 })();

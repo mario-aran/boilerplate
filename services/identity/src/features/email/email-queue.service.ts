@@ -1,17 +1,17 @@
 import { QUEUES } from '@/constants/queues';
 import { bullMQConnection } from '@/lib/redis/bullmq-connection';
 import { Queue } from 'bullmq';
-import { EmailVerificationProps } from './types';
+import { VerificationEmailProps } from './types';
 
 class EmailQueueService {
   private static readonly verificationQueue = new Queue(
-    QUEUES.EMAIL_VERIFICATION,
+    QUEUES.VERIFICATION_EMAIL,
     { connection: bullMQConnection.connection },
   );
 
-  async queueVerification(props: EmailVerificationProps) {
+  async queueVerification(props: VerificationEmailProps) {
     await EmailQueueService.verificationQueue.add(
-      QUEUES.EMAIL_VERIFICATION,
+      QUEUES.VERIFICATION_EMAIL,
       props,
     );
   }

@@ -1,3 +1,3 @@
 export const QUEUES = {
-  EMAIL_VERIFICATION: 'email_verification',
+  VERIFICATION_EMAIL: 'verification_email',
 } as const;

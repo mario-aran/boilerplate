@@ -8,7 +8,7 @@ import {
 } from '@/config/env';
 import { PATHS } from '@/constants/paths';
 import nodemailer from 'nodemailer';
-import { EmailVerificationProps } from './types';
+import { VerificationEmailProps } from './types';
 
 class EmailService {
   private static readonly transporter = nodemailer.createTransport({
@@ -18,7 +18,7 @@ class EmailService {
       SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
   });
 
-  async sendVerification({ email, token }: EmailVerificationProps) {
+  async sendVerification({ email, token }: VerificationEmailProps) {
     const tokenUrl = `${BASE_URL}${PATHS.AUTH_VERIFY_EMAIL}?token=${token}`;
 
     await EmailService.transporter.sendMail({
