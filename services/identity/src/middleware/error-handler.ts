@@ -8,7 +8,7 @@ export const errorHandler = (
   err: Error,
   _: Request,
   res: Response,
-  // Disabled eslint rule: to not being forced to use "_next"
+  // Disabled eslint: to not being forced to use "_next"
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {

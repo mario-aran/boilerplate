@@ -1,13 +1,27 @@
-// import { SEGMENTS } from "@/constants/routes";
-// import { Router } from "express";
+import { PATH_SEGMENTS } from '@/constants/paths';
+import { PERMISSIONS } from '@/constants/permissions';
+import { authenticateAndAuthorize } from '@/middleware/authenticate-and-authorize';
+import { Router } from 'express';
 
-// export const usersRoute = Router();
+export const usersRoutes = Router();
 
-// usersRoute.get(SEGMENTS.ME);
-// usersRoute.patch(SEGMENTS.ME);
-// usersRoute.patch(`${SEGMENTS.ME}${SEGMENTS.PASSWORD}`);
-// usersRoute.delete(SEGMENTS.ME);
+usersRoutes.get(PATH_SEGMENTS.ME, authenticateAndAuthorize());
 
-// usersRoute.get("/");
-// usersRoute.get(SEGMENTS.ID);
-// usersRoute.patch(SEGMENTS.ID);
+usersRoutes.patch(PATH_SEGMENTS.ME, authenticateAndAuthorize());
+
+usersRoutes.get('/', authenticateAndAuthorize(PERMISSIONS.READ_USERS));
+
+usersRoutes.get(
+  PATH_SEGMENTS.ID,
+  authenticateAndAuthorize(PERMISSIONS.READ_USER),
+);
+
+usersRoutes.patch(
+  PATH_SEGMENTS.ID,
+  authenticateAndAuthorize(PERMISSIONS.UPDATE_USER),
+);
+
+usersRoutes.delete(
+  PATH_SEGMENTS.ID,
+  authenticateAndAuthorize(PERMISSIONS.DELETE_USER),
+);

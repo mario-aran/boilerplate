@@ -102,7 +102,7 @@ class UsersService {
   }
 
   private omitUserPassword = <T extends UserSelect>({
-    // Disabled eslint rule: to not be forced to use "_"
+    // Disabled eslint: to not be forced to use "_"
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     password: _,
     ...restOfProps
