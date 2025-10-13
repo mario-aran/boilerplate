@@ -1,5 +1,5 @@
 import { SWAGGER_PATHS } from '@/constants/paths';
-import { ROLES_SWAGGER_COLUMNS } from '@/lib/drizzle/schemas';
+import { ROLES_SWAGGER_COLUMNS_OBJECT } from '@/lib/drizzle/schemas';
 import { SECURITY } from '@/lib/swagger/constants';
 import { idPathParam, paginatedQueryParams } from '@/lib/swagger/utils/inputs';
 import {
@@ -30,7 +30,7 @@ export const rolesPaths = {
       parameters: paginatedQueryParams,
       responses: {
         ...commonResponses,
-        [StatusCodes.OK]: getPaginatedResponse(ROLES_SWAGGER_COLUMNS),
+        [StatusCodes.OK]: getPaginatedResponse(ROLES_SWAGGER_COLUMNS_OBJECT),
       },
     },
     post: {
@@ -67,7 +67,7 @@ export const rolesPaths = {
             'application/json': {
               schema: {
                 type: 'object',
-                example: ROLES_SWAGGER_COLUMNS,
+                example: ROLES_SWAGGER_COLUMNS_OBJECT,
               },
             },
           },

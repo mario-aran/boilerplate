@@ -1,5 +1,5 @@
 import { SWAGGER_PATHS } from '@/constants/paths';
-import { PERMISSIONS_SWAGGER_COLUMNS } from '@/lib/drizzle/schemas';
+import { PERMISSIONS_SWAGGER_COLUMNS_OBJECT } from '@/lib/drizzle/schemas';
 import { SECURITY } from '@/lib/swagger/constants';
 import { paginatedQueryParams } from '@/lib/swagger/utils/inputs';
 import {
@@ -19,7 +19,9 @@ export const permissionsPaths = {
       security: SECURITY,
       parameters: paginatedQueryParams,
       responses: {
-        [StatusCodes.OK]: getPaginatedResponse(PERMISSIONS_SWAGGER_COLUMNS),
+        [StatusCodes.OK]: getPaginatedResponse(
+          PERMISSIONS_SWAGGER_COLUMNS_OBJECT,
+        ),
         [StatusCodes.UNAUTHORIZED]: messageResponse,
         [StatusCodes.UNPROCESSABLE_ENTITY]: unprocessableEntityResponse,
       },
