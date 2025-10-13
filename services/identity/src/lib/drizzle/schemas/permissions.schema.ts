@@ -8,12 +8,6 @@ import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { rolesToPermissionsTable } from './roles-to-permissions.schema';
 
 // ---------------------------
-// TYPES
-// ---------------------------
-
-export type PermissionInsert = typeof permissionsTable.$inferInsert;
-
-// ---------------------------
 // CONSTANTS
 // ---------------------------
 
