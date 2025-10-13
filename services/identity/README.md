@@ -35,13 +35,28 @@ Test
 
 Start
 
-- `pnpm run dev`: Run application in development mode
-- `pnpm run workers:dev`: Run workers in development mode
+- `pnpm run dev`: Run application in development and watch mode
+- `pnpm run workers:dev`: Run workers in development
 
 Tools
 
 - `pnpm run repl`: Run REPL
 - Debuggers: In "multi-root.code-workspace" mode, Open a file -> Select "Run and Debug" -> Choose debugger in dropdown menu
+
+## Configs
+
+- [x] .vscode/launch.json
+- [x] resources/identity.postman_collection.json
+- [x] .env.dev
+- [x] .gitignore
+- [x] .prettierignore | .prettierrc.json
+- [x] drizzle.config.ts
+- [x] eslint.config.mjs
+- [x] package.json
+- [x] pnpm-lock.yaml | pnpm-workspace.yaml
+- [x] README.md
+- [x] tsconfig.build.json | tsconfig.json
+- [x] vitest.config.ts
 
 ## Dependencies
 
@@ -54,14 +69,14 @@ Tools
 - [x] vitest | vitest/coverage-v8
   - supertest | @types/supertest
   - testcontainers | @testcontainers/postgresql | @testcontainers/redis
-- [x] drizzle-orm | drizzle-kit | pg | @types/pg
-  - @faker-js/faker
 - [x] express | @types/express
   - swagger-ui-express | @types/swagger-ui-express
   - http-status-codes
   - dotenv
   - cors | @types/cors
   - winston | morgan | @types/morgan
+- [x] drizzle-orm | drizzle-kit | pg | @types/pg
+  - @faker-js/faker
 - [x] zod
 - [x] passport | @types/passport
   - passport-jwt | @types/passport-jwt
@@ -69,17 +84,3 @@ Tools
   - bcryptjs
 - [x] bullmq | ioredis
   - nodemailer | @types/nodemailer
-
-## Configs
-
-- [x] resources/identity.postman_collection.json
-- [x] .env.dev
-- [x] .gitignore
-- [x] .prettierignore | .prettierrc.json
-- [x] drizzle.config.ts
-- [x] eslint.config.mjs
-- [x] package.json
-- [x] pnpm-lock.yaml | pnpm-workspace.yaml
-- [x] README.md
-- [x] tsconfig.build.json | tsconfig.json
-- [x] vitest.config.ts
