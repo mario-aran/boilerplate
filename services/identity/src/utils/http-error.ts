@@ -1,4 +1,3 @@
-// Types
 type ValidationErrors = Record<string, string>[];
 
 interface HttpErrorProps {
