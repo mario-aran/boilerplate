@@ -4,7 +4,7 @@ import {
   Login,
   RefreshToken,
   Register,
-  ResendEmailVerification,
+  ResendVerificationEmail,
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
 import { HttpError } from '@/utils/http-error';
@@ -53,15 +53,15 @@ class AuthService {
     return { email };
   }
 
-  async resendEmailVerification({ currentEmail }: ResendEmailVerification) {
-    const user = await usersService.getByEmailWithPassword(currentEmail);
+  async resendVerificationEmail({ email }: ResendVerificationEmail) {
+    const user = await usersService.getByEmailWithPassword(email);
     if (user.emailVerified && !user.pendingEmail)
       throw AuthService.emailVerifiedError;
 
-    const email = user.pendingEmail || user.email;
-    await this.signAndQueueEmailVerification(user.id, email);
+    const targetEmail = user.pendingEmail || user.email;
+    await this.signAndQueueEmailVerification(user.id, targetEmail);
 
-    return { email };
+    return { email: targetEmail };
   }
 
   async login({ email, password }: Login) {
