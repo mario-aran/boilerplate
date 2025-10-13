@@ -1,18 +1,17 @@
 import { rolesService } from '@/features/roles/roles.service';
-import { RoleId } from '@/lib/zod/schemas/roles.schema';
+import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { controllerCatchAsync } from './utils';
 
 export const getRoles = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const results = await rolesService.getAll(req.query);
-    res.json(results);
+    const result = await rolesService.getAll(req.query);
+    res.json(result);
   },
 );
 
 export const getRole = controllerCatchAsync(
-  async (req: Request<RoleId>, res: Response) => {
+  async (req: Request, res: Response) => {
     const result = await rolesService.get(req.params.id);
     res.json(result);
   },
@@ -28,14 +27,14 @@ export const createRole = controllerCatchAsync(
 );
 
 export const updateRole = controllerCatchAsync(
-  async (req: Request<RoleId>, res: Response) => {
+  async (req: Request, res: Response) => {
     const { id } = await rolesService.update(req.params.id, req.body);
     res.json({ message: `Role ${id} updated successfully` });
   },
 );
 
 export const deleteRole = controllerCatchAsync(
-  async (req: Request<RoleId>, res: Response) => {
+  async (req: Request, res: Response) => {
     await rolesService.delete(req.params.id);
     res.sendStatus(StatusCodes.NO_CONTENT);
   },
