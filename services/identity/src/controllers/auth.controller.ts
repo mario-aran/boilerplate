@@ -25,8 +25,8 @@ export const verifyEmail = controllerCatchAsync(
     req: Request<unknown, unknown, unknown, VerifyEmail>,
     res: Response,
   ) => {
-    const { email } = await authService.verifyEmail(req.query);
-    res.json({ message: `Email ${email} verified successfully` });
+    await authService.verifyEmail(req.query);
+    res.json({ message: 'Email verified successfully' });
   },
 );
 
