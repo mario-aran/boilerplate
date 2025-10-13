@@ -3,10 +3,10 @@ import { AnyPgTable } from 'drizzle-orm/pg-core';
 
 export const getSwaggerColumnsObject = <
   T extends AnyPgTable,
-  ExCols extends readonly (keyof T['$inferSelect'])[] = [],
+  Excluded extends readonly (keyof T['$inferSelect'])[] = [],
 >(
   table: T,
-  excluded?: ExCols,
+  excluded?: Excluded,
 ) => {
   const columns = getTableColumns(table);
   const filteredEntries = Object.entries(columns).flatMap(([k, v]) =>
@@ -14,7 +14,7 @@ export const getSwaggerColumnsObject = <
   );
 
   return Object.fromEntries(filteredEntries) as Record<
-    Exclude<keyof T['$inferSelect'], ExCols[number]>,
+    Exclude<keyof T['$inferSelect'], Excluded[number]>,
     string
   >;
 };
