@@ -1,4 +1,4 @@
-import { RequestWithUser } from '@/features/auth/types';
+import { requireUserFromReq } from '@/features/auth/utils/require-user-from-req';
 import { usersService } from '@/features/users/users.service';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
@@ -12,8 +12,10 @@ export const getUsers = controllerCatchAsync(
 );
 
 export const getUserMe = controllerCatchAsync(
-  async (req: RequestWithUser, res: Response) => {
-    const result = await usersService.get(req.user.id);
+  async (req: Request, res: Response) => {
+    const user = requireUserFromReq(req);
+
+    const result = await usersService.get(user.id);
     res.json(result);
   },
 );
@@ -26,8 +28,10 @@ export const getUser = controllerCatchAsync(
 );
 
 export const updateUserMe = controllerCatchAsync(
-  async (req: RequestWithUser, res: Response) => {
-    await usersService.update(req.user.id, req.body);
+  async (req: Request, res: Response) => {
+    const user = requireUserFromReq(req);
+
+    await usersService.update(user.id, req.body);
     res.json({ message: 'User updated successfully' });
   },
 );
