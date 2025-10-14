@@ -9,20 +9,36 @@ import { permissionsRoutes } from './permissions.routes';
 import { rolesRoutes } from './roles.routes';
 import { usersRoutes } from './users.route';
 
-// Constants
+// ---------------------------
+// CONSTANTS
+// ---------------------------
+
 const FAVICON_PATH = '/favicon.ico';
 const DOCS_PATH = '/docs';
 
+// ---------------------------
+// ROUTER
+// ---------------------------
+
 export const routes = Router();
 
-// Favicon handler
+// ---------------------------
+// FAVICON ROUTES
+// ---------------------------
+
 routes.get(FAVICON_PATH, (_, res) => res.sendStatus(StatusCodes.NO_CONTENT));
 
-// Swagger UI
+// ---------------------------
+// SWAGGER UI ROUTES
+// ---------------------------
+
 routes.use(DOCS_PATH, swaggerUi.serve);
 routes.get(DOCS_PATH, swaggerUi.setup(swaggerDocument));
 
-// Root endpoints
+// ---------------------------
+// ROOT ROUTES
+// ---------------------------
+
 routes.get('/', (_, res) =>
   res.json({
     message: 'Identity service',
@@ -31,7 +47,10 @@ routes.get('/', (_, res) =>
   }),
 );
 
-// API endpoints
+// ---------------------------
+// API ROUTES
+// ---------------------------
+
 routes.use(PATH_SEGMENTS.AUTH, authRoutes);
 routes.use(PATH_SEGMENTS.USERS, usersRoutes);
 routes.use(PATH_SEGMENTS.ROLES, rolesRoutes);
