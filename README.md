@@ -5,7 +5,9 @@
 
 ## To-do
 
+- [] add bullMq dashboard
 - [] redo bullMq Connection (no more classes)
+
 - [] check verify emails flow (it should show an html page, not json)
 - [] implement forget password flow with email
 - [] finish swagger docs
