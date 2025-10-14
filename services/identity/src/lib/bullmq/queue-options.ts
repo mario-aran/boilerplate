@@ -1,5 +1,5 @@
 import { QueueOptions } from 'bullmq';
-import { queueClient } from './bullmq-clients';
+import { queueClient } from './clients';
 
 export const queueOptions: QueueOptions = {
   connection: queueClient,

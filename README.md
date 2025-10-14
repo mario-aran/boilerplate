@@ -5,7 +5,7 @@
 
 ## To-do
 
-- [] redo bullMq Connection (no more classes)
+- [] implement eslint-plugin-import to show error when unused export
 - [] finish swagger docs
 - [] check if integration tests are worth it and finish test cases
 
