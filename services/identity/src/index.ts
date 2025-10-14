@@ -4,12 +4,12 @@ import { app } from './app';
 import { BASE_URL, PORT } from './config/env';
 import { testDbConnection } from './lib/drizzle/db';
 import { logger } from './lib/logger/winston-logger';
-import { bullMQConnection } from './lib/redis/bullmq-connection';
+import { testQueueConnection } from './lib/redis/bullmq-connection';
 
 (async () => {
   // Verify connections
   await testDbConnection();
-  await bullMQConnection.verify();
+  await testQueueConnection();
 
   // Start app
   const server = app.listen(PORT, () =>

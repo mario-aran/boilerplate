@@ -2,7 +2,7 @@ import { db } from '@/lib/drizzle/db';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { Register } from '@/lib/zod/schemas/auth.schema';
-import { GetAllUsers, UserId } from '@/lib/zod/schemas/users.schema';
+import { GetUsers, UserId } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
@@ -18,7 +18,7 @@ class UsersService {
     message: 'User not found',
   });
 
-  async getAll({ limit, page, sort, roleId = '', search = '' }: GetAllUsers) {
+  async getAll({ limit, page, sort, roleId = '', search = '' }: GetUsers) {
     const filters = and(
       ilike(usersTable.roleId, `%${roleId}%`),
       or(

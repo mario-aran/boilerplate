@@ -11,7 +11,7 @@ export const getUsers = controllerCatchAsync(
   },
 );
 
-export const getUsersMe = controllerCatchAsync(
+export const getUserMe = controllerCatchAsync(
   async (req: RequestWithUser, res: Response) => {
     const result = await usersService.get(req.user.id);
     res.json(result);
@@ -25,7 +25,7 @@ export const getUser = controllerCatchAsync(
   },
 );
 
-export const updateUsersMe = controllerCatchAsync(
+export const updateUserMe = controllerCatchAsync(
   async (req: RequestWithUser, res: Response) => {
     await usersService.update(req.user.id, req.body);
     res.json({ message: 'User updated successfully' });

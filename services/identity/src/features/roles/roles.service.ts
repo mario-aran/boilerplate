@@ -3,7 +3,7 @@ import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
   CreateRole,
-  GetAllRoles,
+  GetRoles,
   RoleId,
   UpdateRole,
 } from '@/lib/zod/schemas/roles.schema';
@@ -17,7 +17,7 @@ class RolesService {
     message: 'Role not found',
   });
 
-  async getAll({ limit, page, sort, search = '' }: GetAllRoles) {
+  async getAll({ limit, page, sort, search = '' }: GetRoles) {
     return queryPaginatedData({
       table: rolesTable,
       filters: ilike(rolesTable.id, `%${search}%`),

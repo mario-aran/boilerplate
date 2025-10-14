@@ -1,10 +1,10 @@
 import { permissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import { GetAllPermissions } from '@/lib/zod/schemas/permissions.schema';
+import { GetPermissions } from '@/lib/zod/schemas/permissions.schema';
 import { ilike } from 'drizzle-orm';
 
 class PermissionsService {
-  async getAll(props?: GetAllPermissions) {
+  async getAll(props?: GetPermissions) {
     const { limit, page, sort, search } = props ?? {};
     const sortArr = sort ? (Array.isArray(sort) ? sort : [sort]) : undefined;
     const filters = search

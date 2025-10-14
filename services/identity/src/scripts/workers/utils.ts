@@ -1,5 +1,5 @@
 import { logger } from '@/lib/logger/winston-logger';
-import { bullMQConnection } from '@/lib/redis/bullmq-connection';
+import { workerConnection } from '@/lib/redis/bullmq-connection';
 import { Job, Worker } from 'bullmq';
 
 interface CreateWorkerProps {
@@ -10,7 +10,7 @@ interface CreateWorkerProps {
 export const createWorker = ({ name, processor }: CreateWorkerProps) => {
   // Start worker
   const worker = new Worker(name, processor, {
-    connection: bullMQConnection.connection,
+    connection: workerConnection,
   });
 
   // Add Worker events
