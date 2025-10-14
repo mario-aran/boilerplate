@@ -10,6 +10,7 @@ import {
 } from '@/controllers/users.controller';
 import {
   getUsersSchema,
+  updateUserMeSchema,
   updateUserSchema,
   userIdSchema,
 } from '@/lib/zod/schemas/users.schema';
@@ -38,7 +39,7 @@ usersRoutes.get(
 usersRoutes.patch(
   PATH_SEGMENTS.ME,
   authenticateAndAuthorize(),
-  zodValidator({ body: updateUserSchema }),
+  zodValidator({ body: updateUserMeSchema }),
   updateUserMe,
 );
 
