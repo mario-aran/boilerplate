@@ -1,4 +1,10 @@
-import { email, password, text, token } from '@/lib/zod/utils/fields';
+import {
+  email,
+  firstName,
+  lastName,
+  password,
+  token,
+} from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
 // ---------------------------
@@ -19,14 +25,13 @@ export type RefreshToken = z.infer<typeof refreshTokenSchema>;
 // SCHEMAS
 // ---------------------------
 
-export const registerSchema = z.strictObject({
-  email,
-  password,
-  firstName: text.optional(),
-  lastName: text.optional(),
-});
-
 export const resendVerificationEmailSchema = z.strictObject({ email });
 export const verifyEmailSchema = z.strictObject({ token });
 export const loginSchema = z.strictObject({ email, password });
+
+export const registerSchema = loginSchema.extend({
+  firstName: firstName.optional(),
+  lastName: lastName.optional(),
+});
+
 export const refreshTokenSchema = z.strictObject({ token });
