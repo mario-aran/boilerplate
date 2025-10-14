@@ -10,7 +10,7 @@ import { z } from 'zod';
 // ---------------------------
 
 export type RoleId = z.infer<typeof roleIdSchema>;
-export type GetAllRoles = z.infer<typeof getAllRolesSchema>;
+export type GetRoles = z.infer<typeof getRolesSchema>;
 export type CreateRole = z.infer<typeof createRoleSchema>;
 export type UpdateRole = z.infer<typeof updateRoleSchema>;
 
@@ -28,7 +28,7 @@ const permissionIds = noDuplicateStrs(
 
 export const roleIdSchema = z.strictObject({ id: textId });
 
-export const getAllRolesSchema = z
+export const getRolesSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,

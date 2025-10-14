@@ -9,7 +9,7 @@ import {
 } from '@/controllers/roles.controller';
 import {
   createRoleSchema,
-  getAllRolesSchema,
+  getRolesSchema,
   roleIdSchema,
   updateRoleSchema,
 } from '@/lib/zod/schemas/roles.schema';
@@ -22,7 +22,7 @@ export const rolesRoutes = Router();
 rolesRoutes.get(
   '/',
   authenticateAndAuthorize(PERMISSIONS.READ_ROLES),
-  zodValidator({ query: getAllRolesSchema }),
+  zodValidator({ query: getRolesSchema }),
   getRoles,
 );
 

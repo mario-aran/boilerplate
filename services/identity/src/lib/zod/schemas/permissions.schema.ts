@@ -7,13 +7,13 @@ import { z } from 'zod';
 // TYPES
 // ---------------------------
 
-export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
+export type GetPermissions = z.infer<typeof getPermissionsSchema>;
 
 // ---------------------------
 // SCHEMAS
 // ---------------------------
 
-export const getAllPermissionsSchema = z
+export const getPermissionsSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,

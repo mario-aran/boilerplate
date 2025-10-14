@@ -8,7 +8,8 @@ import { z } from 'zod';
 // ---------------------------
 
 export type UserId = z.infer<typeof userIdSchema>;
-export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
+export type GetUsers = z.infer<typeof getUsersSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
 
 // ---------------------------
 // SCHEMAS
@@ -16,7 +17,7 @@ export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
 
 export const userIdSchema = z.strictObject({ id: textId });
 
-export const getAllUsersSchema = z
+export const getUsersSchema = z
   .strictObject({
     limit: stringToPositiveInt,
     page: stringToPositiveInt,
@@ -25,3 +26,5 @@ export const getAllUsersSchema = z
     search: text,
   })
   .partial();
+
+export const updateUserSchema = z.strictObject({}).partial();

@@ -18,12 +18,6 @@ import { Router } from 'express';
 
 export const authRoutes = Router();
 
-authRoutes.get(
-  PATH_SEGMENTS.VERIFY_EMAIL,
-  zodValidator({ query: verifyEmailSchema }),
-  verifyEmail,
-);
-
 authRoutes.post(
   PATH_SEGMENTS.REGISTER,
   zodValidator({ body: registerSchema }),
@@ -34,6 +28,12 @@ authRoutes.post(
   PATH_SEGMENTS.RESEND_VERIFICATION_EMAIL,
   zodValidator({ body: resendVerificationEmailSchema }),
   resendVerificationEmail,
+);
+
+authRoutes.get(
+  PATH_SEGMENTS.VERIFY_EMAIL,
+  zodValidator({ query: verifyEmailSchema }),
+  verifyEmail,
 );
 
 authRoutes.post(
