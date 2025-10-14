@@ -2,7 +2,7 @@ import { db } from '@/lib/drizzle/db';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { Register } from '@/lib/zod/schemas/auth.schema';
-import { GetUsers, UserId } from '@/lib/zod/schemas/users.schema';
+import { GetUsers } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
@@ -39,7 +39,7 @@ class UsersService {
     return { data: usersWithoutPassword, ...restOfRecords };
   }
 
-  async get(id: UserId['id']) {
+  async get(id: string) {
     const user = await db.query.usersTable.findFirst({
       columns: { password: false },
       with: {
@@ -80,10 +80,7 @@ class UsersService {
     return this.omitUserPassword(createdUser);
   }
 
-  async update(
-    id: UserId['id'],
-    { password, ...restOfProps }: Partial<UserInsert>,
-  ) {
+  async update(id: string, { password, ...restOfProps }: Partial<UserInsert>) {
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
     const [updatedUser] = await db
@@ -96,7 +93,7 @@ class UsersService {
     return this.omitUserPassword(updatedUser);
   }
 
-  async delete(id: UserId['id']) {
+  async delete(id: string) {
     // TO-DO!!!
     return { id };
   }

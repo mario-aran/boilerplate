@@ -4,7 +4,6 @@ import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
   CreateRole,
   GetRoles,
-  RoleId,
   UpdateRole,
 } from '@/lib/zod/schemas/roles.schema';
 import { HttpError } from '@/utils/http-error';
@@ -27,7 +26,7 @@ class RolesService {
     });
   }
 
-  async get(id: RoleId['id']) {
+  async get(id: string) {
     const records = await db.query.rolesTable.findFirst({
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
@@ -50,10 +49,7 @@ class RolesService {
     return createdRecord;
   }
 
-  async update(
-    id: RoleId['id'],
-    { permissionIds, ...restOfProps }: UpdateRole,
-  ) {
+  async update(id: string, { permissionIds, ...restOfProps }: UpdateRole) {
     // Update roles
     if (Object.keys(restOfProps).length)
       await db.update(rolesTable).set(restOfProps).where(eq(rolesTable.id, id));
@@ -65,7 +61,7 @@ class RolesService {
     return this.get(id);
   }
 
-  async delete(id: RoleId['id']) {
+  async delete(id: string) {
     const [deletedRecord] = await db
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
@@ -76,7 +72,7 @@ class RolesService {
   }
 
   private async updatePermissions(
-    id: RoleId['id'],
+    id: string,
     { permissionIds }: Required<Pick<UpdateRole, 'permissionIds'>>,
   ) {
     return db.transaction(async (tx) => {

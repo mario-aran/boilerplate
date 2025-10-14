@@ -29,22 +29,6 @@ class AuthService {
     message: 'Invalid credentials',
   });
 
-  async verifyEmail({ token }: VerifyEmail) {
-    const { userId } = verifyEmailVerificationToken(token);
-
-    const user = await usersService.get(userId);
-    if (user.emailVerified && !user.pendingEmail)
-      throw AuthService.emailVerifiedError;
-
-    const { email } = await usersService.update(user.id, {
-      emailVerifiedAt: new Date(),
-      emailVerified: !user.emailVerified ? true : undefined, // Don't update if already true
-      email: user.pendingEmail || undefined, // Prevent empty string
-      pendingEmail: null,
-    });
-    return { email };
-  }
-
   async register(props: Register) {
     const { id, email } = await usersService.create(props);
 
@@ -62,6 +46,22 @@ class AuthService {
     await this.signAndQueueEmailVerification(user.id, targetEmail);
 
     return { email: targetEmail };
+  }
+
+  async verifyEmail({ token }: VerifyEmail) {
+    const { userId } = verifyEmailVerificationToken(token);
+
+    const user = await usersService.get(userId);
+    if (user.emailVerified && !user.pendingEmail)
+      throw AuthService.emailVerifiedError;
+
+    const { email } = await usersService.update(user.id, {
+      emailVerifiedAt: new Date(),
+      emailVerified: !user.emailVerified ? true : undefined, // Don't update if already true
+      email: user.pendingEmail || undefined, // Prevent empty string
+      pendingEmail: null,
+    });
+    return { email };
   }
 
   async login({ email, password }: Login) {

@@ -9,7 +9,6 @@ import { z } from 'zod';
 // TYPES
 // ---------------------------
 
-export type RoleId = z.infer<typeof roleIdSchema>;
 export type GetRoles = z.infer<typeof getRolesSchema>;
 export type CreateRole = z.infer<typeof createRoleSchema>;
 export type UpdateRole = z.infer<typeof updateRoleSchema>;

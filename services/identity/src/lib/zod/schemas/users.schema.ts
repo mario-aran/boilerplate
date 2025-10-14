@@ -17,10 +17,7 @@ import { z } from 'zod';
 // TYPES
 // ---------------------------
 
-export type UserId = z.infer<typeof userIdSchema>;
 export type GetUsers = z.infer<typeof getUsersSchema>;
-export type UpdateUserMe = z.infer<typeof updateUserMeSchema>;
-export type UpdateUser = z.infer<typeof updateUserSchema>;
 
 // ---------------------------
 // FIELDS
