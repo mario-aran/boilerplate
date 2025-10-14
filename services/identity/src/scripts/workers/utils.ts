@@ -1,5 +1,5 @@
+import { workerClient } from '@/lib/bullmq/bullmq-clients';
 import { logger } from '@/lib/logger/winston-logger';
-import { workerConnection } from '@/lib/redis/bullmq-connection';
 import { Job, Worker } from 'bullmq';
 
 interface CreateWorkerProps {
@@ -10,14 +10,11 @@ interface CreateWorkerProps {
 export const createWorker = ({ name, processor }: CreateWorkerProps) => {
   // Start worker
   const worker = new Worker(name, processor, {
-    connection: workerConnection,
+    connection: workerClient,
   });
-
-  // Add Worker events
   worker.on('completed', (job) =>
     logger.info(`${name} job ${job.id} has completed`),
   );
-
   worker.on('failed', (job, err) =>
     logger.error(`${name} job ${job?.id} has failed: ${err.message}`),
   );

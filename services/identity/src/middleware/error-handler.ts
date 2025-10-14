@@ -52,9 +52,6 @@ export const errorHandler = (
     }
   }
 
-  // Log error details
   logger.error(err.stack || message);
-
-  // Respond without exposing error details
   res.status(status).json({ message, validationErrors });
 };
