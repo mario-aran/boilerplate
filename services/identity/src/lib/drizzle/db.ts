@@ -16,18 +16,18 @@ export type Db = typeof db;
 // ---------------------------
 
 export const pool = new Pool({ connectionString: DATABASE_URL });
-pool.on('error', (err) => logger.error(`Database connection error: ${err}`)); // Log idle errors
+pool.on('error', (err) => logger.error(`Database connection error: ${err}`));
 
 // ---------------------------
 // UTILS
 // ---------------------------
 
-export const testDbConnection = async () => {
+export const checkDbConnection = async () => {
   try {
     await pool.query('SELECT 1');
-    logger.info('Database connected successfully');
+    logger.info('Database connection verified');
   } catch (err) {
-    logger.error(`Error connecting to database: ${err}. Forced exit`);
+    logger.error(`Database connection failed: ${err}. Exiting.`);
     process.exit(1);
   }
 };
