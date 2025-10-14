@@ -2,14 +2,14 @@
 
 import { app } from './app';
 import { BASE_URL, PORT } from './config/env';
+import { checkQueueConnection } from './lib/bullmq/clients';
 import { checkDbConnection } from './lib/drizzle/db';
 import { logger } from './lib/logger/winston-logger';
-import { checkRedisConnection } from './lib/redis/redis-options';
 
 (async () => {
   // Check connections
   await checkDbConnection();
-  await checkRedisConnection();
+  await checkQueueConnection();
 
   // Start app
   const server = app.listen(PORT, () =>
