@@ -9,6 +9,7 @@
 - [] finish swagger docs
 - [] check if integration tests are worth it and finish test cases
 
+- [] implement caching
 - [] check verify emails flow (it should show an html page, not json)
 - [] implement forget password flow with email
 - [] fix test containers not pulling images
