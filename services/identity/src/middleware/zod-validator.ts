@@ -3,16 +3,15 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ZodError, ZodObject } from 'zod';
 
-// Types
-type ZodValidator = (props: {
+interface ZodValidatorProps {
   params?: ZodObject;
   query?: ZodObject;
   body?: ZodObject;
-}) => (req: Request, res: Response, next: NextFunction) => void;
+}
 
-export const zodValidator: ZodValidator =
-  ({ params, query, body }) =>
-  (req, _res, next) => {
+export const zodValidator =
+  ({ params, query, body }: ZodValidatorProps) =>
+  (req: Request, _: Response, next: NextFunction) => {
     try {
       // Validate request data
       params?.parse(req.params);

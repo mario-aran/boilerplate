@@ -5,13 +5,15 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import passport from 'passport';
 
+type PassportUser = UsersServiceGetResult | false;
+
 export const authenticateAndAuthorize =
   (permission?: Permission) =>
   (req: Request, res: Response, next: NextFunction) =>
     passport.authenticate(
       'jwt',
       { session: false },
-      (err: unknown, user: UsersServiceGetResult | false) => {
+      (err: unknown, user: PassportUser) => {
         // Authenticate: check strategy errors
         if (err) return next(err);
 

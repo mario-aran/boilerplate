@@ -12,44 +12,49 @@ export const errorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
-  let message = 'Server error';
   let status = StatusCodes.INTERNAL_SERVER_ERROR;
-  let validationErrors;
+  let message = 'Server error';
+  let validationErrors: HttpError['validationErrors'];
 
-  // Custom errors
+  // Check application error
   if (err instanceof HttpError) {
-    message = err.message;
     status = err.status;
+    message = err.message;
     validationErrors = err.validationErrors;
   }
 
-  // Body parser errors
+  // Check body parser error
   if (
     err instanceof SyntaxError &&
-    'body' in err &&
     'status' in err &&
-    err.status === StatusCodes.BAD_REQUEST
+    err.status === StatusCodes.BAD_REQUEST &&
+    'body' in err
   ) {
-    message = 'Malformed JSON body';
     status = err.status;
+    message = 'Malformed JSON body';
   }
 
-  // DB errors
+  // Check db error
   if (err instanceof DrizzleQueryError && err.cause && 'code' in err.cause) {
     switch (err.cause.code) {
       case '23503':
-        message = 'Data relationship constraints';
         status = StatusCodes.CONFLICT;
+        message = 'Data relationship constraints';
         break;
       case '23505':
-        message = 'Data already exists';
         status = StatusCodes.CONFLICT;
+        message = 'Data already exists';
         break;
+
       default:
+        status = StatusCodes.INTERNAL_SERVER_ERROR;
         message = 'Database error';
     }
   }
 
+  // Log error details
   logger.error(err.stack || message);
+
+  // Respond without exposing error details
   res.status(status).json({ message, validationErrors });
 };
