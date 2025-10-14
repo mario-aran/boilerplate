@@ -1,6 +1,5 @@
 import { SWAGGER_PATHS } from '@/constants/paths';
 
-// Values
 const tags = ['auth'];
 
 export const authPaths = {

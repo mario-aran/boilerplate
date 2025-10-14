@@ -5,11 +5,12 @@
 
 ## To-do
 
-- [] add bullMq dashboard
 - [] redo bullMq Connection (no more classes)
+- [] finish swagger docs
+- [] check if integration tests are worth it and finish test cases
 
 - [] check verify emails flow (it should show an html page, not json)
 - [] implement forget password flow with email
-- [] finish swagger docs
 - [] fix test containers not pulling images
 - [] remove multiroot workspace and use javascript debug terminal
+- [] add bullMq dashboard

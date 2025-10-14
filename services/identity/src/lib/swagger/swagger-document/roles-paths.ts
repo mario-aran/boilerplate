@@ -9,7 +9,6 @@ import {
 } from '@/lib/swagger/utils/responses';
 import { StatusCodes } from 'http-status-codes';
 
-// Values
 const tags = ['roles'];
 
 const commonResponses = {

@@ -6,10 +6,16 @@ import * as schemas from '@/lib/drizzle/schemas';
 import * as orm from 'drizzle-orm';
 import repl from 'node:repl';
 
-// Guards
+// ---------------------------
+// GUARDS
+// ---------------------------
+
 if (isProduction) throw new Error('Script not allowed in production');
 
-// Start REPL
+// ---------------------------
+// SCRIPT
+// ---------------------------
+
 const replServer = repl.start();
 
 // Expose values to REPL context

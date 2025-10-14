@@ -16,6 +16,10 @@ const MOCK_PAGINATED_RESULT = { prop: 'mock_paginated_result' } as never;
 vi.mock('@/lib/drizzle/utils/query-paginated-data');
 const queryPaginatedDataMock = vi.mocked(queryPaginatedData);
 
+// ---------------------------
+// TESTS
+// ---------------------------
+
 describe('permissionsService', () => {
   describe('getAll', () => {
     beforeEach(() => {
