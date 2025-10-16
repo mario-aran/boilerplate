@@ -6,10 +6,12 @@ import { StatusCodes } from 'http-status-codes';
 
 export const register = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const { email } = await authService.register(req.body);
-    res.status(StatusCodes.CREATED).json({
-      message: `Registration successful. Verification will be sent to ${email} shortly`,
-    });
+    await authService.register(req.body);
+    res
+      .status(StatusCodes.CREATED)
+      .json({
+        message: `Registration successful. Verification will be sent shortly`,
+      });
   },
 );
 
@@ -37,9 +39,7 @@ export const login = controllerCatchAsync(
   },
 );
 
-export const refreshToken = controllerCatchAsync(
-  async (req: Request, res: Response) => {
-    const result = await authService.refreshToken(req.body);
-    res.json(result);
-  },
-);
+export const refreshToken = (req: Request, res: Response) => {
+  const result = authService.refreshToken(req.body);
+  res.json(result);
+};
