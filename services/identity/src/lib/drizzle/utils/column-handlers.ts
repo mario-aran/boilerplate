@@ -3,7 +3,7 @@ import { AnyPgTable } from 'drizzle-orm/pg-core';
 
 export const getSwaggerColumnsObject = <
   T extends AnyPgTable,
-  Excluded extends readonly (keyof T['$inferSelect'])[] = [],
+  Excluded extends readonly (keyof T['$inferSelect'])[] = [], // '[]' enables proper typing of excluded keys
 >(
   table: T,
   excluded?: Excluded,
@@ -22,7 +22,7 @@ export const getSwaggerColumnsObject = <
 export const getSortableColumns = <
   T extends AnyPgTable,
   Col extends keyof T['$inferSelect'],
-  ExCol extends Col = never,
+  ExCol extends Col = never, // 'never' enables proper typing of excluded keys
 >(
   table: T,
   excluded?: readonly ExCol[],

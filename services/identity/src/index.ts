@@ -16,7 +16,7 @@ import { checkQueueConnection } from './lib/redis/bullmq/clients';
     logger.info(`Application started successfully: ${BASE_URL}`),
   );
   server.on('error', (err) => {
-    logger.error(`Error at startup: ${err}. Forced exit`);
+    logger.error(`Application failed to start: ${err}. Exiting`);
     process.exit(1);
   });
 })();

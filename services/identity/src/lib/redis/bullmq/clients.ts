@@ -26,7 +26,7 @@ export const checkQueueConnection = async () => {
     await queueClient.ping();
     logger.info('Queue connection verified');
   } catch (err) {
-    logger.error(`Queue connection failed: ${err}. Exiting.`);
+    logger.error(`Queue connection failed: ${err}. Exiting`);
     process.exit(1);
   }
 };
