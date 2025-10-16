@@ -5,7 +5,6 @@
 
 ## To-do
 
-- [] implement eslint-plugin-import to show error when unused export
 - [] finish swagger docs
 - [] check if integration tests are worth it and finish test cases
 
@@ -15,3 +14,6 @@
 - [] fix test containers not pulling images
 - [] remove multiroot workspace and use javascript debug terminal
 - [] add bullMq dashboard
+
+- [] detect unused exports
+- [] sort imports

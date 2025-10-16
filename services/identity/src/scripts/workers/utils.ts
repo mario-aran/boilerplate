@@ -1,5 +1,5 @@
-import { workerClient } from '@/lib/bullmq/clients';
 import { logger } from '@/lib/logger/winston-logger';
+import { workerClient } from '@/lib/redis/bullmq/clients';
 import { Job, Worker } from 'bullmq';
 
 interface CreateWorkerProps {

@@ -2,9 +2,9 @@
 
 import { app } from './app';
 import { BASE_URL, PORT } from './config/env';
-import { checkQueueConnection } from './lib/bullmq/clients';
 import { checkDbConnection } from './lib/drizzle/db';
 import { logger } from './lib/logger/winston-logger';
+import { checkQueueConnection } from './lib/redis/bullmq/clients';
 
 (async () => {
   // Check connections
