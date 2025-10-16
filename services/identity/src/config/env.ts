@@ -38,11 +38,11 @@ const getOptionalEnv = (key: string) => process.env[key] || undefined;
 
 export const PORT = Number(getRequiredEnv('PORT'));
 export const BASE_URL = getRequiredEnv('BASE_URL');
+export const JWT_VERIFICATION_EMAIL_SECRET = getRequiredEnv(
+  'JWT_VERIFICATION_EMAIL_SECRET',
+);
 export const JWT_ACCESS_SECRET = getRequiredEnv('JWT_ACCESS_SECRET');
 export const JWT_REFRESH_SECRET = getRequiredEnv('JWT_REFRESH_SECRET');
-export const JWT_EMAIL_VERIFICATION_SECRET = getRequiredEnv(
-  'JWT_EMAIL_VERIFICATION_SECRET',
-);
 export const DATABASE_URL = getRequiredEnv('DATABASE_URL');
 export const REDIS_URL = getRequiredEnv('REDIS_URL');
 export const SMTP_HOST = getRequiredEnv('SMTP_HOST');

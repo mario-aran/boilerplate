@@ -11,9 +11,9 @@
 - [] implement caching
 - [] check verify emails flow (it should show an html page, not json)
 - [] implement forget password flow with email
-- [] fix test containers not pulling images
 - [] remove multiroot workspace and use javascript debug terminal
-- [] add bullMq dashboard
 
+- [] fix test containers not pulling images
 - [] detect unused exports
 - [] sort imports
+- [] add bullMq dashboard and redis insight installer
