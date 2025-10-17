@@ -39,7 +39,9 @@ export const login = controllerCatchAsync(
   },
 );
 
-export const refreshToken = (req: Request, res: Response) => {
-  const result = authService.refreshToken(req.body);
-  res.json(result);
-};
+export const refreshToken = controllerCatchAsync(
+  async (req: Request, res: Response) => {
+    const result = await authService.refreshToken(req.body);
+    res.json(result);
+  },
+);
