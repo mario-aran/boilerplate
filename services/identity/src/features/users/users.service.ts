@@ -1,3 +1,4 @@
+import { hash } from '@/lib/bcrypt/hash';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
@@ -6,7 +7,6 @@ import { GetUsers } from '@/lib/zod/schemas/users.schema';
 import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
 import { StatusCodes } from 'http-status-codes';
-import { hashPassword } from './utils/hash-password';
 
 export type UsersServiceGetResult = Awaited<
   ReturnType<typeof usersService.get>
@@ -70,7 +70,7 @@ class UsersService {
   }
 
   async create({ password, ...restOfProps }: Register) {
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await hash(password);
 
     const [createdUser] = await db
       .insert(usersTable)
@@ -81,7 +81,7 @@ class UsersService {
   }
 
   async update(id: string, { password, ...restOfProps }: Partial<UserInsert>) {
-    const hashedPassword = password ? await hashPassword(password) : undefined;
+    const hashedPassword = password ? await hash(password) : undefined;
 
     const [updatedUser] = await db
       .update(usersTable)

@@ -1,8 +1,8 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
+import { hash } from '@/lib/bcrypt/hash';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { faker } from '@faker-js/faker';
-import { hashPassword } from './utils/hash-password';
 
 class UsersSeedService {
   async seed() {
@@ -35,7 +35,7 @@ class UsersSeedService {
   private async seedUsers(props: UserInsert[]) {
     const hashedUserPromises = props.map(async ({ password, ...rest }) => ({
       ...rest,
-      password: await hashPassword(password),
+      password: await hash(password),
     }));
     const hashedUsers = await Promise.all(hashedUserPromises);
 

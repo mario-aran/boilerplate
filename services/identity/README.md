@@ -52,8 +52,7 @@ Tools
 - [x] .prettierignore | .prettierrc.json
 - [x] drizzle.config.ts
 - [x] eslint.config.mjs
-- [x] package.json
-- [x] pnpm-lock.yaml | pnpm-workspace.yaml
+- [x] package.json | pnpm-lock.yaml | pnpm-workspace.yaml
 - [x] README.md
 - [x] tsconfig.build.json | tsconfig.json
 - [x] vitest.config.ts
@@ -69,18 +68,19 @@ Tools
 - [x] vitest | vitest/coverage-v8
   - supertest | @types/supertest
   - testcontainers | @testcontainers/postgresql | @testcontainers/redis
+- [x] drizzle-orm | drizzle-kit | pg | @types/pg
+- [x] bullmq | ioredis
 - [x] express | @types/express
   - swagger-ui-express | @types/swagger-ui-express
-  - http-status-codes
-  - dotenv
   - cors | @types/cors
-  - winston | morgan | @types/morgan
-- [x] drizzle-orm | drizzle-kit | pg | @types/pg
-  - @faker-js/faker
+  - cookie-parser | @types/cookie-parser
+- [x] dotenv
+- [x] http-status-codes
+- [x] winston | morgan | @types/morgan
+- [x] nodemailer | @types/nodemailer
 - [x] zod
 - [x] passport | @types/passport
   - passport-jwt | @types/passport-jwt
   - jsonwebtoken | @types/jsonwebtoken
   - bcryptjs
-- [x] bullmq | ioredis
-  - nodemailer | @types/nodemailer
+- [x] @faker-js/faker
