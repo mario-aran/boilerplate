@@ -31,15 +31,16 @@ export const usersTable = pgTable(USERS_TABLE_NAME, {
     .default(SYSTEM_ROLES.USER)
     .notNull()
     .references(() => rolesTable.id),
-  createdAt,
-  updatedAt,
   email: varchar('email', { length: 255 }).unique().notNull(),
+  pendingEmail: varchar('pending_email', { length: 255 }),
   emailVerified: boolean('email_verified').default(false).notNull(),
   emailVerifiedAt: timestamp('email_verified_at'),
-  pendingEmail: varchar('pending_email', { length: 255 }),
   password: varchar('password', { length: 255 }).notNull(),
   firstName: varchar('first_name', { length: 255 }),
   lastName: varchar('last_name', { length: 255 }),
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt,
+  updatedAt,
 });
 
 export const usersRelations = relations(usersTable, ({ one }) => ({

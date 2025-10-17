@@ -92,7 +92,7 @@ class AuthService {
   private async signAndQueueVerificationEmail(userId: string, email: string) {
     const token = signVerificationEmailToken({ userId });
 
-    await emailQueueService.queueVerification({ email, token });
+    await emailQueueService.queueVerificationEmail({ email, token });
   }
 }
 

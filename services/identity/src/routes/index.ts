@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/config/env';
+import { API_GATEWAY_URL } from '@/config/env';
 import { PATH_SEGMENTS } from '@/constants/paths';
 import { swaggerDocument } from '@/lib/swagger/swagger-document';
 import { Router } from 'express';
@@ -43,7 +43,7 @@ routes.get('/', (_, res) =>
   res.json({
     message: 'Identity service',
     version: '1.0',
-    docs: `${BASE_URL}${DOCS_PATH}`,
+    docs: `${API_GATEWAY_URL}${DOCS_PATH}`,
   }),
 );
 
