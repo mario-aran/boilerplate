@@ -38,8 +38,8 @@ export const updateUserMe = controllerCatchAsync(
 
 export const updateUser = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const { id } = await usersService.update(req.params.id, req.body);
-    res.json({ message: `User ${id} updated successfully` });
+    await usersService.update(req.params.id, req.body);
+    res.json({ message: 'User updated successfully' });
   },
 );
 

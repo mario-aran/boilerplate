@@ -19,17 +19,17 @@ export const getRole = controllerCatchAsync(
 
 export const createRole = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const { id } = await rolesService.create(req.body);
+    await rolesService.create(req.body);
     res
       .status(StatusCodes.CREATED)
-      .json({ message: `Role ${id} created successfully` });
+      .json({ message: 'Role created successfully' });
   },
 );
 
 export const updateRole = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const { id } = await rolesService.update(req.params.id, req.body);
-    res.json({ message: `Role ${id} updated successfully` });
+    await rolesService.update(req.params.id, req.body);
+    res.json({ message: 'Role updated successfully' });
   },
 );
 
