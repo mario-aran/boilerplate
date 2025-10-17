@@ -22,10 +22,16 @@ export type Login = z.infer<typeof loginSchema>;
 export type RefreshToken = z.infer<typeof refreshTokenSchema>;
 
 // ---------------------------
+// FIELDS
+// ---------------------------
+
+const currentEmail = email;
+
+// ---------------------------
 // SCHEMAS
 // ---------------------------
 
-export const resendVerificationEmailSchema = z.strictObject({ email });
+export const resendVerificationEmailSchema = z.strictObject({ currentEmail });
 export const verifyEmailSchema = z.strictObject({ token });
 export const loginSchema = z.strictObject({ email, password });
 

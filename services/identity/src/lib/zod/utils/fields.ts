@@ -29,7 +29,6 @@ export const lastName = text;
 
 export const uuid = z.uuid();
 export const textId = noSpaces(lowerAlphanumUnder(z.string().min(4).max(40)));
-export const roleId = textId;
 
 // ---------------------------
 // SPECIFIC

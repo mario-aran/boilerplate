@@ -6,8 +6,8 @@ import {
   limit,
   page,
   password,
-  roleId,
   search,
+  textId,
   uuid,
 } from '@/lib/zod/utils/fields';
 import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
@@ -25,6 +25,7 @@ export type GetUsers = z.infer<typeof getUsersSchema>;
 
 const id = uuid;
 const sort = generateSortField(USERS_SORTABLE_COLUMNS);
+const roleId = textId;
 
 // ---------------------------
 // SCHEMAS
