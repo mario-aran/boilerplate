@@ -5,5 +5,5 @@ import { createWorker } from './utils';
 export const verificationEmailWorker = () =>
   createWorker({
     name: QUEUES.VERIFICATION_EMAIL,
-    processor: (job) => emailService.sendVerification(job.data),
+    processor: (job) => emailService.sendVerificationEmail(job.data),
   });
