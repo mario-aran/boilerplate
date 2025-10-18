@@ -73,7 +73,6 @@ Tools
 - [x] express | @types/express
   - swagger-ui-express | @types/swagger-ui-express
   - cors | @types/cors
-  - cookie-parser | @types/cookie-parser
 - [x] dotenv
 - [x] http-status-codes
 - [x] winston | morgan | @types/morgan

@@ -1,4 +1,3 @@
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import { passportInit } from './features/auth/passport';
@@ -20,7 +19,6 @@ app.use(cors());
 // PARSERS
 // ---------------------------
 
-app.use(cookieParser());
 app.use(express.json()); // Body parser
 
 // ---------------------------
