@@ -4,8 +4,7 @@ import { GetPermissions } from '@/lib/zod/schemas/permissions.schema';
 import { ilike } from 'drizzle-orm';
 
 class PermissionsService {
-  async getAll(props?: GetPermissions) {
-    const { limit, page, sort, search } = props ?? {};
+  async getAll({ limit, page, sort, search }: GetPermissions = {}) {
     const sortArr = sort ? (Array.isArray(sort) ? sort : [sort]) : undefined;
     const filters = search
       ? ilike(permissionsTable.id, `%${search}%`)
