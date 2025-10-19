@@ -1,13 +1,8 @@
-import { HttpError } from '@/utils/http-error';
+import { UnauthorizedError } from '@/errors/http-errors';
 import { Request } from 'express';
-import { StatusCodes } from 'http-status-codes';
 
 export const requireUserFromReq = (req: Request) => {
-  if (!req.user)
-    throw new HttpError({
-      status: StatusCodes.UNAUTHORIZED,
-      message: 'Unauthorized',
-    });
+  if (!req.user) throw UnauthorizedError;
 
   return req.user;
 };

@@ -1,3 +1,8 @@
+import {
+  AccessDeniedError,
+  EmailAlreadyVerifiedError,
+  InvalidCredentialsError,
+} from '@/errors/http-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
 import {
@@ -7,9 +12,7 @@ import {
   ResendVerificationEmail,
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
-import { HttpError } from '@/utils/http-error';
 import bcrypt from 'bcryptjs';
-import { StatusCodes } from 'http-status-codes';
 import { JwtPayload } from './types';
 import {
   signAccessToken,
@@ -18,21 +21,6 @@ import {
   verifyRefreshToken,
   verifyVerificationEmailToken,
 } from './utils/jwt-handlers';
-
-const alreadyVerifiedError = new HttpError({
-  status: StatusCodes.CONFLICT,
-  message: 'Email already verified',
-});
-
-const accessDeniedError = new HttpError({
-  status: StatusCodes.FORBIDDEN,
-  message: 'Access denied',
-});
-
-const invalidCredentialsError = new HttpError({
-  status: StatusCodes.FORBIDDEN,
-  message: 'Invalid credentials',
-});
 
 class AuthService {
   async register(props: Register) {
@@ -43,7 +31,8 @@ class AuthService {
 
   async resendVerificationEmail({ currentEmail }: ResendVerificationEmail) {
     const user = await usersService.getByEmailWithPassword(currentEmail);
-    if (user.emailVerified && !user.pendingEmail) throw alreadyVerifiedError;
+    if (user.emailVerified && !user.pendingEmail)
+      throw EmailAlreadyVerifiedError;
 
     const targetEmail = user.pendingEmail || user.email;
     await this.signAndQueueVerificationEmail(user.id, targetEmail);
@@ -55,7 +44,8 @@ class AuthService {
     const { userId } = verifyVerificationEmailToken(token);
 
     const user = await usersService.get(userId);
-    if (user.emailVerified && !user.pendingEmail) throw alreadyVerifiedError;
+    if (user.emailVerified && !user.pendingEmail)
+      throw EmailAlreadyVerifiedError;
 
     const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
@@ -68,10 +58,10 @@ class AuthService {
 
   async login({ email, password }: Login) {
     const user = await usersService.getByEmailWithPassword(email);
-    if (!user.isActive) throw accessDeniedError;
+    if (!user.isActive) throw AccessDeniedError;
 
     const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) throw invalidCredentialsError;
+    if (!isValidPassword) throw InvalidCredentialsError;
 
     const payload: JwtPayload = { userId: user.id };
     return {
@@ -84,7 +74,7 @@ class AuthService {
     const { userId } = verifyRefreshToken(token);
 
     const user = await usersService.get(userId);
-    if (!user.isActive) throw accessDeniedError;
+    if (!user.isActive) throw AccessDeniedError;
 
     return { accessToken: signAccessToken({ userId: user.id }) };
   }

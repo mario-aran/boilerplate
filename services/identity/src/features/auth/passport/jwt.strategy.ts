@@ -1,9 +1,7 @@
 import { JWT_ACCESS_SECRET } from '@/config/env';
+import { AccessDeniedError } from '@/errors/http-errors';
 import { JwtPayload } from '@/features/auth/types';
-import {
-  usersService,
-  UsersServiceGetResult,
-} from '@/features/users/users.service';
+import { usersService } from '@/features/users/users.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export const jwtStrategy = new Strategy(
@@ -13,10 +11,9 @@ export const jwtStrategy = new Strategy(
   },
   async (payload: JwtPayload, done) => {
     try {
-      // Check if user exists and type it to match "passport.authenticate" param
-      const user: UsersServiceGetResult = await usersService.get(
-        payload.userId,
-      );
+      // Check if user exists
+      const user = await usersService.get(payload.userId);
+      if (!user.isActive) throw AccessDeniedError;
 
       // Pass user to "passport.authenticate"
       return done(null, user);

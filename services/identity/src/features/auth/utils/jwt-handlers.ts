@@ -3,19 +3,15 @@ import {
   JWT_REFRESH_SECRET,
   JWT_VERIFICATION_EMAIL_SECRET,
 } from '@/config/env';
+import { InvalidTokenError } from '@/errors/http-errors';
 import { JwtPayload } from '@/features/auth/types';
-import { HttpError } from '@/utils/http-error';
-import { StatusCodes } from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 
 const verifyToken = (token: string, secret: string) => {
   try {
     return jwt.verify(token, secret) as JwtPayload;
   } catch {
-    throw new HttpError({
-      status: StatusCodes.UNAUTHORIZED,
-      message: 'Invalid token',
-    });
+    throw InvalidTokenError;
   }
 };
 
