@@ -1,3 +1,4 @@
+import { NotFoundError } from '@/errors/http-errors';
 import { db } from '@/lib/drizzle/db';
 import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
@@ -6,16 +7,9 @@ import {
   GetRoles,
   UpdateRole,
 } from '@/lib/zod/schemas/roles.schema';
-import { HttpError } from '@/utils/http-error';
 import { eq, ilike } from 'drizzle-orm';
-import { StatusCodes } from 'http-status-codes';
 
 class RolesService {
-  private static readonly notFoundError = new HttpError({
-    status: StatusCodes.NOT_FOUND,
-    message: 'Role not found',
-  });
-
   async getAll({ limit, page, sort, search = '' }: GetRoles) {
     return queryPaginatedData({
       table: rolesTable,
@@ -31,7 +25,7 @@ class RolesService {
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
     });
-    if (!records) throw RolesService.notFoundError;
+    if (!records) throw NotFoundError();
 
     // Flat results
     const { rolesToPermissions, ...restOfRecords } = records;
@@ -66,7 +60,7 @@ class RolesService {
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
       .returning({ id: rolesTable.id });
-    if (!deletedRecord) throw RolesService.notFoundError;
+    if (!deletedRecord) throw NotFoundError();
 
     return deletedRecord;
   }

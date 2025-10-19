@@ -1,23 +1,17 @@
+import { NotFoundError } from '@/errors/http-errors';
 import { hash } from '@/lib/bcrypt/hash';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { Register } from '@/lib/zod/schemas/auth.schema';
 import { GetUsers } from '@/lib/zod/schemas/users.schema';
-import { HttpError } from '@/utils/http-error';
 import { and, eq, ilike, or } from 'drizzle-orm';
-import { StatusCodes } from 'http-status-codes';
 
 export type UsersServiceGetResult = Awaited<
   ReturnType<typeof usersService.get>
 >;
 
 class UsersService {
-  private static readonly notFoundError = new HttpError({
-    status: StatusCodes.NOT_FOUND,
-    message: 'User not found',
-  });
-
   async getAll({ limit, page, sort, roleId = '', search = '' }: GetUsers) {
     const filters = and(
       ilike(usersTable.roleId, `%${roleId}%`),
@@ -50,7 +44,7 @@ class UsersService {
       },
       where: eq(usersTable.id, id),
     });
-    if (!user) throw UsersService.notFoundError;
+    if (!user) throw NotFoundError();
 
     // Flat results
     const { role, ...restOfUser } = user;
@@ -64,7 +58,7 @@ class UsersService {
     const user = await db.query.usersTable.findFirst({
       where: eq(usersTable.email, email),
     });
-    if (!user) throw UsersService.notFoundError;
+    if (!user) throw NotFoundError();
 
     return user;
   }
@@ -88,7 +82,7 @@ class UsersService {
       .set({ ...restOfProps, password: hashedPassword })
       .where(eq(usersTable.id, id))
       .returning();
-    if (!updatedUser) throw UsersService.notFoundError;
+    if (!updatedUser) throw NotFoundError();
 
     return this.omitUserPassword(updatedUser);
   }

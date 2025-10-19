@@ -1,4 +1,4 @@
-import { UnprocessableError } from '@/errors/http-errors';
+import { ValidationError } from '@/errors/http-errors';
 import { NextFunction, Request, Response } from 'express';
 import { ZodError, ZodObject } from 'zod';
 
@@ -27,7 +27,7 @@ export const zodValidator =
           message: issue.message,
         }));
 
-        return next(UnprocessableError(validationErrors));
+        return next(ValidationError(validationErrors));
       }
 
       // Failed: regular error

@@ -57,11 +57,11 @@ export const EmailAlreadyVerifiedError = new HttpError({
 // 422 UNPROCESSABLE ENTITY
 // ---------------------------
 
-export const UnprocessableError = (
-  validationErrors?: HttpError['validationErrors'],
+export const ValidationError = (
+  validationErrors: HttpError['validationErrors'],
 ) =>
   new HttpError({
     status: StatusCodes.UNPROCESSABLE_ENTITY,
-    message: 'Unprocessable',
+    message: 'Validation failed',
     validationErrors,
   });
