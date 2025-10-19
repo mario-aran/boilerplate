@@ -1,6 +1,5 @@
-import { HttpError } from '@/utils/http-error';
+import { UnprocessableError } from '@/errors/http-errors';
 import { NextFunction, Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
 import { ZodError, ZodObject } from 'zod';
 
 interface ZodValidatorProps {
@@ -28,13 +27,7 @@ export const zodValidator =
           message: issue.message,
         }));
 
-        return next(
-          new HttpError({
-            status: StatusCodes.UNPROCESSABLE_ENTITY,
-            message: 'Unprocessable',
-            validationErrors,
-          }),
-        );
+        return next(UnprocessableError(validationErrors));
       }
 
       // Failed: regular error
