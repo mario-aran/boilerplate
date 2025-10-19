@@ -9,7 +9,6 @@ export class PermissionsSeedService {
       .values(PERMISSION_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: permissionsTable.id });
-
     return createdRecords.length;
   }
 }
