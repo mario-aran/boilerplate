@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/errors/http-errors';
+import { EntityNotFoundError } from '@/errors/http-errors';
 import { db } from '@/lib/drizzle/db';
 import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
@@ -8,6 +8,8 @@ import {
   UpdateRole,
 } from '@/lib/zod/schemas/roles.schema';
 import { eq, ilike } from 'drizzle-orm';
+
+const RoleNotFoundError = EntityNotFoundError('Role');
 
 class RolesService {
   async getAll({ limit, page, sort, search = '' }: GetRoles) {
@@ -25,7 +27,7 @@ class RolesService {
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
     });
-    if (!records) throw NotFoundError();
+    if (!records) throw RoleNotFoundError;
 
     // Flat results
     const { rolesToPermissions, ...restOfRecords } = records;
@@ -60,7 +62,7 @@ class RolesService {
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
       .returning({ id: rolesTable.id });
-    if (!deletedRecord) throw NotFoundError();
+    if (!deletedRecord) throw RoleNotFoundError;
 
     return deletedRecord;
   }

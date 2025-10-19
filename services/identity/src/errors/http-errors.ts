@@ -38,10 +38,15 @@ export const InvalidCredentialsError = new HttpError({
 // 404 NOT FOUND
 // ---------------------------
 
-export const NotFoundError = (entity?: string) =>
+export const NotFoundError = new HttpError({
+  status: StatusCodes.NOT_FOUND,
+  message: 'Not found',
+});
+
+export const EntityNotFoundError = (entity: string) =>
   new HttpError({
     status: StatusCodes.NOT_FOUND,
-    message: entity ? `${entity} not found` : 'Not found',
+    message: `${entity} not found`,
   });
 
 // ---------------------------
