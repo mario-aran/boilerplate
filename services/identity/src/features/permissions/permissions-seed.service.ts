@@ -10,8 +10,7 @@ export class PermissionsSeedService {
       .onConflictDoNothing()
       .returning({ id: permissionsTable.id });
 
-    const createdKeys = createdRecords.map(({ id }) => id);
-    return { createdKeys };
+    return createdRecords.length;
   }
 }
 
