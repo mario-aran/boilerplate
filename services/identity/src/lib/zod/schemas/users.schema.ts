@@ -1,16 +1,16 @@
-import { USERS_SORTABLE_COLUMNS } from '@/lib/drizzle/schemas';
 import {
-  email,
+  currentPassword,
   firstName,
   lastName,
   limit,
+  newEmail,
+  newPassword,
   page,
-  password,
+  roleId,
   search,
-  textId,
+  sortUsers,
   uuid,
 } from '@/lib/zod/utils/fields';
-import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
 import { z } from 'zod';
 
 // ---------------------------
@@ -18,14 +18,17 @@ import { z } from 'zod';
 // ---------------------------
 
 export type GetUsers = z.infer<typeof getUsersSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
+export type UpdateUserMe = z.infer<typeof updateUserMeSchema>;
+export type UpdateUserMeEmail = z.infer<typeof updateUserMeEmailSchema>;
+export type UpdateUserMePassword = z.infer<typeof updateUserMePasswordSchema>;
 
 // ---------------------------
 // FIELDS
 // ---------------------------
 
 const id = uuid;
-const sort = generateSortField(USERS_SORTABLE_COLUMNS);
-const roleId = textId;
+const sort = sortUsers;
 
 // ---------------------------
 // SCHEMAS
@@ -37,8 +40,14 @@ export const getUsersSchema = z
   .strictObject({ limit, page, sort, roleId, search })
   .partial();
 
-export const updateUserMeSchema = z
-  .strictObject({ email, password, firstName, lastName })
+export const updateUserSchema = z
+  .strictObject({ firstName, lastName, roleId })
   .partial();
 
-export const updateUserSchema = updateUserMeSchema.extend({ roleId });
+export const updateUserMeSchema = updateUserSchema.omit({ roleId: true });
+export const updateUserMeEmailSchema = z.strictObject({ newEmail });
+
+export const updateUserMePasswordSchema = z.strictObject({
+  currentPassword,
+  newPassword,
+});

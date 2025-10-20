@@ -1,8 +1,11 @@
-import { PERMISSION_VALUES } from '@/constants/permissions';
-import { ROLES_SORTABLE_COLUMNS } from '@/lib/drizzle/schemas';
-import { limit, page, search, textId } from '@/lib/zod/utils/fields';
-import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
-import { noDuplicateStrs } from '@/lib/zod/utils/refines';
+import {
+  limit,
+  page,
+  permissionIds,
+  search,
+  sortRoles,
+  textId,
+} from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
 // ---------------------------
@@ -18,11 +21,7 @@ export type UpdateRole = z.infer<typeof updateRoleSchema>;
 // ---------------------------
 
 const id = textId;
-const sort = generateSortField(ROLES_SORTABLE_COLUMNS);
-
-const permissionIds = noDuplicateStrs(
-  z.enum(PERMISSION_VALUES).array().max(PERMISSION_VALUES.length),
-);
+const sort = sortRoles;
 
 // ---------------------------
 // SCHEMAS
