@@ -1,6 +1,4 @@
-import { PERMISSIONS_SORTABLE_COLUMNS } from '@/lib/drizzle/schemas';
-import { limit, page, search } from '@/lib/zod/utils/fields';
-import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
+import { limit, page, search, sortPermissions } from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
 // ---------------------------
@@ -13,7 +11,7 @@ export type GetPermissions = z.infer<typeof getPermissionsSchema>;
 // FIELDS
 // ---------------------------
 
-const sort = generateSortField(PERMISSIONS_SORTABLE_COLUMNS);
+const sort = sortPermissions;
 
 // ---------------------------
 // SCHEMAS
