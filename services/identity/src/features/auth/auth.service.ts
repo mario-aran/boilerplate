@@ -1,6 +1,7 @@
 import {
   AccessDeniedError,
   EmailAlreadyVerifiedError,
+  EmailNotVerified,
   InvalidCredentialsError,
 } from '@/errors/http-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
@@ -58,6 +59,7 @@ class AuthService {
 
   async login({ email, password }: Login) {
     const user = await usersService.getByEmailWithPassword(email);
+    if (!user.emailVerified) throw EmailNotVerified;
     if (!user.isActive) throw AccessDeniedError;
 
     const isValidPassword = await bcrypt.compare(password, user.password);
