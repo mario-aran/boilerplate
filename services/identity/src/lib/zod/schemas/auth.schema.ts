@@ -1,7 +1,9 @@
 import {
+  currentEmail,
   email,
   firstName,
   lastName,
+  newPassword,
   password,
   token,
 } from '@/lib/zod/utils/fields';
@@ -20,24 +22,23 @@ export type ResendVerificationEmail = z.infer<
 export type VerifyEmail = z.infer<typeof verifyEmailSchema>;
 export type Login = z.infer<typeof loginSchema>;
 export type RefreshToken = z.infer<typeof refreshTokenSchema>;
-
-// ---------------------------
-// FIELDS
-// ---------------------------
-
-const currentEmail = email;
+export type ForgotPassword = z.infer<typeof forgotPasswordSchema>;
+export type ResetPassword = z.infer<typeof resetPasswordSchema>;
 
 // ---------------------------
 // SCHEMAS
 // ---------------------------
 
-export const resendVerificationEmailSchema = z.strictObject({ currentEmail });
-export const verifyEmailSchema = z.strictObject({ token });
-export const loginSchema = z.strictObject({ email, password });
-
-export const registerSchema = loginSchema.extend({
+export const registerSchema = z.strictObject({
+  email,
+  password,
   firstName: firstName.optional(),
   lastName: lastName.optional(),
 });
 
+export const resendVerificationEmailSchema = z.strictObject({ currentEmail });
+export const verifyEmailSchema = z.strictObject({ token });
+export const loginSchema = z.strictObject({ email, password });
 export const refreshTokenSchema = z.strictObject({ token });
+export const forgotPasswordSchema = z.strictObject({ email });
+export const resetPasswordSchema = z.strictObject({ token, newPassword });
