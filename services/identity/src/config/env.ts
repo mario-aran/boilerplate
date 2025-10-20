@@ -43,6 +43,9 @@ export const JWT_VERIFICATION_EMAIL_SECRET = getRequiredEnv(
 );
 export const JWT_ACCESS_SECRET = getRequiredEnv('JWT_ACCESS_SECRET');
 export const JWT_REFRESH_SECRET = getRequiredEnv('JWT_REFRESH_SECRET');
+export const JWT_RESET_PASSWORD_SECRET = getRequiredEnv(
+  'JWT_RESET_PASSWORD_SECRET',
+);
 export const DATABASE_URL = getRequiredEnv('DATABASE_URL');
 export const REDIS_URL = getRequiredEnv('REDIS_URL');
 export const SMTP_HOST = getRequiredEnv('SMTP_HOST');
