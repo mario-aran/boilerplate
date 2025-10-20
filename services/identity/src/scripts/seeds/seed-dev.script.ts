@@ -44,8 +44,8 @@ const truncateTables = async () => {
 };
 
 const seedFakeData = async () => {
-  const { createdKeys } = await usersSeedService.seedFake(20);
-  logSeedMessage(USERS_TABLE_NAME, createdKeys);
+  const usersInserted = await usersSeedService.seedFake(20);
+  logSeedMessage(USERS_TABLE_NAME, usersInserted);
 };
 
 // ---------------------------

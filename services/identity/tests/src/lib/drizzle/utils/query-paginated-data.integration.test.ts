@@ -96,7 +96,7 @@ describe('queryPaginatedData', () => {
 
     const { data } = await queryPaginatedData({
       table: usersTable,
-      sortArr: ['-password', 'email', 'nonexistent'],
+      sort: ['-password', 'email', 'nonexistent'],
     });
 
     expect(data.map((r) => [r.email, r.password])).toEqual([

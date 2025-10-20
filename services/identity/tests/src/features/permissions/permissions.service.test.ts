@@ -29,7 +29,7 @@ describe('permissionsService', () => {
     });
 
     it('uses permissionsTable and returns the result of queryPaginatedData', async () => {
-      const result = await permissionsService.getAll();
+      const result = await permissionsService.getAll({});
 
       expect(queryPaginatedDataMock).toHaveBeenCalledOnce();
       expect(queryPaginatedDataMock).toHaveBeenCalledWith({

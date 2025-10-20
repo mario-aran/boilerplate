@@ -32,11 +32,13 @@ class UsersSeedService {
     );
   }
 
-  private async seedUsers(props: UserInsert[]) {
-    const hashedUserPromises = props.map(async ({ password, ...rest }) => ({
-      ...rest,
-      password: await hash(password),
-    }));
+  private async seedUsers(users: UserInsert[]) {
+    const hashedUserPromises = users.map(
+      async ({ password, ...restOfUsers }) => ({
+        ...restOfUsers,
+        password: await hash(password),
+      }),
+    );
     const hashedUsers = await Promise.all(hashedUserPromises);
 
     const createdRecords = await db
@@ -44,8 +46,7 @@ class UsersSeedService {
       .values(hashedUsers)
       .onConflictDoNothing()
       .returning({ email: usersTable.email });
-
-    return { createdKeys: createdRecords.map((el) => el.email) };
+    return createdRecords.length;
   }
 }
 

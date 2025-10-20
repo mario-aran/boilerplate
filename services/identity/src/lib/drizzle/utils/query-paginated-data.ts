@@ -19,7 +19,7 @@ interface CalculatePaginationProps {
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
   filters?: SQL<unknown>;
-  sortArr?: string[];
+  sort?: string | string[];
   limit?: number;
   page?: number;
 }
@@ -49,8 +49,9 @@ const calculatePagination = ({
 
 const buildOrderBy = (
   tableColumns: Record<string, AnyPgColumn>,
-  sortArr: string[],
+  sort?: string | string[],
 ) => {
+  const sortArr = sort ? (Array.isArray(sort) ? sort : [sort]) : [];
   const orderBy = [];
 
   for (const el of sortArr) {
@@ -67,7 +68,7 @@ const buildOrderBy = (
 export const queryPaginatedData = async <T extends AnyPgTable>({
   table,
   filters,
-  sortArr = [],
+  sort,
   limit = 10,
   page = 1,
 }: QueryPaginatedDataProps<T>) => {
@@ -82,7 +83,7 @@ export const queryPaginatedData = async <T extends AnyPgTable>({
   if (!total) return { total, ...pagination, data: [] };
 
   // Query data and return results
-  const orderBy = buildOrderBy(getTableColumns(table), sortArr);
+  const orderBy = buildOrderBy(getTableColumns(table), sort);
   const data = await db
     .select()
     .from(table)
