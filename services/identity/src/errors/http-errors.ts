@@ -24,6 +24,11 @@ export const AccessDeniedError = new HttpError({
   message: 'Access denied',
 });
 
+export const EmailNotVerified = new HttpError({
+  status: StatusCodes.FORBIDDEN,
+  message: 'Email not verified',
+});
+
 export const ForbiddenError = new HttpError({
   status: StatusCodes.FORBIDDEN,
   message: 'Forbidden',
