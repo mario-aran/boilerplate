@@ -7,9 +7,13 @@ import {
   getUsers,
   updateUser,
   updateUserMe,
+  updateUserMeEmail,
+  updateUserMePassword,
 } from '@/controllers/users.controller';
 import {
   getUsersSchema,
+  updateUserMeEmailSchema,
+  updateUserMePasswordSchema,
   updateUserMeSchema,
   updateUserSchema,
   userIdSchema,
@@ -20,6 +24,10 @@ import { Router } from 'express';
 
 export const usersRoutes = Router();
 
+// ---------------------------
+// ROUTES: /users
+// ---------------------------
+
 usersRoutes.get(
   '/',
   authenticateAndAuthorize(PERMISSIONS.READ_USERS),
@@ -27,20 +35,42 @@ usersRoutes.get(
   getUsers,
 );
 
-usersRoutes.get(PATH_SEGMENTS.ME, authenticateAndAuthorize(), getUserMe);
+// ---------------------------
+// ROUTES: /users/me
+// ---------------------------
 
-usersRoutes.get(
-  PATH_SEGMENTS.ID,
-  authenticateAndAuthorize(PERMISSIONS.READ_USER),
-  zodValidator({ params: userIdSchema }),
-  getUser,
-);
+usersRoutes.get(PATH_SEGMENTS.ME, authenticateAndAuthorize(), getUserMe);
 
 usersRoutes.patch(
   PATH_SEGMENTS.ME,
   authenticateAndAuthorize(),
   zodValidator({ body: updateUserMeSchema }),
   updateUserMe,
+);
+
+usersRoutes.patch(
+  PATH_SEGMENTS.ME_EMAIL,
+  authenticateAndAuthorize(),
+  zodValidator({ body: updateUserMeEmailSchema }),
+  updateUserMeEmail,
+);
+
+usersRoutes.patch(
+  PATH_SEGMENTS.ME_PASSWORD,
+  authenticateAndAuthorize(),
+  zodValidator({ body: updateUserMePasswordSchema }),
+  updateUserMePassword,
+);
+
+// ---------------------------
+// ROUTES: /users/:id
+// ---------------------------
+
+usersRoutes.get(
+  PATH_SEGMENTS.ID,
+  authenticateAndAuthorize(PERMISSIONS.READ_USER),
+  zodValidator({ params: userIdSchema }),
+  getUser,
 );
 
 usersRoutes.patch(
