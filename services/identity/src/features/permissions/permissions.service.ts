@@ -8,12 +8,11 @@ class PermissionsService {
     const filters = search
       ? ilike(permissionsTable.id, `%${search}%`)
       : undefined;
-    const sortArr = sort ? (Array.isArray(sort) ? sort : [sort]) : undefined;
 
     return queryPaginatedData({
       table: permissionsTable,
       filters,
-      sortArr,
+      sort,
       limit,
       page,
     });
