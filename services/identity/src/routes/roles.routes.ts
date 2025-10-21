@@ -19,10 +19,6 @@ import { Router } from 'express';
 
 export const rolesRoutes = Router();
 
-// ---------------------------
-// ROUTES: /roles
-// ---------------------------
-
 rolesRoutes.get(
   '/',
   authenticateAndAuthorize(PERMISSIONS.READ_ROLES),
@@ -30,22 +26,18 @@ rolesRoutes.get(
   getRoles,
 );
 
-rolesRoutes.post(
-  '/',
-  authenticateAndAuthorize(PERMISSIONS.CREATE_ROLE),
-  zodValidator({ body: createRoleSchema }),
-  createRole,
-);
-
-// ---------------------------
-// ROUTES: /roles/:id
-// ---------------------------
-
 rolesRoutes.get(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.READ_ROLE),
   zodValidator({ params: roleIdSchema }),
   getRole,
+);
+
+rolesRoutes.post(
+  '/',
+  authenticateAndAuthorize(PERMISSIONS.CREATE_ROLE),
+  zodValidator({ body: createRoleSchema }),
+  createRole,
 );
 
 rolesRoutes.patch(

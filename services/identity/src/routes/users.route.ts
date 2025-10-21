@@ -25,17 +25,6 @@ import { Router } from 'express';
 export const usersRoutes = Router();
 
 // ---------------------------
-// ROUTES: /users
-// ---------------------------
-
-usersRoutes.get(
-  '/',
-  authenticateAndAuthorize(PERMISSIONS.READ_USERS),
-  zodValidator({ query: getUsersSchema }),
-  getUsers,
-);
-
-// ---------------------------
 // ROUTES: /users/me
 // ---------------------------
 
@@ -63,8 +52,15 @@ usersRoutes.patch(
 );
 
 // ---------------------------
-// ROUTES: /users/:id
+// ROUTES: /users + /users/:id
 // ---------------------------
+
+usersRoutes.get(
+  '/',
+  authenticateAndAuthorize(PERMISSIONS.READ_USERS),
+  zodValidator({ query: getUsersSchema }),
+  getUsers,
+);
 
 usersRoutes.get(
   PATH_SEGMENTS.ID,
