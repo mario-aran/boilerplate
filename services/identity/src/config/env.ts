@@ -38,14 +38,14 @@ const getOptionalEnv = (key: string) => process.env[key] || undefined;
 
 export const PORT = Number(getRequiredEnv('PORT'));
 export const API_GATEWAY_URL = getRequiredEnv('API_GATEWAY_URL');
-export const FRONTEND_URL = getRequiredEnv('FRONTEND_URL');
-export const JWT_VERIFICATION_EMAIL_SECRET = getRequiredEnv(
-  'JWT_VERIFICATION_EMAIL_SECRET',
+export const CLIENT_URL = getRequiredEnv('CLIENT_URL');
+export const JWT_EMAIL_VERIFICATION_SECRET = getRequiredEnv(
+  'JWT_EMAIL_VERIFICATION_SECRET',
 );
 export const JWT_ACCESS_SECRET = getRequiredEnv('JWT_ACCESS_SECRET');
 export const JWT_REFRESH_SECRET = getRequiredEnv('JWT_REFRESH_SECRET');
-export const JWT_RESET_PASSWORD_SECRET = getRequiredEnv(
-  'JWT_RESET_PASSWORD_SECRET',
+export const JWT_PASSWORD_RESET_SECRET = getRequiredEnv(
+  'JWT_PASSWORD_RESET_SECRET',
 );
 export const DATABASE_URL = getRequiredEnv('DATABASE_URL');
 export const REDIS_URL = getRequiredEnv('REDIS_URL');
