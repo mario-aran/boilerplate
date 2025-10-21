@@ -1,4 +1,4 @@
-export interface VerificationEmailPayload {
+export interface EmailPayload {
   email: string;
   token: string;
 }
