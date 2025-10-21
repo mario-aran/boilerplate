@@ -19,7 +19,7 @@ class EmailService {
   });
 
   async sendVerificationEmail({ email, token }: EmailPayload) {
-    const link = EmailService.buildLink(PATHS.AUTH_VERIFY_EMAIL, token);
+    const link = this.buildLink(PATHS.AUTH_VERIFY_EMAIL, token);
 
     await EmailService.transporter.sendMail({
       from: EMAIL_FROM,
@@ -30,7 +30,7 @@ class EmailService {
   }
 
   async sendPasswordResetEmail({ email, token }: EmailPayload) {
-    const link = EmailService.buildLink(PATHS.AUTH_RESET_PASSWORD, token);
+    const link = this.buildLink(PATHS.AUTH_RESET_PASSWORD, token);
 
     await EmailService.transporter.sendMail({
       from: EMAIL_FROM,
@@ -40,7 +40,7 @@ class EmailService {
     });
   }
 
-  private static buildLink(path: string, token: string) {
+  private buildLink(path: string, token: string) {
     return `${FRONTEND_URL}${path}?token=${token}`;
   }
 }
