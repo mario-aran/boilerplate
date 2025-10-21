@@ -1,7 +1,7 @@
 import { QUEUES } from '@/constants/queues';
 import { queueOptions } from '@/lib/redis/bullmq/queue-options';
 import { Queue } from 'bullmq';
-import { VerificationEmailPayload } from './types';
+import { EmailPayload } from './types';
 
 class EmailQueueService {
   private static readonly verificationEmailQueue = new Queue(
@@ -9,9 +9,21 @@ class EmailQueueService {
     queueOptions,
   );
 
-  async queueVerificationEmail(payload: VerificationEmailPayload) {
+  private static readonly resetPasswordEmailQueue = new Queue(
+    QUEUES.PASSWORD_RESET_EMAIL,
+    queueOptions,
+  );
+
+  async queueVerificationEmail(payload: EmailPayload) {
     await EmailQueueService.verificationEmailQueue.add(
       QUEUES.VERIFICATION_EMAIL,
+      payload,
+    );
+  }
+
+  async queueResetPasswordEmail(payload: EmailPayload) {
+    await EmailQueueService.resetPasswordEmailQueue.add(
+      QUEUES.PASSWORD_RESET_EMAIL,
       payload,
     );
   }
