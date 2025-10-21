@@ -1,6 +1,6 @@
 import {
-  API_GATEWAY_URL,
   EMAIL_FROM,
+  FRONTEND_URL,
   SMTP_HOST,
   SMTP_PASS,
   SMTP_PORT,
@@ -8,7 +8,7 @@ import {
 } from '@/config/env';
 import { PATHS } from '@/constants/paths';
 import nodemailer from 'nodemailer';
-import { VerificationEmailPayload } from './types';
+import { EmailPayload } from './types';
 
 class EmailService {
   private static readonly transporter = nodemailer.createTransport({
@@ -18,15 +18,30 @@ class EmailService {
       SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined, // "auth" only required in production
   });
 
-  async sendVerificationEmail({ email, token }: VerificationEmailPayload) {
-    const tokenUrl = `${API_GATEWAY_URL}${PATHS.AUTH_VERIFY_EMAIL}?token=${token}`;
+  async sendVerificationEmail({ email, token }: EmailPayload) {
+    const link = EmailService.buildLink(PATHS.AUTH_VERIFY_EMAIL, token);
 
     await EmailService.transporter.sendMail({
       from: EMAIL_FROM,
       to: email,
-      subject: 'Verify your email',
-      text: `Please verify your email address by visiting: ${tokenUrl}`,
+      subject: 'Email verification',
+      text: `Access this link to verify your email: ${link}`,
     });
+  }
+
+  async sendPasswordResetEmail({ email, token }: EmailPayload) {
+    const link = EmailService.buildLink(PATHS.AUTH_RESET_PASSWORD, token);
+
+    await EmailService.transporter.sendMail({
+      from: EMAIL_FROM,
+      to: email,
+      subject: 'Password reset',
+      text: `Access this link to reset your password: ${link}`,
+    });
+  }
+
+  private static buildLink(path: string, token: string) {
+    return `${FRONTEND_URL}${path}?token=${token}`;
   }
 }
 
