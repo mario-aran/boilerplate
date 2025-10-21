@@ -4,7 +4,7 @@ import {
   login,
   refreshToken,
   register,
-  resendVerificationEmail,
+  resendEmailVerification,
   resetPassword,
   verifyEmail,
 } from '@/controllers/auth.controller';
@@ -13,7 +13,7 @@ import {
   loginSchema,
   refreshTokenSchema,
   registerSchema,
-  resendVerificationEmailSchema,
+  resendEmailVerificationSchema,
   resetPasswordSchema,
   verifyEmailSchema,
 } from '@/lib/zod/schemas/auth.schema';
@@ -29,9 +29,9 @@ authRoutes.post(
 );
 
 authRoutes.post(
-  PATH_SEGMENTS.RESEND_VERIFICATION_EMAIL,
-  zodValidator({ body: resendVerificationEmailSchema }),
-  resendVerificationEmail,
+  PATH_SEGMENTS.RESEND_EMAIL_VERIFICATION,
+  zodValidator({ body: resendEmailVerificationSchema }),
+  resendEmailVerification,
 );
 
 authRoutes.post(

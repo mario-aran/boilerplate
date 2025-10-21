@@ -15,8 +15,8 @@ import { z } from 'zod';
 
 export type Register = z.infer<typeof registerSchema>;
 
-export type ResendVerificationEmail = z.infer<
-  typeof resendVerificationEmailSchema
+export type ResendEmailVerification = z.infer<
+  typeof resendEmailVerificationSchema
 >;
 
 export type VerifyEmail = z.infer<typeof verifyEmailSchema>;
@@ -36,7 +36,7 @@ export const registerSchema = z.strictObject({
   lastName: lastName.optional(),
 });
 
-export const resendVerificationEmailSchema = z.strictObject({ currentEmail });
+export const resendEmailVerificationSchema = z.strictObject({ currentEmail });
 export const verifyEmailSchema = z.strictObject({ token });
 export const loginSchema = z.strictObject({ email, password });
 export const refreshTokenSchema = z.strictObject({ token });
