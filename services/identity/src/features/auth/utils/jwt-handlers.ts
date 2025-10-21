@@ -21,7 +21,7 @@ const verifyToken = (token: string, secret: string) => {
 };
 
 // ---------------------------
-// VERIFICATION EMAIL
+// EMAIL VERIFICATION
 // ---------------------------
 
 export const signVerificationEmailToken = (payload: JwtPayload) =>
