@@ -7,7 +7,8 @@ export const register = controllerCatchAsync(
   async (req: Request, res: Response) => {
     await authService.register(req.body);
     res.status(StatusCodes.CREATED).json({
-      message: 'Registration successful. Verification will be sent shortly',
+      message:
+        'Registration successful. Verification email will be sent shortly',
     });
   },
 );
