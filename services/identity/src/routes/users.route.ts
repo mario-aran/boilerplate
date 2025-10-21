@@ -12,9 +12,9 @@ import {
 } from '@/controllers/users.controller';
 import {
   getUsersSchema,
-  updateUserMeEmailSchema,
-  updateUserMePasswordSchema,
+  updateUserEmailSchema,
   updateUserMeSchema,
+  updateUserPasswordSchema,
   updateUserSchema,
   userIdSchema,
 } from '@/lib/zod/schemas/users.schema';
@@ -51,14 +51,14 @@ usersRoutes.patch(
 usersRoutes.patch(
   PATH_SEGMENTS.ME_EMAIL,
   authenticateAndAuthorize(),
-  zodValidator({ body: updateUserMeEmailSchema }),
+  zodValidator({ body: updateUserEmailSchema }),
   updateUserMeEmail,
 );
 
 usersRoutes.patch(
   PATH_SEGMENTS.ME_PASSWORD,
   authenticateAndAuthorize(),
-  zodValidator({ body: updateUserMePasswordSchema }),
+  zodValidator({ body: updateUserPasswordSchema }),
   updateUserMePassword,
 );
 
