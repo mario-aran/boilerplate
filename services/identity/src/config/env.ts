@@ -38,6 +38,7 @@ const getOptionalEnv = (key: string) => process.env[key] || undefined;
 
 export const PORT = Number(getRequiredEnv('PORT'));
 export const API_GATEWAY_URL = getRequiredEnv('API_GATEWAY_URL');
+export const FRONTEND_URL = getRequiredEnv('FRONTEND_URL');
 export const JWT_VERIFICATION_EMAIL_SECRET = getRequiredEnv(
   'JWT_VERIFICATION_EMAIL_SECRET',
 );
