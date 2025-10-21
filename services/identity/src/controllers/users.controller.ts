@@ -1,4 +1,4 @@
-import { requireUserFromReq } from '@/features/auth/utils/require-user-from-req';
+import { requireReqUser } from '@/features/auth/utils/require-req-user';
 import { usersService } from '@/features/users/users.service';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
@@ -10,7 +10,7 @@ import { StatusCodes } from 'http-status-codes';
 
 export const getUserMe = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const reqUser = requireUserFromReq(req);
+    const reqUser = requireReqUser(req);
 
     const result = await usersService.get(reqUser.id);
     res.json(result);
@@ -19,7 +19,7 @@ export const getUserMe = controllerCatchAsync(
 
 export const updateUserMe = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const reqUser = requireUserFromReq(req);
+    const reqUser = requireReqUser(req);
 
     await usersService.update(reqUser.id, req.body);
     res.json({ message: 'User updated successfully' });
@@ -28,7 +28,7 @@ export const updateUserMe = controllerCatchAsync(
 
 export const updateUserMeEmail = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const reqUser = requireUserFromReq(req);
+    const reqUser = requireReqUser(req);
 
     await usersService.updateEmail(reqUser.id, req.body);
     res.json({ message: 'Verification email will be sent shortly' });
@@ -37,7 +37,7 @@ export const updateUserMeEmail = controllerCatchAsync(
 
 export const updateUserMePassword = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const reqUser = requireUserFromReq(req);
+    const reqUser = requireReqUser(req);
 
     await usersService.updatePassword(reqUser.id, req.body);
     res.json({ message: 'Password updated successfully' });
