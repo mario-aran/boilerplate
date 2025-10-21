@@ -13,9 +13,9 @@ export const register = controllerCatchAsync(
   },
 );
 
-export const resendVerificationEmail = controllerCatchAsync(
+export const resendEmailVerification = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const { email } = await authService.resendVerificationEmail(req.body);
+    const { email } = await authService.resendEmailVerification(req.body);
     res.json({
       message: `Verification email will be sent shortly to ${email}`,
     });
