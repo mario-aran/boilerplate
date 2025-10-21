@@ -4,25 +4,25 @@ import { Queue } from 'bullmq';
 import { EmailPayload } from './types';
 
 class EmailQueueService {
-  private static readonly verificationEmailQueue = new Queue(
-    QUEUES.VERIFICATION_EMAIL,
+  private static readonly emailVerificationEmailQueue = new Queue(
+    QUEUES.EMAIL_VERIFICATION_EMAIL,
     queueOptions,
   );
 
-  private static readonly resetPasswordEmailQueue = new Queue(
+  private static readonly passwordResetEmailQueue = new Queue(
     QUEUES.PASSWORD_RESET_EMAIL,
     queueOptions,
   );
 
-  async queueVerificationEmail(payload: EmailPayload) {
-    await EmailQueueService.verificationEmailQueue.add(
-      QUEUES.VERIFICATION_EMAIL,
+  async queueEmailVerification(payload: EmailPayload) {
+    await EmailQueueService.emailVerificationEmailQueue.add(
+      QUEUES.EMAIL_VERIFICATION_EMAIL,
       payload,
     );
   }
 
-  async queueResetPasswordEmail(payload: EmailPayload) {
-    await EmailQueueService.resetPasswordEmailQueue.add(
+  async queuePasswordReset(payload: EmailPayload) {
+    await EmailQueueService.passwordResetEmailQueue.add(
       QUEUES.PASSWORD_RESET_EMAIL,
       payload,
     );

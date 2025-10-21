@@ -1,6 +1,6 @@
 import {
+  CLIENT_URL,
   EMAIL_FROM,
-  FRONTEND_URL,
   SMTP_HOST,
   SMTP_PASS,
   SMTP_PORT,
@@ -18,8 +18,8 @@ class EmailService {
       SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined, // "auth" only required in production
   });
 
-  async sendVerificationEmail({ email, token }: EmailPayload) {
-    const link = this.buildLink(PATHS.AUTH_VERIFY_EMAIL, token);
+  async sendEmailVerification({ email, token }: EmailPayload) {
+    const link = this.buildTokenLink(PATHS.AUTH_VERIFY_EMAIL, token);
 
     await EmailService.transporter.sendMail({
       from: EMAIL_FROM,
@@ -29,8 +29,8 @@ class EmailService {
     });
   }
 
-  async sendPasswordResetEmail({ email, token }: EmailPayload) {
-    const link = this.buildLink(PATHS.AUTH_RESET_PASSWORD, token);
+  async sendPasswordReset({ email, token }: EmailPayload) {
+    const link = this.buildTokenLink(PATHS.AUTH_RESET_PASSWORD, token);
 
     await EmailService.transporter.sendMail({
       from: EMAIL_FROM,
@@ -40,8 +40,8 @@ class EmailService {
     });
   }
 
-  private buildLink(path: string, token: string) {
-    return `${FRONTEND_URL}${path}?token=${token}`;
+  private buildTokenLink(path: string, token: string) {
+    return `${CLIENT_URL}${path}?token=${token}`;
   }
 }
 
