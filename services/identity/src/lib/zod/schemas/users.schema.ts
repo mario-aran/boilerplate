@@ -18,7 +18,6 @@ import { z } from 'zod';
 // ---------------------------
 
 export type GetUsers = z.infer<typeof getUsersSchema>;
-export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type UpdateUserEmail = z.infer<typeof updateUserEmailSchema>;
 export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
 
