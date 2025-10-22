@@ -37,7 +37,7 @@ export const authPaths = {
     },
   },
 
-  [SWAGGER_PATHS.AUTH_RESEND_VERIFICATION_EMAIL]: {
+  [SWAGGER_PATHS.AUTH_RESEND_EMAIL_VERIFICATION]: {
     post: {
       tags,
       requestBody: {
