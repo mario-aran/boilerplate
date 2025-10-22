@@ -1,7 +1,7 @@
 import { JWT_ACCESS_SECRET } from '@/config/env';
 import { AccessDeniedError } from '@/errors/http-errors';
-import { JwtPayload } from '@/features/auth/types';
 import { usersService } from '@/features/users/users.service';
+import { JwtPayload } from '@/lib/jwt/types';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export const jwtStrategy = new Strategy(
