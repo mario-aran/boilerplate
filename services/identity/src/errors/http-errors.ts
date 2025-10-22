@@ -24,7 +24,7 @@ export const AccessDeniedError = new HttpError({
   message: 'Access denied',
 });
 
-export const EmailNotVerified = new HttpError({
+export const EmailNotVerifiedError = new HttpError({
   status: StatusCodes.FORBIDDEN,
   message: 'Email not verified',
 });
@@ -48,7 +48,7 @@ export const NotFoundError = new HttpError({
   message: 'Not found',
 });
 
-export const EntityNotFoundError = (entity: string) =>
+export const buildEntityNotFoundError = (entity: string) =>
   new HttpError({
     status: StatusCodes.NOT_FOUND,
     message: `${entity} not found`,
@@ -67,7 +67,7 @@ export const EmailAlreadyVerifiedError = new HttpError({
 // 422 UNPROCESSABLE ENTITY
 // ---------------------------
 
-export const ValidationError = (
+export const buildValidationFailedError = (
   validationErrors: HttpError['validationErrors'],
 ) =>
   new HttpError({
