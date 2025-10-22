@@ -1,5 +1,5 @@
+import { HttpError } from '@/errors/http-error';
 import { zodValidator } from '@/middleware/zod-validator';
-import { HttpError } from '@/utils/http-error';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import z from 'zod';

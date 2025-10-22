@@ -1,5 +1,5 @@
+import { HttpError } from '@/errors/http-error';
 import { logger } from '@/lib/logger/winston-logger';
-import { HttpError } from '@/utils/http-error';
 import { DrizzleQueryError } from 'drizzle-orm';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
