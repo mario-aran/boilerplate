@@ -1,4 +1,4 @@
-import { ValidationError } from '@/errors/http-errors';
+import { buildValidationFailedError } from '@/errors/http-errors';
 import { NextFunction, Request, Response } from 'express';
 import { ZodError, ZodObject } from 'zod';
 
@@ -27,7 +27,7 @@ export const zodValidator =
           message: issue.message,
         }));
 
-        return next(ValidationError(validationErrors));
+        return next(buildValidationFailedError(validationErrors));
       }
 
       // Failed: regular error
