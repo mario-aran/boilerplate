@@ -18,8 +18,6 @@ import {
 import bcrypt from 'bcryptjs';
 import {
   signAccessToken,
-  signEmailVerificationToken,
-  signPasswordResetToken,
   signRefreshToken,
   verifyEmailVerificationToken,
   verifyPasswordResetToken,
@@ -30,7 +28,10 @@ class AuthService {
   async register(props: Register) {
     const createdUser = await usersService.create(props);
 
-    await this.signAndQueueEmailVerification(createdUser.id, createdUser.email);
+    await emailQueueService.queueEmailVerification({
+      userId: createdUser.id,
+      email: createdUser.email,
+    });
 
     return createdUser;
   }
@@ -55,7 +56,7 @@ class AuthService {
     this.ensureEmailNotVerified(user);
 
     const email = user.pendingEmail || user.email;
-    await this.signAndQueueEmailVerification(user.id, email);
+    await emailQueueService.queueEmailVerification({ userId: user.id, email });
 
     return { email };
   }
@@ -64,8 +65,10 @@ class AuthService {
     const user = await usersService.getByEmail(email);
     this.ensureUserVerifiedAndActive(user);
 
-    const token = signPasswordResetToken({ userId: user.id });
-    await emailQueueService.queuePasswordReset({ email: user.email, token });
+    await emailQueueService.queuePasswordReset({
+      userId: user.id,
+      email: user.email,
+    });
   }
 
   async resetPassword({ token, newPassword }: ResetPassword) {
@@ -113,11 +116,6 @@ class AuthService {
   }) {
     if (!user.emailVerified) throw EmailNotVerifiedError;
     if (!user.isActive) throw AccessDeniedError;
-  }
-
-  private async signAndQueueEmailVerification(userId: string, email: string) {
-    const token = signEmailVerificationToken({ userId });
-    await emailQueueService.queueEmailVerification({ email, token });
   }
 }
 
