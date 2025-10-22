@@ -7,6 +7,10 @@ import {
   SMTP_USER,
 } from '@/config/env';
 import { PATHS } from '@/constants/paths';
+import {
+  signEmailVerificationToken,
+  signPasswordResetToken,
+} from '@/features/auth/utils/jwt-handlers';
 import nodemailer from 'nodemailer';
 import { EmailPayload } from './types';
 
@@ -18,7 +22,8 @@ class EmailService {
       SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined, // "auth" only required in production
   });
 
-  async sendEmailVerification({ email, token }: EmailPayload) {
+  async sendEmailVerification({ userId, email }: EmailPayload) {
+    const token = signEmailVerificationToken({ userId });
     const link = this.buildTokenLink(PATHS.AUTH_VERIFY_EMAIL, token);
 
     await EmailService.transporter.sendMail({
@@ -29,7 +34,8 @@ class EmailService {
     });
   }
 
-  async sendPasswordReset({ email, token }: EmailPayload) {
+  async sendPasswordReset({ userId, email }: EmailPayload) {
+    const token = signPasswordResetToken({ userId });
     const link = this.buildTokenLink(PATHS.AUTH_RESET_PASSWORD, token);
 
     await EmailService.transporter.sendMail({
