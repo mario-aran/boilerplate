@@ -13,15 +13,6 @@ export const register = controllerCatchAsync(
   },
 );
 
-export const resendEmailVerification = controllerCatchAsync(
-  async (req: Request, res: Response) => {
-    const { email } = await authService.resendEmailVerification(req.body);
-    res.json({
-      message: `Verification email will be sent shortly to ${email}`,
-    });
-  },
-);
-
 export const verifyEmail = controllerCatchAsync(
   async (req: Request, res: Response) => {
     await authService.verifyEmail(req.body);
@@ -29,17 +20,12 @@ export const verifyEmail = controllerCatchAsync(
   },
 );
 
-export const login = controllerCatchAsync(
+export const resendEmailVerification = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const result = await authService.login(req.body);
-    res.json(result);
-  },
-);
-
-export const refreshToken = controllerCatchAsync(
-  async (req: Request, res: Response) => {
-    const result = await authService.refreshToken(req.body);
-    res.json(result);
+    const { email } = await authService.resendEmailVerification(req.body);
+    res.json({
+      message: `Verification email will be sent shortly to ${email}`,
+    });
   },
 );
 
@@ -54,5 +40,19 @@ export const resetPassword = controllerCatchAsync(
   async (req: Request, res: Response) => {
     await authService.resetPassword(req.body);
     res.json({ message: 'Password has been reset successfully' });
+  },
+);
+
+export const login = controllerCatchAsync(
+  async (req: Request, res: Response) => {
+    const result = await authService.login(req.body);
+    res.json(result);
+  },
+);
+
+export const refreshToken = controllerCatchAsync(
+  async (req: Request, res: Response) => {
+    const result = await authService.refreshToken(req.body);
+    res.json(result);
   },
 );
