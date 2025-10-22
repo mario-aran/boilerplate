@@ -1,5 +1,5 @@
-import { HttpError } from '@/utils/http-error';
 import { StatusCodes } from 'http-status-codes';
+import { HttpError } from './http-error';
 
 // ---------------------------
 // 401 UNAUTHORIZED
