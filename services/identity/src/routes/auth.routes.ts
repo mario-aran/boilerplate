@@ -29,27 +29,15 @@ authRoutes.post(
 );
 
 authRoutes.post(
-  PATH_SEGMENTS.RESEND_EMAIL_VERIFICATION,
-  zodValidator({ body: resendEmailVerificationSchema }),
-  resendEmailVerification,
-);
-
-authRoutes.post(
   PATH_SEGMENTS.VERIFY_EMAIL,
   zodValidator({ body: verifyEmailSchema }),
   verifyEmail,
 );
 
 authRoutes.post(
-  PATH_SEGMENTS.LOGIN,
-  zodValidator({ body: loginSchema }),
-  login,
-);
-
-authRoutes.post(
-  PATH_SEGMENTS.REFRESH_TOKEN,
-  zodValidator({ body: refreshTokenSchema }),
-  refreshToken,
+  PATH_SEGMENTS.RESEND_EMAIL_VERIFICATION,
+  zodValidator({ body: resendEmailVerificationSchema }),
+  resendEmailVerification,
 );
 
 authRoutes.post(
@@ -62,4 +50,16 @@ authRoutes.post(
   PATH_SEGMENTS.RESET_PASSWORD,
   zodValidator({ body: resetPasswordSchema }),
   resetPassword,
+);
+
+authRoutes.post(
+  PATH_SEGMENTS.LOGIN,
+  zodValidator({ body: loginSchema }),
+  login,
+);
+
+authRoutes.post(
+  PATH_SEGMENTS.REFRESH_TOKEN,
+  zodValidator({ body: refreshTokenSchema }),
+  refreshToken,
 );
