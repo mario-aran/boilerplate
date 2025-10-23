@@ -7,6 +7,13 @@ import {
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
 import {
+  signAccessToken,
+  signRefreshToken,
+  verifyEmailVerificationToken,
+  verifyPasswordResetToken,
+  verifyRefreshToken,
+} from '@/lib/jwt/jwt-handlers';
+import {
   ForgotPassword,
   Login,
   RefreshToken,
@@ -16,13 +23,6 @@ import {
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
 import bcrypt from 'bcryptjs';
-import {
-  signAccessToken,
-  signRefreshToken,
-  verifyEmailVerificationToken,
-  verifyPasswordResetToken,
-  verifyRefreshToken,
-} from './utils/jwt-handlers';
 
 class AuthService {
   async register(props: Register) {
