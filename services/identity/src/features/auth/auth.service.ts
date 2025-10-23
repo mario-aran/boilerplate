@@ -40,7 +40,7 @@ class AuthService {
     const { userId } = verifyEmailVerificationToken(token);
 
     const user = await usersService.get(userId);
-    this.ensureEmailNotVerified(user);
+    this.guardEmailNotVerified(user);
 
     const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
@@ -53,7 +53,7 @@ class AuthService {
 
   async resendEmailVerification({ currentEmail }: ResendEmailVerification) {
     const user = await usersService.getByEmail(currentEmail);
-    this.ensureEmailNotVerified(user);
+    this.guardEmailNotVerified(user);
 
     const email = user.pendingEmail || user.email;
     await emailQueueService.queueEmailVerification({ userId: user.id, email });
@@ -63,7 +63,7 @@ class AuthService {
 
   async forgotPassword({ email }: ForgotPassword) {
     const user = await usersService.getByEmail(email);
-    this.ensureUserVerifiedAndActive(user);
+    this.guardUserVerifiedAndActive(user);
 
     await emailQueueService.queuePasswordReset({
       userId: user.id,
@@ -74,15 +74,15 @@ class AuthService {
   async resetPassword({ token, newPassword }: ResetPassword) {
     const { userId } = verifyPasswordResetToken(token);
 
-    const user = await usersService.getForAuth(userId);
+    const user = await usersService.getWithPassword(userId);
     if (!user.isActive) throw AccessDeniedError;
 
     await usersService.update(user.id, { password: newPassword });
   }
 
   async login({ email, password }: Login) {
-    const user = await usersService.getByEmailForAuth(email);
-    this.ensureUserVerifiedAndActive(user);
+    const user = await usersService.getByEmailWithPassword(email);
+    this.guardUserVerifiedAndActive(user);
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) throw InvalidCredentialsError;
@@ -102,7 +102,7 @@ class AuthService {
     return { accessToken: signAccessToken({ userId: user.id }) };
   }
 
-  private ensureEmailNotVerified(user: {
+  private guardEmailNotVerified(user: {
     emailVerified: boolean;
     pendingEmail: string | null;
   }) {
@@ -110,7 +110,7 @@ class AuthService {
       throw EmailAlreadyVerifiedError;
   }
 
-  private ensureUserVerifiedAndActive(user: {
+  private guardUserVerifiedAndActive(user: {
     emailVerified: boolean;
     isActive: boolean;
   }) {
