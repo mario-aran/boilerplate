@@ -12,7 +12,7 @@ import {
   verifyEmailVerificationToken,
   verifyPasswordResetToken,
   verifyRefreshToken,
-} from '@/lib/jwt/jwt-handlers';
+} from '@/lib/jwt/utils';
 import {
   ForgotPassword,
   Login,
