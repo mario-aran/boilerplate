@@ -2,10 +2,10 @@ import {
   AccessDeniedError,
   EmailAlreadyVerifiedError,
   EmailNotVerifiedError,
-  InvalidCredentialsError,
 } from '@/errors/http-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
+import { guardPassword } from '@/lib/bcrypt/utils';
 import {
   signAccessToken,
   signRefreshToken,
@@ -22,7 +22,6 @@ import {
   ResetPassword,
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
-import bcrypt from 'bcryptjs';
 
 class AuthService {
   async register(props: Register) {
@@ -83,9 +82,7 @@ class AuthService {
   async login({ email, password }: Login) {
     const user = await usersService.getByEmailWithPassword(email);
     this.guardUserVerifiedAndActive(user);
-
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) throw InvalidCredentialsError;
+    guardPassword(password, user.password);
 
     return {
       accessToken: signAccessToken({ userId: user.id }),
