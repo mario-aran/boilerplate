@@ -1,26 +1,43 @@
+/*
+Docs:
+- https://typescript-eslint.io/getting-started/typed-linting#shared-configurations
+- https://typescript-eslint.io/users/configs#disable-type-checked
+*/
+
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginCheckFile from 'eslint-plugin-check-file';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
-export default defineConfig([
+export default defineConfig(
+  // ---------------------------
+  // IGNORES
+  // ---------------------------
+
   globalIgnores(['coverage', 'dist', 'migrations', 'resources']),
+
+  // ---------------------------
+  // BASE RULES
+  // ---------------------------
+
+  // "eslint"
+  eslint.configs.recommended,
+
+  // "typescript-eslint"
+  tseslint.configs.strictTypeChecked, // "strict" with type information
+  tseslint.configs.stylisticTypeChecked, // "stylistic" with type information
+
+  // ---------------------------
+  // SETTINGS
+  // ---------------------------
+
   {
-    files: ['**/*.ts'],
     languageOptions: {
       parserOptions: {
-        projectService: true, // Enables "lint with type information"
+        projectService: true, // Enables linting with type information
       },
     },
-    extends: [
-      // "eslint"
-      eslint.configs.recommended,
-
-      // "typescript-eslint"
-      tseslint.configs.strictTypeChecked, // "strict" with type information
-      tseslint.configs.stylisticTypeChecked, // "stylistic" with type information
-    ],
     plugins: { 'check-file': eslintPluginCheckFile },
     rules: {
       // "eslint"
@@ -55,5 +72,16 @@ export default defineConfig([
       ],
     },
   },
-  eslintConfigPrettier, // "eslint-config-prettier": must be placed last
-]);
+
+  // ---------------------------
+  // OVERRIDES
+  // ---------------------------
+
+  {
+    files: ['**/*.{js,jsx,mjs,cjs}'],
+    extends: [tseslint.configs.disableTypeChecked], // Disables linting with type information
+  },
+
+  // "eslint-config-prettier"
+  eslintConfigPrettier, // must be placed last to override other configs
+);
