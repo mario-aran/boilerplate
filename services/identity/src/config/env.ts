@@ -4,10 +4,10 @@ import { NODE_ENVIRONMENTS } from '@/constants/node-environments';
 // VALUES
 // ---------------------------
 
-const NODE_ENV = process.env.NODE_ENV || NODE_ENVIRONMENTS.DEVELOPMENT;
-export const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
-export const isDevelopment = NODE_ENV === NODE_ENVIRONMENTS.DEVELOPMENT;
+const NODE_ENV = process.env.NODE_ENV;
 export const isTest = NODE_ENV === NODE_ENVIRONMENTS.TEST;
+export const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
+export const isDevelopment = !isProduction && !isTest;
 
 // ---------------------------
 // GUARDS
@@ -16,7 +16,10 @@ export const isTest = NODE_ENV === NODE_ENVIRONMENTS.TEST;
 if (!isProduction) {
   // Disabled eslint: use "require()" to load dotenv synchronously
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require('dotenv').config({ path: '.env.dev', quiet: isTest });
+  (require('dotenv') as typeof import('dotenv')).config({
+    path: '.env.dev',
+    quiet: isTest,
+  });
 }
 
 // ---------------------------
@@ -30,7 +33,10 @@ const getRequiredEnv = (key: string) => {
   return value;
 };
 
-const getOptionalEnv = (key: string) => process.env[key] || undefined;
+const getOptionalEnv = (key: string) => {
+  const env = process.env[key];
+  return (env === '' ? undefined : env) ?? undefined;
+};
 
 // ---------------------------
 // ENV VARIABLES
