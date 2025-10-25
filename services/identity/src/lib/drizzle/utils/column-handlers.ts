@@ -29,7 +29,7 @@ export const getSortableColumns = <
 ) => {
   const columns = getTableColumns(table);
   const result = Object.keys(columns).flatMap((col) =>
-    excluded?.includes(col as ExCol) ? [] : [`${col}`, `-${col}`],
+    excluded?.includes(col as ExCol) ? [] : [col, `-${col}`],
   );
 
   return result as [
