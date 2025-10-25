@@ -36,8 +36,8 @@ describe('zodValidator', () => {
     expect(err).toBeInstanceOf(HttpError);
     expect(err.status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
     expect(err.validationErrors?.[0]).toMatchObject({
-      field: expect.any(String),
-      message: expect.any(String),
+      field: expect.any(String) as unknown,
+      message: expect.any(String) as unknown,
     });
   });
 
