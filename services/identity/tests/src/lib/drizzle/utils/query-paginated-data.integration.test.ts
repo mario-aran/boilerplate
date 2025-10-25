@@ -11,7 +11,7 @@ import { ilike } from 'drizzle-orm';
 
 const createMockUsers = (count: number) =>
   faker.helpers
-    .uniqueArray(faker.internet.email, count)
+    .uniqueArray(() => faker.internet.email(), count)
     .map((email): UserInsert => ({ email, password: 'x' }));
 
 // ---------------------------
