@@ -52,7 +52,7 @@ const seedFakeData = async () => {
 // SCRIPT
 // ---------------------------
 
-(async () => {
+void (async () => {
   await scriptCatchAsync(async () => {
     await truncateTables();
     await seedSystemData();
