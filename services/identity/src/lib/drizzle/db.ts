@@ -27,7 +27,7 @@ export const checkDbConnection = async () => {
     await pool.query('SELECT 1');
     logger.info('Database connection verified');
   } catch (err) {
-    logger.error(`Database connection failed: ${err}. Exiting`);
+    logger.error(`Database connection failed: ${String(err)}. Exiting`);
     process.exit(1);
   }
 };
