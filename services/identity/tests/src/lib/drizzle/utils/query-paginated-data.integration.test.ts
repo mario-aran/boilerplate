@@ -66,7 +66,7 @@ describe('queryPaginatedData', () => {
         prevPage,
         nextPage,
         offset,
-        data: expect.any(Array),
+        data: expect.any(Array) as unknown,
       });
       expect(result.data).toHaveLength(length);
     }
