@@ -52,6 +52,6 @@ export const errorHandler = (
     }
   }
 
-  logger.error(err.stack || message);
+  logger.error(err.stack ?? message);
   res.status(status).json({ message, validationErrors });
 };
