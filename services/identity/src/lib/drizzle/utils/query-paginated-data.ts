@@ -18,7 +18,7 @@ interface CalculatePaginationProps {
 
 interface QueryPaginatedDataProps<T extends AnyPgTable> {
   table: TableLikeHasEmptySelection<T> extends true ? never : T;
-  filters?: SQL<unknown>;
+  filters?: SQL;
   sort?: string | string[];
   limit?: number;
   page?: number;
