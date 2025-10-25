@@ -18,19 +18,20 @@ export const zodValidator =
       body?.parse(req.body);
 
       // Succeeded
-      return next();
+      next();
     } catch (err) {
       // Failed: zod error
       if (err instanceof ZodError) {
         const validationErrors = err.issues.map((issue) => ({
-          field: `${issue.path.join('.')}`,
+          field: issue.path.join('.'),
           message: issue.message,
         }));
 
-        return next(buildValidationFailedError(validationErrors));
+        next(buildValidationFailedError(validationErrors));
+        return;
       }
 
       // Failed: regular error
-      return next(err);
+      next(err);
     }
   };
