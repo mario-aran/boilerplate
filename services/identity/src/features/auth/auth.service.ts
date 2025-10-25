@@ -22,6 +22,7 @@ import {
   ResetPassword,
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
+import { coerceFalsyToUndefined } from '@/utils/coerce';
 
 class AuthService {
   async register(props: Register) {
@@ -44,7 +45,7 @@ class AuthService {
     const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
       emailVerified: user.emailVerified ? undefined : true, // Don't update if already true
-      email: user.pendingEmail || undefined, // Prevent empty string
+      email: coerceFalsyToUndefined(user.pendingEmail) ?? undefined, // Prevent empty string
       pendingEmail: null,
     });
     return { email };
@@ -54,7 +55,7 @@ class AuthService {
     const user = await usersService.getByEmail(currentEmail);
     this.guardEmailNotVerified(user);
 
-    const email = user.pendingEmail || user.email;
+    const email = coerceFalsyToUndefined(user.pendingEmail) ?? user.email;
     await emailQueueService.queueEmailVerification({ userId: user.id, email });
 
     return { email };
@@ -82,7 +83,7 @@ class AuthService {
   async login({ email, password }: Login) {
     const user = await usersService.getByEmailWithPassword(email);
     this.guardUserVerifiedAndActive(user);
-    guardPassword(password, user.password);
+    await guardPassword(password, user.password);
 
     return {
       accessToken: signAccessToken({ userId: user.id }),
