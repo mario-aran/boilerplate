@@ -7,7 +7,7 @@ import { checkDbConnection } from './lib/drizzle/db';
 import { logger } from './lib/logger/winston-logger';
 import { checkQueueConnection } from './lib/redis/bullmq/clients';
 
-(async () => {
+void (async () => {
   // Check connections
   await checkDbConnection();
   await checkQueueConnection();
@@ -15,7 +15,9 @@ import { checkQueueConnection } from './lib/redis/bullmq/clients';
   // Start app
   const server = app.listen(PORT, () => {
     const { address, port } = server.address() as AddressInfo;
-    logger.info(`Application started successfully: http://${address}:${port}`);
+    logger.info(
+      `Application started successfully: http://${address}:${String(port)}`,
+    );
   });
   server.on('error', (err) => {
     logger.error(`Application failed to start: ${err}. Exiting`);
