@@ -35,7 +35,7 @@ const getRequiredEnv = (key: string) => {
 
 const getOptionalEnv = (key: string) => {
   const env = process.env[key];
-  return (env === '' ? undefined : env) ?? undefined;
+  return env === '' ? undefined : env;
 };
 
 // ---------------------------
