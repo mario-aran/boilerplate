@@ -3,7 +3,7 @@
 import { checkDbConnection } from '@/lib/drizzle/db';
 import { verificationEmailWorker } from './verification-email.worker';
 
-(async () => {
+void (async () => {
   // Check connections
   await checkDbConnection();
 
