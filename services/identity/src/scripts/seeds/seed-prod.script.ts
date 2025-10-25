@@ -3,6 +3,6 @@
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { seedSystemData } from './utils/seed-system-data';
 
-(async () => {
+void (async () => {
   await scriptCatchAsync(seedSystemData);
 })();
