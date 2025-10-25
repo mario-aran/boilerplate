@@ -19,16 +19,18 @@ class UsersSeedService {
 
   async seedFake(count: number) {
     return this.seedUsers(
-      faker.helpers.uniqueArray(faker.internet.email, count).map(
-        (email): UserInsert => ({
-          email,
-          emailVerified: true,
-          emailVerifiedAt: new Date(),
-          password: email,
-          firstName: faker.person.firstName(),
-          lastName: faker.person.lastName(),
-        }),
-      ),
+      faker.helpers
+        .uniqueArray(() => faker.internet.email(), count)
+        .map(
+          (email): UserInsert => ({
+            email,
+            emailVerified: true,
+            emailVerifiedAt: new Date(),
+            password: email,
+            firstName: faker.person.firstName(),
+            lastName: faker.person.lastName(),
+          }),
+        ),
     );
   }
 
