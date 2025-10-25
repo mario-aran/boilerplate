@@ -13,10 +13,10 @@ export const createWorker = ({ name, processor }: CreateWorkerProps) => {
     connection: workerClient,
   });
   worker.on('completed', (job) =>
-    logger.info(`${name} job ${job.id} has completed`),
+    logger.info(`${name} job ${String(job.id)} has completed`),
   );
   worker.on('failed', (job, err) =>
-    logger.error(`${name} job ${job?.id} has failed: ${err.message}`),
+    logger.error(`${name} job ${String(job?.id)} has failed: ${err.message}`),
   );
 
   // Return initialized worker
