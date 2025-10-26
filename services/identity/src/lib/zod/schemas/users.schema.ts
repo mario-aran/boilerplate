@@ -21,8 +21,8 @@ export type UsersParams = z.infer<typeof usersParamsSchema>;
 export type GetUsers = z.infer<typeof getUsersSchema>;
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type UpdateUserMe = z.infer<typeof updateUserMeSchema>;
-export type UpdateUserEmail = z.infer<typeof updateUserEmailSchema>;
-export type UpdateUserPassword = z.infer<typeof updateUserPasswordSchema>;
+export type UpdateUserMeEmail = z.infer<typeof updateUserMeEmailSchema>;
+export type UpdateUserMePassword = z.infer<typeof updateUserMePasswordSchema>;
 
 // ---------------------------
 // FIELDS
@@ -46,9 +46,9 @@ export const updateUserSchema = z
   .partial();
 
 export const updateUserMeSchema = updateUserSchema.omit({ roleId: true });
-export const updateUserEmailSchema = z.strictObject({ newEmail });
+export const updateUserMeEmailSchema = z.strictObject({ newEmail });
 
-export const updateUserPasswordSchema = z.strictObject({
+export const updateUserMePasswordSchema = z.strictObject({
   currentPassword,
   newPassword,
 });

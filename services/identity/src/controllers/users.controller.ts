@@ -3,9 +3,9 @@ import { usersService } from '@/features/users/users.service';
 import {
   GetUsers,
   UpdateUser,
-  UpdateUserEmail,
   UpdateUserMe,
-  UpdateUserPassword,
+  UpdateUserMeEmail,
+  UpdateUserMePassword,
   UsersParams,
 } from '@/lib/zod/schemas/users.schema';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
@@ -37,17 +37,20 @@ export const updateUserMe = controllerCatchAsync(
 );
 
 export const updateUserMeEmail = controllerCatchAsync(
-  async (req: Request<unknown, unknown, UpdateUserEmail>, res: Response) => {
+  async (req: Request<unknown, unknown, UpdateUserMeEmail>, res: Response) => {
     const { user } = req;
     if (!user) throw AccessDeniedError;
 
-    await usersService.updateEmail(user.id, req.body);
+    await usersService.requestEmailChange(user.id, req.body);
     res.json({ message: 'Verification email will be sent shortly' });
   },
 );
 
 export const updateUserMePassword = controllerCatchAsync(
-  async (req: Request<unknown, unknown, UpdateUserPassword>, res: Response) => {
+  async (
+    req: Request<unknown, unknown, UpdateUserMePassword>,
+    res: Response,
+  ) => {
     const { user } = req;
     if (!user) throw AccessDeniedError;
 
