@@ -10,7 +10,7 @@ import {
 import {
   createRoleSchema,
   getRolesSchema,
-  roleIdSchema,
+  rolesParamsSchema,
   updateRoleSchema,
 } from '@/lib/zod/schemas/roles.schema';
 import { authenticateAndAuthorize } from '@/middleware/authenticate-and-authorize';
@@ -29,7 +29,7 @@ rolesRoutes.get(
 rolesRoutes.get(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.READ_ROLE),
-  zodValidator({ params: roleIdSchema }),
+  zodValidator({ params: rolesParamsSchema }),
   getRole,
 );
 
@@ -43,13 +43,13 @@ rolesRoutes.post(
 rolesRoutes.patch(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.UPDATE_ROLE),
-  zodValidator({ params: roleIdSchema, body: updateRoleSchema }),
+  zodValidator({ params: rolesParamsSchema, body: updateRoleSchema }),
   updateRole,
 );
 
 rolesRoutes.delete(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.DELETE_ROLE),
-  zodValidator({ params: roleIdSchema }),
+  zodValidator({ params: rolesParamsSchema }),
   deleteRole,
 );

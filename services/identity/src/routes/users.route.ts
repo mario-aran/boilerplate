@@ -16,7 +16,7 @@ import {
   updateUserMeSchema,
   updateUserPasswordSchema,
   updateUserSchema,
-  userIdSchema,
+  usersParamsSchema,
 } from '@/lib/zod/schemas/users.schema';
 import { authenticateAndAuthorize } from '@/middleware/authenticate-and-authorize';
 import { zodValidator } from '@/middleware/zod-validator';
@@ -65,20 +65,20 @@ usersRoutes.get(
 usersRoutes.get(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.READ_USER),
-  zodValidator({ params: userIdSchema }),
+  zodValidator({ params: usersParamsSchema }),
   getUser,
 );
 
 usersRoutes.patch(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.UPDATE_USER),
-  zodValidator({ params: userIdSchema, body: updateUserSchema }),
+  zodValidator({ params: usersParamsSchema, body: updateUserSchema }),
   updateUser,
 );
 
 usersRoutes.delete(
   PATH_SEGMENTS.ID,
   authenticateAndAuthorize(PERMISSIONS.DELETE_USER),
-  zodValidator({ params: userIdSchema }),
+  zodValidator({ params: usersParamsSchema }),
   deleteUser,
 );
