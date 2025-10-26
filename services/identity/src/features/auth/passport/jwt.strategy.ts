@@ -9,8 +9,8 @@ export const jwtStrategy = new Strategy(
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: JWT_ACCESS_SECRET,
   },
-  (payload: JwtPayload, done) =>
-    void usersService
+  (payload: JwtPayload, done) => {
+    usersService
       .get(payload.userId)
       .then((user) => {
         // Check if user exists
@@ -22,5 +22,6 @@ export const jwtStrategy = new Strategy(
       .catch((err: unknown) => {
         // Pass error it to "passport.authenticate"
         done(err, false);
-      }),
+      });
+  },
 );
