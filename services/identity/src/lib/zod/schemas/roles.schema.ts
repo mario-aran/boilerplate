@@ -12,6 +12,7 @@ import { z } from 'zod';
 // TYPES
 // ---------------------------
 
+export type RolesParams = z.infer<typeof rolesParamsSchema>;
 export type GetRoles = z.infer<typeof getRolesSchema>;
 export type CreateRole = z.infer<typeof createRoleSchema>;
 export type UpdateRole = z.infer<typeof updateRoleSchema>;
@@ -27,7 +28,7 @@ const sort = sortRoles;
 // SCHEMAS
 // ---------------------------
 
-export const roleIdSchema = z.strictObject({ id });
+export const rolesParamsSchema = z.strictObject({ id });
 
 export const getRolesSchema = z
   .strictObject({ limit, page, sort, search })
