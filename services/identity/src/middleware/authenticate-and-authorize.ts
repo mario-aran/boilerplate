@@ -1,32 +1,43 @@
 import { Permission } from '@/constants/permissions';
 import { ForbiddenError, UnauthorizedError } from '@/errors/http-errors';
 import { UsersServiceGetResult } from '@/features/users/users.service';
-import { NextFunction, Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import passport from 'passport';
 
+type AuthenticateAndAuthorize = (permission?: Permission) => RequestHandler;
 type PassportUser = UsersServiceGetResult | false;
 
-export const authenticateAndAuthorize =
-  (permission?: Permission) =>
-  (req: Request, res: Response, next: NextFunction) =>
-    passport.authenticate(
+export const authenticateAndAuthorize: AuthenticateAndAuthorize =
+  (permission) => (req, res, next) => {
+    const authenticateJwt = passport.authenticate(
       'jwt',
       { session: false },
       (err: unknown, user: PassportUser) => {
         // Authenticate: check strategy errors
-        if (err) return next(err);
+        if (err) {
+          next(err);
+          return;
+        }
 
         // Authenticate: check invalid or missing JWT
-        if (!user) return next(UnauthorizedError);
+        if (!user) {
+          next(UnauthorizedError);
+          return;
+        }
 
         // Authenticate: requires manually attaching "req.user" in passport callback mode
         req.user = user;
 
         // Authorize: check if user has permission
-        if (permission && !user.permissionIds.includes(permission))
-          return next(ForbiddenError);
+        if (permission && !user.permissionIds.includes(permission)) {
+          next(ForbiddenError);
+          return;
+        }
 
         // Succeeded
-        return next();
+        next();
       },
-    )(req, res, next);
+    ) as RequestHandler;
+
+    return authenticateJwt(req, res, next);
+  };
