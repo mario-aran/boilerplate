@@ -1,4 +1,4 @@
-import { SelfActionError } from '@/errors/http-errors';
+import { SelfActionError } from '@/errors/api-errors';
 import { requireReqUser } from '@/features/auth/require-req-user';
 import { usersService } from '@/features/users/users.service';
 import {
