@@ -1,4 +1,4 @@
-import { HttpError } from '@/errors/http-error';
+import { ApiError } from '@/errors/utils/api-error';
 import { zodValidator } from '@/middleware/zod-validator';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
@@ -31,9 +31,9 @@ describe('zodValidator', () => {
 
     zodValidator({ body })(req, res, next);
 
-    const err = next.mock.calls[0][0] as HttpError;
+    const err = next.mock.calls[0][0] as ApiError;
     expect(next).toHaveBeenCalledOnce();
-    expect(err).toBeInstanceOf(HttpError);
+    expect(err).toBeInstanceOf(ApiError);
     expect(err.status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
     expect(err.validationErrors?.[0]).toMatchObject({
       field: expect.any(String) as unknown,
