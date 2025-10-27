@@ -1,5 +1,5 @@
 import { JWT_ACCESS_SECRET } from '@/config/env';
-import { AccessDeniedError } from '@/errors/http-errors';
+import { AccessDeniedError } from '@/errors/api-errors';
 import { usersService } from '@/features/users/users.service';
 import { JwtPayload } from '@/lib/jwt/types';
 import { ExtractJwt, Strategy } from 'passport-jwt';
