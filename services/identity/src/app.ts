@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
-import { passportInit } from './features/auth/passport';
 import { morganInit } from './lib/logger/morgan-init';
+import { passportInit } from './lib/passport';
 import { errorHandler } from './middleware/error-handler';
 import { notFound } from './middleware/not-found';
 import { routes } from './routes';
