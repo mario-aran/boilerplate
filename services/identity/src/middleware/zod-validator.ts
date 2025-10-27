@@ -1,4 +1,4 @@
-import { buildValidationFailedError } from '@/errors/http-errors';
+import { buildValidationFailedError } from '@/errors/api-errors';
 import { NextFunction, Request, Response } from 'express';
 import { ZodError, ZodObject } from 'zod';
 
