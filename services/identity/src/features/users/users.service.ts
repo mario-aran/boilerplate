@@ -1,4 +1,4 @@
-import { buildEntityNotFoundError } from '@/errors/http-errors';
+import { buildEntityNotFoundError } from '@/errors/api-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { guardPassword, hashPassword } from '@/lib/bcrypt/utils';
 import { db } from '@/lib/drizzle/db';
