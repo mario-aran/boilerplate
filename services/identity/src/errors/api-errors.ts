@@ -1,55 +1,55 @@
 import { StatusCodes } from 'http-status-codes';
-import { HttpError } from './http-error';
+import { ApiError } from './utils/api-error';
 
 // ---------------------------
 // 401 UNAUTHORIZED
 // ---------------------------
 
-export const InvalidTokenError = new HttpError({
-  status: StatusCodes.UNAUTHORIZED,
-  message: 'Invalid token',
-});
-
-export const UnauthorizedError = new HttpError({
+export const UnauthorizedError = new ApiError({
   status: StatusCodes.UNAUTHORIZED,
   message: 'Unauthorized',
+});
+
+export const InvalidCredentialsError = new ApiError({
+  status: StatusCodes.UNAUTHORIZED,
+  message: 'Invalid credentials',
+});
+
+export const InvalidTokenError = new ApiError({
+  status: StatusCodes.UNAUTHORIZED,
+  message: 'Invalid token',
 });
 
 // ---------------------------
 // 403 FORBIDDEN
 // ---------------------------
 
-export const AccessDeniedError = new HttpError({
+export const AccessDeniedError = new ApiError({
   status: StatusCodes.FORBIDDEN,
   message: 'Access denied',
 });
 
-export const EmailNotVerifiedError = new HttpError({
+export const EmailNotVerifiedError = new ApiError({
   status: StatusCodes.FORBIDDEN,
   message: 'Email not verified',
 });
 
-export const ForbiddenError = new HttpError({
+export const SelfActionError = new ApiError({
   status: StatusCodes.FORBIDDEN,
-  message: 'Forbidden',
-});
-
-export const InvalidCredentialsError = new HttpError({
-  status: StatusCodes.FORBIDDEN,
-  message: 'Invalid credentials',
+  message: 'Action not allowed on own account',
 });
 
 // ---------------------------
 // 404 NOT FOUND
 // ---------------------------
 
-export const NotFoundError = new HttpError({
+export const NotFoundError = new ApiError({
   status: StatusCodes.NOT_FOUND,
   message: 'Not found',
 });
 
 export const buildEntityNotFoundError = (entity: string) =>
-  new HttpError({
+  new ApiError({
     status: StatusCodes.NOT_FOUND,
     message: `${entity} not found`,
   });
@@ -58,7 +58,7 @@ export const buildEntityNotFoundError = (entity: string) =>
 // 409 CONFLICT
 // ---------------------------
 
-export const EmailAlreadyVerifiedError = new HttpError({
+export const EmailAlreadyVerifiedError = new ApiError({
   status: StatusCodes.CONFLICT,
   message: 'Email already verified',
 });
@@ -68,9 +68,9 @@ export const EmailAlreadyVerifiedError = new HttpError({
 // ---------------------------
 
 export const buildValidationFailedError = (
-  validationErrors: HttpError['validationErrors'],
+  validationErrors: ApiError['validationErrors'],
 ) =>
-  new HttpError({
+  new ApiError({
     status: StatusCodes.UNPROCESSABLE_ENTITY,
     message: 'Validation failed',
     validationErrors,

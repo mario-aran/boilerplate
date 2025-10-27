@@ -1,16 +1,16 @@
 type ValidationErrors = Record<string, string>[];
 
-interface HttpErrorProps {
+interface ApiErrorProps {
   message: string;
   status: number;
   validationErrors?: ValidationErrors;
 }
 
-export class HttpError extends Error {
+export class ApiError extends Error {
   readonly status: number;
   readonly validationErrors?: ValidationErrors;
 
-  constructor({ message, status, validationErrors }: HttpErrorProps) {
+  constructor({ message, status, validationErrors }: ApiErrorProps) {
     super(message);
     this.status = status;
     this.validationErrors = validationErrors;
