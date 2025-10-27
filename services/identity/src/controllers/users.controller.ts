@@ -41,7 +41,7 @@ export const updateUserMeEmail = controllerCatchAsync(
     const { user } = req;
     if (!user) throw AccessDeniedError;
 
-    await usersService.requestEmailChange(user.id, req.body);
+    await usersService.requestEmailUpdate(user.id, req.body);
     res.json({ message: 'Verification email will be sent shortly' });
   },
 );
