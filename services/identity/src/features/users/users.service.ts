@@ -7,7 +7,6 @@ import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import { Register } from '@/lib/zod/schemas/auth.schema';
 import {
   GetUsers,
-  UpdateUser,
   UpdateUserMeEmail,
   UpdateUserMePassword,
 } from '@/lib/zod/schemas/users.schema';
@@ -90,17 +89,20 @@ class UsersService {
     return this.omitPassword(createdUsers[0]);
   }
 
-  async update(id: string, props: UpdateUser) {
-    return this.applyUpdate(id, props);
-  }
+  async forceUpdate(
+    id: string,
+    { password, ...restOfProps }: Partial<UserInsert>,
+  ) {
+    const hashedPassword = password ? await hashPassword(password) : undefined;
 
-  async requestEmailUpdate(id: string, { newEmail }: UpdateUserMeEmail) {
-    await usersService.applyUpdate(id, { pendingEmail: newEmail });
+    const updatedUsers = await db
+      .update(usersTable)
+      .set({ ...restOfProps, password: hashedPassword })
+      .where(eq(usersTable.id, id))
+      .returning();
+    if (!updatedUsers.length) throw UserNotFoundError;
 
-    await emailQueueService.queueEmailVerification({
-      userId: id,
-      email: newEmail,
-    });
+    return this.omitPassword(updatedUsers[0]);
   }
 
   async updatePassword(
@@ -110,11 +112,16 @@ class UsersService {
     const user = await usersService.getWithPassword(id);
     await guardPassword(currentPassword, user.password);
 
-    await this.applyUpdate(user.id, { password: newPassword });
+    await this.forceUpdate(user.id, { password: newPassword });
   }
 
-  async forceUpdatePassword(id: string, password: string) {
-    await this.applyUpdate(id, { password });
+  async requestEmailUpdate(id: string, { newEmail }: UpdateUserMeEmail) {
+    await usersService.forceUpdate(id, { pendingEmail: newEmail });
+
+    await emailQueueService.queueEmailVerification({
+      userId: id,
+      email: newEmail,
+    });
   }
 
   async delete(id: string) {
@@ -152,22 +159,6 @@ class UsersService {
     const { role, ...restOfUser } = user;
     const permissionIds = role.rolesToPermissions.map((el) => el.permissionId);
     return { ...restOfUser, permissionIds };
-  }
-
-  private async applyUpdate(
-    id: string,
-    { password, ...restOfProps }: Partial<UserInsert>,
-  ) {
-    const hashedPassword = password ? await hashPassword(password) : undefined;
-
-    const updatedUsers = await db
-      .update(usersTable)
-      .set({ ...restOfProps, password: hashedPassword })
-      .where(eq(usersTable.id, id))
-      .returning();
-    if (!updatedUsers.length) throw UserNotFoundError;
-
-    return this.omitPassword(updatedUsers[0]);
   }
 }
 
