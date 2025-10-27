@@ -1,4 +1,4 @@
-import { HttpError } from '@/errors/http-error';
+import { ApiError } from '@/errors/utils/api-error';
 import { logger } from '@/lib/logger/winston-logger';
 import { DrizzleQueryError } from 'drizzle-orm';
 import { NextFunction, Request, Response } from 'express';
@@ -14,10 +14,10 @@ export const errorHandler = (
 ) => {
   let status = StatusCodes.INTERNAL_SERVER_ERROR;
   let message = 'Server error';
-  let validationErrors: HttpError['validationErrors'];
+  let validationErrors: ApiError['validationErrors'];
 
   // Check application error
-  if (err instanceof HttpError) {
+  if (err instanceof ApiError) {
     status = err.status;
     message = err.message;
     validationErrors = err.validationErrors;
