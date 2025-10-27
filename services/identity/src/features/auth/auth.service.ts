@@ -22,7 +22,7 @@ import {
   ResetPassword,
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
-import { coerceFalsyToUndefined } from '@/utils/coerce';
+import { coerceFalsyToUndefined } from '@/utils/coerce-falsy-to-undefined';
 
 class AuthService {
   async register(props: Register) {
