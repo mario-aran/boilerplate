@@ -1,4 +1,5 @@
-import { AccessDeniedError } from '@/errors/http-errors';
+import { SelfActionError } from '@/errors/http-errors';
+import { requireReqUser } from '@/features/auth/require-req-user';
 import { usersService } from '@/features/users/users.service';
 import {
   GetUsers,
@@ -8,6 +9,7 @@ import {
   UpdateUserMePassword,
   UsersParams,
 } from '@/lib/zod/schemas/users.schema';
+import { TypedRequest } from '@/types/typed-request';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
@@ -18,8 +20,7 @@ import { StatusCodes } from 'http-status-codes';
 
 export const getUserMe = controllerCatchAsync(
   async (req: Request, res: Response) => {
-    const { user } = req;
-    if (!user) throw AccessDeniedError;
+    const user = requireReqUser(req);
 
     const result = await usersService.get(user.id);
     res.json(result);
@@ -27,19 +28,17 @@ export const getUserMe = controllerCatchAsync(
 );
 
 export const updateUserMe = controllerCatchAsync(
-  async (req: Request<unknown, unknown, UpdateUserMe>, res: Response) => {
-    const { user } = req;
-    if (!user) throw AccessDeniedError;
+  async (req: TypedRequest<{ body: UpdateUserMe }>, res: Response) => {
+    const user = requireReqUser(req);
 
-    await usersService.update(user.id, req.body);
+    await usersService.forceUpdate(user.id, req.body);
     res.json({ message: 'User updated successfully' });
   },
 );
 
 export const updateUserMeEmail = controllerCatchAsync(
-  async (req: Request<unknown, unknown, UpdateUserMeEmail>, res: Response) => {
-    const { user } = req;
-    if (!user) throw AccessDeniedError;
+  async (req: TypedRequest<{ body: UpdateUserMeEmail }>, res: Response) => {
+    const user = requireReqUser(req);
 
     await usersService.requestEmailUpdate(user.id, req.body);
     res.json({ message: 'Verification email will be sent shortly' });
@@ -47,12 +46,8 @@ export const updateUserMeEmail = controllerCatchAsync(
 );
 
 export const updateUserMePassword = controllerCatchAsync(
-  async (
-    req: Request<unknown, unknown, UpdateUserMePassword>,
-    res: Response,
-  ) => {
-    const { user } = req;
-    if (!user) throw AccessDeniedError;
+  async (req: TypedRequest<{ body: UpdateUserMePassword }>, res: Response) => {
+    const user = requireReqUser(req);
 
     await usersService.updatePassword(user.id, req.body);
     res.json({ message: 'Password updated successfully' });
@@ -64,28 +59,34 @@ export const updateUserMePassword = controllerCatchAsync(
 // ---------------------------
 
 export const getUsers = controllerCatchAsync(
-  async (req: Request<unknown, unknown, unknown, GetUsers>, res: Response) => {
+  async (req: TypedRequest<{ query: GetUsers }>, res: Response) => {
     const result = await usersService.getAll(req.query);
     res.json(result);
   },
 );
 
 export const getUser = controllerCatchAsync(
-  async (req: Request<UsersParams>, res: Response) => {
+  async (req: TypedRequest<{ params: UsersParams }>, res: Response) => {
     const result = await usersService.get(req.params.id);
     res.json(result);
   },
 );
 
 export const updateUser = controllerCatchAsync(
-  async (req: Request<UsersParams, unknown, UpdateUser>, res: Response) => {
-    await usersService.update(req.params.id, req.body);
+  async (
+    req: TypedRequest<{ params: UsersParams; body: UpdateUser }>,
+    res: Response,
+  ) => {
+    await usersService.forceUpdate(req.params.id, req.body);
     res.json({ message: 'User updated successfully' });
   },
 );
 
 export const deleteUser = controllerCatchAsync(
-  async (req: Request<UsersParams>, res: Response) => {
+  async (req: TypedRequest<{ params: UsersParams }>, res: Response) => {
+    const user = requireReqUser(req);
+    if (req.params.id === user.id) throw SelfActionError;
+
     await usersService.delete(req.params.id);
     res.sendStatus(StatusCodes.NO_CONTENT);
   },
