@@ -1,5 +1,5 @@
 import { Permission } from '@/constants/permissions';
-import { ForbiddenError, UnauthorizedError } from '@/errors/http-errors';
+import { AccessDeniedError, UnauthorizedError } from '@/errors/api-errors';
 import { UsersServiceGetResult } from '@/features/users/users.service';
 import { RequestHandler } from 'express';
 import passport from 'passport';
@@ -30,7 +30,7 @@ export const authenticateAndAuthorize: AuthenticateAndAuthorize =
 
         // Authorize: check if user has permission
         if (permission && !user.permissionIds.includes(permission)) {
-          next(ForbiddenError);
+          next(AccessDeniedError);
           return;
         }
 
