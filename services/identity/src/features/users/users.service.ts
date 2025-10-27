@@ -116,11 +116,15 @@ class UsersService {
   }
 
   async requestEmailUpdate(id: string, { newEmail }: UpdateUserMeEmail) {
-    await usersService.forceUpdate(id, { pendingEmail: newEmail });
+    const updatedUser = await usersService.forceUpdate(id, {
+      pendingEmail: newEmail,
+    });
+    if (!updatedUser.pendingEmail)
+      throw new Error('pendingEmail should not be null');
 
     await emailQueueService.queueEmailVerification({
-      userId: id,
-      email: newEmail,
+      userId: updatedUser.id,
+      email: updatedUser.pendingEmail,
     });
   }
 
