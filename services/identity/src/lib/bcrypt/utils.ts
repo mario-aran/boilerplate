@@ -1,4 +1,4 @@
-import { InvalidCredentialsError } from '@/errors/http-errors';
+import { InvalidCredentialsError } from '@/errors/api-errors';
 import bcrypt from 'bcryptjs';
 
 export const hashPassword = async (password: string) =>

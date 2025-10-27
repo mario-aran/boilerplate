@@ -4,7 +4,7 @@ import {
   JWT_PASSWORD_RESET_SECRET,
   JWT_REFRESH_SECRET,
 } from '@/config/env';
-import { InvalidTokenError } from '@/errors/http-errors';
+import { InvalidTokenError } from '@/errors/api-errors';
 import { JwtPayload } from '@/lib/jwt/types';
 import jwt from 'jsonwebtoken';
 
