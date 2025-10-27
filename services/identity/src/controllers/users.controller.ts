@@ -1,5 +1,4 @@
 import { SelfActionError } from '@/errors/api-errors';
-import { requireReqUser } from '@/features/auth/require-req-user';
 import { usersService } from '@/features/users/users.service';
 import {
   GetUsers,
@@ -11,6 +10,7 @@ import {
 } from '@/lib/zod/schemas/users.schema';
 import { TypedRequest } from '@/types/typed-request';
 import { controllerCatchAsync } from '@/utils/controller-catch-async';
+import { requireReqUser } from '@/utils/require-req-user';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
