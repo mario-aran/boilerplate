@@ -1,4 +1,5 @@
-import { EntityNotFoundError } from '@/errors/http-errors';
+import { Permission } from '@/constants/permissions';
+import { buildEntityNotFoundError } from '@/errors/api-errors';
 import { db } from '@/lib/drizzle/db';
 import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
@@ -9,85 +10,93 @@ import {
 } from '@/lib/zod/schemas/roles.schema';
 import { eq, ilike } from 'drizzle-orm';
 
-const RoleNotFoundError = EntityNotFoundError('Role');
+// ---------------------------
+// VALUES
+// ---------------------------
+
+const RoleNotFoundError = buildEntityNotFoundError('Role');
+
+// ---------------------------
+// SERVICE
+// ---------------------------
 
 class RolesService {
-  async getAll({ limit, page, sort, search = '' }: GetRoles) {
+  async getAll({ limit, page, sort, search }: GetRoles) {
+    const filters = search ? ilike(rolesTable.id, `%${search}%`) : undefined;
     return queryPaginatedData({
       table: rolesTable,
-      filters: ilike(rolesTable.id, `%${search}%`),
+      filters,
+      sort,
       limit,
       page,
-      sortArr: sort ? (Array.isArray(sort) ? sort : [sort]) : undefined,
     });
   }
 
   async get(id: string) {
-    const records = await db.query.rolesTable.findFirst({
+    const role = await db.query.rolesTable.findFirst({
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
     });
-    if (!records) throw RoleNotFoundError;
+    if (!role) throw RoleNotFoundError;
 
-    // Flat results
-    const { rolesToPermissions, ...restOfRecords } = records;
-    const permissionIds = rolesToPermissions.map(
-      ({ permissionId }) => permissionId,
-    );
-    return { ...restOfRecords, permissionIds };
+    const { rolesToPermissions, ...restOfRole } = role;
+    const permissionIds = rolesToPermissions.map((el) => el.permissionId);
+    return { ...restOfRole, permissionIds };
   }
 
   async create(props: CreateRole) {
-    const [createdRecord] = await db
-      .insert(rolesTable)
-      .values(props)
-      .returning();
-    return createdRecord;
+    const [createdRole] = await db.insert(rolesTable).values(props).returning();
+    return createdRole;
   }
 
   async update(id: string, { permissionIds, ...restOfProps }: UpdateRole) {
-    // Update roles
-    if (Object.keys(restOfProps).length)
-      await db.update(rolesTable).set(restOfProps).where(eq(rolesTable.id, id));
+    // Guard role
+    await this.get(id);
 
-    // Update roles to permissions
-    if (permissionIds) await this.updatePermissions(id, { permissionIds });
+    const replacedPermissionIds = permissionIds
+      ? await this.replacePermissionsForRole(id, permissionIds)
+      : [];
 
-    // Return updated role with permissions
-    return this.get(id);
+    const [updatedRole] = await db
+      .update(rolesTable)
+      .set(restOfProps)
+      .where(eq(rolesTable.id, id))
+      .returning();
+
+    return { ...updatedRole, permissionIds: replacedPermissionIds };
   }
 
   async delete(id: string) {
-    const [deletedRecord] = await db
+    const deletedRoles = await db
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
-      .returning({ id: rolesTable.id });
-    if (!deletedRecord) throw RoleNotFoundError;
+      .returning();
+    if (!deletedRoles.length) throw RoleNotFoundError;
 
-    return deletedRecord;
+    return deletedRoles[0];
   }
 
-  private async updatePermissions(
+  private async replacePermissionsForRole(
     id: string,
-    { permissionIds }: Required<Pick<UpdateRole, 'permissionIds'>>,
+    permissionIds: Permission[],
   ) {
-    return db.transaction(async (tx) => {
-      // Delete all existing permissions for this role
+    const createdRows = await db.transaction(async (tx) => {
+      // Delete existing permissions for this role
       await tx
         .delete(rolesToPermissionsTable)
         .where(eq(rolesToPermissionsTable.roleId, id));
       if (!permissionIds.length) return [];
 
-      // Add new permissions for this role
-      const newPermissions = permissionIds.map((permissionId) => ({
-        roleId: id,
-        permissionId,
-      }));
+      // Add permissions for this role
       return tx
         .insert(rolesToPermissionsTable)
-        .values(newPermissions)
+        .values(
+          permissionIds.map((permissionId) => ({ roleId: id, permissionId })),
+        )
         .returning();
     });
+
+    return createdRows.map((el) => el.permissionId);
   }
 }
 
