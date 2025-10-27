@@ -2,7 +2,7 @@ import {
   AccessDeniedError,
   EmailAlreadyVerifiedError,
   EmailNotVerifiedError,
-} from '@/errors/http-errors';
+} from '@/errors/api-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
 import { guardPassword } from '@/lib/bcrypt/utils';
@@ -82,8 +82,8 @@ class AuthService {
 
   async login({ email, password }: Login) {
     const user = await usersService.getByEmailWithPassword(email);
-    this.guardUserVerifiedAndActive(user);
     await guardPassword(password, user.password);
+    this.guardUserVerifiedAndActive(user);
 
     return {
       accessToken: signAccessToken({ userId: user.id }),
