@@ -10,7 +10,7 @@ import { PATHS } from '@/constants/paths';
 import {
   signEmailVerificationToken,
   signPasswordResetToken,
-} from '@/lib/jwt/utils';
+} from '@/lib/jwt/utils/tokens';
 import nodemailer from 'nodemailer';
 import { EmailPayload } from './types';
 

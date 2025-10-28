@@ -1,6 +1,6 @@
 import { buildEntityNotFoundError } from '@/errors/api-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
-import { guardPassword, hashPassword } from '@/lib/bcrypt/utils';
+import { guardPassword, hashPassword } from '@/lib/bcrypt/utils/password';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
