@@ -16,13 +16,6 @@ export const errorHandler = (
   let message = 'Server error';
   let validationErrors: ApiError['validationErrors'];
 
-  // Check application error
-  if (err instanceof ApiError) {
-    status = err.status;
-    message = err.message;
-    validationErrors = err.validationErrors;
-  }
-
   // Check body parser error
   if (
     err instanceof SyntaxError &&
@@ -32,6 +25,13 @@ export const errorHandler = (
   ) {
     status = err.status;
     message = 'Malformed JSON body';
+  }
+
+  // Check api error
+  if (err instanceof ApiError) {
+    status = err.status;
+    message = err.message;
+    validationErrors = err.validationErrors;
   }
 
   // Check db error
