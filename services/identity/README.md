@@ -36,7 +36,7 @@ Test
 Start
 
 - `pnpm run dev`: Run application in development and watch mode
-- `pnpm run workers:dev`: Run workers in development
+- `pnpm run dev:workers`: Run workers in development
 
 Tools
 
