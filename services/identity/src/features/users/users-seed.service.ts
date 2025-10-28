@@ -1,5 +1,5 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
-import { hashPassword } from '@/lib/bcrypt/utils/password';
+import { hashPassword } from '@/lib/bcrypt/password-utils';
 import { db } from '@/lib/drizzle/db';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
 import { faker } from '@faker-js/faker';
