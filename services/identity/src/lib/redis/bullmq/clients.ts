@@ -30,3 +30,13 @@ export const checkQueueConnection = async () => {
     process.exit(1);
   }
 };
+
+export const checkWorkerConnection = async () => {
+  try {
+    await workerClient.ping();
+    logger.info('Worker connection verified');
+  } catch (err) {
+    logger.error(`Worker connection failed: ${String(err)}. Exiting`);
+    process.exit(1);
+  }
+};
