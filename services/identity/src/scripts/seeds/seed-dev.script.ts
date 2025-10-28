@@ -4,7 +4,7 @@ import { isProduction } from '@/config/env';
 import { usersSeedService } from '@/features/users/users-seed.service';
 import { db } from '@/lib/drizzle/db';
 import { USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
-import { logger } from '@/lib/logger/winston-logger';
+import { logger } from '@/lib/logger/winston';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
 import { logSeedMessage } from './utils/log-seed-message';
 import { seedSystemData } from './utils/seed-system-data';

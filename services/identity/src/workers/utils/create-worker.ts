@@ -1,4 +1,4 @@
-import { logger } from '@/lib/logger/winston-logger';
+import { logger } from '@/lib/logger/winston';
 import { workerClient } from '@/lib/redis/bullmq/clients';
 import { Job, Worker } from 'bullmq';
 

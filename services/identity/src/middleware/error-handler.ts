@@ -1,5 +1,5 @@
 import { ApiError } from '@/errors/utils/api-error';
-import { logger } from '@/lib/logger/winston-logger';
+import { logger } from '@/lib/logger/winston';
 import { DrizzleQueryError } from 'drizzle-orm';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';

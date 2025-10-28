@@ -1,6 +1,6 @@
 // NOTE: redis in production should use "maxmemory-policy=noeviction" to prevent BullMQ key loss
 
-import { logger } from '@/lib/logger/winston-logger';
+import { logger } from '@/lib/logger/winston';
 import { redisOptions } from '@/lib/redis/redis-options';
 import IORedis from 'ioredis';
 

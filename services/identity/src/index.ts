@@ -4,7 +4,7 @@ import { AddressInfo } from 'net';
 import { app } from './app';
 import { PORT } from './config/env';
 import { checkDbConnection } from './lib/drizzle/db';
-import { logger } from './lib/logger/winston-logger';
+import { logger } from './lib/logger/winston';
 import { checkQueueConnection } from './lib/redis/bullmq/clients';
 
 void (async () => {
