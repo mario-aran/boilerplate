@@ -5,14 +5,14 @@ import {
 } from '@/errors/api-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
-import { guardPassword } from '@/lib/bcrypt/utils/password';
+import { guardPassword } from '@/lib/bcrypt/password-utils';
 import {
   signAccessToken,
   signRefreshToken,
   verifyEmailVerificationToken,
   verifyPasswordResetToken,
   verifyRefreshToken,
-} from '@/lib/jwt/utils/tokens';
+} from '@/lib/jwt/token-utils';
 import {
   ForgotPassword,
   Login,
@@ -22,7 +22,7 @@ import {
   ResetPassword,
   VerifyEmail,
 } from '@/lib/zod/schemas/auth.schema';
-import { coerceFalsyToUndefined } from '@/utils/coerce-falsy-to-undefined';
+import { coerceFalsyToUndefined } from '@/utils/coerce-utils';
 
 class AuthService {
   async register(props: Register) {
