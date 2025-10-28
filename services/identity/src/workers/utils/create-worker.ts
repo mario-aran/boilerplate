@@ -1,5 +1,5 @@
+import { workerClient } from '@/lib/bullmq/clients';
 import { logger } from '@/lib/logger/winston';
-import { workerClient } from '@/lib/redis/bullmq/clients';
 import { Job, Worker } from 'bullmq';
 
 export const createWorker = <T extends object>({

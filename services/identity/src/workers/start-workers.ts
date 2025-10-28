@@ -3,8 +3,8 @@
 import { QUEUES } from '@/constants/queues';
 import { emailService } from '@/features/email/email.service';
 import { EmailPayload } from '@/features/email/types';
+import { checkWorkerConnection } from '@/lib/bullmq/clients';
 import { checkDbConnection } from '@/lib/drizzle/db';
-import { checkWorkerConnection } from '@/lib/redis/bullmq/clients';
 import { createWorker } from './utils/create-worker';
 
 void (async () => {
