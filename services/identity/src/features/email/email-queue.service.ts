@@ -1,5 +1,5 @@
 import { QUEUES } from '@/constants/queues';
-import { queueOptions } from '@/lib/redis/bullmq/queue-options';
+import { queueOptions } from '@/lib/bullmq/options';
 import { Queue } from 'bullmq';
 import { EmailPayload } from './types';
 
