@@ -9,9 +9,7 @@ export const createWorker = <T extends object>({
   name: string;
   processor: (job: Job<T>) => Promise<unknown>;
 }) => {
-  const worker = new Worker(name, processor, {
-    connection: workerClient,
-  });
+  const worker = new Worker(name, processor, { connection: workerClient });
   worker.on('completed', (job) =>
     logger.info(`${name} job ${String(job.id)} has completed`),
   );
