@@ -1,6 +1,7 @@
 import {
   currentPassword,
   firstName,
+  isActive,
   lastName,
   limit,
   newEmail,
@@ -19,10 +20,10 @@ import { z } from 'zod';
 
 export type UsersParams = z.infer<typeof usersParamsSchema>;
 export type GetUsers = z.infer<typeof getUsersSchema>;
-export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type UpdateUserMe = z.infer<typeof updateUserMeSchema>;
 export type UpdateUserMeEmail = z.infer<typeof updateUserMeEmailSchema>;
 export type UpdateUserMePassword = z.infer<typeof updateUserMePasswordSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
 
 // ---------------------------
 // FIELDS
@@ -41,14 +42,17 @@ export const getUsersSchema = z
   .strictObject({ limit, page, sort, roleId, search })
   .partial();
 
-export const updateUserSchema = z
-  .strictObject({ firstName, lastName, roleId })
+export const updateUserMeSchema = z
+  .strictObject({ firstName, lastName })
   .partial();
 
-export const updateUserMeSchema = updateUserSchema.omit({ roleId: true });
 export const updateUserMeEmailSchema = z.strictObject({ newEmail });
 
 export const updateUserMePasswordSchema = z.strictObject({
   currentPassword,
   newPassword,
 });
+
+export const updateUserSchema = updateUserMeSchema
+  .extend({ roleId, isActive })
+  .partial();

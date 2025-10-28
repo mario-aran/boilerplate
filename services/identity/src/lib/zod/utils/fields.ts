@@ -9,28 +9,6 @@ import { generateSortField } from './generate-sort-field';
 import { lowerAlphanumUnder, noDuplicateStrs, noSpaces } from './refines';
 
 // ---------------------------
-// INTEGERS
-// ---------------------------
-
-export const stringToPositiveInt = z
-  .string()
-  .nonempty()
-  .transform(Number)
-  .pipe(z.number().int().positive());
-
-export const limit = stringToPositiveInt;
-export const page = stringToPositiveInt;
-
-// ---------------------------
-// TEXTS
-// ---------------------------
-
-export const text = z.string().trim().min(1).max(60);
-export const search = text;
-export const firstName = text;
-export const lastName = text;
-
-// ---------------------------
 // IDS
 // ---------------------------
 
@@ -41,6 +19,24 @@ export const roleId = textId;
 export const permissionIds = noDuplicateStrs(
   z.enum(PERMISSION_VALUES).array().max(PERMISSION_VALUES.length),
 );
+
+// ---------------------------
+// COERCIONS
+// ---------------------------
+
+const coerceToPositiveInt = z.coerce.number().int().positive();
+export const limit = coerceToPositiveInt;
+export const page = coerceToPositiveInt;
+export const isActive = z.coerce.boolean();
+
+// ---------------------------
+// TEXTS
+// ---------------------------
+
+const text = z.string().trim().min(1).max(60);
+export const search = text;
+export const firstName = text;
+export const lastName = text;
 
 // ---------------------------
 // SPECIFIC
