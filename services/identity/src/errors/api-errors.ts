@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { ApiError } from './utils/api-error';
+import { ApiError } from './api-error';
 
 // ---------------------------
 // 401 UNAUTHORIZED
