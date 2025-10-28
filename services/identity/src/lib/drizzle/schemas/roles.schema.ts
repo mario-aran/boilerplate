@@ -1,7 +1,7 @@
 import {
   getSortableColumns,
   getSwaggerColumnsObject,
-} from '@/lib/drizzle/utils/column-handlers';
+} from '@/lib/drizzle/utils/column-utils';
 import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';

@@ -2,7 +2,7 @@ import { SYSTEM_ROLES } from '@/constants/system-roles';
 import {
   getSortableColumns,
   getSwaggerColumnsObject,
-} from '@/lib/drizzle/utils/column-handlers';
+} from '@/lib/drizzle/utils/column-utils';
 import { createdAt, id, updatedAt } from '@/lib/drizzle/utils/columns';
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
