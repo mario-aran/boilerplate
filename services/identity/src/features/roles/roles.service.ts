@@ -10,15 +10,7 @@ import {
 } from '@/lib/zod/schemas/roles.schema';
 import { eq, ilike } from 'drizzle-orm';
 
-// ---------------------------
-// VALUES
-// ---------------------------
-
 const RoleNotFoundError = buildEntityNotFoundError('Role');
-
-// ---------------------------
-// SERVICE
-// ---------------------------
 
 class RolesService {
   async getAll({ limit, page, sort, search }: GetRoles) {
