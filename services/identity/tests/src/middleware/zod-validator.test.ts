@@ -1,4 +1,4 @@
-import { ApiError } from '@/errors/utils/api-error';
+import { ApiError } from '@/errors/api-error';
 import { zodValidator } from '@/middleware/zod-validator';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
