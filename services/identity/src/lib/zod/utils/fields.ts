@@ -39,7 +39,7 @@ export const firstName = text;
 export const lastName = text;
 
 // ---------------------------
-// SPECIFIC
+// SPECIFICS
 // ---------------------------
 
 export const email = z.email().min(5).max(60);
