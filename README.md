@@ -5,13 +5,15 @@
 
 ## To-do
 
-- [] add docs to all config files
-- [] add bullMq dashboard and redis insight installer
-- [] finish swagger docs
-- [] check if integration tests are worth it and finish test cases
+- [] don't allow disabling own user
+- [] format files and code
+- [] add doc links to config files
+- [] swagger docs
+- [] tests: check if integration tests are worth it and finish cases
 - [] replace non-standard libraries
 - [] remove multiroot workspace and use javascript debug terminal
 - [] fix test containers not pulling images
 
+- [] implement bullMq dashboard
 - [] implement google auth
 - [] implement caching
