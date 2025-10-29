@@ -1,5 +1,5 @@
 /*
-Docs:
+docs:
 - https://typescript-eslint.io/getting-started/typed-linting#shared-configurations
 - https://typescript-eslint.io/users/configs#disable-type-checked
 */
