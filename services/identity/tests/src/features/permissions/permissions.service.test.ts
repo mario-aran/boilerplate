@@ -10,7 +10,7 @@ import { ilike } from 'drizzle-orm';
 const MOCK_PAGINATED_RESULT = { prop: 'mock_paginated_result' } as never;
 
 // ---------------------------
-// MODULE MOCKS
+// MOCKS
 // ---------------------------
 
 vi.mock('@/lib/drizzle/utils/query-paginated-data');

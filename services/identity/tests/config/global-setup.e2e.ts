@@ -39,7 +39,7 @@ const startTestContainers = async () => {
 };
 
 // ---------------------------
-// GLOBAL SETUP
+// SETUP
 // ---------------------------
 
 export default async function globalSetup(project: TestProject) {

@@ -5,7 +5,7 @@
 
 ## To-do
 
-- [] format files and code, add doc links to config files, check headers
+- [] format files and code, add doc links to config files
 - [] swagger docs
 - [] tests: check if integration tests are worth it and finish cases
 - [] replace non-standard libraries
