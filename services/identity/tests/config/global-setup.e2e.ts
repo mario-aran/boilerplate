@@ -1,4 +1,4 @@
-// DO NOT RENAME OR MOVE THIS FILE — used by "vitest.config.ts"
+// note: DO NOT RENAME OR MOVE THIS FILE — used by "vitest.config.ts"
 
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { TestProject } from 'vitest/node';
