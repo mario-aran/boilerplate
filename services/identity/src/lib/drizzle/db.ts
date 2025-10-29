@@ -39,7 +39,7 @@ class DrizzleLogger implements Logger {
 }
 
 // ---------------------------
-// DRIZZLE CLIENT
+// DRIZZLE INSTANCE
 // ---------------------------
 
 export const db = drizzle({
