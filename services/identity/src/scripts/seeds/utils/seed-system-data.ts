@@ -16,7 +16,8 @@ export const seedSystemData = async () => {
   const rolesInserted = await rolesSeedService.seed();
   logSeedMessage(ROLES_TABLE_NAME, rolesInserted);
 
-  const rolesToPermissionsInserted = await rolesSeedService.seedPermissions();
+  const rolesToPermissionsInserted =
+    await rolesSeedService.seedPermissionsForRole();
   logSeedMessage(ROLES_TO_PERMISSIONS_TABLE_NAME, rolesToPermissionsInserted);
 
   const usersInserted = await usersSeedService.seed();
