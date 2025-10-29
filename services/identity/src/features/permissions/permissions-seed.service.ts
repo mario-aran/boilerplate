@@ -4,12 +4,12 @@ import { permissionsTable } from '@/lib/drizzle/schemas';
 
 export class PermissionsSeedService {
   async seed() {
-    const createdRecords = await db
+    const createdPermissions = await db
       .insert(permissionsTable)
       .values(PERMISSION_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: permissionsTable.id });
-    return createdRecords.length;
+    return createdPermissions.length;
   }
 }
 

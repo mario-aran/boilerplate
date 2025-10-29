@@ -72,7 +72,7 @@ class RolesService {
     id: string,
     permissionIds: Permission[],
   ) {
-    const createdRows = await db.transaction(async (tx) => {
+    const createdPermissions = await db.transaction(async (tx) => {
       // Delete existing permissions for this role
       await tx
         .delete(rolesToPermissionsTable)
@@ -88,7 +88,7 @@ class RolesService {
         .returning();
     });
 
-    return createdRows.map((el) => el.permissionId);
+    return createdPermissions.map((el) => el.permissionId);
   }
 }
 

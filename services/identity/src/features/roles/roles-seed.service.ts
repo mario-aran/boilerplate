@@ -9,16 +9,16 @@ import {
 
 class RolesSeedService {
   async seed() {
-    const createdRecords = await db
+    const createdRoles = await db
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: rolesTable.id });
-    return createdRecords.length;
+    return createdRoles.length;
   }
 
-  async seedPermissions() {
-    const createdRecords = await db
+  async seedPermissionsForRole() {
+    const createdPermissions = await db
       .insert(rolesToPermissionsTable)
       .values(
         PERMISSION_VALUES.map(
@@ -33,7 +33,7 @@ class RolesSeedService {
         roleId: rolesToPermissionsTable.roleId,
         permissionId: rolesToPermissionsTable.permissionId,
       });
-    return createdRecords.length;
+    return createdPermissions.length;
   }
 }
 

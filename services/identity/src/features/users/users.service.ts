@@ -44,7 +44,7 @@ class UsersService {
       : undefined;
     const filters = and(roleIdFilter, searchFilter);
 
-    const { data, ...restOfRecords } = await queryPaginatedData({
+    const { data, ...restOfPagination } = await queryPaginatedData({
       table: usersTable,
       filters,
       sort,
@@ -53,14 +53,14 @@ class UsersService {
     });
 
     const usersWithoutPassword = data.map((user) => this.omitPassword(user));
-    return { ...restOfRecords, data: usersWithoutPassword };
+    return { ...restOfPagination, data: usersWithoutPassword };
   }
 
   async get(id: string) {
     const where = eq(usersTable.id, id);
-    const record = await this.getByWhereWithPassword(where);
+    const user = await this.getByWhereWithPassword(where);
 
-    return this.omitPassword(record);
+    return this.omitPassword(user);
   }
 
   async getWithPassword(id: string) {
@@ -70,9 +70,9 @@ class UsersService {
 
   async getByEmail(email: string) {
     const where = eq(usersTable.email, email);
-    const record = await this.getByWhereWithPassword(where);
+    const user = await this.getByWhereWithPassword(where);
 
-    return this.omitPassword(record);
+    return this.omitPassword(user);
   }
 
   async getByEmailWithPassword(email: string) {
@@ -83,12 +83,12 @@ class UsersService {
   async create({ password, ...restOfProps }: Register) {
     const hashedPassword = await hashPassword(password);
 
-    const createdUsers = await db
+    const [createdUser] = await db
       .insert(usersTable)
       .values({ ...restOfProps, password: hashedPassword })
       .returning();
 
-    return this.omitPassword(createdUsers[0]);
+    return this.omitPassword(createdUser);
   }
 
   async update(
@@ -136,13 +136,13 @@ class UsersService {
   async delete(id: string, context?: UserContext) {
     if (id === context?.callerId) throw SelfActionError;
 
-    const deletedRecords = await db
+    const deletedUsers = await db
       .delete(usersTable)
       .where(eq(usersTable.id, id))
       .returning();
-    if (!deletedRecords.length) throw UserNotFoundError;
+    if (!deletedUsers.length) throw UserNotFoundError;
 
-    return deletedRecords[0];
+    return deletedUsers[0];
   }
 
   private omitPassword<T extends UserSelect>({

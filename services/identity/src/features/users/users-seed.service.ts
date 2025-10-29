@@ -43,12 +43,12 @@ class UsersSeedService {
     );
     const hashedUsers = await Promise.all(hashedUserPromises);
 
-    const createdRecords = await db
+    const createdUsers = await db
       .insert(usersTable)
       .values(hashedUsers)
       .onConflictDoNothing()
       .returning({ email: usersTable.email });
-    return createdRecords.length;
+    return createdUsers.length;
   }
 }
 
