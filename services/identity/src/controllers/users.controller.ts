@@ -14,7 +14,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 // ---------------------------
-// CONTROLLERS: /users/me
+// ROUTES: /users/me
 // ---------------------------
 
 export const getUserMe = controllerCatchAsync(
@@ -54,7 +54,7 @@ export const updateUserMePassword = controllerCatchAsync(
 );
 
 // ---------------------------
-// CONTROLLERS: /users + /users/:id
+// ROUTES: /users + /users/:id
 // ---------------------------
 
 export const getUsers = controllerCatchAsync(
