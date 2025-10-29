@@ -42,7 +42,7 @@ class AuthService {
     const user = await usersService.get(userId);
     this.guardEmailNotVerified(user);
 
-    const { email } = await usersService.forceUpdate(user.id, {
+    const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
       emailVerified: user.emailVerified ? undefined : true, // Don't update if already true
       email: coerceFalsyToUndefined(user.pendingEmail) ?? undefined, // Prevent empty string
@@ -77,7 +77,7 @@ class AuthService {
     const user = await usersService.getWithPassword(userId);
     if (!user.isActive) throw AccessDeniedError;
 
-    await usersService.forceUpdate(user.id, { password: newPassword });
+    await usersService.update(user.id, { password: newPassword });
   }
 
   async login({ email, password }: Login) {

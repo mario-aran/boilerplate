@@ -31,7 +31,7 @@ export const updateUserMe = controllerCatchAsync(
   async (req: TypedRequest<{ body: UpdateUserMe }>, res: Response) => {
     const user = requireReqUser(req);
 
-    await usersService.forceUpdate(user.id, req.body);
+    await usersService.update(user.id, req.body);
     res.json({ message: 'User updated successfully' });
   },
 );
@@ -77,7 +77,7 @@ export const updateUser = controllerCatchAsync(
     req: TypedRequest<{ params: UsersParams; body: UpdateUser }>,
     res: Response,
   ) => {
-    await usersService.forceUpdate(req.params.id, req.body);
+    await usersService.update(req.params.id, req.body);
     res.json({ message: 'User updated successfully' });
   },
 );

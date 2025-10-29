@@ -89,10 +89,7 @@ class UsersService {
     return this.omitPassword(createdUsers[0]);
   }
 
-  async forceUpdate(
-    id: string,
-    { password, ...restOfProps }: Partial<UserInsert>,
-  ) {
+  async update(id: string, { password, ...restOfProps }: Partial<UserInsert>) {
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
     const updatedUsers = await db
@@ -112,11 +109,11 @@ class UsersService {
     const user = await usersService.getWithPassword(id);
     await guardPassword(currentPassword, user.password);
 
-    await this.forceUpdate(user.id, { password: newPassword });
+    await this.update(user.id, { password: newPassword });
   }
 
   async requestEmailUpdate(id: string, { newEmail }: UpdateUserMeEmail) {
-    const updatedUser = await usersService.forceUpdate(id, {
+    const updatedUser = await usersService.update(id, {
       pendingEmail: newEmail,
     });
     if (!updatedUser.pendingEmail)

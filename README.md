@@ -5,9 +5,9 @@
 
 ## To-do
 
+- [] add docs to all config files
 - [] add bullMq dashboard and redis insight installer
 - [] finish swagger docs
-- [] add docs to all config files
 - [] check if integration tests are worth it and finish test cases
 - [] replace non-standard libraries
 - [] remove multiroot workspace and use javascript debug terminal
