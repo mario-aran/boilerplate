@@ -1,4 +1,3 @@
-import { SelfActionError } from '@/errors/api-errors';
 import { usersService } from '@/features/users/users.service';
 import {
   GetUsers,
@@ -77,7 +76,9 @@ export const updateUser = controllerCatchAsync(
     req: TypedRequest<{ params: UsersParams; body: UpdateUser }>,
     res: Response,
   ) => {
-    await usersService.update(req.params.id, req.body);
+    const user = requireReqUser(req);
+
+    await usersService.update(req.params.id, req.body, { callerId: user.id });
     res.json({ message: 'User updated successfully' });
   },
 );
@@ -85,9 +86,8 @@ export const updateUser = controllerCatchAsync(
 export const deleteUser = controllerCatchAsync(
   async (req: TypedRequest<{ params: UsersParams }>, res: Response) => {
     const user = requireReqUser(req);
-    if (req.params.id === user.id) throw SelfActionError;
 
-    await usersService.delete(req.params.id);
+    await usersService.delete(req.params.id, { callerId: user.id });
     res.sendStatus(StatusCodes.NO_CONTENT);
   },
 );
