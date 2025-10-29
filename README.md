@@ -5,9 +5,7 @@
 
 ## To-do
 
-- [] don't allow disabling own user
-- [] format files and code
-- [] add doc links to config files
+- [] format files and code, add doc links to config files, check headers
 - [] swagger docs
 - [] tests: check if integration tests are worth it and finish cases
 - [] replace non-standard libraries

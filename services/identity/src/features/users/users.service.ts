@@ -1,4 +1,4 @@
-import { buildEntityNotFoundError } from '@/errors/api-errors';
+import { buildEntityNotFoundError, SelfActionError } from '@/errors/api-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { guardPassword, hashPassword } from '@/lib/bcrypt/password-utils';
 import { db } from '@/lib/drizzle/db';
@@ -16,9 +16,11 @@ import { and, eq, ilike, or, SQL } from 'drizzle-orm';
 // TYPES
 // ---------------------------
 
-export type UsersServiceGetResult = Awaited<
-  ReturnType<typeof usersService.get>
->;
+interface UserContext {
+  callerId: string;
+}
+
+export type GetUserResult = Awaited<ReturnType<typeof usersService.get>>;
 
 // ---------------------------
 // VALUES
@@ -89,7 +91,13 @@ class UsersService {
     return this.omitPassword(createdUsers[0]);
   }
 
-  async update(id: string, { password, ...restOfProps }: Partial<UserInsert>) {
+  async update(
+    id: string,
+    { password, ...restOfProps }: Partial<UserInsert>,
+    context?: UserContext,
+  ) {
+    if (id === context?.callerId) throw SelfActionError;
+
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
     const updatedUsers = await db
@@ -125,7 +133,9 @@ class UsersService {
     });
   }
 
-  async delete(id: string) {
+  async delete(id: string, context?: UserContext) {
+    if (id === context?.callerId) throw SelfActionError;
+
     const deletedRecords = await db
       .delete(usersTable)
       .where(eq(usersTable.id, id))

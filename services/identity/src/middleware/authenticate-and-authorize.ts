@@ -1,11 +1,11 @@
 import { Permission } from '@/constants/permissions';
 import { AccessDeniedError, UnauthorizedError } from '@/errors/api-errors';
-import { UsersServiceGetResult } from '@/features/users/users.service';
+import { GetUserResult } from '@/features/users/users.service';
 import { RequestHandler } from 'express';
 import passport from 'passport';
 
 type AuthenticateAndAuthorize = (permission?: Permission) => RequestHandler;
-type PassportUser = UsersServiceGetResult | false;
+type PassportUser = GetUserResult | false;
 
 export const authenticateAndAuthorize: AuthenticateAndAuthorize =
   (permission) => (req, res, next) => {
