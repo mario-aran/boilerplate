@@ -38,17 +38,17 @@ usersRoutes.patch(
 );
 
 usersRoutes.patch(
-  PATH_SEGMENTS.ME_EMAIL,
-  authenticateAndAuthorize(),
-  zodValidator({ body: updateUserMeEmailSchema }),
-  updateUserMeEmail,
-);
-
-usersRoutes.patch(
   PATH_SEGMENTS.ME_PASSWORD,
   authenticateAndAuthorize(),
   zodValidator({ body: updateUserMePasswordSchema }),
   updateUserMePassword,
+);
+
+usersRoutes.patch(
+  PATH_SEGMENTS.ME_EMAIL,
+  authenticateAndAuthorize(),
+  zodValidator({ body: updateUserMeEmailSchema }),
+  updateUserMeEmail,
 );
 
 // ---------------------------

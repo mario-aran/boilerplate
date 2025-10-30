@@ -35,21 +35,21 @@ export const updateUserMe = controllerCatchAsync(
   },
 );
 
-export const updateUserMeEmail = controllerCatchAsync(
-  async (req: TypedRequest<{ body: UpdateUserMeEmail }>, res: Response) => {
-    const user = requireReqUser(req);
-
-    await usersService.requestEmailUpdate(user.id, req.body);
-    res.json({ message: 'Verification email will be sent shortly' });
-  },
-);
-
 export const updateUserMePassword = controllerCatchAsync(
   async (req: TypedRequest<{ body: UpdateUserMePassword }>, res: Response) => {
     const user = requireReqUser(req);
 
     await usersService.updatePassword(user.id, req.body);
     res.json({ message: 'Password updated successfully' });
+  },
+);
+
+export const updateUserMeEmail = controllerCatchAsync(
+  async (req: TypedRequest<{ body: UpdateUserMeEmail }>, res: Response) => {
+    const user = requireReqUser(req);
+
+    await usersService.requestEmailUpdate(user.id, req.body);
+    res.json({ message: 'Verification email will be sent shortly' });
   },
 );
 

@@ -21,8 +21,8 @@ import { z } from 'zod';
 export type UsersParams = z.infer<typeof usersParamsSchema>;
 export type GetUsers = z.infer<typeof getUsersSchema>;
 export type UpdateUserMe = z.infer<typeof updateUserMeSchema>;
-export type UpdateUserMeEmail = z.infer<typeof updateUserMeEmailSchema>;
 export type UpdateUserMePassword = z.infer<typeof updateUserMePasswordSchema>;
+export type UpdateUserMeEmail = z.infer<typeof updateUserMeEmailSchema>;
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 
 // ---------------------------
@@ -46,12 +46,12 @@ export const updateUserMeSchema = z
   .strictObject({ firstName, lastName })
   .partial();
 
-export const updateUserMeEmailSchema = z.strictObject({ newEmail });
-
 export const updateUserMePasswordSchema = z.strictObject({
   currentPassword,
   newPassword,
 });
+
+export const updateUserMeEmailSchema = z.strictObject({ newEmail });
 
 export const updateUserSchema = updateUserMeSchema
   .extend({ roleId, isActive })
