@@ -17,4 +17,9 @@ void (async () => {
     name: QUEUES.EMAIL_VERIFICATION_EMAIL,
     processor: (job) => emailService.sendEmailVerification(job.data),
   });
+
+  createWorker<EmailPayload>({
+    name: QUEUES.PASSWORD_RESET_EMAIL,
+    processor: (job) => emailService.sendPasswordReset(job.data),
+  });
 })();
