@@ -31,6 +31,16 @@ export const verifyEmailVerificationToken = (token: string) =>
   verifyToken(token, JWT_EMAIL_VERIFICATION_SECRET);
 
 // ---------------------------
+// PASSWORD RESET
+// ---------------------------
+
+export const signPasswordResetToken = (payload: JwtPayload) =>
+  jwt.sign(payload, JWT_PASSWORD_RESET_SECRET, { expiresIn: '15m' });
+
+export const verifyPasswordResetToken = (token: string) =>
+  verifyToken(token, JWT_PASSWORD_RESET_SECRET);
+
+// ---------------------------
 // ACCESS
 // ---------------------------
 
@@ -46,13 +56,3 @@ export const signRefreshToken = (payload: JwtPayload) =>
 
 export const verifyRefreshToken = (token: string) =>
   verifyToken(token, JWT_REFRESH_SECRET);
-
-// ---------------------------
-// PASSWORD RESET
-// ---------------------------
-
-export const signPasswordResetToken = (payload: JwtPayload) =>
-  jwt.sign(payload, JWT_PASSWORD_RESET_SECRET, { expiresIn: '15m' });
-
-export const verifyPasswordResetToken = (token: string) =>
-  verifyToken(token, JWT_PASSWORD_RESET_SECRET);
