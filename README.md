@@ -15,3 +15,7 @@
 - [] implement bullMq dashboard
 - [] implement google auth
 - [] implement caching
+
+## Instructions
+
+- mailhog: http://localhost:8025/
