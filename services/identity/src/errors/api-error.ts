@@ -1,4 +1,4 @@
-type ValidationErrors = Record<string, string>[];
+type ValidationErrors = Record<string, unknown>[];
 
 interface ApiErrorProps {
   message: string;

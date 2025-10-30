@@ -1,4 +1,5 @@
 import { buildValidationFailedError } from '@/errors/api-errors';
+import { coerceFalsyToUndefined } from '@/utils/coerce-utils';
 import { NextFunction, Request, Response } from 'express';
 import { ZodError, ZodObject } from 'zod';
 
@@ -23,7 +24,7 @@ export const zodValidator =
       // Failed: zod error
       if (err instanceof ZodError) {
         const validationErrors = err.issues.map((issue) => ({
-          field: issue.path.join('.'),
+          field: coerceFalsyToUndefined(issue.path.join('.')),
           message: issue.message,
         }));
 
