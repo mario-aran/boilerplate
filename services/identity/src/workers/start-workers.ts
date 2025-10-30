@@ -13,13 +13,11 @@ void (async () => {
   await checkWorkerConnection();
 
   // Start workers
-  createWorker<EmailPayload>({
-    name: QUEUES.EMAIL_VERIFICATION_EMAIL,
-    processor: (job) => emailService.sendEmailVerification(job.data),
-  });
+  createWorker<EmailPayload>(QUEUES.EMAIL_VERIFICATION_EMAIL, (job) =>
+    emailService.sendEmailVerification(job.data),
+  );
 
-  createWorker<EmailPayload>({
-    name: QUEUES.PASSWORD_RESET_EMAIL,
-    processor: (job) => emailService.sendPasswordReset(job.data),
-  });
+  createWorker<EmailPayload>(QUEUES.PASSWORD_RESET_EMAIL, (job) =>
+    emailService.sendPasswordReset(job.data),
+  );
 })();
