@@ -1,4 +1,8 @@
-import { buildEntityNotFoundError, SelfActionError } from '@/errors/api-errors';
+import {
+  buildEntityNotFoundError,
+  EmailAlreadyTakenError,
+  SelfActionError,
+} from '@/errors/api-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { guardPassword, hashPassword } from '@/lib/bcrypt/password-utils';
 import { db } from '@/lib/drizzle/db';
@@ -93,16 +97,17 @@ class UsersService {
 
   async update(
     id: string,
-    { password, ...restOfProps }: Partial<UserInsert>,
+    { password, email, ...restOfProps }: Partial<UserInsert>,
     context?: UserContext,
   ) {
     if (id === context?.callerId) throw SelfActionError;
+    await this.guardEmailUniqueness(email);
 
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
     const updatedUsers = await db
       .update(usersTable)
-      .set({ ...restOfProps, password: hashedPassword })
+      .set({ ...restOfProps, email, password: hashedPassword })
       .where(eq(usersTable.id, id))
       .returning();
     if (!updatedUsers.length) throw UserNotFoundError;
@@ -152,6 +157,16 @@ class UsersService {
     ...restOfProps
   }: T) {
     return restOfProps;
+  }
+
+  private async guardEmailUniqueness(email: string | undefined) {
+    if (!email) return;
+
+    const emailTaken = await db.query.usersTable.findFirst({
+      columns: { email: true },
+      where: eq(usersTable.email, email),
+    });
+    if (emailTaken) throw EmailAlreadyTakenError;
   }
 
   private async getByWhereWithPassword(where: SQL) {

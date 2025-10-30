@@ -63,9 +63,9 @@ export const EmailAlreadyVerifiedError = new ApiError({
   message: 'Email already verified',
 });
 
-export const EmailAlreadyInUseError = new ApiError({
+export const EmailAlreadyTakenError = new ApiError({
   status: StatusCodes.CONFLICT,
-  message: 'Email already in use',
+  message: 'Email already taken',
 });
 
 // ---------------------------
