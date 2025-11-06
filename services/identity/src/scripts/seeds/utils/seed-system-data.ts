@@ -10,16 +10,16 @@ import {
 import { logSeedMessage } from './log-seed-message';
 
 export const seedSystemData = async () => {
-  const { createdKeys: permissionKeys } = await permissionsSeedService.seed();
-  logSeedMessage(PERMISSIONS_TABLE_NAME, permissionKeys);
+  const permissionsInserted = await permissionsSeedService.seed();
+  logSeedMessage(PERMISSIONS_TABLE_NAME, permissionsInserted);
 
-  const { createdKeys: roleKeys } = await rolesSeedService.seed();
-  logSeedMessage(ROLES_TABLE_NAME, roleKeys);
+  const rolesInserted = await rolesSeedService.seed();
+  logSeedMessage(ROLES_TABLE_NAME, rolesInserted);
 
-  const { createdKeys: roleToPermissionKeys } =
-    await rolesSeedService.seedPermissions();
-  logSeedMessage(ROLES_TO_PERMISSIONS_TABLE_NAME, roleToPermissionKeys);
+  const rolesToPermissionsInserted =
+    await rolesSeedService.seedPermissionsForRole();
+  logSeedMessage(ROLES_TO_PERMISSIONS_TABLE_NAME, rolesToPermissionsInserted);
 
-  const { createdKeys: userKeys } = await usersSeedService.seed();
-  logSeedMessage(USERS_TABLE_NAME, userKeys);
+  const usersInserted = await usersSeedService.seed();
+  logSeedMessage(USERS_TABLE_NAME, usersInserted);
 };

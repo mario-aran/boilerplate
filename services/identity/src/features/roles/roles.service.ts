@@ -1,101 +1,94 @@
-import { db } from '@/lib/drizzle/db-connection';
+import { Permission } from '@/constants/permissions';
+import { buildEntityNotFoundError } from '@/errors/api-errors';
+import { db } from '@/lib/drizzle/db';
 import { rolesTable, rolesToPermissionsTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
 import {
   CreateRole,
-  GetAllRoles,
-  RoleId,
+  GetRoles,
   UpdateRole,
 } from '@/lib/zod/schemas/roles.schema';
-import { HttpError } from '@/utils/http-error';
 import { eq, ilike } from 'drizzle-orm';
-import { StatusCodes } from 'http-status-codes';
+
+const RoleNotFoundError = buildEntityNotFoundError('Role');
 
 class RolesService {
-  private roleNotFoundError = new HttpError({
-    message: 'Role not found',
-    httpStatus: StatusCodes.NOT_FOUND,
-  });
-
-  async getAll({ limit, page, sort, search = '' }: GetAllRoles) {
+  async getAll({ limit, page, sort, search }: GetRoles) {
+    const filters = search ? ilike(rolesTable.id, `%${search}%`) : undefined;
     return queryPaginatedData({
-      schema: rolesTable,
-      filters: ilike(rolesTable.id, `%${search}%`),
+      table: rolesTable,
+      filters,
+      sort,
       limit,
       page,
-      sort,
     });
   }
 
-  async get(id: RoleId['id']) {
-    const records = await db.query.rolesTable.findFirst({
+  async get(id: string) {
+    const role = await db.query.rolesTable.findFirst({
       with: { rolesToPermissions: { columns: { permissionId: true } } },
       where: eq(rolesTable.id, id),
     });
-    if (!records) throw this.roleNotFoundError;
+    if (!role) throw RoleNotFoundError;
 
-    // Flatten results
-    const { rolesToPermissions, ...restOfRecords } = records;
-    const permissionIds = rolesToPermissions.map(
-      ({ permissionId }) => permissionId,
-    );
-    return { ...restOfRecords, permissionIds };
+    const { rolesToPermissions, ...restOfRole } = role;
+    const permissionIds = rolesToPermissions.map((el) => el.permissionId);
+    return { ...restOfRole, permissionIds };
   }
 
   async create(props: CreateRole) {
-    const [createdRecord] = await db
-      .insert(rolesTable)
-      .values(props)
+    const [createdRole] = await db.insert(rolesTable).values(props).returning();
+    return createdRole;
+  }
+
+  async update(id: string, { permissionIds, ...restOfProps }: UpdateRole) {
+    // Guard role
+    await this.get(id);
+
+    const replacedPermissionIds = permissionIds
+      ? await this.replacePermissionsForRole(id, permissionIds)
+      : [];
+
+    const [updatedRole] = await db
+      .update(rolesTable)
+      .set(restOfProps)
+      .where(eq(rolesTable.id, id))
       .returning();
-    return createdRecord;
+
+    return { ...updatedRole, permissionIds: replacedPermissionIds };
   }
 
-  async update(
-    id: RoleId['id'],
-    { permissionIds, ...restOfProps }: UpdateRole,
-  ) {
-    // Update roles
-    if (Object.keys(restOfProps).length)
-      await db.update(rolesTable).set(restOfProps).where(eq(rolesTable.id, id));
-
-    // Update roles to permissions
-    if (permissionIds) await this.updatePermissions(id, { permissionIds });
-
-    // Return updated role with permissions
-    return this.get(id);
-  }
-
-  async delete(id: RoleId['id']) {
-    const [deletedRecord] = await db
+  async delete(id: string) {
+    const deletedRoles = await db
       .delete(rolesTable)
       .where(eq(rolesTable.id, id))
-      .returning({ id: rolesTable.id });
-    if (!deletedRecord) throw this.roleNotFoundError;
+      .returning();
+    if (!deletedRoles.length) throw RoleNotFoundError;
 
-    return deletedRecord;
+    return deletedRoles[0];
   }
 
-  private async updatePermissions(
-    id: RoleId['id'],
-    { permissionIds }: Required<Pick<UpdateRole, 'permissionIds'>>,
+  private async replacePermissionsForRole(
+    id: string,
+    permissionIds: Permission[],
   ) {
-    return db.transaction(async (tx) => {
-      // Delete all existing permissions for this role
+    const createdPermissions = await db.transaction(async (tx) => {
+      // Delete existing permissions for this role
       await tx
         .delete(rolesToPermissionsTable)
         .where(eq(rolesToPermissionsTable.roleId, id));
       if (!permissionIds.length) return [];
 
-      // Add new permissions for this role
-      const newPermissions = permissionIds.map((permissionId) => ({
-        roleId: id,
-        permissionId,
-      }));
+      // Add permissions for this role
       return tx
         .insert(rolesToPermissionsTable)
-        .values(newPermissions)
+        .values(
+          permissionIds.map((permissionId) => ({ roleId: id, permissionId })),
+        )
         .returning();
     });
+
+    return createdPermissions.map((el) => el.permissionId);
   }
 }
 

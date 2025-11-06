@@ -1,22 +1,21 @@
 ## Docker commands
 
-- `docker compose up -d`: Launch development databases
-- `docker compose down -v`: Destroy development databases
+- `docker compose up -d`: Launch development containers
+- `docker compose down -v`: Destroy development containers and their volumes
 
-## Kubernetes commands
+## To-do
 
-Management
+- [] format files and code
+- [] swagger docs
+- [] tests: check if integration tests are worth it and finish cases
+- [] replace non-standard libraries
+- [] remove multiroot workspace and use javascript debug terminal
+- [] fix test containers not pulling images
 
-- `kubectl apply -f ./kubernetes -R`
-- `kubectl delete -f ./kubernetes -R`
+- [] implement bullMq dashboard
+- [] implement google auth
+- [] implement caching
 
-Check
+## Instructions
 
-- `kubectl get pods --all-namespaces`
-- `kubectl get pvc --all-namespaces`
-- `kubectl get pv`
-- `kubectl get storageclass`
-
-Installers
-
-- `kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.31/deploy/local-path-storage.yaml`: Allow persistent volumes
+- mailhog: http://localhost:8025/

@@ -1,71 +1,90 @@
-import { db } from '@/lib/drizzle/db-connection';
+import {
+  buildEntityNotFoundError,
+  EmailAlreadyTakenError,
+  SelfActionError,
+} from '@/errors/api-errors';
+import { emailQueueService } from '@/features/email/email-queue.service';
+import { guardPassword, hashPassword } from '@/lib/bcrypt/password-utils';
+import { db } from '@/lib/drizzle/db';
 import { UserInsert, UserSelect, usersTable } from '@/lib/drizzle/schemas';
 import { queryPaginatedData } from '@/lib/drizzle/utils/query-paginated-data';
-import { RegisterAuth } from '@/lib/zod/schemas/auth.schema';
-import { GetAllUsers, UserId } from '@/lib/zod/schemas/users.schema';
-import { HttpError } from '@/utils/http-error';
-import { and, eq, ilike, or } from 'drizzle-orm';
-import { StatusCodes } from 'http-status-codes';
-import { hashPassword } from './utils/hash-password';
+import { Register } from '@/lib/zod/schemas/auth.schema';
+import {
+  GetUsers,
+  UpdateUserMeEmail,
+  UpdateUserMePassword,
+} from '@/lib/zod/schemas/users.schema';
+import { and, eq, ilike, or, SQL } from 'drizzle-orm';
+
+// ---------------------------
+// TYPES
+// ---------------------------
+
+interface UserContext {
+  callerId: string;
+}
+
+export type GetUserResult = Awaited<ReturnType<typeof usersService.get>>;
+
+// ---------------------------
+// VALUES
+// ---------------------------
+
+const UserNotFoundError = buildEntityNotFoundError('User');
+
+// ---------------------------
+// SERVICE
+// ---------------------------
 
 class UsersService {
-  private userNotFoundError = new HttpError({
-    message: 'User not found',
-    httpStatus: StatusCodes.NOT_FOUND,
-  });
+  async getAll({ limit, page, sort, roleId, search }: GetUsers) {
+    const roleIdFilter = roleId ? eq(usersTable.roleId, roleId) : undefined;
+    const searchFilter = search
+      ? or(
+          ilike(usersTable.email, `%${search}%`),
+          ilike(usersTable.firstName, `%${search}%`),
+          ilike(usersTable.lastName, `%${search}%`),
+        )
+      : undefined;
+    const filters = and(roleIdFilter, searchFilter);
 
-  async getAll({ limit, page, sort, roleId = '', search = '' }: GetAllUsers) {
-    const filters = and(
-      ilike(usersTable.roleId, `%${roleId}%`),
-      or(
-        ilike(usersTable.email, `%${search}%`),
-        ilike(usersTable.firstName, `%${search}%`),
-        ilike(usersTable.lastName, `%${search}%`),
-      ),
-    );
-    const { data, ...restOfRecords } = await queryPaginatedData({
-      schema: usersTable,
+    const { data, ...restOfPagination } = await queryPaginatedData({
+      table: usersTable,
       filters,
+      sort,
       limit,
       page,
-      sort,
     });
 
-    const usersWithoutPassword = data.map(this.omitUserPassword);
-    return { data: usersWithoutPassword, ...restOfRecords };
+    const usersWithoutPassword = data.map((user) => this.omitPassword(user));
+    return { ...restOfPagination, data: usersWithoutPassword };
   }
 
-  async get(id: UserId['id']) {
-    const user = await db.query.usersTable.findFirst({
-      columns: { password: false },
-      with: {
-        role: {
-          columns: {},
-          with: { rolesToPermissions: { columns: { permissionId: true } } },
-        },
-      },
-      where: eq(usersTable.id, id),
-    });
-    if (!user) throw this.userNotFoundError;
+  async get(id: string) {
+    const where = eq(usersTable.id, id);
+    const user = await this.getByWhereWithPassword(where);
 
-    // Flatten results
-    const { role, ...restOfUser } = user;
-    const permissionIds = role.rolesToPermissions.map(
-      ({ permissionId }) => permissionId,
-    );
-    return { ...restOfUser, permissionIds };
+    return this.omitPassword(user);
+  }
+
+  async getWithPassword(id: string) {
+    const where = eq(usersTable.id, id);
+    return this.getByWhereWithPassword(where);
+  }
+
+  async getByEmail(email: string) {
+    const where = eq(usersTable.email, email);
+    const user = await this.getByWhereWithPassword(where);
+
+    return this.omitPassword(user);
   }
 
   async getByEmailWithPassword(email: string) {
-    const user = await db.query.usersTable.findFirst({
-      where: eq(usersTable.email, email),
-    });
-    if (!user) throw this.userNotFoundError;
-
-    return user;
+    const where = eq(usersTable.email, email);
+    return this.getByWhereWithPassword(where);
   }
 
-  async create({ password, ...restOfProps }: RegisterAuth) {
+  async create({ password, ...restOfProps }: Register) {
     const hashedPassword = await hashPassword(password);
 
     const [createdUser] = await db
@@ -73,30 +92,100 @@ class UsersService {
       .values({ ...restOfProps, password: hashedPassword })
       .returning();
 
-    return this.omitUserPassword(createdUser);
+    return this.omitPassword(createdUser);
   }
 
   async update(
-    id: UserId['id'],
-    { password, ...restOfProps }: Partial<UserInsert>,
+    id: string,
+    { password, email, ...restOfProps }: Partial<UserInsert>,
+    context?: UserContext,
   ) {
+    if (id === context?.callerId) throw SelfActionError;
+    await this.guardEmailUniqueness(email);
+
     const hashedPassword = password ? await hashPassword(password) : undefined;
 
-    const [updatedUser] = await db
+    const updatedUsers = await db
       .update(usersTable)
-      .set({ ...restOfProps, password: hashedPassword })
+      .set({ ...restOfProps, email, password: hashedPassword })
       .where(eq(usersTable.id, id))
       .returning();
-    if (!updatedUser) throw this.userNotFoundError;
+    if (!updatedUsers.length) throw UserNotFoundError;
 
-    return this.omitUserPassword(updatedUser);
+    return this.omitPassword(updatedUsers[0]);
   }
 
-  private omitUserPassword = <T extends UserSelect>({
+  async updatePassword(
+    id: string,
+    { currentPassword, newPassword }: UpdateUserMePassword,
+  ) {
+    const user = await usersService.getWithPassword(id);
+    await guardPassword(currentPassword, user.password);
+
+    await this.update(user.id, { password: newPassword });
+  }
+
+  async requestEmailUpdate(id: string, { newEmail }: UpdateUserMeEmail) {
+    const updatedUser = await usersService.update(id, {
+      pendingEmail: newEmail,
+    });
+    if (!updatedUser.pendingEmail)
+      throw new Error('pendingEmail should not be null');
+
+    await emailQueueService.queueEmailVerification({
+      userId: updatedUser.id,
+      email: updatedUser.pendingEmail,
+    });
+  }
+
+  async delete(id: string, context?: UserContext) {
+    if (id === context?.callerId) throw SelfActionError;
+
+    const deletedUsers = await db
+      .delete(usersTable)
+      .where(eq(usersTable.id, id))
+      .returning();
+    if (!deletedUsers.length) throw UserNotFoundError;
+
+    return deletedUsers[0];
+  }
+
+  private omitPassword<T extends UserSelect>({
+    // Disabled eslint: to not be forced to use "_"
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     password: _,
     ...restOfProps
-  }: T) => restOfProps;
+  }: T) {
+    return restOfProps;
+  }
+
+  private async guardEmailUniqueness(email: string | undefined) {
+    if (!email) return;
+
+    const emailTaken = await db.query.usersTable.findFirst({
+      columns: { email: true },
+      where: eq(usersTable.email, email),
+    });
+    if (emailTaken) throw EmailAlreadyTakenError;
+  }
+
+  private async getByWhereWithPassword(where: SQL) {
+    const user = await db.query.usersTable.findFirst({
+      with: {
+        role: {
+          columns: {},
+          with: { rolesToPermissions: { columns: { permissionId: true } } },
+        },
+      },
+      where,
+    });
+    if (!user) throw UserNotFoundError;
+
+    // Flat results
+    const { role, ...restOfUser } = user;
+    const permissionIds = role.rolesToPermissions.map((el) => el.permissionId);
+    return { ...restOfUser, permissionIds };
+  }
 }
 
 export const usersService = new UsersService();

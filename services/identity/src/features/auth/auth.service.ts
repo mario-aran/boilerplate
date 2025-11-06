@@ -1,91 +1,119 @@
+import {
+  AccessDeniedError,
+  EmailAlreadyVerifiedError,
+  EmailNotVerifiedError,
+} from '@/errors/api-errors';
 import { emailQueueService } from '@/features/email/email-queue.service';
 import { usersService } from '@/features/users/users.service';
-import {
-  LoginAuth,
-  RegisterAuth,
-  ResendEmailVerificationAuth,
-  VerifyEmailAuth,
-} from '@/lib/zod/schemas/auth.schema';
-import { HttpError } from '@/utils/http-error';
-import bcrypt from 'bcryptjs';
-import { StatusCodes } from 'http-status-codes';
+import { guardPassword } from '@/lib/bcrypt/password-utils';
 import {
   signAccessToken,
-  signEmailVerificationToken,
   signRefreshToken,
-  validateEmailVerificationToken,
-} from './utils/jwt-handlers';
-
-// Types
-interface SignAndEnqueueEmailVerificationProps {
-  userId: string;
-  email: string;
-}
+  verifyEmailVerificationToken,
+  verifyPasswordResetToken,
+  verifyRefreshToken,
+} from '@/lib/jwt/token-utils';
+import {
+  ForgotPassword,
+  Login,
+  RefreshToken,
+  Register,
+  ResendEmailVerification,
+  ResetPassword,
+  VerifyEmail,
+} from '@/lib/zod/schemas/auth.schema';
+import { coerceFalsyToUndefined } from '@/utils/coerce-utils';
 
 class AuthService {
-  private emailAlreadyVerifiedError = new HttpError({
-    message: 'Email already verified',
-    httpStatus: StatusCodes.CONFLICT,
-  });
+  async register(props: Register) {
+    const createdUser = await usersService.create(props);
 
-  private invalidCredentialsError = new HttpError({
-    message: 'Invalid credentials',
-    httpStatus: StatusCodes.FORBIDDEN,
-  });
+    await emailQueueService.queueEmailVerification({
+      userId: createdUser.id,
+      email: createdUser.email,
+    });
 
-  async verifyEmail({ token }: VerifyEmailAuth) {
-    const { userId } = validateEmailVerificationToken(token);
+    return createdUser;
+  }
+
+  async verifyEmail({ token }: VerifyEmail) {
+    const { userId } = verifyEmailVerificationToken(token);
 
     const user = await usersService.get(userId);
-    if (user.emailVerified && !user.pendingEmail)
-      throw this.emailAlreadyVerifiedError;
+    this.guardEmailNotVerified(user);
 
     const { email } = await usersService.update(user.id, {
       emailVerifiedAt: new Date(),
+      emailVerified: user.emailVerified ? undefined : true, // Don't update if already true
+      email: coerceFalsyToUndefined(user.pendingEmail) ?? undefined, // Prevent empty string
       pendingEmail: null,
-      emailVerified: !user.emailVerified ? true : undefined,
-      email: user.pendingEmail || undefined,
     });
     return { email };
   }
 
-  async register(props: RegisterAuth) {
-    const { id, email } = await usersService.create(props);
+  async resendEmailVerification({ currentEmail }: ResendEmailVerification) {
+    const user = await usersService.getByEmail(currentEmail);
+    this.guardEmailNotVerified(user);
 
-    await this.signAndEnqueueEmailVerification({ userId: id, email });
-
-    return { email };
-  }
-
-  async resendEmailVerification({ currentEmail }: ResendEmailVerificationAuth) {
-    const user = await usersService.getByEmailWithPassword(currentEmail);
-    if (user.emailVerified && !user.pendingEmail)
-      throw this.emailAlreadyVerifiedError;
-
-    const email = user.pendingEmail ?? user.email;
-    await this.signAndEnqueueEmailVerification({ userId: user.id, email });
+    const email = coerceFalsyToUndefined(user.pendingEmail) ?? user.email;
+    await emailQueueService.queueEmailVerification({ userId: user.id, email });
 
     return { email };
   }
 
-  async login({ email, password }: LoginAuth) {
+  async forgotPassword({ email }: ForgotPassword) {
+    const user = await usersService.getByEmail(email);
+    this.guardUserVerifiedAndActive(user);
+
+    await emailQueueService.queuePasswordReset({
+      userId: user.id,
+      email: user.email,
+    });
+  }
+
+  async resetPassword({ token, newPassword }: ResetPassword) {
+    const { userId } = verifyPasswordResetToken(token);
+
+    const user = await usersService.getWithPassword(userId);
+    if (!user.isActive) throw AccessDeniedError;
+
+    await usersService.update(user.id, { password: newPassword });
+  }
+
+  async login({ email, password }: Login) {
     const user = await usersService.getByEmailWithPassword(email);
+    await guardPassword(password, user.password);
+    this.guardUserVerifiedAndActive(user);
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) throw this.invalidCredentialsError;
-
-    const payload = { userId: user.id };
-    const accessToken = signAccessToken(payload);
-    const refreshToken = signRefreshToken(payload);
-    return { accessToken, refreshToken };
+    return {
+      accessToken: signAccessToken({ userId: user.id }),
+      refreshToken: signRefreshToken({ userId: user.id }),
+    };
   }
 
-  private async signAndEnqueueEmailVerification({
-    userId,
-    email,
-  }: SignAndEnqueueEmailVerificationProps) {
-    const token = signEmailVerificationToken({ userId });
-    await emailQueueService.enqueueEmailVerification({ email, token });
+  async refreshToken({ token }: RefreshToken) {
+    const { userId } = verifyRefreshToken(token);
+
+    const user = await usersService.get(userId);
+    if (!user.isActive) throw AccessDeniedError;
+
+    return { accessToken: signAccessToken({ userId: user.id }) };
+  }
+
+  private guardEmailNotVerified(user: {
+    emailVerified: boolean;
+    pendingEmail: string | null;
+  }) {
+    if (user.emailVerified && !user.pendingEmail)
+      throw EmailAlreadyVerifiedError;
+  }
+
+  private guardUserVerifiedAndActive(user: {
+    emailVerified: boolean;
+    isActive: boolean;
+  }) {
+    if (!user.emailVerified) throw EmailNotVerifiedError;
+    if (!user.isActive) throw AccessDeniedError;
   }
 }
 

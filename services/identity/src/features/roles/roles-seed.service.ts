@@ -1,6 +1,6 @@
 import { PERMISSION_VALUES } from '@/constants/permissions';
 import { SYSTEM_ROLE_VALUES, SYSTEM_ROLES } from '@/constants/system-roles';
-import { db } from '@/lib/drizzle/db-connection';
+import { db } from '@/lib/drizzle/db';
 import {
   rolesTable,
   rolesToPermissionsTable,
@@ -9,18 +9,16 @@ import {
 
 class RolesSeedService {
   async seed() {
-    const createdRecords = await db
+    const createdRoles = await db
       .insert(rolesTable)
       .values(SYSTEM_ROLE_VALUES.map((id) => ({ id })))
       .onConflictDoNothing()
       .returning({ id: rolesTable.id });
-
-    const createdKeys = createdRecords.map(({ id }) => id);
-    return { createdKeys };
+    return createdRoles.length;
   }
 
-  async seedPermissions() {
-    const createdRecords = await db
+  async seedPermissionsForRole() {
+    const createdPermissions = await db
       .insert(rolesToPermissionsTable)
       .values(
         PERMISSION_VALUES.map(
@@ -35,11 +33,7 @@ class RolesSeedService {
         roleId: rolesToPermissionsTable.roleId,
         permissionId: rolesToPermissionsTable.permissionId,
       });
-
-    const createdKeys = createdRecords.map(
-      ({ roleId, permissionId }) => `${roleId}.${permissionId}`,
-    );
-    return { createdKeys };
+    return createdPermissions.length;
   }
 }
 

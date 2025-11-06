@@ -1,11 +1,12 @@
-// This file won't be compiled, so path aliases cannot be used
+// docs: https://orm.drizzle.team/docs/get-started/postgresql-new#step-5---setup-drizzle-config-file
 
+import { DATABASE_URL } from '@/config/env';
 import { defineConfig } from 'drizzle-kit';
-import { DATABASE_URL } from './src/config/env';
 
+// Paths must be relative to project root
 export default defineConfig({
-  out: './migrations',
-  schema: './src/lib/drizzle/schemas/index.ts',
+  out: 'migrations',
+  schema: 'src/lib/drizzle/schemas/index.ts',
   dialect: 'postgresql',
   dbCredentials: { url: DATABASE_URL },
 });

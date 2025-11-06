@@ -1,5 +1,5 @@
-import { logger } from '@/lib/logger/winston-logger';
-import { HttpError } from '@/utils/http-error';
+import { ApiError } from '@/errors/api-error';
+import { logger } from '@/lib/logger/winston';
 import { DrizzleQueryError } from 'drizzle-orm';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
@@ -8,47 +8,50 @@ export const errorHandler = (
   err: Error,
   _: Request,
   res: Response,
+  // Disabled eslint: to not being forced to use "_next"
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
+  let status = StatusCodes.INTERNAL_SERVER_ERROR;
   let message = 'Server error';
-  let httpStatus = StatusCodes.INTERNAL_SERVER_ERROR;
-  let validationErrors;
+  let validationErrors: ApiError['validationErrors'];
 
-  // Custom errors
-  if (err instanceof HttpError) {
+  // Check body parser error
+  if (
+    err instanceof SyntaxError &&
+    'status' in err &&
+    err.status === StatusCodes.BAD_REQUEST &&
+    'body' in err
+  ) {
+    status = err.status;
+    message = 'Malformed JSON body';
+  }
+
+  // Check api error
+  if (err instanceof ApiError) {
+    status = err.status;
     message = err.message;
-    httpStatus = err.httpStatus;
     validationErrors = err.validationErrors;
   }
 
-  // Body parser errors
-  if (
-    err instanceof SyntaxError &&
-    'body' in err &&
-    'status' in err &&
-    err.status === StatusCodes.BAD_REQUEST
-  ) {
-    message = 'Malformed JSON body';
-    httpStatus = err.status;
-  }
-
-  // DB errors
+  // Check db error
   if (err instanceof DrizzleQueryError && err.cause && 'code' in err.cause) {
     switch (err.cause.code) {
       case '23503':
+        status = StatusCodes.CONFLICT;
         message = 'Data relationship constraints';
-        httpStatus = StatusCodes.CONFLICT;
         break;
       case '23505':
+        status = StatusCodes.CONFLICT;
         message = 'Data already exists';
-        httpStatus = StatusCodes.CONFLICT;
         break;
+
       default:
+        status = StatusCodes.INTERNAL_SERVER_ERROR;
         message = 'Database error';
     }
   }
 
-  logger.error(err.stack || message);
-  res.status(httpStatus).json({ message, validationErrors });
+  logger.error(err.stack ?? message);
+  res.status(status).json({ message, validationErrors });
 };

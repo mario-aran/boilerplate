@@ -1,31 +1,53 @@
 import {
-  BASE_URL,
+  CLIENT_URL,
+  EMAIL_FROM,
   SMTP_HOST,
   SMTP_PASS,
   SMTP_PORT,
   SMTP_USER,
-  VERIFY_EMAIL_FROM,
 } from '@/config/env';
-import { ROUTES } from '@/constants/routes';
+import { PATHS } from '@/constants/paths';
+import {
+  signEmailVerificationToken,
+  signPasswordResetToken,
+} from '@/lib/jwt/token-utils';
 import nodemailer from 'nodemailer';
-import { EmailVerificationProps } from './types';
+import { EmailPayload } from './types';
 
 class EmailService {
-  private transporter = nodemailer.createTransport({
+  private static readonly transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: SMTP_PORT,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    auth:
+      SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined, // "auth" only required in production
   });
 
-  async sendEmailVerification({ email, token }: EmailVerificationProps) {
-    const tokenUrl = `${BASE_URL}${ROUTES.API_AUTH_VERIFY_EMAIL}?token=${token}`;
+  async sendEmailVerification({ userId, email }: EmailPayload) {
+    const token = signEmailVerificationToken({ userId });
+    const link = this.buildTokenLink(PATHS.AUTH_VERIFY_EMAIL, token);
 
-    await this.transporter.sendMail({
-      from: VERIFY_EMAIL_FROM,
+    await EmailService.transporter.sendMail({
+      from: EMAIL_FROM,
       to: email,
-      subject: 'Verify your email',
-      text: `Please verify your email address by visiting: ${tokenUrl}`,
+      subject: 'Email verification',
+      text: `Access this link to verify your email: ${link}`,
     });
+  }
+
+  async sendPasswordReset({ userId, email }: EmailPayload) {
+    const token = signPasswordResetToken({ userId });
+    const link = this.buildTokenLink(PATHS.AUTH_RESET_PASSWORD, token);
+
+    await EmailService.transporter.sendMail({
+      from: EMAIL_FROM,
+      to: email,
+      subject: 'Password reset',
+      text: `Access this link to reset your password: ${link}`,
+    });
+  }
+
+  private buildTokenLink(path: string, token: string) {
+    return `${CLIENT_URL}${path}?token=${token}`;
   }
 }
 

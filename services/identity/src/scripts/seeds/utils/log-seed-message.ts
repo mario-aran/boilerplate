@@ -1,11 +1,9 @@
-import { logger } from '@/lib/logger/winston-logger';
+import { logger } from '@/lib/logger/winston';
 
-export const logSeedMessage = (tableName: string, createdKeys: string[]) => {
-  if (!createdKeys.length) {
-    logger.info(`No new records, skipping seeding of ${tableName}`);
-    return;
-  }
+export const logSeedMessage = (table: string, inserted: number) => {
+  const message = inserted
+    ? `${table} seeded: ${String(inserted)}`
+    : `No new records inserted into ${table}`;
 
-  const joinedUniqueKeys = createdKeys.map((key) => key).join(', ');
-  logger.info(`${tableName} seeded: ${joinedUniqueKeys}`);
+  logger.info(message);
 };

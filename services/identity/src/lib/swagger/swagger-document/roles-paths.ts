@@ -1,5 +1,5 @@
-import { DOC_PATHS } from '@/constants/routes';
-import { ROLES_EXAMPLE_COLUMNS } from '@/lib/drizzle/schemas';
+import { SWAGGER_PATHS } from '@/constants/paths';
+import { ROLES_SWAGGER_COLUMNS_OBJECT } from '@/lib/drizzle/schemas';
 import { SECURITY } from '@/lib/swagger/constants';
 import { idPathParam, paginatedQueryParams } from '@/lib/swagger/utils/inputs';
 import {
@@ -9,7 +9,6 @@ import {
 } from '@/lib/swagger/utils/responses';
 import { StatusCodes } from 'http-status-codes';
 
-// Values
 const tags = ['roles'];
 
 const commonResponses = {
@@ -23,14 +22,14 @@ const idCommonResponses = {
 };
 
 export const rolesPaths = {
-  [DOC_PATHS.ROLES]: {
+  [SWAGGER_PATHS.ROLES]: {
     get: {
       tags,
       security: SECURITY,
       parameters: paginatedQueryParams,
       responses: {
         ...commonResponses,
-        [StatusCodes.OK]: getPaginatedResponse(ROLES_EXAMPLE_COLUMNS),
+        [StatusCodes.OK]: getPaginatedResponse(ROLES_SWAGGER_COLUMNS_OBJECT),
       },
     },
     post: {
@@ -55,7 +54,7 @@ export const rolesPaths = {
     },
   },
 
-  [DOC_PATHS.ROLES_ID]: {
+  [SWAGGER_PATHS.ROLES_ID]: {
     get: {
       tags,
       security: SECURITY,
@@ -67,7 +66,7 @@ export const rolesPaths = {
             'application/json': {
               schema: {
                 type: 'object',
-                example: ROLES_EXAMPLE_COLUMNS,
+                example: ROLES_SWAGGER_COLUMNS_OBJECT,
               },
             },
           },

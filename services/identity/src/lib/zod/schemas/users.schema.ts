@@ -1,21 +1,58 @@
-import { USERS_SORT_COLUMNS_NO_PASSWORD } from '@/lib/drizzle/schemas';
-import { stringToPositiveInt, text, textId } from '@/lib/zod/utils/fields';
-import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
+import {
+  currentPassword,
+  firstName,
+  isActive,
+  lastName,
+  limit,
+  newEmail,
+  newPassword,
+  page,
+  roleId,
+  search,
+  sortUsers,
+  uuid,
+} from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
-// Types
-export type UserId = z.infer<typeof userIdSchema>;
-export type GetAllUsers = z.infer<typeof getAllUsersSchema>;
+// ---------------------------
+// TYPES
+// ---------------------------
 
-// Schemas
-export const userIdSchema = z.strictObject({ id: textId });
+export type UsersParams = z.infer<typeof usersParamsSchema>;
+export type GetUsers = z.infer<typeof getUsersSchema>;
+export type UpdateUserMe = z.infer<typeof updateUserMeSchema>;
+export type UpdateUserMePassword = z.infer<typeof updateUserMePasswordSchema>;
+export type UpdateUserMeEmail = z.infer<typeof updateUserMeEmailSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
 
-export const getAllUsersSchema = z
-  .strictObject({
-    limit: stringToPositiveInt,
-    page: stringToPositiveInt,
-    sort: generateSortField(USERS_SORT_COLUMNS_NO_PASSWORD),
-    roleId: textId,
-    search: text,
-  })
+// ---------------------------
+// FIELDS
+// ---------------------------
+
+const id = uuid;
+const sort = sortUsers;
+
+// ---------------------------
+// SCHEMAS
+// ---------------------------
+
+export const usersParamsSchema = z.strictObject({ id });
+
+export const getUsersSchema = z
+  .strictObject({ limit, page, sort, roleId, search })
+  .partial();
+
+export const updateUserMeSchema = z
+  .strictObject({ firstName, lastName })
+  .partial();
+
+export const updateUserMePasswordSchema = z.strictObject({
+  currentPassword,
+  newPassword,
+});
+
+export const updateUserMeEmailSchema = z.strictObject({ newEmail });
+
+export const updateUserSchema = updateUserMeSchema
+  .extend({ roleId, isActive })
   .partial();

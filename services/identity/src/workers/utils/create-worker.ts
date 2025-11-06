@@ -1,0 +1,19 @@
+import { workerClient } from '@/lib/bullmq/clients';
+import { logger } from '@/lib/logger/winston';
+import { Job, Worker } from 'bullmq';
+
+export const createWorker = <T extends object>(
+  name: string,
+  processor: (job: Job<T>) => Promise<unknown>,
+) => {
+  const worker = new Worker(name, processor, { connection: workerClient });
+  worker.on('completed', (job) =>
+    logger.info(`${name} job ${String(job.id)} has completed`),
+  );
+  worker.on('failed', (job, err) =>
+    logger.error(`${name} job ${String(job?.id)} has failed: ${err.message}`),
+  );
+
+  logger.info(`${name} worker started`);
+  return worker;
+};

@@ -1,17 +1,23 @@
 import {
-  getExampleColumns,
-  getSortColumns,
-} from '@/lib/drizzle/utils/column-handlers';
+  getSortableColumns,
+  getSwaggerColumnsObject,
+} from '@/lib/drizzle/utils/column-utils';
 import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { rolesToPermissionsTable } from './roles-to-permissions.schema';
 import { usersTable } from './users.schema';
 
-// Constants
+// ---------------------------
+// CONSTANTS
+// ---------------------------
+
 export const ROLES_TABLE_NAME = 'roles';
 
-// Schema
+// ---------------------------
+// SCHEMA
+// ---------------------------
+
 export const rolesTable = pgTable(ROLES_TABLE_NAME, {
   id: varchar('id', { length: 255 }).primaryKey(),
   createdAt,
@@ -23,6 +29,9 @@ export const rolesRelations = relations(rolesTable, ({ many }) => ({
   rolesToPermissions: many(rolesToPermissionsTable),
 }));
 
-// Columns
-export const ROLES_EXAMPLE_COLUMNS = getExampleColumns(rolesTable);
-export const ROLES_SORT_COLUMNS = getSortColumns(rolesTable);
+// ---------------------------
+// DERIVED CONSTANTS
+// ---------------------------
+
+export const ROLES_SWAGGER_COLUMNS_OBJECT = getSwaggerColumnsObject(rolesTable);
+export const ROLES_SORTABLE_COLUMNS = getSortableColumns(rolesTable);

@@ -1,16 +1,22 @@
 import {
-  getExampleColumns,
-  getSortColumns,
-} from '@/lib/drizzle/utils/column-handlers';
+  getSortableColumns,
+  getSwaggerColumnsObject,
+} from '@/lib/drizzle/utils/column-utils';
 import { createdAt, updatedAt } from '@/lib/drizzle/utils/columns';
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar } from 'drizzle-orm/pg-core';
 import { rolesToPermissionsTable } from './roles-to-permissions.schema';
 
-// Constants
+// ---------------------------
+// CONSTANTS
+// ---------------------------
+
 export const PERMISSIONS_TABLE_NAME = 'permissions';
 
-// Schema
+// ---------------------------
+// SCHEMA
+// ---------------------------
+
 export const permissionsTable = pgTable(PERMISSIONS_TABLE_NAME, {
   id: varchar('id', { length: 255 }).primaryKey(),
   createdAt,
@@ -21,6 +27,12 @@ export const permissionsRelations = relations(permissionsTable, ({ many }) => ({
   rolesToPermissions: many(rolesToPermissionsTable),
 }));
 
-// Columns
-export const PERMISSIONS_EXAMPLE_COLUMNS = getExampleColumns(permissionsTable);
-export const PERMISSIONS_SORT_COLUMNS = getSortColumns(permissionsTable);
+// ---------------------------
+// DERIVED CONSTANTS
+// ---------------------------
+
+export const PERMISSIONS_SWAGGER_COLUMNS_OBJECT =
+  getSwaggerColumnsObject(permissionsTable);
+
+export const PERMISSIONS_SORTABLE_COLUMNS =
+  getSortableColumns(permissionsTable);

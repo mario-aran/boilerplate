@@ -1,0 +1,7 @@
+// note: DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
+// docs: https://www.typescriptlang.org/tsconfig/
+
+{
+  "extends": "./tsconfig.json",
+  "include": ["src"]
+}

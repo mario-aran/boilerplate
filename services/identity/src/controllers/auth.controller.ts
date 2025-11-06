@@ -1,39 +1,71 @@
 import { authService } from '@/features/auth/auth.service';
-import { VerifyEmailAuth } from '@/lib/zod/schemas/auth.schema';
-import { Request, Response } from 'express';
+import {
+  ForgotPassword,
+  Login,
+  RefreshToken,
+  Register,
+  ResendEmailVerification,
+  ResetPassword,
+  VerifyEmail,
+} from '@/lib/zod/schemas/auth.schema';
+import { TypedRequest } from '@/types/typed-request';
+import { controllerCatchAsync } from '@/utils/controller-catch-async';
+import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { controllerCatchAsync } from './utils/controller-catch-async';
 
-class AuthController {
-  verifyEmail = controllerCatchAsync(
-    async (
-      req: Request<unknown, unknown, unknown, VerifyEmailAuth>,
-      res: Response,
-    ) => {
-      const { email } = await authService.verifyEmail(req.query);
-      res.json({ message: `Email ${email} verified successfully` });
-    },
-  );
-
-  register = controllerCatchAsync(async (req: Request, res: Response) => {
-    const { email } = await authService.register(req.body);
-
+export const register = controllerCatchAsync(
+  async (req: TypedRequest<{ body: Register }>, res: Response) => {
+    await authService.register(req.body);
     res.status(StatusCodes.CREATED).json({
-      message: `Registration successful. Verification will be sent to ${email} shortly`,
+      message:
+        'Registration successful. Verification email will be sent shortly',
     });
-  });
+  },
+);
 
-  resendEmailVerification = controllerCatchAsync(
-    async (req: Request, res: Response) => {
-      const { email } = await authService.resendEmailVerification(req.body);
-      res.json({ message: `Verification will be sent to ${email} shortly` });
-    },
-  );
+export const verifyEmail = controllerCatchAsync(
+  async (req: TypedRequest<{ body: VerifyEmail }>, res: Response) => {
+    await authService.verifyEmail(req.body);
+    res.json({ message: 'Email verified successfully' });
+  },
+);
 
-  login = controllerCatchAsync(async (req: Request, res: Response) => {
+export const resendEmailVerification = controllerCatchAsync(
+  async (
+    req: TypedRequest<{ body: ResendEmailVerification }>,
+    res: Response,
+  ) => {
+    const { email } = await authService.resendEmailVerification(req.body);
+    res.json({
+      message: `Verification email will be sent shortly to ${email}`,
+    });
+  },
+);
+
+export const forgotPassword = controllerCatchAsync(
+  async (req: TypedRequest<{ body: ForgotPassword }>, res: Response) => {
+    await authService.forgotPassword(req.body);
+    res.json({ message: 'Password reset email will be sent shortly' });
+  },
+);
+
+export const resetPassword = controllerCatchAsync(
+  async (req: TypedRequest<{ body: ResetPassword }>, res: Response) => {
+    await authService.resetPassword(req.body);
+    res.json({ message: 'Password has been reset successfully' });
+  },
+);
+
+export const login = controllerCatchAsync(
+  async (req: TypedRequest<{ body: Login }>, res: Response) => {
     const result = await authService.login(req.body);
     res.json(result);
-  });
-}
+  },
+);
 
-export const authController = new AuthController();
+export const refreshToken = controllerCatchAsync(
+  async (req: TypedRequest<{ body: RefreshToken }>, res: Response) => {
+    const result = await authService.refreshToken(req.body);
+    res.json(result);
+  },
+);

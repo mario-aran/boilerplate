@@ -1,18 +1,17 @@
-import { HttpError } from '@/utils/http-error';
+import { buildValidationFailedError } from '@/errors/api-errors';
+import { coerceFalsyToUndefined } from '@/utils/coerce-utils';
 import { NextFunction, Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
 import { ZodError, ZodObject } from 'zod';
 
-// Types
-type ZodValidator = (props: {
+interface ZodValidatorProps {
   params?: ZodObject;
   query?: ZodObject;
   body?: ZodObject;
-}) => (req: Request, res: Response, next: NextFunction) => void;
+}
 
-export const zodValidator: ZodValidator =
-  ({ params, query, body }) =>
-  (req, _, next) => {
+export const zodValidator =
+  ({ params, query, body }: ZodValidatorProps) =>
+  (req: Request, _: Response, next: NextFunction) => {
     try {
       // Validate request data
       params?.parse(req.params);
@@ -20,24 +19,20 @@ export const zodValidator: ZodValidator =
       body?.parse(req.body);
 
       // Succeeded
-      return next();
+      next();
     } catch (err) {
-      // Failed: Zod error
+      // Failed: zod error
       if (err instanceof ZodError) {
         const validationErrors = err.issues.map((issue) => ({
-          field: `${issue.path.join('.')}`,
+          field: coerceFalsyToUndefined(issue.path.join('.')),
           message: issue.message,
         }));
-        return next(
-          new HttpError({
-            message: 'Unprocessable',
-            httpStatus: StatusCodes.UNPROCESSABLE_ENTITY,
-            validationErrors,
-          }),
-        );
+
+        next(buildValidationFailedError(validationErrors));
+        return;
       }
 
-      // Failed: Internal error
-      return next(err);
+      // Failed: regular error
+      next(err);
     }
   };

@@ -1,33 +1,54 @@
+/*
+docs:
+- https://typescript-eslint.io/getting-started/typed-linting#shared-configurations
+- https://typescript-eslint.io/users/configs#disable-type-checked
+*/
+
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import eslintPluginCheckFile from 'eslint-plugin-check-file';
-import { globalIgnores } from 'eslint/config';
-import globals from 'globals';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config([
-  globalIgnores(['dist', 'coverage']),
+export default defineConfig(
+  // ---------------------------
+  // IGNORES
+  // ---------------------------
+
+  globalIgnores(['coverage', 'dist', 'migrations', 'resources']),
+
+  // ---------------------------
+  // BASE RULES
+  // ---------------------------
+
+  // "eslint"
+  eslint.configs.recommended,
+
+  // "typescript-eslint"
+  tseslint.configs.strictTypeChecked, // "strict" with type information
+  tseslint.configs.stylisticTypeChecked, // "stylistic" with type information
+
+  // ---------------------------
+  // SETTINGS
+  // ---------------------------
+
   {
-    files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2022, // Should match target version in "tsconfig.json"
-      globals: globals.node, // Environment: "browser" or "node"
+      parserOptions: {
+        projectService: true, // Enables linting with type information
+      },
     },
-    extends: [
-      eslint.configs.recommended,
-      tseslint.configs.strict,
-      tseslint.configs.stylistic,
-    ],
-    plugins: {
-      'check-file': eslintPluginCheckFile,
-    },
+    plugins: { 'check-file': eslintPluginCheckFile },
     rules: {
       // "eslint"
       'no-restricted-imports': [
         'error',
         {
           patterns: [
-            { group: ['../**', 'src/*'], message: 'Use "@/" instead' },
+            {
+              group: ['..', '../**', 'src/*', 'tests/*'],
+              message: 'Use "@/" or "@tests/" instead',
+            },
             {
               group: ['@/lib/drizzle/schemas/*'],
               message: 'Use "@/lib/drizzle/schemas" instead',
@@ -36,17 +57,31 @@ export default tseslint.config([
         },
       ],
 
+      // "typescript-eslint"
+      '@typescript-eslint/no-floating-promises': 'error',
+
       // "eslint-plugin-check-file"
       'check-file/filename-naming-convention': [
         'error',
-        { '**/*.{ts,tsx}': 'KEBAB_CASE' },
+        { '**/*.ts': 'KEBAB_CASE' },
         { ignoreMiddleExtensions: true },
       ],
       'check-file/folder-naming-convention': [
         'error',
-        { 'src/**/!(__tests__)': 'KEBAB_CASE' },
+        { '{src,tests}/**': 'KEBAB_CASE' },
       ],
     },
   },
-  eslintConfigPrettier, // Must be placed last
-]);
+
+  // ---------------------------
+  // OVERRIDES
+  // ---------------------------
+
+  {
+    files: ['**/*.{js,jsx,mjs,cjs}'],
+    extends: [tseslint.configs.disableTypeChecked], // Disables linting with type information
+  },
+
+  // "eslint-config-prettier"
+  eslintConfigPrettier, // must be placed last to override other configs
+);

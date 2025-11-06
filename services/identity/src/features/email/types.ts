@@ -1,4 +1,4 @@
-export interface EmailVerificationProps {
+export interface EmailPayload {
+  userId: string;
   email: string;
-  token: string;
 }

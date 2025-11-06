@@ -1,17 +1,22 @@
-import { PERMISSIONS_SORT_COLUMNS } from '@/lib/drizzle/schemas';
-import { stringToPositiveInt, text } from '@/lib/zod/utils/fields';
-import { generateSortField } from '@/lib/zod/utils/generate-sort-field';
+import { limit, page, search, sortPermissions } from '@/lib/zod/utils/fields';
 import { z } from 'zod';
 
-// Types
-export type GetAllPermissions = z.infer<typeof getAllPermissionsSchema>;
+// ---------------------------
+// TYPES
+// ---------------------------
 
-// Schemas
-export const getAllPermissionsSchema = z
-  .strictObject({
-    limit: stringToPositiveInt,
-    page: stringToPositiveInt,
-    sort: generateSortField(PERMISSIONS_SORT_COLUMNS),
-    search: text,
-  })
+export type GetPermissions = z.infer<typeof getPermissionsSchema>;
+
+// ---------------------------
+// FIELDS
+// ---------------------------
+
+const sort = sortPermissions;
+
+// ---------------------------
+// SCHEMAS
+// ---------------------------
+
+export const getPermissionsSchema = z
+  .strictObject({ limit, page, sort, search })
   .partial();

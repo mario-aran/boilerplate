@@ -1,16 +1,37 @@
+// note: Vitest automatically sets NODE_ENV='test' when running
+// docs: https://vitest.dev/guide/#configuring-vitest
+
 import path from 'path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  resolve: {
-    // Path aliases
-    alias: { '@': path.resolve(__dirname, './src') },
-  },
   test: {
-    // "@vitest/coverage-v8"
-    coverage: {
-      reporter: ['text', 'html'], // Report outputs
-      include: ['src'],
+    globals: true, // Enables test globals like "declare" without imports
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@tests': path.resolve(__dirname, './tests'),
     },
+    coverage: { include: ['src'] },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          include: ['tests/src/**/*.test.ts'],
+          exclude: ['**/*.integration.test.ts', '**/*.e2e.test.ts'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'e2e',
+          include: [
+            'tests/e2e/**/*.e2e.test.ts',
+            'tests/src/**/*.integration.test.ts',
+          ],
+          globalSetup: 'tests/config/global-setup.e2e.ts',
+        },
+      },
+    ],
   },
 });

@@ -1,21 +1,24 @@
-// DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
+// note: DO NOT RENAME OR MOVE THIS FILE — used by "package.json"
 
-import { NODE_ENV } from '@/config/env';
-import { SYSTEM_ROLES } from '@/constants/system-roles';
+import { isProduction } from '@/config/env';
 import { usersSeedService } from '@/features/users/users-seed.service';
-import { db } from '@/lib/drizzle/db-connection';
-import { UserInsert, USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
-import { logger } from '@/lib/logger/winston-logger';
+import { db } from '@/lib/drizzle/db';
+import { USERS_TABLE_NAME } from '@/lib/drizzle/schemas';
+import { logger } from '@/lib/logger/winston';
 import { scriptCatchAsync } from '@/scripts/utils/script-catch-async';
-import { faker } from '@faker-js/faker';
 import { logSeedMessage } from './utils/log-seed-message';
 import { seedSystemData } from './utils/seed-system-data';
 
-// Guards
-if (NODE_ENV === 'production')
-  throw new Error('Script not allowed in production');
+// ---------------------------
+// GUARDS
+// ---------------------------
 
-// Utils
+if (isProduction) throw new Error('Script not allowed in production');
+
+// ---------------------------
+// UTILS
+// ---------------------------
+
 const truncateTables = async () => {
   const selectTableNamesQuery = `
   SELECT table_name
@@ -40,25 +43,19 @@ const truncateTables = async () => {
   logger.info(`${joinedTableNames} tables truncated successfully`);
 };
 
-const seedFakeUsers = async () => {
-  const mockedUsers = faker.helpers.uniqueArray(faker.internet.email, 20).map(
-    (email): UserInsert => ({
-      email,
-      password: '12345678',
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      roleId: SYSTEM_ROLES.USER,
-    }),
-  );
-  const { createdKeys } = await usersSeedService.seedUsers(mockedUsers);
-  logSeedMessage(USERS_TABLE_NAME, createdKeys);
+const seedFakeData = async () => {
+  const usersInserted = await usersSeedService.seedFake(20);
+  logSeedMessage(USERS_TABLE_NAME, usersInserted);
 };
 
-// Run the script
-(async () => {
+// ---------------------------
+// SCRIPT
+// ---------------------------
+
+void (async () => {
   await scriptCatchAsync(async () => {
     await truncateTables();
     await seedSystemData();
-    await seedFakeUsers();
+    await seedFakeData();
   });
 })();

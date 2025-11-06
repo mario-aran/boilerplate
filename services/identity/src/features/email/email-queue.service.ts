@@ -1,15 +1,31 @@
 import { QUEUES } from '@/constants/queues';
-import { bullMQConnection } from '@/lib/redis/bullmq-connection';
+import { queueOptions } from '@/lib/bullmq/options';
 import { Queue } from 'bullmq';
-import { EmailVerificationProps } from './types';
+import { EmailPayload } from './types';
 
 class EmailQueueService {
-  private emailVerificationQueue = new Queue(QUEUES.EMAIL_VERIFICATION, {
-    connection: bullMQConnection.connection,
-  });
+  private static readonly emailVerificationEmailQueue = new Queue(
+    QUEUES.EMAIL_VERIFICATION_EMAIL,
+    queueOptions,
+  );
 
-  async enqueueEmailVerification(props: EmailVerificationProps) {
-    await this.emailVerificationQueue.add(QUEUES.EMAIL_VERIFICATION, props);
+  private static readonly passwordResetEmailQueue = new Queue(
+    QUEUES.PASSWORD_RESET_EMAIL,
+    queueOptions,
+  );
+
+  async queueEmailVerification(payload: EmailPayload) {
+    await EmailQueueService.emailVerificationEmailQueue.add(
+      QUEUES.EMAIL_VERIFICATION_EMAIL,
+      payload,
+    );
+  }
+
+  async queuePasswordReset(payload: EmailPayload) {
+    await EmailQueueService.passwordResetEmailQueue.add(
+      QUEUES.PASSWORD_RESET_EMAIL,
+      payload,
+    );
   }
 }
 

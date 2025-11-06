@@ -1,36 +1,51 @@
 import { rolesService } from '@/features/roles/roles.service';
-import { RoleId } from '@/lib/zod/schemas/roles.schema';
-import { Request, Response } from 'express';
+import {
+  CreateRole,
+  GetRoles,
+  RolesParams,
+  UpdateRole,
+} from '@/lib/zod/schemas/roles.schema';
+import { TypedRequest } from '@/types/typed-request';
+import { controllerCatchAsync } from '@/utils/controller-catch-async';
+import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { controllerCatchAsync } from './utils/controller-catch-async';
 
-class RolesController {
-  getAll = controllerCatchAsync(async (req: Request, res: Response) => {
-    const results = await rolesService.getAll(req.query);
-    res.json(results);
-  });
+export const getRoles = controllerCatchAsync(
+  async (req: TypedRequest<{ query: GetRoles }>, res: Response) => {
+    const result = await rolesService.getAll(req.query);
+    res.json(result);
+  },
+);
 
-  get = controllerCatchAsync(async (req: Request<RoleId>, res: Response) => {
+export const getRole = controllerCatchAsync(
+  async (req: TypedRequest<{ params: RolesParams }>, res: Response) => {
     const result = await rolesService.get(req.params.id);
     res.json(result);
-  });
+  },
+);
 
-  create = controllerCatchAsync(async (req: Request, res: Response) => {
-    const { id } = await rolesService.create(req.body);
+export const createRole = controllerCatchAsync(
+  async (req: TypedRequest<{ body: CreateRole }>, res: Response) => {
+    await rolesService.create(req.body);
     res
       .status(StatusCodes.CREATED)
-      .json({ message: `Role ${id} created successfully` });
-  });
+      .json({ message: 'Role created successfully' });
+  },
+);
 
-  update = controllerCatchAsync(async (req: Request<RoleId>, res: Response) => {
-    const { id } = await rolesService.update(req.params.id, req.body);
-    res.json({ message: `Role ${id} updated successfully` });
-  });
+export const updateRole = controllerCatchAsync(
+  async (
+    req: TypedRequest<{ params: RolesParams; body: UpdateRole }>,
+    res: Response,
+  ) => {
+    await rolesService.update(req.params.id, req.body);
+    res.json({ message: 'Role updated successfully' });
+  },
+);
 
-  delete = controllerCatchAsync(async (req: Request<RoleId>, res: Response) => {
-    const { id } = await rolesService.delete(req.params.id);
-    res.json({ message: `Role ${id} deleted successfully` });
-  });
-}
-
-export const rolesController = new RolesController();
+export const deleteRole = controllerCatchAsync(
+  async (req: TypedRequest<{ params: RolesParams }>, res: Response) => {
+    await rolesService.delete(req.params.id);
+    res.sendStatus(StatusCodes.NO_CONTENT);
+  },
+);

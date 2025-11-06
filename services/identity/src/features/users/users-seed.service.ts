@@ -1,28 +1,10 @@
 import { SYSTEM_ROLES } from '@/constants/system-roles';
-import { db } from '@/lib/drizzle/db-connection';
+import { hashPassword } from '@/lib/bcrypt/password-utils';
+import { db } from '@/lib/drizzle/db';
 import { UserInsert, usersTable } from '@/lib/drizzle/schemas';
-import { hashPassword } from './utils/hash-password';
+import { faker } from '@faker-js/faker';
 
 class UsersSeedService {
-  async seedUsers(props: UserInsert[]) {
-    const hashedUserPromises = props.map(({ password, ...restOfUser }) =>
-      hashPassword(password).then((hashedPassword) => ({
-        ...restOfUser,
-        password: hashedPassword,
-      })),
-    );
-    const usersWithHashedPassword = await Promise.all(hashedUserPromises);
-
-    const createdRecords = await db
-      .insert(usersTable)
-      .values(usersWithHashedPassword)
-      .onConflictDoNothing()
-      .returning({ email: usersTable.email });
-
-    const createdKeys = createdRecords.map(({ email }) => email);
-    return { createdKeys };
-  }
-
   async seed() {
     return this.seedUsers([
       {
@@ -33,6 +15,40 @@ class UsersSeedService {
         password: SYSTEM_ROLES.SUPER_ADMIN,
       },
     ]);
+  }
+
+  async seedFake(count: number) {
+    return this.seedUsers(
+      faker.helpers
+        .uniqueArray(() => faker.internet.email(), count)
+        .map(
+          (email): UserInsert => ({
+            email,
+            emailVerified: true,
+            emailVerifiedAt: new Date(),
+            password: email,
+            firstName: faker.person.firstName(),
+            lastName: faker.person.lastName(),
+          }),
+        ),
+    );
+  }
+
+  private async seedUsers(users: UserInsert[]) {
+    const hashedUserPromises = users.map(
+      async ({ password, ...restOfUsers }) => ({
+        ...restOfUsers,
+        password: await hashPassword(password),
+      }),
+    );
+    const hashedUsers = await Promise.all(hashedUserPromises);
+
+    const createdUsers = await db
+      .insert(usersTable)
+      .values(hashedUsers)
+      .onConflictDoNothing()
+      .returning({ email: usersTable.email });
+    return createdUsers.length;
   }
 }
 
